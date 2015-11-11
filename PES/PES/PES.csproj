@@ -115,10 +115,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Description.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\LM_Skill.cs" />
-    <Compile Include="Models\PEs.cs" />
-    <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Subtitle.cs" />
