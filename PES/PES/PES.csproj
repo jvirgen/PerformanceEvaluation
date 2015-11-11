@@ -117,7 +117,12 @@
     </Compile>
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\LM_Skill.cs" />
+    <Compile Include="Models\PEs.cs" />
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Skill.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\Subtitle.cs" />
+    <Compile Include="Models\Title.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

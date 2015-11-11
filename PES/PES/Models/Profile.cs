@@ -6,18 +6,18 @@ using System.Web;
 namespace PES.Models
 {
     /// <summary>
-    /// This class will store a skill
+    /// This class will store a profile
     /// </summary>
-    public class Skill
+    public class Profile
     {
         /// <summary>
-        /// Skill Id
+        /// Profile Id
         /// </summary>
-        public int SkillId {get; set;}
+        public int ProfileId { get; set; }
 
         /// <summary>
-        /// Description of skill
+        /// Profile name
         /// </summary>
-        public string Skill {get; set;}
+        public string Profile { get; set; }
     }
 }
