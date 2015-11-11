@@ -19,5 +19,7 @@ namespace PES.Models
         /// Profile name
         /// </summary>
         public string Profile { get; set; }
+
+        /// Comment
     }
 }

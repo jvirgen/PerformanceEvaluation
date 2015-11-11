@@ -7,6 +7,9 @@ namespace PES.Models
 {
     public class Score
     {
+        /// <summary>
+        /// Id Scores
+        /// </summary>
         public int ScoreId { get; set; }
 
         public int DescriptionId { get; set; }
