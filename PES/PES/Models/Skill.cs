@@ -5,7 +5,10 @@ using System.Web;
 
 namespace PES.Models
 {
-    public class Skills
+    /// <summary>
+    /// This class is to store a skill
+    /// </summary>
+    public class Skill
     {
         /// <summary>
         /// Skill Id

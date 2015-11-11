@@ -117,7 +117,7 @@
     </Compile>
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\LM_Skill.cs" />
-    <Compile Include="Models\Skills.cs" />
+    <Compile Include="Models\Skill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
