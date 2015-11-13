@@ -18,7 +18,7 @@ namespace PES.Models
         /// <summary>
         /// Description 
         /// </summary>
-        public string Description { get; set; }
+        public string DescriptionText { get; set; }
 
         /// <summary>
         /// Subtitle Id
