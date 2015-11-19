@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Performance Evaluation System";
+}
+<hr />
+<div class="jumbotron">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>Performance Evaluation System</h2>
+        </div>
+        <br />
+        <div class="col-md-12">
+            <p>Please choose an option</p>
+        </div>
+    </div>
+    
+    <div class="row text-center">
+        <div class="col-md-6">
+            <a href="@Url.Action("SearchInformation", "PerformanceEvaluation")" class="btn btn-lg btn-default">Search information</a>
+        </div>
+        <div class="col-md-6">
+            <a href="@Url.Action("UploadFile", "PerformanceEvaluation")" class="btn btn-lg btn-default">Upload File</a>
+        </div>
+    </div>
+</div>
+

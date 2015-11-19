@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Upload File";
+}
+
+<hr />
+<div class="jumbotron">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>Performance Evaluation System</h2>
+            <h4>Upload File</h4>
+        </div>
+        <br />
+    </div>
+
+
+        @using (Html.BeginForm("LoadPEFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="row text-center">
+                <div class="form-group">
+                    @Html.Label("File to upload", new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        <input type="file" id="fileUploaded" name="fileUploaded" required />
+                    </div>
+                </div>
+           </div>
+            <div class="row text-center">
+                <br />
+                <div class="form-group">
+                    <input type="submit" class="btn btn-lg btn-default" value="Load Performance Evaluation" />
+                </div>
+            </div>
+        }
+</div>
