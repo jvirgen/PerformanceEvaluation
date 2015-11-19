@@ -27,6 +27,12 @@ namespace PES.Controllers
         {
             return View();
         }
+        
+        // GET: PeformanceEvaluation/SearchIformation
+        public ActionResult Login()
+        {
+            return View();
+        }
 
         public ActionResult LoadPerformanceEvaluationFile(HttpPostedFileBase fileUploaded)
         {
