@@ -52,7 +52,7 @@ namespace PES.Controllers
                     try
                     {
                         // Load file into database
-                        result = await _userService.LoadUsersFromXLSFile(fullPath);
+                        //result = await _userService.LoadUsersFromXLSFile(fullPath);
                     }
                     finally
                     {
@@ -90,58 +90,58 @@ namespace PES.Controllers
 
             #region Load XLS file with EPPlus
             //Validate path file 
-            if (!String.IsNullOrEmpty(pathFileString))
-            {
-                FileInfo file;
+            //if (!String.IsNullOrEmpty(pathFileString))
+            //{
+            //    FileInfo file;
 
-                try
-                {
-                    //Creates a new file
-                    file = new FileInfo(pathFileString);
+            //    try
+            //    {
+            //        //Creates a new file
+            //        file = new FileInfo(pathFileString);
 
-                    //Excel file valid extensions
-                    var validExtensions = new string[] { ".xls", ".xlsx" };
+            //        //Excel file valid extensions
+            //        var validExtensions = new string[] { ".xls", ".xlsx" };
 
-                    //Validate extesion of file selected
-                    if (!validExtensions.Contains(file.Extension))
-                    {
-                        throw new System.IO.FileFormatException("Excel file not found in specified path");
-                    }
-                }
-                catch (Exception ex)
-                {
+            //        //Validate extesion of file selected
+            //        if (!validExtensions.Contains(file.Extension))
+            //        {
+            //            throw new System.IO.FileFormatException("Excel file not found in specified path");
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
 
-                    throw;
-                }
+            //        throw;
+            //    }
 
-                // Open and read the XlSX file.
-                ExcelPackage package = null;
-                try
-                {
-                    package = new ExcelPackage(file);
-                }
-                catch (System.IO.FileFormatException ex)
-                {
-                    throw new System.IO.FileFormatException("Unable to read excel file");
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+            //    // Open and read the XlSX file.
+            //    ExcelPackage package = null;
+            //    try
+            //    {
+            //        package = new ExcelPackage(file);
+            //    }
+            //    catch (System.IO.FileFormatException ex)
+            //    {
+            //        throw new System.IO.FileFormatException("Unable to read excel file");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw;
+            //    }
 
-                using (package)
-                {
-                    // Get the work book in the file
-                    ExcelWorkbook workBook = package.Workbook;
+            //    using (package)
+            //    {
+            //        // Get the work book in the file
+            //        ExcelWorkbook workBook = package.Workbook;
 
-                    //If there is a workbook
-                    if (workBook != null && workBook.Worksheets.Count > 0)
-                    {
-                        // Get the first worksheet
-                        ExcelWorksheet sheet = workBook.Worksheets.First();
-                    }
-                }
-            }
+            //        //If there is a workbook
+            //        if (workBook != null && workBook.Worksheets.Count > 0)
+            //        {
+            //            // Get the first worksheet
+            //            ExcelWorksheet sheet = workBook.Worksheets.First();
+            //        }
+            //    }
+            //}
             #endregion
 
             return false;
