@@ -172,6 +172,7 @@
     <Content Include="Views\PerformanceEvaluation\SearchInformation.cshtml" />
     <Content Include="Views\PerformanceEvaluation\Login.cshtml" />
     <Content Include="Views\PerformanceEvaluation\ChoosePeriod.cshtml" />
+    <Content Include="Views\PerformanceEvaluation\SearchInfoRank.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

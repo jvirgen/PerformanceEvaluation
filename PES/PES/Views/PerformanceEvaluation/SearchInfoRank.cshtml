@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Search Information";
+}
+<p class="text-right">
+    <a href="@Url.Action("Login", "PerformanceEvaluation")">Logout</a>
+</p>
+<div>
+    <h2 class="text-center col-md-12">Performance Evaluation System</h2>
+</div>
+
+<div>
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" name="SearchName" placeholder="Search Name" />
+        </div>
+        <input type="button" class="btn btn-default" value="Search" />
+        <br />
+        <br />
+        <div>
+            <table border="1" width="100" class="table table-striped">
+                <tr>
+                    <th class="col-lg-6" id="Header_Employee">Employee</th>
+                    <th class="col-lg-3" id="Header_ScoreRank">Score</th>
+                    <th class="col-lg-3" id="Header_Ranking">Ranking</th>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td></td>
+                    <td>Writable field</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td></td>
+                    <td>Writable field</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td></td>
+                    <td>Writable field</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td></td>
+                    <td>Writable field</td>
+                </tr>
+            </table>
+        </div>
+        <input type="button" class="btn btn-default" name="UpdateRanking" value="Update" />
+    </form>
+</div>

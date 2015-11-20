@@ -40,6 +40,12 @@ namespace PES.Controllers
             return View();
         }
 
+        // GET: PerformanceEvaluation/SearchInfoRank
+        public ActionResult SearchInfoRank()
+        {
+            return View();
+        }
+
         public ActionResult LoadPerformanceEvaluationFile(HttpPostedFileBase fileUploaded)
         {
             string errorMessage = "";
