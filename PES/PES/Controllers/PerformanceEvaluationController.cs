@@ -34,6 +34,24 @@ namespace PES.Controllers
             return View();
         }
 
+        // GET: PerformanceEvaluation/ChoosePeriod
+        public ActionResult ChoosePeriod()
+        {
+            return View();
+        }
+
+        // GET: PerformanceEvaluation/SearchInfoRank
+        public ActionResult SearchInfoRank()
+        {
+            return View();
+        }
+
+        //GET: PerformanceEvaluation/PEVisualization
+        public ActionResult PEVisualization()
+        {
+            return View();
+        }
+
         public ActionResult LoadPerformanceEvaluationFile(HttpPostedFileBase fileUploaded)
         {
             string errorMessage = "";
