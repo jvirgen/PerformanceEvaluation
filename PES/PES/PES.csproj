@@ -175,6 +175,7 @@
     <Content Include="Views\PerformanceEvaluation\UploadFile.cshtml" />
     <Content Include="Views\PerformanceEvaluation\SearchInformation.cshtml" />
     <Content Include="Views\PerformanceEvaluation\Login.cshtml" />
+    <Content Include="Views\PerformanceEvaluation\PEVisualization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
