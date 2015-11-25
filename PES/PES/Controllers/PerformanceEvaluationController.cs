@@ -46,6 +46,12 @@ namespace PES.Controllers
             return View();
         }
 
+        //GET: PerformanceEvaluation/PEVisualization
+        public ActionResult PEVisualization()
+        {
+            return View();
+        }
+
         public ActionResult LoadPerformanceEvaluationFile(HttpPostedFileBase fileUploaded)
         {
             string errorMessage = "";
