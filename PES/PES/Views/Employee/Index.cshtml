@@ -11,76 +11,76 @@
 </p>
 <table class="table">
     <tr>
-        @*<th>
+        <th>
             First Name
-        </th>*@
+        </th>
         <th>
             Last Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Customer)
+            Customer
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Position)
+            Position
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProfileId)
+            Id Profile
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ManagerId)
+            Id Manager
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HireDate)
+            Hire Date
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Ranking)
+            Ranking
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndDate)
+            End Date
         </th>
         <th></th>
     </tr>
 
 @foreach (var employee in Model) {
     <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>*@
+        <td>
+            @employee.FirstName
+        </td>
         <td>
             @employee.LastName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @employee.Email
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Customer)
+            @employee.Customer
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Position)
+            @employee.Position
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProfileId)
+            @employee.ProfileId
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ManagerId)
+            @employee.ManagerId
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.HireDate)
+            @employee.HireDate
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Ranking)
+            @employee.Ranking
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
+            @employee.EndDate
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
-        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=employee.EmployeeId }) |
+            @Html.ActionLink("Details", "Details", new { id=employee.EmployeeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=employee.EmployeeId })
+        </td>*@
     </tr>
 }
 

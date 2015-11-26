@@ -13,20 +13,27 @@ namespace PES.Controllers
     {
         // GET: Employee
         public ActionResult Index()
-        {
-            string EmployeeName = "";
-
+        {   
             // Connect to the database
             OracleConnection Connection = new OracleConnection();
             Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
             Connection.Open();
 
             // Read data
-            string query = "SELECT ID_EMPLOYEE, " +
+            string Query = "SELECT ID_EMPLOYEE, " +
                                   "FIRST_NAME," +
+                                  "LAST_NAME," +
+                                  "EMAIL," +
+                                  "CUSTOMER," +
+                                  "POSITION," +
+                                  "ID_PROFILE," +
+                                  "ID_MANAGER," +
+                                  "HIRE_DATE," +
+                                  "RANKING," +
+                                  "END_DATE FROM PES.EMPLOYEE";
 
 
-            OracleCommand Comand = new OracleCommand("SELECT * FROM PES.EMPLOYEE", Connection);
+            OracleCommand Comand = new OracleCommand(Query, Connection);
             OracleDataReader Read = Comand.ExecuteReader();
 
             List<Employee> employees = new List<Employee>();
@@ -46,7 +53,17 @@ namespace PES.Controllers
                 employee.ManagerId = Convert.ToInt32(Read["iD_MANAGER"]);
                 employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                 employee.Ranking = Convert.ToInt32(Read["RANKING"]);
-                employee.EndDate = null;
+                string endDate = Convert.ToString(Read["END_DATE"]);
+
+                if (!string.IsNullOrEmpty(endDate))
+                {
+                    employee.EndDate = Convert.ToDateTime(endDate);
+                }
+                else 
+                {
+                    employee.EndDate = null;
+                }
+                
                 // ---
                 
       
