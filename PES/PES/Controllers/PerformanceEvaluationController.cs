@@ -13,7 +13,31 @@ namespace PES.Controllers
         // GET: PerformanceEvaluation
         public ActionResult Index()
         {
+            List<PES.Models.PEs> performanceEvaluations = new List<Models.PEs>();
+
+            // Get performance evaluation
+            string queryPEs;
+            //Whille()
+            // 
+
+            foreach(var pe in performanceEvaluations)
+            {
+                // Get comments 
+                string queryComments;
+                
+                // Get employee
+                string query = "select * from Employee where Employee_id =  " + pe.EmployeeId;
+                PES.Models.Employee employee;
+                employee = new PES.Models.Employee();
+                //employee; 
+                // Get 
+            }
+
+            
+
             return View();
+
+
         }
 
         // GET: PerformanceEvaluation/UploadFile
