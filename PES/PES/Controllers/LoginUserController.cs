@@ -20,7 +20,9 @@ namespace PES.Controllers
         {
             if (user.Authentication(user.UserName, user.Password))
             {
+                if(Convert.ToInt32(user.UserProfile)==1)
                 return RedirectToAction("Index", "PerformanceEvaluation");
+
             }
             else
             {

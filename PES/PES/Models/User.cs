@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Exchange.WebServices.Data;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Microsoft.Exchange.WebServices.Data;
 
 namespace PES.Models
 {
@@ -33,5 +35,23 @@ namespace PES.Models
             return false;
 
         }
+
+        public String UserProfile(string username)
+        {
+            System.Web.HttpContext.Current.Session["Name"] = username;
+            OracleConnection Connection = new OracleConnection();
+            Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
+            Connection.Open();
+            string Query = "SELECT ID_PROFILE FROM PES.EMPLOYEE WHERE EMAIL="+"'"+username+"'";
+            OracleCommand Comand = new OracleCommand(Query, Connection);
+            OracleDataReader Read = Comand.ExecuteReader();
+            while (Read.Read())
+            {
+                System.Web.HttpContext.Current.Session["Profile"]= Read["ID_PROFILE"];
+            }
+
+            Connection.Close();
+            return "hola";
+       }
     }
 }
