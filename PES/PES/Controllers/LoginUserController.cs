@@ -8,11 +8,6 @@ namespace PES.Controllers
 {
     public class LoginUserController : Controller
     {
-        // GET: LoginUser
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
 
         [HttpGet]
         public ActionResult Login()

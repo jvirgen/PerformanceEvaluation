@@ -9,13 +9,7 @@ namespace PES.Models
 {
     public class User
     {
-        [Required]
-        [Display (Name= "User Name")]
         public string UserName { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name= "Password")]
         public string Password { get; set; }
 
         public bool Authentication(string username, string pass)
@@ -28,6 +22,7 @@ namespace PES.Models
                 ItemView view = new ItemView(1);
                 if (service.FindItems(WellKnownFolderName.Inbox, view).TotalCount >= 0)
                 {
+
                     return true;
                 }
             }
