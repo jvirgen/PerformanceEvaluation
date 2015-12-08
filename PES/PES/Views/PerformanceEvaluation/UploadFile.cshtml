@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = "Upload File";
 }
-<script src="~/Scripts/FileValidation.js"></script>
+<!--<script src="~/Scripts/FileValidation.js"></script>-->
 <hr />
 <div class="jumbotron">
     <div class="row text-center">
         <div class="col-md-12">
             <h2>Performance Evaluation System</h2>
             <h4>Upload File</h4>
+
         </div>
         <br />
     </div>
@@ -20,7 +21,7 @@
                 <div class="form-group">
                     @Html.Label("File to upload", new { @class = "col-md-4 control-label" })
                     <div class="col-md-8">
-                        <input type="file" id="fileUploaded" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required  />
+                        <input type="file" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required  />
                     </div>
                 </div>
            </div>
