@@ -12,9 +12,9 @@ namespace PES.Models
     public class User
     {
         //Get UserName and Password 
-        public string UserName { get; set; }
+        public string UserEmail { get; set; }
         public string Password { get; set; }
-        public string Profile;
+       // public string Profile;
 
         //Authentication Office 365
         public bool Authentication(string username, string pass)
@@ -40,12 +40,12 @@ namespace PES.Models
         }
 
         //Get ID_Profile from the DB 
-        public string UserProfile(string UserName)
+        public string UserProfile(string UserEmail)
         {
             OracleConnection Connection = new OracleConnection();
             Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
             Connection.Open();
-            string Query = "SELECT ID_PROFILE FROM PES.EMPLOYEE WHERE EMAIL="+"'"+UserName+"'";
+            string Query = "SELECT ID_PROFILE FROM PES.EMPLOYEE WHERE EMAIL="+"'"+UserEmail+"'";
             OracleCommand Comand = new OracleCommand(Query, Connection);
             OracleDataReader Read = Comand.ExecuteReader();
            
@@ -65,6 +65,26 @@ namespace PES.Models
             Resource = 1,
             Manager = 2,
             Director = 3
+        }
+
+        //Get User Name to show in the Resource view 
+        public string UserName(string UserEmail)
+        {
+            OracleConnection Connection = new OracleConnection();
+            Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
+            Connection.Open();
+            string Query = "SELECT FIRST_NAME FROM PES.EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
+            OracleCommand Comand = new OracleCommand(Query, Connection);
+            OracleDataReader Read = Comand.ExecuteReader();
+
+            while (Read.Read())
+            {
+                Name = Convert.ToString(Read["FIRST_NAME"]);
+            }
+
+            Connection.Close();
+
+            return Name;
         }
     }
 }
