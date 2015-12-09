@@ -61,7 +61,7 @@ namespace PES.Controllers
                 }
                 else 
                 {
-                    employee.EndDate = null;
+                  //  employee.EndDate = null;
                 }
                 
                 // ---

@@ -14,7 +14,7 @@ namespace PES.Models
         //Get UserName and Password 
         public string UserEmail { get; set; }
         public string Password { get; set; }
-       // public string Profile;
+        public string Profile, Name;
 
         //Authentication Office 365
         public bool Authentication(string username, string pass)

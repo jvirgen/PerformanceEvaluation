@@ -20,7 +20,7 @@ namespace PES.Controllers
         public ActionResult Login(User user)
         {
             //Check if the Email and Password exist in Office 356
-            if (user.Authentication(user.UserName, user.Password))
+            if (user.Authentication(user.UserEmail, user.Password))
             {
                 // Get profile
                 PES.Models.User.ProfileUser userProfile = (PES.Models.User.ProfileUser)int.Parse((SessionProfile(user)));
@@ -49,7 +49,7 @@ namespace PES.Controllers
         //Get session variables Profile
         public string SessionProfile (User user)
         {
-            Session["UserProfile"] = user.UserProfile(user.UserName);
+            Session["UserProfile"] = user.UserProfile(user.UserEmail);
             string SessionProfile = (string)Session["UserProfile"];
             return SessionProfile;
         }
@@ -57,7 +57,7 @@ namespace PES.Controllers
         //Get session variable Email
         public string SessionEmail(User user)
         {
-            Session["UserEmail"] = user.UserName;
+            Session["UserEmail"] = user.UserEmail;
             string SessionEmail = (string)Session["UserEmail"];
             return SessionEmail;
         }
