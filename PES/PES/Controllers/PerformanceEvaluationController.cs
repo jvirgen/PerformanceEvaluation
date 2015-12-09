@@ -126,7 +126,7 @@ namespace PES.Controllers
                     PESc.nine.ScoreEmployee = excelSheet.Cells[6,35];
                     PESc.ten.ScoreEmployee = excelSheet.Cells[6, 44];
                     PESc.eleven.ScoreEmployee = excelSheet.Cells[6, 45];
-                    PESc.twelve..ScoreEmployee = excelSheet.Cells[6, 46];
+                    PESc.twelve.ScoreEmployee = excelSheet.Cells[6, 46];
                     PESc.thirteen.ScoreEmployee = excelSheet.Cells[6, 47];
                     PESc.fourteen.ScoreEmployee = excelSheet.Cells[6, 48];
                     PESc.fifteen.ScoreEmployee = excelSheet.Cells[6, 49];
@@ -161,7 +161,7 @@ namespace PES.Controllers
                     PESc.eighteen.ScoreEvaluator = excelSheet.Cells[7, 55];
                     PESc.nineteen.ScoreEvaluator = excelSheet.Cells[7, 56];
                     PESc.twentyone.ScoreEvaluator = excelSheet.Cells[7, 61];
-                    PESc.twentytwo.ScoreEvaluator = excelSheet.Cells[7, 62,];
+                    PESc.twentytwo.ScoreEvaluator = excelSheet.Cells[7, 62];
                     PESc.twentyfour.ScoreEvaluator = excelSheet.Cells[7, 64];
                     PESc.punctuality.ScoreEvaluator = excelSheet.Cells[7, 68];
                     PESc.policies.ScoreEvaluator = excelSheet.Cells[7, 69];
@@ -187,7 +187,7 @@ namespace PES.Controllers
                     PESc.eighteen.Comments = excelSheet.Cells[8, 55];
                     PESc.nineteen.Comments = excelSheet.Cells[8, 56];
                     PESc.twentyone.Comments = excelSheet.Cells[8, 61];
-                    PESc.twentytwo.Comments = excelSheet.Cells[8, 62,];
+                    PESc.twentytwo.Comments = excelSheet.Cells[8, 62];
                     PESc.twentyfour.Comments = excelSheet.Cells[8, 64];
                     PESc.punctuality.Comments = excelSheet.Cells[8, 68];
                     PESc.policies.Comments = excelSheet.Cells[8, 69];
@@ -213,7 +213,7 @@ namespace PES.Controllers
                     PESc.eighteen.Calculation = excelSheet.Cells[9, 55];
                     PESc.nineteen.Calculation = excelSheet.Cells[9, 56];
                     PESc.twentyone.Calculation = excelSheet.Cells[9, 61];
-                    PESc.twentytwo.Calculation = excelSheet.Cells[9, 62,];
+                    PESc.twentytwo.Calculation = excelSheet.Cells[9, 62];
                     PESc.twentyfour.Calculation = excelSheet.Cells[9, 64];
                     PESc.punctuality.Calculation = excelSheet.Cells[9, 68];
                     PESc.policies.Calculation = excelSheet.Cells[9, 69];
