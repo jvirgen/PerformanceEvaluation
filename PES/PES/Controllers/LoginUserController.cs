@@ -32,18 +32,24 @@ namespace PES.Controllers
                     return RedirectToAction("ChoosePeriod", "PerformanceEvaluation");
                 }
                 //Check if the user is a Manager or Director 
-                else if (userProfile == PES.Models.User.ProfileUser.Manager || userProfile == PES.Models.User.ProfileUser.Manager)
+                else if (userProfile == PES.Models.User.ProfileUser.Manager || userProfile == PES.Models.User.ProfileUser.Director)
                 {
                     //Returns a Manager's view
                     return RedirectToAction("Index", "PerformanceEvaluation");
                 }
+                else
+                {
+                    // Return to the login screen if no profile
+                    // Message: You are not allowed
+                    return RedirectToAction("Login", "LoginUser");
+                }
             }
             else
             {
-                //Return the login view if the user isn't valid 
+                // Return the login view if the user isn't valid 
+                // Message: User or password are not valid
                 return RedirectToAction("Login", "LoginUser");
             }
-            return RedirectToAction("Login", "LoginUser");
         }
 
         //Get session variables Profile
