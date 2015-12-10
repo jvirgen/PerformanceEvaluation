@@ -45,13 +45,20 @@ namespace PES.Models
             OracleConnection Connection = new OracleConnection();
             Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
             Connection.Open();
-            string Query = "SELECT ID_PROFILE FROM PES.EMPLOYEE WHERE EMAIL="+"'"+UserEmail+"'";
-            OracleCommand Comand = new OracleCommand(Query, Connection);
+            string QueryProfile = "SELECT ID_PROFILE FROM PES.EMPLOYEE WHERE EMAIL="+"'"+UserEmail+"'";
+            string QueryName = "SELECT FIRST_NAME FROM PES.EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
+            OracleCommand Comand = new OracleCommand(QueryProfile, Connection);
             OracleDataReader Read = Comand.ExecuteReader();
            
             while (Read.Read())
             {
                 Profile = Convert.ToString(Read["ID_PROFILE"]); 
+            }
+            Comand = new OracleCommand(QueryName, Connection);
+            Read = Comand.ExecuteReader();
+            while (Read.Read())
+            {
+                Name = Convert.ToString(Read["FIRST_NAME"]);
             }
             
             Connection.Close();
@@ -70,20 +77,6 @@ namespace PES.Models
         //Get User Name to show in the Resource view 
         public string UserName(string UserEmail)
         {
-            OracleConnection Connection = new OracleConnection();
-            Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
-            Connection.Open();
-            string Query = "SELECT FIRST_NAME FROM PES.EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
-            OracleCommand Comand = new OracleCommand(Query, Connection);
-            OracleDataReader Read = Comand.ExecuteReader();
-
-            while (Read.Read())
-            {
-                Name = Convert.ToString(Read["FIRST_NAME"]);
-            }
-
-            Connection.Close();
-
             return Name;
         }
     }

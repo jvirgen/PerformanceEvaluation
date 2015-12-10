@@ -50,6 +50,7 @@ namespace PES.Controllers
         public string SessionProfile (User user)
         {
             Session["UserProfile"] = user.UserProfile(user.UserEmail);
+            Session["UserName"] = user.UserName(user.UserEmail);
             string SessionProfile = (string)Session["UserProfile"];
             return SessionProfile;
         }
@@ -61,5 +62,13 @@ namespace PES.Controllers
             string SessionEmail = (string)Session["UserEmail"];
             return SessionEmail;
         }
+
+        //Get session variable Name
+        //public string SessionName(User user)
+        //{
+        //    Session["UserName"] = user.UserName(user.UserEmail);
+        //    string SessionName = (string)Session["UserName"];
+        //    return SessionName;
+        //}
     }
 }
