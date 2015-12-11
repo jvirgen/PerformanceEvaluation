@@ -14,7 +14,7 @@ namespace PES.DBContext
         }
         public string UserId
         {
-            get { return "systen"; }
+            get { return "system"; }
         }
         public string Password
         {
