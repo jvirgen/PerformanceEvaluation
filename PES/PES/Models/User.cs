@@ -45,8 +45,8 @@ namespace PES.Models
             OracleConnection Connection = new OracleConnection();
             Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
             Connection.Open();
-            string QueryProfile = "SELECT ID_PROFILE FROM PES.EMPLOYEE WHERE EMAIL="+"'"+UserEmail+"'";
-            string QueryName = "SELECT FIRST_NAME FROM PES.EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
+            string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL="+"'"+UserEmail+"'";
+            string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
             OracleCommand Comand = new OracleCommand(QueryProfile, Connection);
             OracleDataReader Read = Comand.ExecuteReader();
            

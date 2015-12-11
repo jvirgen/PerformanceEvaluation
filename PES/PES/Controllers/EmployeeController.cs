@@ -11,49 +11,7 @@ namespace PES.Controllers
 {
     public class EmployeeController : Controller
     {
-        public bool InsertEmployee(Employee employee) 
-        {
-            bool status = false;
-           
-            // Connect to the DB 
-            OracleConnection Connection = new OracleConnection();
-            Connection.ConnectionString = "data source=localhost;user id=system;password=4colima";
-            Connection.Open();
-            
-
-            // insert
-            try
-            {
-                string InserQuery = "INSERT INTO PES.EMPLOYEE (FIRST_NAME," +
-                                                           "LAST_NAME," +
-                                                           "EMAIL," +
-                                                           "CUSTOMER," +
-                                                           "POSITION," +
-                                                           "ID_MANAGER," +
-                                                           "HIRE_DATE," +
-                                                           "RANKING," +
-                                                           "END_DATE)" +
-                                 " VALUES (" + employee.FirstName + "," +
-                                           employee.LastName + "," +
-                                           employee.Email + "," +
-                                           employee.Customer + "," +
-                                           employee.Position + "," +
-                                           employee.ManagerId + "," +
-                                           employee.HireDate + "," +
-                                           employee.Ranking + "," +
-                                           employee.EndDate + ")";
-                status = true;
-            }
-            catch
-            {
-                status = false;    
-            }
-                     
-            // Close connection
-            Connection.Close();
-            
-            return status;
-        }
+        
 
         // GET: Employee
         public ActionResult Index()
@@ -74,7 +32,7 @@ namespace PES.Controllers
                                   "ID_MANAGER," +
                                   "HIRE_DATE," +
                                   "RANKING," +
-                                  "END_DATE FROM PES.EMPLOYEE";
+                                  "END_DATE FROM EMPLOYEE";
 
 
             OracleCommand Comand = new OracleCommand(Query, Connection);
