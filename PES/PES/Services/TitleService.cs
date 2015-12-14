@@ -8,23 +8,21 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace PES.Services
 {
-    public class DescriptionService
+    public class TitleService
     {
         private PESDBContext dbContext;
 
 
-        public bool InsertDescription(Description description)
+        public bool InsertTitle(Title title)
         {
             bool status = false;
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
-                    string InsertDescription = "INSERT INTO DESCRIPTION (DESCRIPTION," +
-                                                                 "ID_SUBTITLE)" +
-                                            "VALUES (" + description.DescriptionText + "," +
-                                                       description.SubtitleId + ")";
-                    OracleCommand Command = new OracleCommand(InsertDescription, db);
+                    string InsertTitle = "INSERT INTO TITLE (TITLE)" +
+                                            "VALUES (" + title.Name + ")";
+                    OracleCommand Command = new OracleCommand(InsertTitle, db);
                     Command.ExecuteNonQuery();
 
                     status = true;
