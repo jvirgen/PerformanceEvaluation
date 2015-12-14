@@ -25,7 +25,7 @@ namespace PES.Controllers
             if (user.Authentication(user.UserEmail, user.Password))
             {
                 // Get profile
-                EmployeeService.ProfileUser userProfile = (PES.Services.EmployeeService.ProfileUser)int.Parse(Employee.UserProfile(user.UserEmail));
+                EmployeeService.ProfileUser userProfile = (PES.Services.EmployeeService.ProfileUser)int.Parse(Employee.GetUserProfile(user.UserEmail));
 
                 //Store the Resource profile in a variable session
                 Session["UserProfile"] = (int)userProfile;

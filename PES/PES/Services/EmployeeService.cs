@@ -114,6 +114,7 @@ namespace PES.Services
             return employees;
         }
 
+        // Insert a employee data in the DB
         public bool InsertEmployee(Employee employee)
         {
             bool status = false;
@@ -158,7 +159,7 @@ namespace PES.Services
 
 
         //Get ID_Profile from the DB 
-        public string UserProfile(string UserEmail)
+        public string GetUserProfile(string UserEmail)
         {
             try
             {
