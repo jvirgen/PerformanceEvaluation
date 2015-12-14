@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PES.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,10 +40,30 @@ namespace PES.Controllers
 
 
         }
+
+        public PESComplete ReadPerformanceFile(HttpPostedFileBase fileUploaded) 
+        {
+            PESComplete PESc = new Models.PESComplete();
+
+            return PESc;
+        } 
         
         [HttpPost]
         public ActionResult LoadPEFile(HttpPostedFileBase fileUploaded)
         {
+            string errorMessage = "";
+            
+            PESComplete file = ReadPerformanceFile(fileUploaded);
+            if (file != null)
+            {
+                // Load file into db
+                
+            }
+            else 
+            {
+                errorMessage = "File was not read";
+            }
+
             if (fileUploaded == null || fileUploaded.ContentLength == 0)
             {
                 //ViewBag.Error = "Please Select  a excel file<br>";
@@ -61,8 +82,7 @@ namespace PES.Controllers
                     Excel.Application excel = new Excel.Application();
                     Excel.Workbook wb = excel.Workbooks.Open(path);
                     Excel.Worksheet excelSheet = wb.ActiveSheet;
-                    PES.Models.PESComplete PESc = new Models.PESComplete();
-
+                    PESComplete PESc = new Models.PESComplete();
                     PESc.pes.Total = excelSheet.Cells[9, 6];
 
                     PESc.empleado.FirstName = excelSheet.Cells[3, 3];

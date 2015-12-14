@@ -8,13 +8,13 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace PES.Services
 {
-    public class EmployeeService
+    public class CommentService
     {
         private PESDBContext dbContext;
 
-        public Employee GetById(int id)
+        public Comment GetById(int id)
         {
-            Employee employee = null;
+            Comment comment = null;
             using (OracleConnection db = dbContext.GetDBConnection())
             {
                 db.Open();
@@ -22,18 +22,7 @@ namespace PES.Services
 
             }
 
-            return employee;
-        }
-
-        public List<Employee> GetAll()
-        {
-            List<Employee> employees = null;
-            using (OracleConnection db = dbContext.GetDBConnection())
-            {
-
-            }
-
-            return employees;
+            return comment;
         }
     }
 }

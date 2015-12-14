@@ -16,7 +16,7 @@ namespace PES
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "PerformanceEvaluation", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "LoginUser", action = "Login", id = UrlParameter.Optional }
             );
         }
     }
