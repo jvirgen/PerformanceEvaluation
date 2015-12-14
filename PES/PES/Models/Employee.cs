@@ -63,7 +63,7 @@ namespace PES.Models
         /// <summary>
         /// End Date 
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
 
         /// <summary>
