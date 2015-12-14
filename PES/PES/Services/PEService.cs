@@ -17,9 +17,9 @@ namespace PES.Services
         {
             bool status = false;
 
-            using(OracleConnection db= dbContext.GetDBConnection())
+            try
             {
-                try
+                using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     string InsertQuery = "INSERT INTO PE (EVALUATION_PERIOD," +
                                           "ID_EMPLOYEE," +
@@ -35,11 +35,12 @@ namespace PES.Services
                     Command.ExecuteNonQuery();
                     status = true;
                 }
-                catch
-                {
-                    status = false;
-                }
             }
+            catch
+            {
+                status = false;
+            }
+            
             return status;
         }
     }
