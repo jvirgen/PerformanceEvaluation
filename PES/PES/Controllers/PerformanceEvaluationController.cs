@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Excel = Microsoft.Office.Interop.Excel;
+using PES.Services;
 
 namespace PES.Controllers
 {
@@ -83,6 +84,7 @@ namespace PES.Controllers
                     Excel.Workbook wb = excel.Workbooks.Open(path);
                     Excel.Worksheet excelSheet = wb.ActiveSheet;
                     PESComplete PESc = new Models.PESComplete();
+                    EmployeeService employeeservice = new EmployeeService();
                     PESc.pes.Total = excelSheet.Cells[9, 6];
 
                     PESc.empleado.FirstName = excelSheet.Cells[3, 3];
@@ -90,6 +92,7 @@ namespace PES.Controllers
                     PESc.empleado.Position = excelSheet.Cells[3, 4];
                     PESc.empleado.Customer = excelSheet.Cells[3, 5];
                     PESc.empleado.Project = excelSheet.Cells[3, 6];
+                    employeeservice.InsertEmployee(PESc.empleado);
 
                     PESc.title1.Name = excelSheet.Cells[2, 19];
                     PESc.title2.Name = excelSheet.Cells[2, 39];

@@ -14,7 +14,7 @@ namespace PES.Services
         public string Profile, Name;
 
         //Get ONE employee By Email
-        public Employee GetByEmail(string Emial)
+        public Employee GetByEmail(string Email)
         {
             Employee employee = null;
             using (OracleConnection db = dbContext.GetDBConnection())
@@ -130,19 +130,19 @@ namespace PES.Services
                                                                "EMAIL," +
                                                                "CUSTOMER," +
                                                                "POSITION," +
-                                                               "ID_MANAGER," +
-                                                               "HIRE_DATE," +
-                                                               "RANKING," +
-                                                               "END_DATE)" +
+                                                               "ID_MANAGER)" +
+                        //"HIRE_DATE," +
+                        //"RANKING," +
+                        //"END_DATE)" +
                                      " VALUES (" + employee.FirstName + "," +
                                                employee.LastName + "," +
                                                employee.Email + "," +
                                                employee.Customer + "," +
                                                employee.Position + "," +
-                                               employee.ManagerId + "," +
-                                               employee.HireDate + "," +
-                                               employee.Ranking + "," +
-                                               employee.EndDate + ")";
+                                               employee.ManagerId + ")"; //+
+                                               //employee.HireDate + "," +
+                                               //employee.Ranking + "," +
+                                               //employee.EndDate + ")";
 
                     OracleCommand Comand = new OracleCommand(InsertQuery, db);
                     Comand.ExecuteNonQuery();
