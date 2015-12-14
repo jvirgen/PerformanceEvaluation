@@ -67,7 +67,7 @@ namespace PES.Models
         //public string EndDate { get; set; }
 
         /// <summary>
-        /// End Date 
+        /// Employee project 
         /// </summary>
         public string Project { get; set; }
 

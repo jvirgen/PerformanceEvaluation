@@ -14,7 +14,7 @@ namespace PES.Services
         public string Profile, Name;
 
         //Get ONE employee By Email
-        public Employee GetByEmail(string Emial)
+        public Employee GetByEmail(string Email)
         {
             Employee employee = null;
             using (OracleConnection db = dbContext.GetDBConnection())
@@ -120,41 +120,40 @@ namespace PES.Services
             bool status = false;
 
             // Connect to the DB 
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
                 // insert
                 try
                 {
-                    using (OracleConnection db = dbContext.GetDBConnection())
-                    {
-                        string InsertQuery = "INSERT INTO EMPLOYEE (FIRST_NAME," +
-                                                                   "LAST_NAME," +
-                                                                   "EMAIL," +
-                                                                   "CUSTOMER," +
-                                                                   "POSITION," +
-                                                                   "ID_MANAGER," +
-                                                                   "HIRE_DATE," +
-                                                                   "RANKING," +
-                                                                   "END_DATE)" +
-                                         " VALUES (" + employee.FirstName + "," +
-                                                   employee.LastName + "," +
-                                                   employee.Email + "," +
-                                                   employee.Customer + "," +
-                                                   employee.Position + "," +
-                                                   employee.ManagerId + "," +
-                                                   employee.HireDate + "," +
-                                                   employee.Ranking + "," +
-                                                   employee.EndDate + ")";
+                    string InsertQuery = "INSERT INTO EMPLOYEE (FIRST_NAME," +
+                                                               "LAST_NAME," +
+                                                               "EMAIL," +
+                                                               "CUSTOMER," +
+                                                               "POSITION," +
+                                                               "ID_MANAGER)" +
+                        //"HIRE_DATE," +
+                        //"RANKING," +
+                        //"END_DATE)" +
+                                     " VALUES (" + employee.FirstName + "," +
+                                               employee.LastName + "," +
+                                               employee.Email + "," +
+                                               employee.Customer + "," +
+                                               employee.Position + "," +
+                                               employee.ManagerId + ")"; //+
+                                               //employee.HireDate + "," +
+                                               //employee.Ranking + "," +
+                                               //employee.EndDate + ")";
 
-                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
-                        Comand.ExecuteNonQuery();
-
-                        status = true;
-                    }
+                    OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                    Comand.ExecuteNonQuery();
+                    
+                    status = true;
                 }
                 catch
                 {
                     status = false;
                 }
-            
+            }
             return status;
         }
 

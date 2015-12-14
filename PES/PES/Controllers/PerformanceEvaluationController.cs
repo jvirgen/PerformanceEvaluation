@@ -1,10 +1,12 @@
-﻿using System;
+﻿using PES.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Excel = Microsoft.Office.Interop.Excel;
+using PES.Services;
 
 namespace PES.Controllers
 {
@@ -39,10 +41,30 @@ namespace PES.Controllers
 
 
         }
+
+        public PESComplete ReadPerformanceFile(HttpPostedFileBase fileUploaded) 
+        {
+            PESComplete PESc = new Models.PESComplete();
+
+            return PESc;
+        } 
         
         [HttpPost]
         public ActionResult LoadPEFile(HttpPostedFileBase fileUploaded)
         {
+            string errorMessage = "";
+            
+            PESComplete file = ReadPerformanceFile(fileUploaded);
+            if (file != null)
+            {
+                // Load file into db
+                
+            }
+            else 
+            {
+                errorMessage = "File was not read";
+            }
+
             if (fileUploaded == null || fileUploaded.ContentLength == 0)
             {
                 //ViewBag.Error = "Please Select  a excel file<br>";
@@ -61,8 +83,8 @@ namespace PES.Controllers
                     Excel.Application excel = new Excel.Application();
                     Excel.Workbook wb = excel.Workbooks.Open(path);
                     Excel.Worksheet excelSheet = wb.ActiveSheet;
-                    PES.Models.PESComplete PESc = new Models.PESComplete();
-
+                    PESComplete PESc = new Models.PESComplete();
+                    EmployeeService employeeservice = new EmployeeService();
                     PESc.pes.Total = excelSheet.Cells[9, 6];
 
                     PESc.empleado.FirstName = excelSheet.Cells[3, 3];
@@ -70,6 +92,7 @@ namespace PES.Controllers
                     PESc.empleado.Position = excelSheet.Cells[3, 4];
                     PESc.empleado.Customer = excelSheet.Cells[3, 5];
                     PESc.empleado.Project = excelSheet.Cells[3, 6];
+                    employeeservice.InsertEmployee(PESc.empleado);
 
                     PESc.title1.Name = excelSheet.Cells[2, 19];
                     PESc.title2.Name = excelSheet.Cells[2, 39];
