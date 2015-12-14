@@ -151,8 +151,10 @@
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\DescriptionService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\LM_SkillService.cs" />
     <Compile Include="Services\PEService.cs" />
     <Compile Include="Services\ScoreService.cs" />
+    <Compile Include="Services\SubtitleService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
