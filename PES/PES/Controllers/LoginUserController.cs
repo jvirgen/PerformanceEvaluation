@@ -8,10 +8,17 @@ using PES.Services;
 
 namespace PES.Controllers
 {
+    [AllowAnonymous]
     public class LoginUserController : Controller
     {
         public string UserEmail;
-        EmployeeService Employee = new EmployeeService();
+        EmployeeService _employeeService;
+
+        public LoginUserController()
+        {
+            _employeeService = new EmployeeService();
+        }
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -21,31 +28,33 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult Login(Login user)
         {
+            var isAuthenticated = user.Authentication(user.UserEmail, user.Password);
+
             //Check if the Email and Password exist in Office 356
-            if (user.Authentication(user.UserEmail, user.Password))
+            if (isAuthenticated)
             {
-                // Get profile
-                EmployeeService.ProfileUser userProfile = (PES.Services.EmployeeService.ProfileUser)int.Parse(Employee.GetUserProfile(user.UserEmail));
+                // Get user 
+                Employee resource = _employeeService.GetByEmail(user.UserEmail);
 
                 //Store the Resource profile in a variable session
-                Session["UserProfile"] = (int)userProfile;
+                Session["UserProfile"] = (int)resource.ProfileId;
 
-                //Store the Resource name in a variable session
-                Session["UserName"] = Employee.UserName();
+                //Store the Resource user name in a variable session
+                Session["UserName"] = resource.Email;
 
                 //Deside if the user is a Resouce
-                if (userProfile == EmployeeService.ProfileUser.Resource)
+                if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                 {
                     //Return the Resource's view 
                     return RedirectToAction("ChoosePeriod", "PerformanceEvaluation");
                 }
                 //Check if the user is a Manager or Director 
-                else if (userProfile == EmployeeService.ProfileUser.Manager)
+                else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
                 {
                     //Return the Manager's view
                     return RedirectToAction("Index", "PerformanceEvaluation");
                 }
-                else if (userProfile == EmployeeService.ProfileUser.Director)
+                else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)
                 {
                     //Return the Manager's view
                     return RedirectToAction("Index", "PerformanceEvaluation");
@@ -61,7 +70,8 @@ namespace PES.Controllers
             {
                 // Return the login view if the user isn't valid 
                 // Message: User or password are not valid
-                return RedirectToAction("Login", "LoginUser");
+                TempData["Error"] = "User or password not correct. Please try again.";
+                return View("Login", user);
             }
         }
 

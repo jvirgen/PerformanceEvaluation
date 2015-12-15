@@ -10,6 +10,7 @@ using PES.Services;
 
 namespace PES.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         

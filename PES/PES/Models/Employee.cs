@@ -72,4 +72,12 @@ namespace PES.Models
         public string Project { get; set; }
 
     }
+
+    public enum ProfileUser
+    {
+        None = 0,
+        Resource = 1,
+        Manager = 2,
+        Director = 3
+    }
 }

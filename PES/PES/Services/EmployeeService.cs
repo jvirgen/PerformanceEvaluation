@@ -13,12 +13,19 @@ namespace PES.Services
         private PESDBContext dbContext;
         public string Profile, Name;
 
+        public EmployeeService()
+        {
+            dbContext = new PESDBContext();
+        }
+
         //Get ONE employee By Email
-        public Employee GetByEmail(string Email)
+        public Employee GetByEmail(string email)
         {
             Employee employee = null;
             using (OracleConnection db = dbContext.GetDBConnection())
             {
+                db.Open();
+
                 string Query = "SELECT FIRST_NAME," +
                                        "LAST_NAME," +
                                        "EMAIL," +
@@ -28,7 +35,7 @@ namespace PES.Services
                                        "HIRE_DATE," +
                                        "RANKING," +
                                        "END_DATE)" +
-                                       "FROM EMPLOYEE WHERE ID_EMPLOYEE = " + employee.Email;
+                                       "FROM EMPLOYEE WHERE ID_EMPLOYEE = " + email;
                 
                 OracleCommand Comand = new OracleCommand(Query, db);
                 OracleDataReader Read = Comand.ExecuteReader();
@@ -58,6 +65,8 @@ namespace PES.Services
                         employee.EndDate = null;
                     }
                 }
+
+                db.Close();
             }
 
             return employee;
@@ -159,14 +168,14 @@ namespace PES.Services
 
 
         //Get ID_Profile from the DB 
-        public string GetUserProfile(string UserEmail)
+        public string GetUserProfile(string userEmail)
         {
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
-                    string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
-                    string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
+                    string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
+                    string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
                     OracleCommand Comand = new OracleCommand(QueryProfile, db);
                     OracleDataReader Read = Comand.ExecuteReader();
 
@@ -196,12 +205,6 @@ namespace PES.Services
             return Name;
         }
 
-        public enum ProfileUser
-        {
-            None = 0,
-            Resource = 1,
-            Manager = 2,
-            Director = 3
-        }
+        
     }
 }
