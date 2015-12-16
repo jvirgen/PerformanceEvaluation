@@ -12,7 +12,9 @@ namespace PES.Models
     public class Login
     {
         //Get UserName and Password 
+        [Required(ErrorMessage = "The user name (email) is required")]
         public string UserEmail { get; set; }
+        [Required(ErrorMessage = "The password is required")]
         public string Password { get; set; }
         
 

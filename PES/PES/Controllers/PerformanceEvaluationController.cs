@@ -10,6 +10,7 @@ using PES.Services;
 
 namespace PES.Controllers
 {
+    [Authorize]
     public class PerformanceEvaluationController : Controller
     {
         // Declare services 
@@ -46,18 +47,54 @@ namespace PES.Controllers
             //Whille()
             // 
 
-            foreach(var pe in performanceEvaluations)
-            {
-                // Get comments 
-                string queryComments;
+            //string userId = "1";
+            //string managerId = "2";
+            //// Get user 
+
+            //Employee e;
+            //e = new Employee();
+            //e.HireDate = DateTime.Now;
+            //e.Ranking = 0;
+            
+
+            // Get manager of user 
+
+
+            // Insert employee 
+
+            Employee employee = new Employee();
+            employee.FirstName = "Victor";
+            employee.LastName = "Leon";
+            employee.Email = "victor.leon@4thsource";
+            employee.Customer = "ESI";
+            employee.Position = "developer";
+            employee.ProfileId = 1;
+            employee.ManagerId = 1;
+            employee.HireDate = DateTime.Now.Date;
+            employee.Ranking = 0;
+            employee.EndDate = DateTime.Now.Date;
+
+            EmployeeService insertemployee = new EmployeeService();
+
+            insertemployee.InsertEmployee(employee);
+
+
+
+
+
+
+            //foreach(var pe in performanceEvaluations)
+            //{
+            //    // Get comments 
+            //    string queryComments;
                 
-                // Get employee
-                string query = "select * from Employee where Employee_id =  " + pe.EmployeeId;
-                PES.Models.Employee employee;
-                employee = new PES.Models.Employee();
-                //employee; 
-                // Get 
-            }
+            //    // Get employee
+            //    string query = "select * from Employee where Employee_id =  " + pe.EmployeeId;
+            //    PES.Models.Employee employee;
+            //    employee = new PES.Models.Employee();
+            //    //employee; 
+            //    // Get 
+            //}
 
             
 

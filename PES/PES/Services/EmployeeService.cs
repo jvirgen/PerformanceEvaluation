@@ -13,12 +13,19 @@ namespace PES.Services
         private PESDBContext dbContext;
         public string Profile, Name;
 
+        public EmployeeService()
+        {
+            dbContext = new PESDBContext();
+        }
+
         //Get ONE employee By Email
-        public Employee GetByEmail(string Email)
+        public Employee GetByEmail(string email)
         {
             Employee employee = null;
             using (OracleConnection db = dbContext.GetDBConnection())
             {
+                db.Open();
+
                 string Query = "SELECT FIRST_NAME," +
                                        "LAST_NAME," +
                                        "EMAIL," +
@@ -27,8 +34,8 @@ namespace PES.Services
                                        "ID_MANAGER," +
                                        "HIRE_DATE," +
                                        "RANKING," +
-                                       "END_DATE)" +
-                                       "FROM EMPLOYEE WHERE ID_EMPLOYEE = " + employee.Email;
+                                       "END_DATE " +
+                                       "FROM EMPLOYEE WHERE EMAIL = '" + email + "'";
                 
                 OracleCommand Comand = new OracleCommand(Query, db);
                 OracleDataReader Read = Comand.ExecuteReader();
@@ -58,6 +65,8 @@ namespace PES.Services
                         employee.EndDate = null;
                     }
                 }
+
+                db.Close();
             }
 
             return employee;
@@ -70,6 +79,7 @@ namespace PES.Services
             Employee employee = null;
             using (OracleConnection db = dbContext.GetDBConnection())
             {
+                db.Open();
                 string Query = "SELECT FIRST_NAME," +
                                        "LAST_NAME," +
                                        "EMAIL," +
@@ -110,6 +120,7 @@ namespace PES.Services
                     }
                     employees.Add(employee);
                 }
+                db.Close();
             }
             return employees;
         }
@@ -122,6 +133,7 @@ namespace PES.Services
             // Connect to the DB 
             using (OracleConnection db = dbContext.GetDBConnection())
             {
+                db.Open();
                 // insert
                 try
                 {
@@ -130,43 +142,47 @@ namespace PES.Services
                                                                "EMAIL," +
                                                                "CUSTOMER," +
                                                                "POSITION," +
-                                                               "ID_MANAGER)" +
-                        //"HIRE_DATE," +
-                        //"RANKING," +
-                        //"END_DATE)" +
-                                     " VALUES (" + employee.FirstName + "," +
-                                               employee.LastName + "," +
-                                               employee.Email + "," +
-                                               employee.Customer + "," +
-                                               employee.Position + "," +
-                                               employee.ManagerId + ")"; //+
-                                               //employee.HireDate + "," +
-                                               //employee.Ranking + "," +
-                                               //employee.EndDate + ")";
+                                                               "ID_PROFILE,"+
+                                                               "ID_MANAGER," +
+                                                               "HIRE_DATE," +
+                                                               "RANKING," +
+                                                               "END_DATE)" +
+                                     " VALUES ('" + employee.FirstName + "', '" +
+                                               employee.LastName + "', '" +
+                                               employee.Email + "', '" +
+                                               employee.Customer + "', '" +
+                                               employee.Position + "', '" +
+                                               employee.ProfileId+ "', '" +
+                                               employee.ManagerId + "', '" +
+                                               employee.HireDate.ToShortDateString() + "', '" +
+                                               employee.Ranking + "', '" +
+                                               (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : null) + "')";
 
                     OracleCommand Comand = new OracleCommand(InsertQuery, db);
                     Comand.ExecuteNonQuery();
-                    
+
                     status = true;
                 }
                 catch
                 {
                     status = false;
                 }
+                db.Close();
             }
             return status;
         }
 
 
         //Get ID_Profile from the DB 
-        public string GetUserProfile(string UserEmail)
+        public string GetUserProfile(string userEmail)
         {
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
-                    string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
-                    string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + UserEmail + "'";
+                    db.Open();
+                    string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
+                    string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
                     OracleCommand Comand = new OracleCommand(QueryProfile, db);
                     OracleDataReader Read = Comand.ExecuteReader();
 
@@ -180,6 +196,7 @@ namespace PES.Services
                     {
                         Name = Convert.ToString(Read["FIRST_NAME"]);
                     }
+                    db.Close();
                 }
 
                 return Profile;
@@ -196,12 +213,6 @@ namespace PES.Services
             return Name;
         }
 
-        public enum ProfileUser
-        {
-            None = 0,
-            Resource = 1,
-            Manager = 2,
-            Director = 3
-        }
+        
     }
 }
