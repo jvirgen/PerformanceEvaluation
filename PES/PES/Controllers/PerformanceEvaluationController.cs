@@ -10,7 +10,7 @@ using PES.Services;
 
 namespace PES.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class PerformanceEvaluationController : Controller
     {
         // GET: PerformanceEvaluation
@@ -38,25 +38,28 @@ namespace PES.Controllers
 
             // Insert employee 
 
-            Employee employee = new Employee();
-            employee.FirstName = "Victor";
-            employee.LastName = "Leon";
-            employee.Email = "victor.leon@4thsource";
-            employee.Customer = "ESI";
-            employee.Position = "developer";
-            employee.ProfileId = 1;
-            employee.ManagerId = 1;
-            employee.HireDate = DateTime.Now.Date;
-            employee.Ranking = 0;
-            employee.EndDate = DateTime.Now.Date;
-
-            EmployeeService insertemployee = new EmployeeService();
-
-            insertemployee.InsertEmployee(employee);
 
 
+            /************* CHECKING THE SERVICES 
+            //Comment comment = new Comment();
+            //comment.PEId = 1;
+            //comment.TrainningEmployee = "trainning employee";
+            //comment.TrainningEvaluator = "trainning evaluator";
+            //comment.AcknowledgeEvaluator = "acknowledge evaluator";
+            //comment.CommRecommEmployee = "comment employee";
+            //comment.CommRecommEvaluator = "comment evaluator";
+            //CommentService commservice = new CommentService();
+            //commservice.InsertComment(comment);
 
-
+            //PEs pe = new PEs();
+            //pe.EvaluationPeriod = DateTime.Now;
+            //pe.EmployeeId = 1;
+            //pe.EvaluatorId = 2;
+            //pe.StatusId = 2;
+            //pe.Total = 6;
+            //PEService peservice = new PEService();
+            //peservice.InsertPE(pe);
+            ***********************************/
 
 
             //foreach(var pe in performanceEvaluations)

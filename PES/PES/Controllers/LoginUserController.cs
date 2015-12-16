@@ -17,8 +17,8 @@ namespace PES.Controllers
         public LoginUserController()
         {
             _employeeService = new EmployeeService();
-            using (PES.Controllers.PerformanceEvaluationController callemployee = new PerformanceEvaluationController())
-                callemployee.Index();
+            //using (PES.Controllers.PerformanceEvaluationController callsubtitle = new PerformanceEvaluationController())
+            //    callsubtitle.Index();
         }
 
         [HttpGet]

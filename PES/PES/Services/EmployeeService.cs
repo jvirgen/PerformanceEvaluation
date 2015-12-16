@@ -26,11 +26,13 @@ namespace PES.Services
             {
                 db.Open();
 
-                string Query = "SELECT FIRST_NAME," +
+                string Query = "SELECT ID_EMPLOYEE,"+
+                                       "FIRST_NAME," +
                                        "LAST_NAME," +
                                        "EMAIL," +
                                        "CUSTOMER," +
                                        "POSITION," +
+                                       "ID_PROFILE," +
                                        "ID_MANAGER," +
                                        "HIRE_DATE," +
                                        "RANKING," +

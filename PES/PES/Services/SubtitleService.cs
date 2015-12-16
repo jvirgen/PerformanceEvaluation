@@ -10,7 +10,7 @@ namespace PES.Services
 {
     public class SubtitleService
     {
-        private PESDBContext dbContext;
+        private PESDBContext dbContext = new PESDBContext();
 
         public bool InsertSubtitles(Subtitle subtitle)
         {
@@ -20,15 +20,17 @@ namespace PES.Services
             {
                 using(OracleConnection db = dbContext.GetDBConnection())
                 {
+                    db.Open();
                     string InsertQuery = "INSERT INTO SUBTITLE (SUBTITLE,"+
                                                                 "ID_TITLE)"+
-                                         "VALUES ("+subtitle.Name+","+
+                                         "VALUES ('"+subtitle.Name+"',"+
                                                     subtitle.TitleId+")";
 
                     OracleCommand Command = new OracleCommand(InsertQuery, db);
                     Command.ExecuteNonQuery();
 
                     status = true;
+                    db.Close();
                 }
 
             }

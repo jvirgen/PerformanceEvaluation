@@ -10,7 +10,7 @@ namespace PES.Services
 {
     public class TitleService
     {
-        private PESDBContext dbContext;
+        private PESDBContext dbContext = new PESDBContext();
 
 
         public bool InsertTitle(Title title)
@@ -20,12 +20,14 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
+                    db.Open();
                     string InsertTitle = "INSERT INTO TITLE (TITLE)" +
-                                            "VALUES (" + title.Name + ")";
+                                            "VALUES ('" + title.Name + "')";
                     OracleCommand Command = new OracleCommand(InsertTitle, db);
                     Command.ExecuteNonQuery();
 
                     status = true;
+                    db.Close();
                 }
 
             }
