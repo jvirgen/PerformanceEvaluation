@@ -3,6 +3,14 @@
     ViewBag.Title = "Upload File";
 }
 <!--<script src="~/Scripts/FileValidation.js"></script>-->
+@if (TempData["Error"] != null)
+{
+    <p class="alert alert-danger">@TempData["Error"]</p>
+}
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success">@TempData["Success"]</p>
+}
 <hr />
 <div class="jumbotron">
     <div class="row text-center">
@@ -15,7 +23,7 @@
     </div>
 
 
-        @using (Html.BeginForm("LoadPEFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
         {
             <div class="row text-center">
                 <div class="form-group">
