@@ -34,8 +34,8 @@ namespace PES.Services
                                        "ID_MANAGER," +
                                        "HIRE_DATE," +
                                        "RANKING," +
-                                       "END_DATE)" +
-                                       "FROM EMPLOYEE WHERE ID_EMPLOYEE = " + email;
+                                       "END_DATE " +
+                                       "FROM EMPLOYEE WHERE EMAIL = '" + email + "'";
                 
                 OracleCommand Comand = new OracleCommand(Query, db);
                 OracleDataReader Read = Comand.ExecuteReader();
@@ -79,6 +79,7 @@ namespace PES.Services
             Employee employee = null;
             using (OracleConnection db = dbContext.GetDBConnection())
             {
+                db.Open();
                 string Query = "SELECT FIRST_NAME," +
                                        "LAST_NAME," +
                                        "EMAIL," +
@@ -119,6 +120,7 @@ namespace PES.Services
                     }
                     employees.Add(employee);
                 }
+                db.Close();
             }
             return employees;
         }
@@ -131,6 +133,7 @@ namespace PES.Services
             // Connect to the DB 
             using (OracleConnection db = dbContext.GetDBConnection())
             {
+                db.Open();
                 // insert
                 try
                 {
@@ -139,29 +142,32 @@ namespace PES.Services
                                                                "EMAIL," +
                                                                "CUSTOMER," +
                                                                "POSITION," +
-                                                               "ID_MANAGER)" +
-                        //"HIRE_DATE," +
-                        //"RANKING," +
-                        //"END_DATE)" +
-                                     " VALUES (" + employee.FirstName + "," +
-                                               employee.LastName + "," +
-                                               employee.Email + "," +
-                                               employee.Customer + "," +
-                                               employee.Position + "," +
-                                               employee.ManagerId + ")"; //+
-                                               //employee.HireDate + "," +
-                                               //employee.Ranking + "," +
-                                               //employee.EndDate + ")";
+                                                               "ID_PROFILE,"+
+                                                               "ID_MANAGER," +
+                                                               "HIRE_DATE," +
+                                                               "RANKING," +
+                                                               "END_DATE)" +
+                                     " VALUES ('" + employee.FirstName + "', '" +
+                                               employee.LastName + "', '" +
+                                               employee.Email + "', '" +
+                                               employee.Customer + "', '" +
+                                               employee.Position + "', '" +
+                                               employee.ProfileId+ "', '" +
+                                               employee.ManagerId + "', '" +
+                                               employee.HireDate.ToShortDateString() + "', '" +
+                                               employee.Ranking + "', '" +
+                                               (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : null) + "')";
 
                     OracleCommand Comand = new OracleCommand(InsertQuery, db);
                     Comand.ExecuteNonQuery();
-                    
+
                     status = true;
                 }
                 catch
                 {
                     status = false;
                 }
+                db.Close();
             }
             return status;
         }
@@ -174,6 +180,7 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
+                    db.Open();
                     string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
                     string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
                     OracleCommand Comand = new OracleCommand(QueryProfile, db);
@@ -189,6 +196,7 @@ namespace PES.Services
                     {
                         Name = Convert.ToString(Read["FIRST_NAME"]);
                     }
+                    db.Close();
                 }
 
                 return Profile;

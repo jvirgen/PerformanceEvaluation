@@ -17,6 +17,8 @@ namespace PES.Controllers
         public LoginUserController()
         {
             _employeeService = new EmployeeService();
+            using (PES.Controllers.PerformanceEvaluationController callemployee = new PerformanceEvaluationController())
+                callemployee.Index();
         }
 
         [HttpGet]
@@ -36,34 +38,44 @@ namespace PES.Controllers
                 // Get user 
                 Employee resource = _employeeService.GetByEmail(user.UserEmail);
 
-                //Store the Resource profile in a variable session
-                Session["UserProfile"] = (int)resource.ProfileId;
+                // Validate if resource not found
+                if (resource != null)
+                {
+                    //Store the Resource profile in a variable session
+                    Session["UserProfile"] = (int)resource.ProfileId;
 
-                //Store the Resource user name in a variable session
-                Session["UserName"] = resource.Email;
+                    //Store the Resource user name in a variable session
+                    Session["UserName"] = resource.Email;
 
-                //Deside if the user is a Resouce
-                if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
-                {
-                    //Return the Resource's view 
-                    return RedirectToAction("ChoosePeriod", "PerformanceEvaluation");
+                    //Deside if the user is a Resouce
+                    if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
+                    {
+                        //Return the Resource's view 
+                        return RedirectToAction("ChoosePeriod", "PerformanceEvaluation");
+                    }
+                    //Check if the user is a Manager or Director 
+                    else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
+                    {
+                        //Return the Manager's view
+                        return RedirectToAction("Index", "PerformanceEvaluation");
+                    }
+                    else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)
+                    {
+                        //Return the Manager's view
+                        return RedirectToAction("Index", "PerformanceEvaluation");
+                    }
+                    else
+                    {
+                        // Return to the login screen if no profile
+                        // Message: You are not allowed
+                        return RedirectToAction("Login", "LoginUser");
+                    }
                 }
-                //Check if the user is a Manager or Director 
-                else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
+                else 
                 {
-                    //Return the Manager's view
-                    return RedirectToAction("Index", "PerformanceEvaluation");
-                }
-                else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)
-                {
-                    //Return the Manager's view
-                    return RedirectToAction("Index", "PerformanceEvaluation");
-                }
-                else
-                {
-                    // Return to the login screen if no profile
-                    // Message: You are not allowed
-                    return RedirectToAction("Login", "LoginUser");
+                    // resource not found
+                    TempData["Error"] = "Resource not found";
+                    return View("Login", user);
                 }
             }
             else
