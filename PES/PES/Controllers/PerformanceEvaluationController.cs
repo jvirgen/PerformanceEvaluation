@@ -10,7 +10,7 @@ using PES.Services;
 
 namespace PES.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PerformanceEvaluationController : Controller
     {
         // Declare services 
@@ -110,9 +110,9 @@ namespace PES.Controllers
             Excel.Application excel = new Excel.Application();
             Excel.Workbook wb = excel.Workbooks.Open(path);
             Excel.Worksheet excelSheet = wb.ActiveSheet;
-            PESComplete PESc = new Models.PESComplete();
+             PESComplete PESc = new PESComplete();
 
-            PESc.pes.Total = excelSheet.Cells[9, 6];
+            PESc.pes.Total = (int)excelSheet.Cells[9, 6];
 
             PESc.empleado.FirstName = excelSheet.Cells[3, 3];
             PESc.empleado.LastName = excelSheet.Cells[3, 3];
@@ -344,7 +344,7 @@ namespace PES.Controllers
             PESc.supportsUseful.CheckEvaluator = excelSheet.Cells[6, 110];
             PESc.welcomes.CheckEvaluator = excelSheet.Cells[6, 111];
             PESc.setsSpecific.CheckEvaluator = excelSheet.Cells[6, 112];
-
+            
             return PESc;
         }
 
@@ -353,6 +353,128 @@ namespace PES.Controllers
             try
             {
                 // Call services to insert
+                _peService.InsertPE(pEFile.pes);
+
+                _employeeService.InsertEmployee(pEFile.empleado);
+
+                _titleService.InsertTitle(pEFile.title1);
+                _titleService.InsertTitle(pEFile.title2);
+
+                _subtitleService.InsertSubtitles(pEFile.subtitle1);
+                _subtitleService.InsertSubtitles(pEFile.subtitle2);
+                _subtitleService.InsertSubtitles(pEFile.subtitle3);
+                _subtitleService.InsertSubtitles(pEFile.subtitle4);
+                _subtitleService.InsertSubtitles(pEFile.subtitle5);
+                _subtitleService.InsertSubtitles(pEFile.subtitle6);
+
+                _descriptionService.InsertDescription(pEFile.description1);
+                _descriptionService.InsertDescription(pEFile.description2);
+                _descriptionService.InsertDescription(pEFile.description3);
+                _descriptionService.InsertDescription(pEFile.description4);
+                _descriptionService.InsertDescription(pEFile.description5);
+                _descriptionService.InsertDescription(pEFile.description6);
+                _descriptionService.InsertDescription(pEFile.description7);
+                _descriptionService.InsertDescription(pEFile.description8);
+                _descriptionService.InsertDescription(pEFile.description9);
+                _descriptionService.InsertDescription(pEFile.description10);
+                _descriptionService.InsertDescription(pEFile.description11);
+                _descriptionService.InsertDescription(pEFile.description12);
+                _descriptionService.InsertDescription(pEFile.description13);
+                _descriptionService.InsertDescription(pEFile.description14);
+                _descriptionService.InsertDescription(pEFile.description15);
+                _descriptionService.InsertDescription(pEFile.description16);
+                _descriptionService.InsertDescription(pEFile.description17);
+                _descriptionService.InsertDescription(pEFile.description18);
+                _descriptionService.InsertDescription(pEFile.description19);
+                _descriptionService.InsertDescription(pEFile.description21);
+                _descriptionService.InsertDescription(pEFile.description22);
+                _descriptionService.InsertDescription(pEFile.description24);
+                _descriptionService.InsertDescription(pEFile.descriptionPuctuality);
+                _descriptionService.InsertDescription(pEFile.descriptionPolicies);
+                _descriptionService.InsertDescription(pEFile.descriptionValues);
+                _descriptionService.InsertDescription(pEFile.subtotalQuality);
+                _descriptionService.InsertDescription(pEFile.subtotalOpportunity);
+                _descriptionService.InsertDescription(pEFile.totalPerformance);
+                _descriptionService.InsertDescription(pEFile.subtotalSkills);
+                _descriptionService.InsertDescription(pEFile.subtotalInterpersonal);
+                _descriptionService.InsertDescription(pEFile.subtotalGrowth);
+                _descriptionService.InsertDescription(pEFile.subtotalPolicies);
+                _descriptionService.InsertDescription(pEFile.totalCompetences);
+
+                _scoreService.InsertScore(pEFile.one);
+                _scoreService.InsertScore(pEFile.two);
+                _scoreService.InsertScore(pEFile.three);
+                _scoreService.InsertScore(pEFile.four);
+                _scoreService.InsertScore(pEFile.five);
+                _scoreService.InsertScore(pEFile.six);
+                _scoreService.InsertScore(pEFile.seven);
+                _scoreService.InsertScore(pEFile.eight);
+                _scoreService.InsertScore(pEFile.nine);
+                _scoreService.InsertScore(pEFile.ten);
+                _scoreService.InsertScore(pEFile.eleven);
+                _scoreService.InsertScore(pEFile.twelve);
+                _scoreService.InsertScore(pEFile.thirteen);
+                _scoreService.InsertScore(pEFile.fourteen);
+                _scoreService.InsertScore(pEFile.fifteen);
+                _scoreService.InsertScore(pEFile.sixteen);
+                _scoreService.InsertScore(pEFile.seventeen);
+                _scoreService.InsertScore(pEFile.eighteen);
+                _scoreService.InsertScore(pEFile.nineteen);
+                _scoreService.InsertScore(pEFile.twentyone);
+                _scoreService.InsertScore(pEFile.twentytwo);
+                _scoreService.InsertScore(pEFile.twentyfour);
+                _scoreService.InsertScore(pEFile.policies);
+                _scoreService.InsertScore(pEFile.punctuality);
+                _scoreService.InsertScore(pEFile.values);
+                _scoreService.InsertScore(pEFile.scoreQuality);
+                _scoreService.InsertScore(pEFile.scoreOpportunity);
+                _scoreService.InsertScore(pEFile.scorePerformance);
+                _scoreService.InsertScore(pEFile.scoreSkills);
+                _scoreService.InsertScore(pEFile.scoreInterpersonal);
+                _scoreService.InsertScore(pEFile.scoreGrowth);
+                _scoreService.InsertScore(pEFile.scorePolicies);
+                _scoreService.InsertScore(pEFile.scoreCompetences);
+
+                _commentService.InsertComment(pEFile.comment1);
+                _commentService.InsertComment(pEFile.comment2);
+                _commentService.InsertComment(pEFile.comment3);
+                
+                _skillService.InsertSkill(pEFile.skill1);
+                _skillService.InsertSkill(pEFile.skill2);
+                _skillService.InsertSkill(pEFile.skill3);
+                _skillService.InsertSkill(pEFile.skill4);
+                _skillService.InsertSkill(pEFile.skill5);
+                _skillService.InsertSkill(pEFile.skill6);
+                _skillService.InsertSkill(pEFile.skill7);
+                _skillService.InsertSkill(pEFile.skill8);
+                _skillService.InsertSkill(pEFile.skill9);
+                _skillService.InsertSkill(pEFile.skill10);
+                _skillService.InsertSkill(pEFile.skill11);
+                _skillService.InsertSkill(pEFile.skill12);
+                _skillService.InsertSkill(pEFile.skill13);
+                _skillService.InsertSkill(pEFile.skill14);
+                _skillService.InsertSkill(pEFile.skill15);
+                _skillService.InsertSkill(pEFile.skill16);
+                _skillService.InsertSkill(pEFile.skill17);
+
+                _lm_skillService.InsertLM_Skill(pEFile.supervises);
+                _lm_skillService.InsertLM_Skill(pEFile.coordinates);
+                _lm_skillService.InsertLM_Skill(pEFile.defines);
+                _lm_skillService.InsertLM_Skill(pEFile.supports);
+                _lm_skillService.InsertLM_Skill(pEFile.keeps);
+                _lm_skillService.InsertLM_Skill(pEFile.generates);
+                _lm_skillService.InsertLM_Skill(pEFile.trains);
+                _lm_skillService.InsertLM_Skill(pEFile.supportsExperimentation);
+                _lm_skillService.InsertLM_Skill(pEFile.evaluates);
+                _lm_skillService.InsertLM_Skill(pEFile.faces);
+                _lm_skillService.InsertLM_Skill(pEFile.supportsResponsible);
+                _lm_skillService.InsertLM_Skill(pEFile.helps);
+                _lm_skillService.InsertLM_Skill(pEFile.instills);
+                _lm_skillService.InsertLM_Skill(pEFile.sets);
+                _lm_skillService.InsertLM_Skill(pEFile.supportsUseful);
+                _lm_skillService.InsertLM_Skill(pEFile.welcomes);
+                _lm_skillService.InsertLM_Skill(pEFile.setsSpecific);
+                
             }
             catch (Exception ex)
             {
@@ -363,7 +485,7 @@ namespace PES.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoadPEFile(HttpPostedFileBase fileUploaded)
+        public ActionResult UploadFile(HttpPostedFileBase fileUploaded)
         {
             string message = "";
                    
@@ -381,45 +503,57 @@ namespace PES.Controllers
                     {
                         System.IO.File.Delete(path);
                     }
-                        
+                    //Save the file in the repository   
                     fileUploaded.SaveAs(path);
 
-                    PESComplete file = ReadPerformanceFile(path);
-                    if (file != null)
+                    try
                     {
-                        // Load file into db
-                        bool fileSaved = SavePEFile(file);
+                        PESComplete file = ReadPerformanceFile(path);
+                        if (file != null)
+                        {
+                            // Load file into db
+                            bool fileSaved = SavePEFile(file);
 
-                        if (fileSaved) 
-                        {
-                            // File saved successfully
-                            message = "File saved successfully";
-                            return View("SearchInformation");
+                            if (!fileSaved)
+                            {
+                                // File not saved
+                                TempData["Error"] = "There were some problems saving the file. Please try again later.";    
+                            }
+                            else
+                            {
+                                // File saved successfully
+                                TempData["Success"] = "File saved successfully";
+                            }
+                            
                         }
-                        else 
+                        else
                         {
-                            // File not saved
-                            message = "There were some problems saving the file. Please try again later.";
-                            return View("SearchInformation");
+                            TempData["Error"] = "File was not read successfully";
+                            
                         }
                     }
-                    else
+                    finally
                     {
-                        message = "File was not read successfully";
+                        //Delete the file from the repository
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
                     }
 
-                    System.IO.File.Delete(path);
-                    
+                    return View("UploadFile");
                 }
                 else
                 {
                     //ViewBag.Error = "File type is incorrect<br>";
-                    message = "File is not a valid excel file";
+                    TempData["Error"] = "File is not a valid excel file";
+
                     return View("UploadFile");
                 }
 
             }
         }
+        
         // GET: PerformanceEvaluation/UploadFile
         public ActionResult UploadFile()
         {
