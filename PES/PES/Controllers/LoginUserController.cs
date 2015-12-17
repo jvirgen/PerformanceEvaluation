@@ -85,7 +85,7 @@ namespace PES.Controllers
             }
         }
 
-        public ActionResult Logut()
+        public ActionResult Logout()
         {
             Session.Clear();
             Session.Abandon();
