@@ -202,7 +202,6 @@
     <Content Include="Views\PerformanceEvaluation\Index.cshtml" />
     <Content Include="Views\PerformanceEvaluation\UploadFile.cshtml" />
     <Content Include="Views\PerformanceEvaluation\SearchInformation.cshtml" />
-    <Content Include="Views\PerformanceEvaluation\Login.cshtml" />
     <Content Include="Views\PerformanceEvaluation\PEVisualization.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\PerformanceEvaluation\ChoosePeriod.cshtml" />

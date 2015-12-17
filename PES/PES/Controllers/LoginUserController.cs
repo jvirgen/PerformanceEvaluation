@@ -85,29 +85,12 @@ namespace PES.Controllers
             }
         }
 
-        //Get session variables Profile
-        //public string SessionProfile (string UserEmail)
-        //{
-        //    Session["UserProfile"] = PES.Services.EmployeeService.UserProfile(UserEmail);
-        //    Session["UserName"] = UserName(UserEmail);
-        //    string SessionProfile = (string)Session["UserProfile"];
-        //    return SessionProfile;
-        //}
+        public ActionResult Logut()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Login", "LoginUser");
+        }
 
-        ////Get session variable Email
-        //public string SessionEmail(Login user)
-        //{
-        //    Session["UserEmail"] = user.UserEmail;
-        //    string SessionEmail = (string)Session["UserEmail"];
-        //    return SessionEmail;
-        //}
-
-        //Get session variable Name
-        //public string SessionName(User user)
-        //{
-        //    Session["UserName"] = user.UserName(user.UserEmail);
-        //    string SessionName = (string)Session["UserName"];
-        //    return SessionName;
-        //}
     }
 }
