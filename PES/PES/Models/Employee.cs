@@ -63,7 +63,21 @@ namespace PES.Models
         /// <summary>
         /// End Date 
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        //public string EndDate { get; set; }
 
+        /// <summary>
+        /// Employee project 
+        /// </summary>
+        public string Project { get; set; }
+
+    }
+
+    public enum ProfileUser
+    {
+        None = 0,
+        Resource = 1,
+        Manager = 2,
+        Director = 3
     }
 }
