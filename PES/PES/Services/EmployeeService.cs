@@ -215,6 +215,36 @@ namespace PES.Services
             return Name;
         }
 
+        //Get Users Name By Manager Id
+        public List<Employee> GetEmployeeByManager(int ManageerId)
+        {
+            List<Employee> Employees = null;
+            Employee employee = null;
+            try
+            {
+                using(OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string GetEmployees = "SELECT FIRST_NAME," +
+                                       "LAST_NAME," +
+                                       "EMAIL," +
+                                       "CUSTOMER," +
+                                       "POSITION," +
+                                       "ID_MANAGER," +
+                                       "HIRE_DATE," +
+                                       "RANKING," +
+                                       "END_DATE)" +
+                                       "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId;
+                    OracleCommand Command = new OracleCommand();
+                }
+
+            }
+            catch
+            {
+
+            }
+            return ;
+        }
         
     }
 }
