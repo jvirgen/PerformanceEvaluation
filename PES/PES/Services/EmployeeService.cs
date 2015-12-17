@@ -253,7 +253,7 @@ namespace PES.Services
                                        "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId;
                     OracleCommand Command = new OracleCommand(GetEmployees, db);
                     Command.ExecuteNonQuery();
-                    OracleDataReader Reader = new OracleDataReader();
+                    OracleDataReader Reader = Command.ExecuteReader();
 
                     while (Reader.Read())
                     {
