@@ -62,18 +62,6 @@ namespace PES.Controllers
 
             // Insert employee 
 
-            Comment comment = new Comment();
-            comment.PEId = 1;
-            comment.TrainningEmployee = "New Trainning employee";
-            comment.TrainningEvaluator = "New Trainning Evaluator";
-            comment.AcknowledgeEvaluator = "New Acknowledge Evaluator";
-            comment.CommRecommEmployee = "New Comment Employee";
-            comment.CommRecommEvaluator = "New Comment Evaluator";
-
-            CommentService commentService = new CommentService();
-            commentService.InsertComment(comment);
-
-
             //foreach(var pe in performanceEvaluations)
             //{
             //    // Get comments 

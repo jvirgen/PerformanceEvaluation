@@ -22,7 +22,6 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection()) 
                 {
                     db.Open();
-                    string commillas = "\"commias\" ";
                     string InsertComment = "INSERT INTO "+ "\""+"COMMENT"+"\" "+" (ID_PE," +
                                                                  "TRAINNING_EMPLOYEE," +
                                                                  "TRAINNING_EVALUATOR," +
