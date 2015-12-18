@@ -542,7 +542,86 @@ namespace PES.Controllers
         // GET: PeformanceEvaluation/SearchIformation
         public ActionResult SearchInformation()
         {
-            return View();
+
+            // Read from database
+ 
+            // Get current users by using email in Session
+            var director = new Employee()
+            {
+                EmployeeId = 0,
+                Email = "victor.leon@hotmail.com",
+                ManagerId = 0, 
+                ProfileId = 3
+            };
+
+            // Create manager
+            var manager = new Employee()
+            {
+                EmployeeId = 1,
+                Email = "victor.leon@hotmail.com",
+                FirstName = "Victor",
+                LastName = "León",
+                ManagerId = 0
+            };
+
+            // Create users of manager
+            var employee1 = new Employee()
+            {
+                EmployeeId = 2,
+                Email = "jose.aguilar@4thsource.com",
+                FirstName = "José Eduardo",
+                LastName = "Aguilar Anguiano",
+                ManagerId = 1
+            };
+            var employee2 = new Employee()
+            {
+                EmployeeId = 3,
+                Email = "jose.cortes@4thsource.com",
+                FirstName = "Jose Eduardo",
+                LastName = "Cortes Cernas",
+                ManagerId = 1
+            };
+
+            var employee3 = new Employee()
+            {
+                EmployeeId = 3,
+                Email = "jose.vaca@4thsource.com",
+                FirstName = "Eduardo",
+                LastName = "Vaca",
+                ManagerId = 0
+            };
+
+            var employee4 = new Employee()
+            {
+                EmployeeId = 4,
+                Email = "Eder.palacios@4thsource.com",
+                FirstName = "Eder",
+                LastName = "Palacios",
+                ManagerId = 3
+            };
+
+            List<EmployeeManagerViewModel> managerEmployeesVM = new List<EmployeeManagerViewModel>()
+            {
+                new EmployeeManagerViewModel
+                {
+                    employee =  employee1,
+                    manager = manager
+                
+                },
+                new EmployeeManagerViewModel
+                {
+                    employee =  employee2,
+                    manager = manager
+                
+                },
+                new EmployeeManagerViewModel
+                {
+                    employee = employee3,
+                    manager = manager
+                }
+            };
+
+            return View(managerEmployeesVM);
         }
         
         // GET: PeformanceEvaluation/SearchIformation
@@ -552,9 +631,21 @@ namespace PES.Controllers
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
-        public ActionResult ChoosePeriod()
+        public ActionResult ChoosePeriod(string employeeId)
         {
-            return View();
+            // Get user 
+            var user = new Employee();
+
+            // -- Get performance evaluation data
+            // Get performance evaluation 
+            PEs userPE = _peService.GetPerformanceEvaluationByUser("email");
+
+            //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
+
+            EmployeeChoosePeriodViewModel choosePeriodVM = new EmployeeChoosePeriodViewModel();
+            //choosePeriodVM.totalEvaluation;
+
+            return View(choosePeriodVM);
         }
 
         // GET: PerformanceEvaluation/SearchInfoRank

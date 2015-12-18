@@ -1,9 +1,46 @@
-﻿
+﻿@model IEnumerable<PES.Models.EmployeeManagerViewModel>
+@using PES.Models 
 @{
     ViewBag.Title = "Search Information";
+
+    var currentUser = new PES.Models.Employee()
+    {
+        EmployeeId = 0,
+        Email = "victor.leon@hotmail.com",
+        ManagerId = 0,
+        ProfileId = 3
+    };
 }
-<p class="text-right">
-    <a href="@Url.Action("Logout","LoginUser")">Logout</a>
+
+
+<table border="1" width="100" class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Employee</th>
+            @if (currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                <th>Manager</th>
+}
+        </tr>
+    </thead>
+    <tbody> 
+        @foreach (var employeeM in Model)
+        {
+            <tr>
+                <td>@employeeM.employee.EmployeeId</td>
+                <td><a href="~/PerformanceEvaluation/ChoosePeriod">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
+                @if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    <td>@(employeeM.manager.FirstName + " " + employeeM.manager.LastName)</td>
+                }
+            </tr>
+        }        
+    </tbody>
+</table>
+
+@*<p class="text-right">
+    <a href="@Url.Action("Login", "PerformanceEvaluation")">Logout</a>
 </p>
 <div>
     <h2 class="text-center">Search Information</h2>
@@ -41,7 +78,7 @@
             </tr>
         </table>
     </div>
-</div>
+</div>*@
 
 
 

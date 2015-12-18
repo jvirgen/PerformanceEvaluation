@@ -73,6 +73,20 @@ namespace PES.Models
 
     }
 
+    public class EmployeeManagerViewModel 
+    {
+        public Employee employee { get; set; }
+        public Employee manager { get; set; }
+    }
+
+    public class EmployeeChoosePeriodViewModel 
+    {
+        public decimal totalEvaluation { get; set; }
+        public decimal totalPerforformance { get; set; }
+        public decimal totalCompetences { get; set; }
+        public decimal totalEnglish { get; set; }
+    }
+
     public enum ProfileUser
     {
         None = 0,
