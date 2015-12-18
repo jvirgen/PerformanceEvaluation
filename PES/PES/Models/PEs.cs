@@ -43,4 +43,11 @@ namespace PES.Models
         //comment
         
     }
+
+    public class UploadFileViewModel 
+    {
+        public Employee CurrentUser { get; set; }
+        public List<Employee> ListEmployees { get; set; }
+        public int SelectedEmployee { get; set; }
+    }
 }

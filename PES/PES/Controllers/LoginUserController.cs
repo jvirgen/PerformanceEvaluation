@@ -42,8 +42,9 @@ namespace PES.Controllers
                     //Store the Resource profile in a variable session
                     Session["UserProfile"] = (int)resource.ProfileId;
 
+
                     //Store the Resource user name in a variable session
-                    Session["UserName"] = resource.Email;
+                    Session["UserEmail"] = resource.Email;
 
                     //Deside if the user is a Resouce
                     if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
