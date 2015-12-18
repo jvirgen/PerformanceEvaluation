@@ -654,9 +654,21 @@ namespace PES.Controllers
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
-        public ActionResult ChoosePeriod()
+        public ActionResult ChoosePeriod(string employeeId)
         {
-            return View();
+            // Get user 
+            var user = new Employee();
+
+            // -- Get performance evaluation data
+            // Get performance evaluation 
+            PEs userPE = _peService.GetPerformanceEvaluationByUser("email");
+
+            //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
+
+            EmployeeChoosePeriodViewModel choosePeriodVM = new EmployeeChoosePeriodViewModel();
+            //choosePeriodVM.totalEvaluation;
+
+            return View(choosePeriodVM);
         }
 
         // GET: PerformanceEvaluation/SearchInfoRank
