@@ -11,7 +11,7 @@ namespace PES.Services
 {
     public class CommentService
     {
-        private PESDBContext dbContext;
+        private PESDBContext dbContext = new PESDBContext();
 
 
         public bool InsertComment(Comment comment)
@@ -21,21 +21,24 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection()) 
                 {
-                    string InsertComment = "INSERT INTO COMMENT (ID_PE," +
-                                                                 "TRAINING_EMPLOYEE," +
-                                                                 "TRAINING_EVALUATOR," +
-                                                                 "AKNOWLEDGE_EVALUATOR," +
-                                                                 "comm/recomm_employee," +
-                                                                 "comm/recomm_evaluator)" +
-                                            "VALUES (" + comment.PEId + "," +
-                                                       comment.TrainningEmployee + "," +
-                                                       comment.TrainningEvaluator + "," +
-                                                       comment.CommRecommEmployee + "," +
-                                                       comment.CommRecommEvaluator + ")";
+                    db.Open();
+                    string InsertComment = "INSERT INTO "+ "\""+"COMMENT"+"\" "+" (ID_PE," +
+                                                                 "TRAINNING_EMPLOYEE," +
+                                                                 "TRAINNING_EVALUATOR," +
+                                                                 "ACKNOWLEDGE_EVALUATOR," +
+                                                                 "\"comm/recomm_employee\"," +
+                                                                 " \"comm/recomm_evaluator\" )" +
+                                            "VALUES (" + comment.PEId + ", '" +
+                                                       comment.TrainningEmployee + "', '" +
+                                                       comment.TrainningEvaluator + "', '" +
+                                                       comment.AcknowledgeEvaluator+"', '"+
+                                                       comment.CommRecommEmployee + "', '" +
+                                                       comment.CommRecommEvaluator + "')";
                     OracleCommand Command = new OracleCommand(InsertComment, db);
                     Command.ExecuteNonQuery();
 
                     status = true;
+                    db.Close();
                 }
                     
             }

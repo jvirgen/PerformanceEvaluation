@@ -10,7 +10,7 @@ namespace PES.Services
 {
     public class SkillService
     {
-        private PESDBContext dbContext;
+        private PESDBContext dbContext = new PESDBContext();
 
 
         public bool InsertSkill(Skill skill)
@@ -20,12 +20,14 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
+                    db.Open();
                     string InsertSkill = "INSERT INTO SKILL (SKILL)" +
-                                            "VALUES (" + skill.Description + ")";
+                                            "VALUES ('" + skill.Description + "')";
                     OracleCommand Command = new OracleCommand(InsertSkill, db);
                     Command.ExecuteNonQuery();
 
                     status = true;
+                    db.Close();
                 }
 
             }

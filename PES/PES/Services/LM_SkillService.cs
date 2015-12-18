@@ -10,7 +10,7 @@ namespace PES.Services
 {
     public class LM_SkillService
     {
-        private PESDBContext dbContext;
+        private PESDBContext dbContext = new PESDBContext();
 
         public bool InsertLM_Skill(LM_Skill lm_skill)
         {
@@ -20,18 +20,20 @@ namespace PES.Services
             {
                 using(OracleConnection db = dbContext.GetDBConnection())
                 {
-                    string InsertQuery = "INSTER INTO LM_SKILL (ID_SKILL," +
+                    db.Open();
+                    string InsertQuery = "INSERT INTO LM_SKILL (ID_SKILL," +
                                                                 "ID_PE," +
                                                                 "CHECK_EMPLOYEE," +
                                                                 "CHECK_EVALUATOR)" +
                                          "VALUES (" + lm_skill.SkillId + "," +
-                                                     lm_skill.PEId + "," +
-                                                     lm_skill.CheckEmployee + "," +
-                                                     lm_skill.CheckEvaluator + ")";
+                                                     lm_skill.PEId + ", '" +
+                                                     lm_skill.CheckEmployee + "', '" +
+                                                     lm_skill.CheckEvaluator + "')";
                     OracleCommand Command = new OracleCommand(InsertQuery, db);
                     Command.ExecuteNonQuery();
 
                     status = true;
+                    db.Close();
                 }
             }
             catch
