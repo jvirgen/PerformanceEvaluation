@@ -301,7 +301,7 @@ namespace PES.Services
         /// Function to get the employees from the XLS Resource file 
         /// </summary>
         /// <param name="pathFileString">Path string of the file to be loaded</param>
-        /// <returns>Returns a list of movements</returns>
+        /// <returns>Returns a list of employees</returns>
         public List<Employee> GetEmployeesFromXLSFile(string pathFileString)
         {
             //Declare variables
@@ -350,8 +350,6 @@ namespace PES.Services
 
                 using (package)
                 {
-                    //using (var db = new FXWellDBContext())
-                    //{
                     // Get the work book in the file
                     ExcelWorkbook workBook = package.Workbook;
 
@@ -359,14 +357,12 @@ namespace PES.Services
                     if (workBook != null && workBook.Worksheets.Count > 0)
                     {
                         //Declare inner variables
-                        //GroupService groupService = new GroupService(this.DatabaseFactory);
                         IEnumerable<string> columnNames;
                         int countRows = 0;
                         bool required = false;
 
                         // Change required columns if needed
                         List<string> requiredColumns = ResourceColumns.GetColumnList();
-                        // Note: challenge and publicId were ignored in this file
 
                         // Get the first worksheet
                         ExcelWorksheet sheet = workBook.Worksheets.First();
@@ -400,10 +396,10 @@ namespace PES.Services
                             Employee newEmployee;
                             employees = new List<Employee>();
 
-                            //Read each movement/video in the file
+                            //Read each employee in the file
                             for (int i = 0; i < countRows; i++)
                             {
-                                // Create new movement/video for each record in the file
+                                // Create new employee for each record in the file
                                 newEmployee = new Employee();
 
                                 // Get required fields
