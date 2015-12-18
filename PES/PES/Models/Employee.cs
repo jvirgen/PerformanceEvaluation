@@ -73,6 +73,12 @@ namespace PES.Models
 
     }
 
+    public class EmployeeManagerViewModel 
+    {
+        public Employee employee { get; set; }
+        public Employee manager { get; set; }
+    }
+
     public enum ProfileUser
     {
         None = 0,
