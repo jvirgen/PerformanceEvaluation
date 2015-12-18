@@ -27,7 +27,7 @@ namespace PES.Services
                                                                  "TRAINNING_EVALUATOR," +
                                                                  "ACKNOWLEDGE_EVALUATOR," +
                                                                  "\"comm/recomm_employee\"," +
-                                                                 " \"commr/ecomm_evaluator\" )" +
+                                                                 " \"comm/recomm_evaluator\" )" +
                                             "VALUES (" + comment.PEId + ", '" +
                                                        comment.TrainningEmployee + "', '" +
                                                        comment.TrainningEvaluator + "', '" +

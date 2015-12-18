@@ -27,7 +27,7 @@ namespace PES.Services
                                           "ID_EVALUATOR," +
                                           "ID_STATUS," +
                                           "TOTAL) " +
-                                          "VALUES (" +pe.EvaluationPeriod.ToShortDateString() + "," +
+                                          "VALUES ('" +pe.EvaluationPeriod.ToShortDateString() + "'," +
                                                       pe.EmployeeId + "," +
                                                       pe.EvaluatorId + "," +
                                                       pe.StatusId + "," +

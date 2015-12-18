@@ -62,27 +62,6 @@ namespace PES.Controllers
 
             // Insert employee 
 
-            Employee employee = new Employee();
-            employee.FirstName = "Victor";
-            employee.LastName = "Leon";
-            employee.Email = "victor.leon@4thsource";
-            employee.Customer = "ESI";
-            employee.Position = "developer";
-            employee.ProfileId = 1;
-            employee.ManagerId = 1;
-            employee.HireDate = DateTime.Now.Date;
-            employee.Ranking = 0;
-            employee.EndDate = DateTime.Now.Date;
-
-            EmployeeService insertemployee = new EmployeeService();
-
-            insertemployee.InsertEmployee(employee);
-
-
-
-
-
-
             //foreach(var pe in performanceEvaluations)
             //{
             //    // Get comments 

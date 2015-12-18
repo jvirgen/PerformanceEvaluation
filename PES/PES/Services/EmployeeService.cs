@@ -22,55 +22,61 @@ namespace PES.Services
         public Employee GetByEmail(string email)
         {
             Employee employee = null;
-            using (OracleConnection db = dbContext.GetDBConnection())
+            try
             {
-                db.Open();
-
-                string Query = "SELECT ID_EMPLOYEE,"+
-                                       "FIRST_NAME," +
-                                       "LAST_NAME," +
-                                       "EMAIL," +
-                                       "CUSTOMER," +
-                                       "POSITION," +
-                                       "ID_PROFILE," +
-                                       "ID_MANAGER," +
-                                       "HIRE_DATE," +
-                                       "RANKING," +
-                                       "END_DATE " +
-                                       "FROM EMPLOYEE WHERE EMAIL = '" + email + "'";
-                
-                OracleCommand Comand = new OracleCommand(Query, db);
-                OracleDataReader Read = Comand.ExecuteReader();
-                while (Read.Read())
+                using (OracleConnection db = dbContext.GetDBConnection())
                 {
+                    db.Open();
 
-                    // Store data in employee object 
-                    employee = new Employee();
-                    employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
-                    employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
-                    employee.LastName = Convert.ToString(Read["LAST_NAME"]);
-                    employee.Email = Convert.ToString(Read["EMAIL"]);
-                    employee.Customer = Convert.ToString(Read["CUSTOMER"]);
-                    employee.Position = Convert.ToString(Read["POSITION"]);
-                    employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
-                    employee.ManagerId = Convert.ToInt32(Read["iD_MANAGER"]);
-                    employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
-                    employee.Ranking = Convert.ToInt32(Read["RANKING"]);
-                    string endDate = Convert.ToString(Read["END_DATE"]);
+                    string Query = "SELECT ID_EMPLOYEE," +
+                                           "FIRST_NAME," +
+                                           "LAST_NAME," +
+                                           "EMAIL," +
+                                           "CUSTOMER," +
+                                           "POSITION," +
+                                           "ID_PROFILE," +
+                                           "ID_MANAGER," +
+                                           "HIRE_DATE," +
+                                           "RANKING," +
+                                           "END_DATE " +
+                                           "FROM EMPLOYEE WHERE EMAIL = '" + email + "'";
 
-                    if (!string.IsNullOrEmpty(endDate))
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
                     {
-                        employee.EndDate = Convert.ToDateTime(endDate);
+
+                        // Store data in employee object 
+                        employee = new Employee();
+                        employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
+                        employee.LastName = Convert.ToString(Read["LAST_NAME"]);
+                        employee.Email = Convert.ToString(Read["EMAIL"]);
+                        employee.Customer = Convert.ToString(Read["CUSTOMER"]);
+                        employee.Position = Convert.ToString(Read["POSITION"]);
+                        employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
+                        employee.ManagerId = Convert.ToInt32(Read["iD_MANAGER"]);
+                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        employee.Ranking = Convert.ToInt32(Read["RANKING"]);
+                        string endDate = Convert.ToString(Read["END_DATE"]);
+
+                        if (!string.IsNullOrEmpty(endDate))
+                        {
+                            employee.EndDate = Convert.ToDateTime(endDate);
+                        }
+                        else
+                        {
+                            employee.EndDate = null;
+                        }
                     }
-                    else
-                    {
-                        employee.EndDate = null;
-                    }
+
+                    db.Close();
                 }
-
-                db.Close();
             }
-
+            catch
+            {
+                employee = null;
+            }
             return employee;
         }
 
@@ -79,50 +85,59 @@ namespace PES.Services
         {
             List<Employee> employees = null;
             Employee employee = null;
-            using (OracleConnection db = dbContext.GetDBConnection())
+            try
             {
-                db.Open();
-                string Query = "SELECT FIRST_NAME," +
-                                       "LAST_NAME," +
-                                       "EMAIL," +
-                                       "CUSTOMER," +
-                                       "POSITION," +
-                                       "ID_MANAGER," +
-                                       "HIRE_DATE," +
-                                       "RANKING," +
-                                       "END_DATE)" +
-                                       "FROM EMPLOYEE";
-
-                OracleCommand Comand = new OracleCommand(Query, db);
-                OracleDataReader Read = Comand.ExecuteReader();
-                while (Read.Read())
+                using (OracleConnection db = dbContext.GetDBConnection())
                 {
+                    db.Open();
+                    string Query = "SELECT ID_EMLPOYEE" +
+                                           "FIRST_NAME," +
+                                           "LAST_NAME," +
+                                           "EMAIL," +
+                                           "CUSTOMER," +
+                                           "POSITION," +
+                                           "ID_MANAGER," +
+                                           "HIRE_DATE," +
+                                           "RANKING," +
+                                           "END_DATE)" +
+                                           "FROM EMPLOYEE";
 
-                    // Store data in employee object 
-                    employee = new Employee();
-                    employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
-                    employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
-                    employee.LastName = Convert.ToString(Read["LAST_NAME"]);
-                    employee.Email = Convert.ToString(Read["EMAIL"]);
-                    employee.Customer = Convert.ToString(Read["CUSTOMER"]);
-                    employee.Position = Convert.ToString(Read["POSITION"]);
-                    employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
-                    employee.ManagerId = Convert.ToInt32(Read["iD_MANAGER"]);
-                    employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
-                    employee.Ranking = Convert.ToInt32(Read["RANKING"]);
-                    string endDate = Convert.ToString(Read["END_DATE"]);
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
+                    {
 
-                    if (!string.IsNullOrEmpty(endDate))
-                    {
-                        employee.EndDate = Convert.ToDateTime(endDate);
+                        // Store data in employee object 
+                        employee = new Employee();
+                        employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
+                        employee.LastName = Convert.ToString(Read["LAST_NAME"]);
+                        employee.Email = Convert.ToString(Read["EMAIL"]);
+                        employee.Customer = Convert.ToString(Read["CUSTOMER"]);
+                        employee.Position = Convert.ToString(Read["POSITION"]);
+                        employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
+                        employee.ManagerId = Convert.ToInt32(Read["iD_MANAGER"]);
+                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        employee.Ranking = Convert.ToInt32(Read["RANKING"]);
+                        string endDate = Convert.ToString(Read["END_DATE"]);
+
+                        if (!string.IsNullOrEmpty(endDate))
+                        {
+                            employee.EndDate = Convert.ToDateTime(endDate);
+                        }
+                        else
+                        {
+                            employee.EndDate = null;
+                        }
+                        employees.Add(employee);
                     }
-                    else
-                    {
-                        employee.EndDate = null;
-                    }
-                    employees.Add(employee);
+                    db.Close();
                 }
-                db.Close();
+
+            }
+            catch
+            {
+                employees = null;
             }
             return employees;
         }
@@ -215,6 +230,65 @@ namespace PES.Services
             return Name;
         }
 
+        //Get Users Name By Manager Id
+        public List<Employee> GetEmployeeByManager(int ManageerId)
+        {
+            List<Employee> Employees = null;
+            Employee employee = null;
+            try
+            {
+                using(OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string GetEmployees = "SELECT ID_EMPLOYEE"+ 
+                                       "FIRST_NAME," +
+                                       "LAST_NAME," +
+                                       "EMAIL," +
+                                       "CUSTOMER," +
+                                       "POSITION," +
+                                       "ID_MANAGER," +
+                                       "HIRE_DATE," +
+                                       "RANKING," +
+                                       "END_DATE)" +
+                                       "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId;
+                    OracleCommand Command = new OracleCommand(GetEmployees, db);
+                    Command.ExecuteNonQuery();
+                    OracleDataReader Reader = Command.ExecuteReader();
+
+                    while (Reader.Read())
+                    {
+                        employee = new Employee();
+                        employee.EmployeeId = Convert.ToInt32(Reader["ID_EMPLOYEE"]);
+                        employee.FirstName = Convert.ToString(Reader["FIRST_NAME"]);
+                        employee.LastName = Convert.ToString(Reader["LAST_NAME"]);
+                        employee.Email = Convert.ToString(Reader["EMAIL"]);
+                        employee.Customer = Convert.ToString(Reader["CUSTOMER"]);
+                        employee.Position = Convert.ToString(Reader["POSITION"]);
+                        employee.ManagerId = Convert.ToInt32(Reader["ID_MANAGER"]);
+                        employee.HireDate = Convert.ToDateTime(Reader["HIRE_DATE"]);
+                        employee.Ranking = Convert.ToInt32(Reader["RANKING"]);
+                        string endDate = Convert.ToString(Reader["END_DATE"]);
+
+                        if (!string.IsNullOrEmpty(endDate))
+                        {
+                            employee.EndDate = Convert.ToDateTime(endDate);
+                        }
+                        else
+                        {
+                            employee.EndDate = null;
+                        }
+                        Employees.Add(employee);
+                    }
+                    db.Close();
+                }
+
+            }
+            catch
+            {
+                Employees = null;
+            }
+            return Employees;
+        }
         
     }
 }

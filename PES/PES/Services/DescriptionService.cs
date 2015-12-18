@@ -10,7 +10,7 @@ namespace PES.Services
 {
     public class DescriptionService
     {
-        private PESDBContext dbContext;
+        private PESDBContext dbContext = new PESDBContext();
 
 
         public bool InsertDescription(Description description)
@@ -20,14 +20,15 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
+                    db.Open();
                     string InsertDescription = "INSERT INTO DESCRIPTION (DESCRIPTION," +
                                                                  "ID_SUBTITLE)" +
-                                            "VALUES (" + description.DescriptionText + "," +
+                                            "VALUES ('" + description.DescriptionText + "'," +
                                                        description.SubtitleId + ")";
                     OracleCommand Command = new OracleCommand(InsertDescription, db);
                     Command.ExecuteNonQuery();
-
                     status = true;
+                    db.Close();
                 }
 
             }
