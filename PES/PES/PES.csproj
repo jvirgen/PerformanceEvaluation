@@ -40,6 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.4.0.4\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Exchange.WebServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -116,6 +119,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -137,10 +141,13 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Description.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\LM_Skill.cs" />
     <Compile Include="Models\PEs.cs" />
     <Compile Include="Models\PESComplete.cs" />
     <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\ProfilesOwners.cs" />
+    <Compile Include="Models\ResourceColumns.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\Status.cs" />

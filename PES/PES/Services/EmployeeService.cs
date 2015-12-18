@@ -5,6 +5,8 @@ using System.Web;
 using PES.DBContext;
 using PES.Models;
 using Oracle.ManagedDataAccess.Client;
+using OfficeOpenXml;
+using System.IO;
 
 namespace PES.Services
 {
@@ -12,6 +14,11 @@ namespace PES.Services
     {
         private PESDBContext dbContext;
         public string Profile, Name;
+
+        /// <summary>
+        /// Column where the count of the number of rows will be gotten
+        /// </summary>
+        public const string countColumn = ResourceColumns.Email;
 
         public EmployeeService()
         {
@@ -289,6 +296,202 @@ namespace PES.Services
             }
             return Employees;
         }
-        
+
+        /// <summary>
+        /// Function to get the employees from the XLS Resource file 
+        /// </summary>
+        /// <param name="pathFileString">Path string of the file to be loaded</param>
+        /// <returns>Returns a list of movements</returns>
+        public List<Employee> GetEmployeesFromXLSFile(string pathFileString)
+        {
+            //Declare variables
+            List<Employee> employees = new List<Employee>();
+
+            #region Load XLS file with EPPlus
+            //Validate path file 
+            if (!String.IsNullOrEmpty(pathFileString))
+            {
+                FileInfo file;
+
+                try
+                {
+                    //Creates a new file
+                    file = new FileInfo(pathFileString);
+
+                    //Excel file valid extensions
+                    var validExtensions = new string[] { ".xls", ".xlsx" };
+
+                    //Validate extesion of file selected
+                    if (!validExtensions.Contains(file.Extension))
+                    {
+                        throw new System.IO.FileFormatException("Excel file not found in specified path");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+
+                // Open and read the XlSX file.
+                ExcelPackage package = null;
+                try
+                {
+                    package = new ExcelPackage(file);
+                }
+                catch (System.IO.FileFormatException ex)
+                {
+                    throw new System.IO.FileFormatException("Unable to read excel file");
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
+                using (package)
+                {
+                    //using (var db = new FXWellDBContext())
+                    //{
+                    // Get the work book in the file
+                    ExcelWorkbook workBook = package.Workbook;
+
+                    //If there is a workbook
+                    if (workBook != null && workBook.Worksheets.Count > 0)
+                    {
+                        //Declare inner variables
+                        //GroupService groupService = new GroupService(this.DatabaseFactory);
+                        IEnumerable<string> columnNames;
+                        int countRows = 0;
+                        bool required = false;
+
+                        // Change required columns if needed
+                        List<string> requiredColumns = ResourceColumns.GetColumnList();
+                        // Note: challenge and publicId were ignored in this file
+
+                        // Get the first worksheet
+                        ExcelWorksheet sheet = workBook.Worksheets.First();
+
+                        //Get column names in the file
+                        columnNames = sheet.GetSheetColumnNames();
+
+                        //Check if file contains the required columns
+                        required = columnNames.ContainsAll(requiredColumns);
+
+                        //If file has required columns
+                        if (required)
+                        {
+                            //Get columns 
+                            var columns = sheet.GetSheetColumns();
+
+                            //Get count of rows
+                            countRows = sheet.GetCountRowsFromColumn(countColumn, columns);
+
+                            //Read and store data
+                            var columnsData = new Dictionary<string, IEnumerable<string>>();
+                            foreach (var colName in columnNames)
+                            {
+                                columnsData.Add(colName, sheet.GetRowsFromHeader(colName, columns));
+                            }
+
+                            //--[ Starts file processing
+                            #region File processing
+
+                            //create list of employees
+                            Employee newEmployee;
+                            employees = new List<Employee>();
+
+                            //Read each movement/video in the file
+                            for (int i = 0; i < countRows; i++)
+                            {
+                                // Create new movement/video for each record in the file
+                                newEmployee = new Employee();
+
+                                // Get required fields
+                                newEmployee.FirstName = columnsData[ResourceColumns.FirstName].ToArray<string>()[i];
+                                newEmployee.LastName = columnsData[ResourceColumns.LastName].ToArray<string>()[i];
+                                newEmployee.Email = columnsData[ResourceColumns.Email].ToArray<string>()[i];
+                                newEmployee.Customer = string.Empty; // Column not comming from excel file
+                                newEmployee.Position = columnsData[ResourceColumns.JobCode].ToArray<string>()[i];
+
+                                #region Set profile
+                                // --[ Set profile
+                                var user = columnsData[ResourceColumns.Email].ToArray<string>()[i];
+
+                                if (!string.IsNullOrEmpty(user))
+                                {
+                                    if(user == ProfilesOwners.Director)
+                                    {
+                                        // User is director
+                                        newEmployee.ProfileId = (int)ProfileUser.Director;
+                                    }
+                                    else if (ProfilesOwners.Managers.Contains(user))
+                                    {
+                                        // User is manager
+                                        newEmployee.ProfileId = (int)ProfileUser.Manager;
+                                    }
+                                    else 
+                                    {
+                                        // User is resource
+                                        newEmployee.ProfileId = (int)ProfileUser.Resource;
+                                    }
+                                }
+                                else 
+                                {
+                                    newEmployee.ProfileId = (int)ProfileUser.None; 
+                                }
+                                // --] Set profile
+                                #endregion
+
+                                newEmployee.ManagerId = 0; // Set as 0 for now: Create a function to update later when table is already populated
+                                newEmployee.HireDate = DateTime.Now; // Set as today due to not comming from excel
+                                newEmployee.Ranking = 0;
+
+                                var active = columnsData[ResourceColumns.Active].ToArray<string>()[i];
+                                if (string.IsNullOrEmpty(active))
+                                {
+                                    // Employee is still active
+                                    newEmployee.EndDate = null;
+                                }
+                                else 
+                                {
+                                    newEmployee.EndDate = DateTime.Now;
+                                }
+                                
+                                newEmployee.Project = string.Empty; // Column not comming from excel file
+
+                                //Add employee to the list 
+                                employees.Add(newEmployee);
+
+                            } //End for loop
+                            #endregion
+                            //--] Ends file processing
+
+                        }//Enf if requiredFields
+                        else
+                        {
+                            //File does not have the required columns: 
+                            throw new ApplicationException("File does not have the required columns");
+                        }
+
+                    }//Enf if workbook != null
+                    else
+                    {
+                        //No worksheets found
+                        throw new ApplicationException("No worksheets found on Excel file");
+                    }
+                    //}
+                }//End using
+            }
+            #endregion
+
+            return employees;
+        }
+
+        public List<Employee> UpdateManagerAssigment(List<Employee> employees) 
+        {
+            // Add code 
+
+            return employees;
+        }
     }
 }
