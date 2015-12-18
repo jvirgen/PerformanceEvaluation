@@ -18,7 +18,7 @@ namespace PES.Services
         /// <summary>
         /// Column where the count of the number of rows will be gotten
         /// </summary>
-        public const string countColumn = ResourceColumns.Email;
+        public const string countColumn = "Email";
 
         public EmployeeService()
         {
