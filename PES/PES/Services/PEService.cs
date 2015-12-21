@@ -45,5 +45,15 @@ namespace PES.Services
             
             return status;
         }
+
+        public PEs GetPerformanceEvaluationByUser(string emailUser) 
+        {
+            return null;
+        }
+
+        public PEs GetPerformanceEvaluationByUser(int userId)
+        {
+            return null;
+        }
     }
 }

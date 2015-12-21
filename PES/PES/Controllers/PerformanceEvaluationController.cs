@@ -464,7 +464,7 @@ namespace PES.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(HttpPostedFileBase fileUploaded)
+        public ActionResult UploadFile(UploadFileViewModel uploadVM, HttpPostedFileBase fileUploaded)
         {
             string message = "";
                    
@@ -536,7 +536,30 @@ namespace PES.Controllers
         // GET: PerformanceEvaluation/UploadFile
         public ActionResult UploadFile()
         {
-            return View();
+            UploadFileViewModel uploadVM = new UploadFileViewModel();
+
+            // Get current user by using the session
+            Employee currentUser = new Employee();
+            EmployeeService EmployeeService = new EmployeeService();
+            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
+            uploadVM.CurrentUser = currentUser;
+
+            List<Employee> listEmployees = new List<Employee>();
+            if(currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all employees 
+                listEmployees = _employeeService.GetAll();
+            }
+            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get employees by manager
+                listEmployees = null;
+                listEmployees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
+
+            uploadVM.ListEmployees = listEmployees;
+
+            return View(uploadVM);
         }
 
         // GET: PeformanceEvaluation/SearchIformation
@@ -613,12 +636,12 @@ namespace PES.Controllers
                     employee =  employee2,
                     manager = manager
                 
-                }
+                },
                 new EmployeeManagerViewModel
                 {
-                    employee = employee3
-                    manager = 
-                }
+                    employee = employee3,
+                    manager = manager
+                },
             };
 
             return View(managerEmployeesVM);
@@ -631,9 +654,21 @@ namespace PES.Controllers
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
-        public ActionResult ChoosePeriod()
+        public ActionResult ChoosePeriod(string employeeId)
         {
-            return View();
+            // Get user 
+            var user = new Employee();
+
+            // -- Get performance evaluation data
+            // Get performance evaluation 
+            PEs userPE = _peService.GetPerformanceEvaluationByUser("email");
+
+            //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
+
+            EmployeeChoosePeriodViewModel choosePeriodVM = new EmployeeChoosePeriodViewModel();
+            //choosePeriodVM.totalEvaluation;
+
+            return View(choosePeriodVM);
         }
 
         // GET: PerformanceEvaluation/SearchInfoRank

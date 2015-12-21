@@ -1,4 +1,4 @@
-﻿
+﻿@model PES.Models.UploadFileViewModel
 @{
     ViewBag.Title = "Upload File";
 }
@@ -30,11 +30,19 @@
         {
             <div class="row text-center">
                 <div class="form-group">
+                    <p>@(Model.CurrentUser.FirstName + Model.CurrentUser.LastName)</p>
                     @Html.Label("File to upload", new { @class = "col-md-4 control-label" })
                     <div class="col-md-8">
                         <input type="file" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required  />
+                        <select id="SelectedEmployee" name="SelectedEmployee">
+                            @foreach (var employee in Model.ListEmployees)
+                            {
+                                <option value="@employee.EmployeeId">@employee.Email</option>
+                            }
+                        </select>
                     </div>
                 </div>
+
            </div>
             <div class="row text-center">
                 <br />
