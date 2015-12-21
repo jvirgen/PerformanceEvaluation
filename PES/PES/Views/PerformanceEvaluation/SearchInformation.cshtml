@@ -5,10 +5,12 @@
 
     var currentUser = new PES.Models.Employee()
     {
-        EmployeeId = 0,
-        Email = "victor.leon@hotmail.com",
+        EmployeeId = 4,
+        Email = "jose.vaca@4thsource.com",
+        FirstName = "Eduardo",
+        LastName = "Vaca",
         ManagerId = 0,
-        ProfileId = 3
+        ProfileId = 2,
     };
 }
 
@@ -27,6 +29,27 @@
     <tbody> 
         @foreach (var employeeM in Model)
         {
+            if (currentUser.ProfileId == employeeM.director.ProfileId)
+            {
+                <tr>
+                    <td>@employeeM.employee.EmployeeId</td>
+                    <td><a href="~/PerformanceEvaluation/ChoosePeriod">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
+                    <td>@(employeeM.manager.FirstName + " " + employeeM.manager.LastName)</td>
+                </tr>
+            }
+            
+            else if (currentUser.ProfileId == employeeM.manager.ProfileId)
+            {
+                if (currentUser.EmployeeId == employeeM.employee.ManagerId)
+                {
+                    <tr>
+                        <td>@employeeM.employee.EmployeeId</td>
+                        <td><a href="~/PerformanceEvaluation/ChoosePeriod">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
+                    </tr>
+                }
+            }
+            
+            /*
             <tr>
                 <td>@employeeM.employee.EmployeeId</td>
                 <td><a href="~/PerformanceEvaluation/ChoosePeriod">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
@@ -35,6 +58,7 @@
                     <td>@(employeeM.manager.FirstName + " " + employeeM.manager.LastName)</td>
                 }
             </tr>
+            */
         }        
     </tbody>
 </table>

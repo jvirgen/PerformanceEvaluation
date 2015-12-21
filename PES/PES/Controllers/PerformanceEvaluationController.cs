@@ -569,22 +569,36 @@ namespace PES.Controllers
             // Read from database
  
             // Get current users by using email in Session
+            // Create director
             var director = new Employee()
             {
-                EmployeeId = 0,
-                Email = "victor.leon@hotmail.com",
+                EmployeeId = 6,
+                Email = "eder.palacios@4thsource.com",
+                FirstName = "Eder",
+                LastName = "Palacios",
                 ManagerId = 0, 
                 ProfileId = 3
             };
 
             // Create manager
-            var manager = new Employee()
+            var manager1 = new Employee()
             {
                 EmployeeId = 1,
                 Email = "victor.leon@hotmail.com",
                 FirstName = "Victor",
                 LastName = "León",
-                ManagerId = 0
+                ManagerId = 0,
+                ProfileId = 2
+            };
+
+            var manager2= new Employee()
+            {
+                EmployeeId = 4,
+                Email = "jose.vaca@4thsource.com",
+                FirstName = "Eduardo",
+                LastName = "Vaca",
+                ManagerId = 0,
+                ProfileId = 2,
             };
 
             // Create users of manager
@@ -594,7 +608,8 @@ namespace PES.Controllers
                 Email = "jose.aguilar@4thsource.com",
                 FirstName = "José Eduardo",
                 LastName = "Aguilar Anguiano",
-                ManagerId = 1
+                ManagerId = 1,
+                ProfileId = 1
             };
             var employee2 = new Employee()
             {
@@ -602,25 +617,18 @@ namespace PES.Controllers
                 Email = "jose.cortes@4thsource.com",
                 FirstName = "Jose Eduardo",
                 LastName = "Cortes Cernas",
-                ManagerId = 1
+                ManagerId = 1,
+                ProfileId = 1
             };
 
             var employee3 = new Employee()
             {
-                EmployeeId = 3,
-                Email = "jose.vaca@4thsource.com",
-                FirstName = "Eduardo",
-                LastName = "Vaca",
-                ManagerId = 0
-            };
-
-            var employee4 = new Employee()
-            {
-                EmployeeId = 4,
-                Email = "Eder.palacios@4thsource.com",
-                FirstName = "Eder",
-                LastName = "Palacios",
-                ManagerId = 3
+                EmployeeId = 5,
+                Email = "juan.camarena@4thsource.com",
+                FirstName = "Juan",
+                LastName = "Camarena",
+                ManagerId = 4,
+                ProfileId = 1
             };
 
             List<EmployeeManagerViewModel> managerEmployeesVM = new List<EmployeeManagerViewModel>()
@@ -628,19 +636,22 @@ namespace PES.Controllers
                 new EmployeeManagerViewModel
                 {
                     employee =  employee1,
-                    manager = manager
+                    manager = manager1,
+                    director = director
                 
                 },
                 new EmployeeManagerViewModel
                 {
                     employee =  employee2,
-                    manager = manager
+                    manager = manager1,
+                    director = director
                 
                 },
                 new EmployeeManagerViewModel
                 {
                     employee = employee3,
-                    manager = manager
+                    manager = manager2,
+                    director = director
                 },
             };
 
