@@ -10,7 +10,8 @@ using PES.Services;
 
 namespace PES.Controllers
 {
-    //[Authorize]
+
+    [AllowAnonymous]
     public class PerformanceEvaluationController : Controller
     {
         // Declare services 
