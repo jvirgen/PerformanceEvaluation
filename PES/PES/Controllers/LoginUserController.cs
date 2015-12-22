@@ -25,7 +25,9 @@ namespace PES.Controllers
             return View();
         }
 
+        
         [HttpPost]
+       // [Authorize(Order=1 ,Roles="UserEmail", Users="Employee")]
         public ActionResult Login(Login user)
         {
             var isAuthenticated = user.Authentication(user.UserEmail, user.Password);

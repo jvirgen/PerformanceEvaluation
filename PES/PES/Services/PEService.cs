@@ -46,9 +46,9 @@ namespace PES.Services
             return status;
         }
 
-        public PEs GetPerformanceEvaluationByUserID(int userid) 
+        public List<PEs> GetPerformanceEvaluationByUserID(int userid) 
         {
-            PEs pes = new PEs();
+            List<PEs> listPES = null;
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -70,7 +70,7 @@ namespace PES.Services
                     {
 
                         // Store data in employee object 
-                        pes = new PEs();
+                        var pes = new PEs();
                         pes.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
                         pes.PEId = Convert.ToInt32(Read["ID_PE"]);
                         pes.EvaluationPeriod = Convert.ToDateTime(Read["EVALUATION_PERIOD"]);
@@ -78,17 +78,18 @@ namespace PES.Services
                         pes.StatusId = Convert.ToInt32(Read["ID_STATUS"]);
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
                         pes.EnglishScore = Convert.ToDouble(Read["ENGLISH_SCORE"]);
-                        
-                    }
 
+                        listPES.Add(pes);
+                    }
+                    
                     db.Close();
                 }
             }
             catch
             {
-                pes = null;
+                listPES = null;
             }
-            return pes;
+            return listPES;
         }
 
         //public PEs GetPerformanceEvaluationByUser(int userId)

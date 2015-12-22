@@ -10,7 +10,8 @@ using PES.Services;
 
 namespace PES.Controllers
 {
-    //[Authorize]
+
+    [AllowAnonymous]
     public class PerformanceEvaluationController : Controller
     {
         // Declare services 
@@ -484,41 +485,56 @@ namespace PES.Controllers
                     }
                     //Save the file in the repository   
                     fileUploaded.SaveAs(path);
-
-                    try
+                    
+                    
+                    //Read Employees by a Excel file *************************************
+                    List<Employee> employees = new List<Employee>();
+                    EmployeeService employeeservice = new EmployeeService();
+                    employees = employeeservice.GetEmployeesFromXLSFile(path);
+                   
+                    // insert employees
+                    foreach (Employee employee in employees)
                     {
-                        PESComplete file = ReadPerformanceFile(path);
-                        if (file != null)
-                        {
-                            // Load file into db
-                            bool fileSaved = SavePEFile(file);
+                        employeeservice.InsertEmployee(employee);
+                    }
+                    //********************************************************************
 
-                            if (!fileSaved)
-                            {
-                                // File not saved
-                                TempData["Error"] = "There were some problems saving the file. Please try again later.";    
-                            }
-                            else
-                            {
-                                // File saved successfully
-                                TempData["Success"] = "File saved successfully";
-                            }
+                    #region comment for now
+                    //try
+                    //{
+                    //    PESComplete file = ReadPerformanceFile(path);
+                    //    if (file != null)
+                    //    {
+                    //        // Load file into db
+                    //        bool fileSaved = SavePEFile(file);
+
+                    //        if (!fileSaved)
+                    //        {
+                    //            // File not saved
+                    //            TempData["Error"] = "There were some problems saving the file. Please try again later.";    
+                    //        }
+                    //        else
+                    //        {
+                    //            // File saved successfully
+                    //            TempData["Success"] = "File saved successfully";
+                    //        }
                             
-                        }
-                        else
-                        {
-                            TempData["Error"] = "File was not read successfully";
+                    //    }
+                    //    else
+                    //    {
+                    //        TempData["Error"] = "File was not read successfully";
                             
-                        }
-                    }
-                    finally
-                    {
-                        //Delete the file from the repository
-                        if (System.IO.File.Exists(path))
-                        {
-                            System.IO.File.Delete(path);
-                        }
-                    }
+                    //    }
+                    //}
+                    //finally
+                    //{
+                    //    //Delete the file from the repository
+                    //    if (System.IO.File.Exists(path))
+                    //    {
+                    //        System.IO.File.Delete(path);
+                    //    }
+                    //}
+                    #endregion
 
                     return View("UploadFile");
                 }
@@ -664,8 +680,20 @@ namespace PES.Controllers
                 employeeVM.employee = employee;
                 employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
                 
-                var pe = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-                employeeVM.totalScore = pe.Total; 
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                if (listPE != null && listPE.Count > 0)
+                {
+                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+
+                    employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
+                }
+                else 
+                {
+                    employeeVM.totalScore = 0;
+                }
+
+                listEmployeeVM.Add(employeeVM);
             }
 
             ViewBag.currentEmployee = currentUser;
@@ -710,7 +738,7 @@ namespace PES.Controllers
             var userid = _employeeService.GetByID(employeeID);
             // -- Get performance evaluation data
             // Get performance evaluation 
-            PEs userPE = _peService.GetPerformanceEvaluationByUserID(employeeID);
+            List<PEs> listUserPE = _peService.GetPerformanceEvaluationByUserID(employeeID);
 
             //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
             /*var pe1Employee1 = new PEs()
@@ -728,16 +756,23 @@ namespace PES.Controllers
                 Total = 9.5
             };
             */
-            List<EmployeeChoosePeriodViewModel> choosePeriodVM = new List<EmployeeChoosePeriodViewModel>()
+            List<EmployeeChoosePeriodViewModel> choosePeriodVM = new List<EmployeeChoosePeriodViewModel>();
+
+            if(listUserPE != null && listUserPE.Count > 0)
             {
-                new EmployeeChoosePeriodViewModel
+                foreach(var userPE in listUserPE)
                 {
-                    employeeid = userPE.EmployeeId,
-                    pesid = userPE.PEId,
-                    period = userPE.EvaluationPeriod,
-                    totalEvaluation = userPE.Total
+                    var chooseVM = new EmployeeChoosePeriodViewModel
+                    {
+                        employeeid = userPE.EmployeeId,
+                        pesid = userPE.PEId,
+                        period = userPE.EvaluationPeriod,
+                        totalEvaluation = userPE.Total
+                    };
+
+                    choosePeriodVM.Add(chooseVM);
                 }
-            };
+            }
 
             ViewBag.UserEmail = employeeEmail;
             ViewBag.UserID = employeeID;
