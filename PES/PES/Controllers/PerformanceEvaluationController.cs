@@ -586,7 +586,7 @@ namespace PES.Controllers
  
             // Get current users by using email in Session
             // Create director
-            var director = new Employee()
+            /*var director = new Employee()
             {
                 EmployeeId = 6,
                 Email = "eder.palacios@4thsource.com",
@@ -614,7 +614,7 @@ namespace PES.Controllers
                 FirstName = "Eduardo",
                 LastName = "Vaca",
                 ManagerId = 0,
-                ProfileId = 2,
+                ProfileId = 2
             };
 
             // Create users of manager
@@ -627,6 +627,7 @@ namespace PES.Controllers
                 ManagerId = 1,
                 ProfileId = 1
             };
+
             var employee2 = new Employee()
             {
                 EmployeeId = 3,
@@ -634,7 +635,7 @@ namespace PES.Controllers
                 FirstName = "Jose Eduardo",
                 LastName = "Cortes Cernas",
                 ManagerId = 1,
-                ProfileId = 1
+                ProfileId = 1,
             };
 
             var employee3 = new Employee()
@@ -646,8 +647,45 @@ namespace PES.Controllers
                 ManagerId = 4,
                 ProfileId = 1
             };
+            */
 
-            List<EmployeeManagerViewModel> managerEmployeesVM = new List<EmployeeManagerViewModel>()
+            // Get current user 
+            Employee currentUser = new Employee();
+            var userEmail = (string)Session["UserEmail"];
+
+            currentUser = _employeeService.GetByEmail(userEmail);
+
+            List<Employee> employees = new List<Employee>();
+            if(currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all
+                employees = _employeeService.GetAll();
+            }
+            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
+            else
+            {
+                // user is resource not allowed, return to home 
+                // send error
+                return RedirectToAction("ChoosePeriod");
+            }
+
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            foreach(var employee in employees)
+            {
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                
+                var pe = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                employeeVM.totalScore = pe.Total; 
+            }
+
+            ViewBag.currentEmployee = currentUser;
+            /*List<EmployeeManagerViewModel> managerEmployeesVM = new List<EmployeeManagerViewModel>()
             {
                 new EmployeeManagerViewModel
                 {
@@ -669,9 +707,9 @@ namespace PES.Controllers
                     manager = manager2,
                     director = director
                 },
-            };
+            };*/
 
-            return View(managerEmployeesVM);
+            return View(listEmployeeVM);
         }
         
         // GET: PeformanceEvaluation/SearchIformation
@@ -681,20 +719,48 @@ namespace PES.Controllers
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
-        public ActionResult ChoosePeriod(string employeeId)
+        public ActionResult ChoosePeriod(string employeeEmail, int employeeID)
         {
             // Get user 
-            var user = new Employee();
-
+            var user = _employeeService.GetByEmail(employeeEmail);
+            var userid = _employeeService.GetByID(employeeID);
             // -- Get performance evaluation data
             // Get performance evaluation 
-            PEs userPE = _peService.GetPerformanceEvaluationByUser("email");
+            PEs userPE = _peService.GetPerformanceEvaluationByUserID(employeeID);
 
             //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
+            /*var pe1Employee1 = new PEs()
+            {
+                EmployeeId = 2,
+                EvaluationPeriod = DateTime.Now.Date.AddDays(-1),
+                PEId = 1,
+                Total = 10
+            };
+            var pe2Employee1 = new PEs()
+            {
+                EmployeeId = 2,
+                EvaluationPeriod = DateTime.Now.Date,
+                PEId = 2,
+                Total = 9.5
+            };
+            */
+            List<EmployeeChoosePeriodViewModel> choosePeriodVM = new List<EmployeeChoosePeriodViewModel>()
+            {
+                new EmployeeChoosePeriodViewModel
+                {
+                    employeeid = userPE.EmployeeId,
+                    pesid = userPE.PEId,
+                    period = userPE.EvaluationPeriod,
+                    totalEvaluation = userPE.Total
+                }
+            };
 
-            EmployeeChoosePeriodViewModel choosePeriodVM = new EmployeeChoosePeriodViewModel();
-            //choosePeriodVM.totalEvaluation;
+            ViewBag.UserEmail = employeeEmail;
+            ViewBag.UserID = employeeID;
+            //EmployeeChoosePeriodViewModel choosePeriodVM = new EmployeeChoosePeriodViewModel();
 
+            //choosePeriodVM.period = userPE.EvaluationPeriod;
+            //choosePeriodVM.totalEvaluation = userPE.Total;
             return View(choosePeriodVM);
         }
 

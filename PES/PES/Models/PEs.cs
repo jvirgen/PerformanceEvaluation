@@ -38,9 +38,12 @@ namespace PES.Models
         /// <summary>
         /// Employee total score
         /// </summary>
-        public int Total { get; set; }
+        public double Total { get; set; }
 
-        //comment
+        /// <summary>
+        /// English Score
+        /// </summary>
+        public double EnglishScore { get; set; }
         
     }
 
