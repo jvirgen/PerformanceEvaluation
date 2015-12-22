@@ -3,15 +3,7 @@
 @{
     ViewBag.Title = "Search Information";
 
-    var currentUser = new PES.Models.Employee()
-    {
-        EmployeeId = 6,
-        Email = "eder.palacios@4thsource.com",
-        FirstName = "Eder",
-        LastName = "Palacios",
-        ManagerId = 0,
-        ProfileId = 3
-    };
+    var currentUser = ViewBag.currentEmployee;
 }
 
 
@@ -23,43 +15,22 @@
             @if (currentUser.ProfileId == (int)ProfileUser.Director)
             {
                 <th>Manager</th>
-}
+            }
         </tr>
     </thead>
     <tbody> 
         @foreach (var employeeM in Model)
         {
-            if (currentUser.ProfileId == employeeM.director.ProfileId)
-            {
-                <tr>
-                    <td>@employeeM.employee.EmployeeId</td>
-                    <td><a href="@Url.Action("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = employeeM.employee.Email, employeeID = employeeM.employee.EmployeeId})">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
-                    <td>@(employeeM.manager.FirstName + " " + employeeM.manager.LastName)</td>
-                </tr>
-            }
-            
-            else if (currentUser.ProfileId == employeeM.manager.ProfileId)
-            {
-                if (currentUser.EmployeeId == employeeM.employee.ManagerId)
-                {
-                    <tr>
-                        <td>@employeeM.employee.EmployeeId</td>
-                        <td><a href="~/PerformanceEvaluation/ChoosePeriod">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
-                    </tr>
-                }
-            }
-            
-            /*
             <tr>
                 <td>@employeeM.employee.EmployeeId</td>
-                <td><a href="~/PerformanceEvaluation/ChoosePeriod">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
+                <td><a href="@Url.Action("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = employeeM.employee.Email, employeeID = employeeM.employee.EmployeeId})">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
                 @if (currentUser.ProfileId == (int)ProfileUser.Director)
                 {
                     <td>@(employeeM.manager.FirstName + " " + employeeM.manager.LastName)</td>
                 }
+                
             </tr>
-            */
-        }        
+         }        
     </tbody>
 </table>
 

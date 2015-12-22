@@ -46,14 +46,54 @@ namespace PES.Services
             return status;
         }
 
-        public PEs GetPerformanceEvaluationByUser(string emailUser) 
+        public PEs GetPerformanceEvaluationByUserID(int userid) 
         {
-            return null;
+            PEs pes = new PEs();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT ID_PE," +
+                                           "EVALUATION_PERIOD," +
+                                           "ID_EMPLOYEE," +
+                                           "ID_EVALUATOR," +
+                                           "ID_STATUS," +
+                                           "TOTAL," +
+                                           "ENGLISH_SCORE" +
+                                           "FROM EMPLOYEE WHERE ID_EMPLOYEE = '" + userid + "'";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        pes = new PEs();
+                        pes.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        pes.PEId = Convert.ToInt32(Read["ID_PE"]);
+                        pes.EvaluationPeriod = Convert.ToDateTime(Read["EVALUATION_PERIOD"]);
+                        pes.EvaluatorId = Convert.ToInt32(Read["ID_EVALUATOR"]);
+                        pes.StatusId = Convert.ToInt32(Read["ID_STATUS"]);
+                        pes.Total = Convert.ToDouble(Read["TOTAL"]);
+                        pes.EnglishScore = Convert.ToDouble(Read["ENGLISH_SCORE"]);
+                        
+                    }
+
+                    db.Close();
+                }
+            }
+            catch
+            {
+                pes = null;
+            }
+            return pes;
         }
 
-        public PEs GetPerformanceEvaluationByUser(int userId)
-        {
-            return null;
-        }
+        //public PEs GetPerformanceEvaluationByUser(int userId)
+        //{
+        //    return null;
+        //}
     }
 }

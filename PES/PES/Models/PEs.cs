@@ -40,7 +40,10 @@ namespace PES.Models
         /// </summary>
         public double Total { get; set; }
 
-        //comment
+        /// <summary>
+        /// English Score
+        /// </summary>
+        public double EnglishScore { get; set; }
         
     }
 
