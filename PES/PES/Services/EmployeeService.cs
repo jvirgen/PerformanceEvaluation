@@ -409,7 +409,7 @@ namespace PES.Services
                                 newEmployee.FirstName = columnsData[ResourceColumns.FirstName].ToArray<string>()[i];
                                 newEmployee.LastName = columnsData[ResourceColumns.LastName].ToArray<string>()[i];
                                 newEmployee.Email = columnsData[ResourceColumns.Email].ToArray<string>()[i];
-                                newEmployee.Customer = string.Empty; // Column not comming from excel file
+                                newEmployee.Customer = "No Customer"; // Column not comming from excel file
                                 newEmployee.Position = columnsData[ResourceColumns.JobCode].ToArray<string>()[i];
 
                                 #region Set profile
@@ -441,7 +441,7 @@ namespace PES.Services
                                 // --] Set profile
                                 #endregion
 
-                                newEmployee.ManagerId = 0; // Set as 0 for now: Create a function to update later when table is already populated
+                                newEmployee.ManagerId = 2; // Set as 2 for now: Create a function to update later when table is already populated
                                 newEmployee.HireDate = DateTime.Now; // Set as today due to not comming from excel
                                 newEmployee.Ranking = 0;
 
@@ -456,7 +456,7 @@ namespace PES.Services
                                     newEmployee.EndDate = DateTime.Now;
                                 }
                                 
-                                newEmployee.Project = string.Empty; // Column not comming from excel file
+                                newEmployee.Project = "No project"; // Column not comming from excel file
 
                                 //Add employee to the list 
                                 employees.Add(newEmployee);

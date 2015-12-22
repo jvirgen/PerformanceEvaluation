@@ -485,41 +485,56 @@ namespace PES.Controllers
                     }
                     //Save the file in the repository   
                     fileUploaded.SaveAs(path);
-
-                    try
+                    
+                    
+                    //Read Employees by a Excel file *************************************
+                    List<Employee> employees = new List<Employee>();
+                    EmployeeService employeeservice = new EmployeeService();
+                    employees = employeeservice.GetEmployeesFromXLSFile(path);
+                   
+                    // insert employees
+                    foreach (Employee employee in employees)
                     {
-                        PESComplete file = ReadPerformanceFile(path);
-                        if (file != null)
-                        {
-                            // Load file into db
-                            bool fileSaved = SavePEFile(file);
+                        employeeservice.InsertEmployee(employee);
+                    }
+                    //********************************************************************
 
-                            if (!fileSaved)
-                            {
-                                // File not saved
-                                TempData["Error"] = "There were some problems saving the file. Please try again later.";    
-                            }
-                            else
-                            {
-                                // File saved successfully
-                                TempData["Success"] = "File saved successfully";
-                            }
+                    #region comment for now
+                    //try
+                    //{
+                    //    PESComplete file = ReadPerformanceFile(path);
+                    //    if (file != null)
+                    //    {
+                    //        // Load file into db
+                    //        bool fileSaved = SavePEFile(file);
+
+                    //        if (!fileSaved)
+                    //        {
+                    //            // File not saved
+                    //            TempData["Error"] = "There were some problems saving the file. Please try again later.";    
+                    //        }
+                    //        else
+                    //        {
+                    //            // File saved successfully
+                    //            TempData["Success"] = "File saved successfully";
+                    //        }
                             
-                        }
-                        else
-                        {
-                            TempData["Error"] = "File was not read successfully";
+                    //    }
+                    //    else
+                    //    {
+                    //        TempData["Error"] = "File was not read successfully";
                             
-                        }
-                    }
-                    finally
-                    {
-                        //Delete the file from the repository
-                        if (System.IO.File.Exists(path))
-                        {
-                            System.IO.File.Delete(path);
-                        }
-                    }
+                    //    }
+                    //}
+                    //finally
+                    //{
+                    //    //Delete the file from the repository
+                    //    if (System.IO.File.Exists(path))
+                    //    {
+                    //        System.IO.File.Delete(path);
+                    //    }
+                    //}
+                    #endregion
 
                     return View("UploadFile");
                 }
