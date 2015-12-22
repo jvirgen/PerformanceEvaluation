@@ -680,8 +680,20 @@ namespace PES.Controllers
                 employeeVM.employee = employee;
                 employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
                 
-                var pe = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-                employeeVM.totalScore = pe.Total; 
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                if (listPE != null && listPE.Count > 0)
+                {
+                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+
+                    employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
+                }
+                else 
+                {
+                    employeeVM.totalScore = 0;
+                }
+
+                listEmployeeVM.Add(employeeVM);
             }
 
             ViewBag.currentEmployee = currentUser;
@@ -726,7 +738,7 @@ namespace PES.Controllers
             var userid = _employeeService.GetByID(employeeID);
             // -- Get performance evaluation data
             // Get performance evaluation 
-            PEs userPE = _peService.GetPerformanceEvaluationByUserID(employeeID);
+            List<PEs> listUserPE = _peService.GetPerformanceEvaluationByUserID(employeeID);
 
             //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
             /*var pe1Employee1 = new PEs()
@@ -744,16 +756,23 @@ namespace PES.Controllers
                 Total = 9.5
             };
             */
-            List<EmployeeChoosePeriodViewModel> choosePeriodVM = new List<EmployeeChoosePeriodViewModel>()
+            List<EmployeeChoosePeriodViewModel> choosePeriodVM = new List<EmployeeChoosePeriodViewModel>();
+
+            if(listUserPE != null && listUserPE.Count > 0)
             {
-                new EmployeeChoosePeriodViewModel
+                foreach(var userPE in listUserPE)
                 {
-                    employeeid = userPE.EmployeeId,
-                    pesid = userPE.PEId,
-                    period = userPE.EvaluationPeriod,
-                    totalEvaluation = userPE.Total
+                    var chooseVM = new EmployeeChoosePeriodViewModel
+                    {
+                        employeeid = userPE.EmployeeId,
+                        pesid = userPE.PEId,
+                        period = userPE.EvaluationPeriod,
+                        totalEvaluation = userPE.Total
+                    };
+
+                    choosePeriodVM.Add(chooseVM);
                 }
-            };
+            }
 
             ViewBag.UserEmail = employeeEmail;
             ViewBag.UserID = employeeID;
