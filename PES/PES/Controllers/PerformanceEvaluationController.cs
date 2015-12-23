@@ -489,15 +489,15 @@ namespace PES.Controllers
                     
                     /*
                     //Read Employees by a Excel file *************************************
-                    List<Employee> employees = new List<Employee>();
-                    EmployeeService employeeservice = new EmployeeService();
-                    employees = employeeservice.GetEmployeesFromXLSFile(path);
+                    //List<Employee> employees = new List<Employee>();
+                    //EmployeeService employeeservice = new EmployeeService();
+                    //employees = employeeservice.GetEmployeesFromXLSFile(path);
                    
-                    // insert employees
-                    foreach (Employee employee in employees)
-                    {
-                        employeeservice.InsertEmployee(employee);
-                    }
+                    //// insert employees
+                    //foreach (Employee employee in employees)
+                    //{
+                    //    employeeservice.InsertEmployee(employee);
+                    //}
                     //********************************************************************
                     */
                     #region comment for now
