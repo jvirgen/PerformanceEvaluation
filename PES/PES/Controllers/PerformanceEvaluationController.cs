@@ -668,7 +668,8 @@ namespace PES.Controllers
                         employeeid = userPE.EmployeeId,
                         pesid = userPE.PEId,
                         period = userPE.EvaluationPeriod,
-                        totalEvaluation = userPE.Total
+                        totalEvaluation = userPE.Total,
+                        totalEnglish = userPE.EnglishScore
                     };
 
                     choosePeriodVM.Add(chooseVM);

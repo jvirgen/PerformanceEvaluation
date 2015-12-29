@@ -61,16 +61,17 @@ namespace PES.Services
                                            "ID_EVALUATOR," +
                                            "ID_STATUS," +
                                            "TOTAL," +
-                                           "ENGLISH_SCORE" +
-                                           "FROM EMPLOYEE WHERE ID_EMPLOYEE = '" + userid + "'";
+                                           "ENGLISH_SCORE " +
+                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
                     OracleDataReader Read = Comand.ExecuteReader();
+                    listPES = new List<PEs>();
                     while (Read.Read())
                     {
 
                         // Store data in employee object 
-                        var pes = new PEs();
+                        PEs pes = new PEs();
                         pes.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
                         pes.PEId = Convert.ToInt32(Read["ID_PE"]);
                         pes.EvaluationPeriod = Convert.ToDateTime(Read["EVALUATION_PERIOD"]);
