@@ -92,7 +92,8 @@ namespace PES.Controllers
             Excel.Worksheet excelSheet = wb.ActiveSheet;
              PESComplete PESc = new PESComplete();
 
-            PESc.pes.Total = (int)excelSheet.Cells[9, 6];
+            //var val = excelSheet.Cells[6, 9].Value;
+            PESc.pes.Total = Convert.ToDouble(excelSheet.Cells[6, 9]);
 
             PESc.empleado.FirstName = excelSheet.Cells[3, 3];
             PESc.empleado.LastName = excelSheet.Cells[3, 3];
@@ -486,7 +487,7 @@ namespace PES.Controllers
                     //Save the file in the repository   
                     fileUploaded.SaveAs(path);
                     
-                    
+                    /*
                     //Read Employees by a Excel file *************************************
                     //List<Employee> employees = new List<Employee>();
                     //EmployeeService employeeservice = new EmployeeService();
@@ -498,42 +499,42 @@ namespace PES.Controllers
                     //    employeeservice.InsertEmployee(employee);
                     //}
                     //********************************************************************
-
+                    */
                     #region comment for now
-                    //try
-                    //{
-                    //    PESComplete file = ReadPerformanceFile(path);
-                    //    if (file != null)
-                    //    {
-                    //        // Load file into db
-                    //        bool fileSaved = SavePEFile(file);
+                    try
+                    {
+                        PESComplete file = ReadPerformanceFile(path);
+                        if (file != null)
+                        {
+                            // Load file into db
+                            bool fileSaved = SavePEFile(file);
 
-                    //        if (!fileSaved)
-                    //        {
-                    //            // File not saved
-                    //            TempData["Error"] = "There were some problems saving the file. Please try again later.";    
-                    //        }
-                    //        else
-                    //        {
-                    //            // File saved successfully
-                    //            TempData["Success"] = "File saved successfully";
-                    //        }
-                            
-                    //    }
-                    //    else
-                    //    {
-                    //        TempData["Error"] = "File was not read successfully";
-                            
-                    //    }
-                    //}
-                    //finally
-                    //{
-                    //    //Delete the file from the repository
-                    //    if (System.IO.File.Exists(path))
-                    //    {
-                    //        System.IO.File.Delete(path);
-                    //    }
-                    //}
+                            if (!fileSaved)
+                            {
+                                // File not saved
+                                TempData["Error"] = "There were some problems saving the file. Please try again later.";
+                            }
+                            else
+                            {
+                                // File saved successfully
+                                TempData["Success"] = "File saved successfully";
+                            }
+
+                        }
+                        else
+                        {
+                            TempData["Error"] = "File was not read successfully";
+
+                        }
+                    }
+                    finally
+                    {
+                        //Delete the file from the repository
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                    }
                     #endregion
 
                     return View("UploadFile");
@@ -585,70 +586,6 @@ namespace PES.Controllers
             // Read from database
  
             // Get current users by using email in Session
-            // Create director
-            /*var director = new Employee()
-            {
-                EmployeeId = 6,
-                Email = "eder.palacios@4thsource.com",
-                FirstName = "Eder",
-                LastName = "Palacios",
-                ManagerId = 0, 
-                ProfileId = 3
-            };
-
-            // Create manager
-            var manager1 = new Employee()
-            {
-                EmployeeId = 1,
-                Email = "victor.leon@hotmail.com",
-                FirstName = "Victor",
-                LastName = "León",
-                ManagerId = 0,
-                ProfileId = 2
-            };
-
-            var manager2= new Employee()
-            {
-                EmployeeId = 4,
-                Email = "jose.vaca@4thsource.com",
-                FirstName = "Eduardo",
-                LastName = "Vaca",
-                ManagerId = 0,
-                ProfileId = 2
-            };
-
-            // Create users of manager
-            var employee1 = new Employee()
-            {
-                EmployeeId = 2,
-                Email = "jose.aguilar@4thsource.com",
-                FirstName = "José Eduardo",
-                LastName = "Aguilar Anguiano",
-                ManagerId = 1,
-                ProfileId = 1
-            };
-
-            var employee2 = new Employee()
-            {
-                EmployeeId = 3,
-                Email = "jose.cortes@4thsource.com",
-                FirstName = "Jose Eduardo",
-                LastName = "Cortes Cernas",
-                ManagerId = 1,
-                ProfileId = 1,
-            };
-
-            var employee3 = new Employee()
-            {
-                EmployeeId = 5,
-                Email = "juan.camarena@4thsource.com",
-                FirstName = "Juan",
-                LastName = "Camarena",
-                ManagerId = 4,
-                ProfileId = 1
-            };
-            */
-
             // Get current user 
             Employee currentUser = new Employee();
             var userEmail = (string)Session["UserEmail"];
@@ -697,30 +634,7 @@ namespace PES.Controllers
             }
 
             ViewBag.currentEmployee = currentUser;
-            /*List<EmployeeManagerViewModel> managerEmployeesVM = new List<EmployeeManagerViewModel>()
-            {
-                new EmployeeManagerViewModel
-                {
-                    employee =  employee1,
-                    manager = manager1,
-                    director = director
-                
-                },
-                new EmployeeManagerViewModel
-                {
-                    employee =  employee2,
-                    manager = manager1,
-                    director = director
-                
-                },
-                new EmployeeManagerViewModel
-                {
-                    employee = employee3,
-                    manager = manager2,
-                    director = director
-                },
-            };*/
-
+            
             return View(listEmployeeVM);
         }
         
@@ -742,21 +656,7 @@ namespace PES.Controllers
             List<PEs> listUserPE = _peService.GetPerformanceEvaluationByUserID(employeeID);
 
             //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
-            /*var pe1Employee1 = new PEs()
-            {
-                EmployeeId = 2,
-                EvaluationPeriod = DateTime.Now.Date.AddDays(-1),
-                PEId = 1,
-                Total = 10
-            };
-            var pe2Employee1 = new PEs()
-            {
-                EmployeeId = 2,
-                EvaluationPeriod = DateTime.Now.Date,
-                PEId = 2,
-                Total = 9.5
-            };
-            */
+            
             List<EmployeeChoosePeriodViewModel> choosePeriodVM = new List<EmployeeChoosePeriodViewModel>();
 
             if(listUserPE != null && listUserPE.Count > 0)
@@ -777,10 +677,6 @@ namespace PES.Controllers
 
             ViewBag.UserEmail = employeeEmail;
             ViewBag.UserID = employeeID;
-            //EmployeeChoosePeriodViewModel choosePeriodVM = new EmployeeChoosePeriodViewModel();
-
-            //choosePeriodVM.period = userPE.EvaluationPeriod;
-            //choosePeriodVM.totalEvaluation = userPE.Total;
             return View(choosePeriodVM);
         }
 
