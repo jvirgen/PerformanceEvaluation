@@ -52,7 +52,7 @@ namespace PES.Controllers
                     if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                     {
                         //Return the Resource's view 
-                        return RedirectToAction("ChoosePeriod", "PerformanceEvaluation");
+                        return RedirectToAction("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = resource.Email, employeeID = resource.EmployeeId });
                     }
                     //Check if the user is a Manager or Director 
                     else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)

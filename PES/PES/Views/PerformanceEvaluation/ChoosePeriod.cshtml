@@ -16,11 +16,14 @@
     <div>
         <br />
         <div>
-            <table border="1" width="100" class="table table-striped">
+            <table id="Tableview" border="1" class="table table-striped">
                 <thead>
                 <tr>
                     <th id="Header_Period">Period</th>
-                    <th id="Header_Score">Score</th>
+                    <th id="Header_Performance">Performance Score</th>
+                    <th id="Header_Competences">Competences Score</th>
+                    <th id="Header_English">English Score</th>
+                    <th id="Header_Score">Final Score</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +33,9 @@
                         { 
                             <tr>
                                 <td>@scoreM.pesid</td>
+                                <td>@scoreM.totalPerforformance</td>
+                                <td>@scoreM.totalCompetences</td>
+                                <td>@scoreM.totalEnglish</td>
                                 <td>@scoreM.totalEvaluation</td>
                             </tr>
                         }
@@ -38,3 +44,25 @@
             </table>
         </div>
     </div>
+
+@section Styles
+{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+}
+
+
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#Tableview').DataTable({
+            lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+            pageLength: 25
+        });
+    });
+    </script>
+
+}

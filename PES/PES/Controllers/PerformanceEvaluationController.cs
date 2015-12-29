@@ -731,6 +731,7 @@ namespace PES.Controllers
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
+        [HttpGet]
         public ActionResult ChoosePeriod(string employeeEmail, int employeeID)
         {
             // Get user 
