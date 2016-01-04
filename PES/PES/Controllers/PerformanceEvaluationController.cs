@@ -10,7 +10,8 @@ using PES.Services;
 
 namespace PES.Controllers
 {
-    //[Authorize]
+
+    [AllowAnonymous]
     public class PerformanceEvaluationController : Controller
     {
         // Declare services 
@@ -91,7 +92,8 @@ namespace PES.Controllers
             Excel.Worksheet excelSheet = wb.ActiveSheet;
              PESComplete PESc = new PESComplete();
 
-            PESc.pes.Total = (int)excelSheet.Cells[9, 6];
+            //var val = excelSheet.Cells[6, 9].Value;
+            PESc.pes.Total = Convert.ToDouble(excelSheet.Cells[6, 9]);
 
             PESc.empleado.FirstName = excelSheet.Cells[3, 3];
             PESc.empleado.LastName = excelSheet.Cells[3, 3];
@@ -464,7 +466,7 @@ namespace PES.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(HttpPostedFileBase fileUploaded)
+        public ActionResult UploadFile(UploadFileViewModel uploadVM, HttpPostedFileBase fileUploaded)
         {
             string message = "";
                    
@@ -484,7 +486,21 @@ namespace PES.Controllers
                     }
                     //Save the file in the repository   
                     fileUploaded.SaveAs(path);
-
+                    
+                    /*
+                    //Read Employees by a Excel file *************************************
+                    //List<Employee> employees = new List<Employee>();
+                    //EmployeeService employeeservice = new EmployeeService();
+                    //employees = employeeservice.GetEmployeesFromXLSFile(path);
+                   
+                    //// insert employees
+                    //foreach (Employee employee in employees)
+                    //{
+                    //    employeeservice.InsertEmployee(employee);
+                    //}
+                    //********************************************************************
+                    */
+                    #region comment for now
                     try
                     {
                         PESComplete file = ReadPerformanceFile(path);
@@ -496,19 +512,19 @@ namespace PES.Controllers
                             if (!fileSaved)
                             {
                                 // File not saved
-                                TempData["Error"] = "There were some problems saving the file. Please try again later.";    
+                                TempData["Error"] = "There were some problems saving the file. Please try again later.";
                             }
                             else
                             {
                                 // File saved successfully
                                 TempData["Success"] = "File saved successfully";
                             }
-                            
+
                         }
                         else
                         {
                             TempData["Error"] = "File was not read successfully";
-                            
+
                         }
                     }
                     finally
@@ -519,6 +535,7 @@ namespace PES.Controllers
                             System.IO.File.Delete(path);
                         }
                     }
+                    #endregion
 
                     return View("UploadFile");
                 }
@@ -536,7 +553,30 @@ namespace PES.Controllers
         // GET: PerformanceEvaluation/UploadFile
         public ActionResult UploadFile()
         {
-            return View();
+            UploadFileViewModel uploadVM = new UploadFileViewModel();
+
+            // Get current user by using the session
+            Employee currentUser = new Employee();
+            EmployeeService EmployeeService = new EmployeeService();
+            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
+            uploadVM.CurrentUser = currentUser;
+
+            List<Employee> listEmployees = new List<Employee>();
+            if(currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all employees 
+                listEmployees = _employeeService.GetAll();
+            }
+            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get employees by manager
+                listEmployees = null;
+                listEmployees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
+
+            uploadVM.ListEmployees = listEmployees;
+
+            return View(uploadVM);
         }
 
         // GET: PeformanceEvaluation/SearchIformation
@@ -546,82 +586,56 @@ namespace PES.Controllers
             // Read from database
  
             // Get current users by using email in Session
-            var director = new Employee()
-            {
-                EmployeeId = 0,
-                Email = "victor.leon@hotmail.com",
-                ManagerId = 0, 
-                ProfileId = 3
-            };
+            // Get current user 
+            Employee currentUser = new Employee();
+            var userEmail = (string)Session["UserEmail"];
 
-            // Create manager
-            var manager = new Employee()
-            {
-                EmployeeId = 1,
-                Email = "victor.leon@hotmail.com",
-                FirstName = "Victor",
-                LastName = "León",
-                ManagerId = 0
-            };
+            currentUser = _employeeService.GetByEmail(userEmail);
 
-            // Create users of manager
-            var employee1 = new Employee()
+            List<Employee> employees = new List<Employee>();
+            if(currentUser.ProfileId == (int)ProfileUser.Director)
             {
-                EmployeeId = 2,
-                Email = "jose.aguilar@4thsource.com",
-                FirstName = "José Eduardo",
-                LastName = "Aguilar Anguiano",
-                ManagerId = 1
-            };
-            var employee2 = new Employee()
+                // Get all
+                employees = _employeeService.GetAll();
+            }
+            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
             {
-                EmployeeId = 3,
-                Email = "jose.cortes@4thsource.com",
-                FirstName = "Jose Eduardo",
-                LastName = "Cortes Cernas",
-                ManagerId = 1
-            };
+                // Get by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
+            else
+            {
+                // user is resource not allowed, return to home 
+                // send error
+                return RedirectToAction("ChoosePeriod");
+            }
 
-            var employee3 = new Employee()
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            foreach(var employee in employees)
             {
-                EmployeeId = 3,
-                Email = "jose.vaca@4thsource.com",
-                FirstName = "Eduardo",
-                LastName = "Vaca",
-                ManagerId = 0
-            };
-
-            var employee4 = new Employee()
-            {
-                EmployeeId = 4,
-                Email = "Eder.palacios@4thsource.com",
-                FirstName = "Eder",
-                LastName = "Palacios",
-                ManagerId = 3
-            };
-
-            List<EmployeeManagerViewModel> managerEmployeesVM = new List<EmployeeManagerViewModel>()
-            {
-                new EmployeeManagerViewModel
-                {
-                    employee =  employee1,
-                    manager = manager
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
                 
-                },
-                new EmployeeManagerViewModel
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                if (listPE != null && listPE.Count > 0)
                 {
-                    employee =  employee2,
-                    manager = manager
-                
-                },
-                new EmployeeManagerViewModel
-                {
-                    employee = employee3,
-                    manager = manager
+                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+
+                    employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
                 }
-            };
+                else 
+                {
+                    employeeVM.totalScore = 0;
+                }
 
-            return View(managerEmployeesVM);
+                listEmployeeVM.Add(employeeVM);
+            }
+
+            ViewBag.currentEmployee = currentUser;
+            
+            return View(listEmployeeVM);
         }
         
         // GET: PeformanceEvaluation/SearchIformation
@@ -631,20 +645,39 @@ namespace PES.Controllers
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
-        public ActionResult ChoosePeriod(string employeeId)
+        [HttpGet]
+        public ActionResult ChoosePeriod(string employeeEmail, int employeeID)
         {
             // Get user 
-            var user = new Employee();
-
+            var user = _employeeService.GetByEmail(employeeEmail);
+            var userid = _employeeService.GetByID(employeeID);
             // -- Get performance evaluation data
             // Get performance evaluation 
-            PEs userPE = _peService.GetPerformanceEvaluationByUser("email");
+            List<PEs> listUserPE = _peService.GetPerformanceEvaluationByUserID(employeeID);
 
             //decimal totalEvaluation = _scoreService.GetScoreByPE(userPE.PEId);
+            
+            List<EmployeeChoosePeriodViewModel> choosePeriodVM = new List<EmployeeChoosePeriodViewModel>();
 
-            EmployeeChoosePeriodViewModel choosePeriodVM = new EmployeeChoosePeriodViewModel();
-            //choosePeriodVM.totalEvaluation;
+            if(listUserPE != null && listUserPE.Count > 0)
+            {
+                foreach(var userPE in listUserPE)
+                {
+                    var chooseVM = new EmployeeChoosePeriodViewModel
+                    {
+                        employeeid = userPE.EmployeeId,
+                        pesid = userPE.PEId,
+                        period = userPE.EvaluationPeriod,
+                        totalEvaluation = userPE.Total,
+                        totalEnglish = userPE.EnglishScore
+                    };
 
+                    choosePeriodVM.Add(chooseVM);
+                }
+            }
+
+            ViewBag.UserEmail = employeeEmail;
+            ViewBag.UserID = employeeID;
             return View(choosePeriodVM);
         }
 

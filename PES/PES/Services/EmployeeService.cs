@@ -28,7 +28,7 @@ namespace PES.Services
         //Get ONE employee By Email
         public Employee GetByEmail(string email)
         {
-            Employee employee = null;
+            Employee employee = new Employee();
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -62,7 +62,69 @@ namespace PES.Services
                         employee.Customer = Convert.ToString(Read["CUSTOMER"]);
                         employee.Position = Convert.ToString(Read["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
-                        employee.ManagerId = Convert.ToInt32(Read["iD_MANAGER"]);
+                        employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
+                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        employee.Ranking = Convert.ToInt32(Read["RANKING"]);
+                        string endDate = Convert.ToString(Read["END_DATE"]);
+
+                        if (!string.IsNullOrEmpty(endDate))
+                        {
+                            employee.EndDate = Convert.ToDateTime(endDate);
+                        }
+                        else
+                        {
+                            employee.EndDate = null;
+                        }
+                    }
+
+                    db.Close();
+                }
+            }
+            catch
+            {
+                employee = null;
+            }
+            return employee;
+        }
+
+        //Get ONE employee by ID
+        public Employee GetByID(int ID)
+        {
+            Employee employee = new Employee();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT ID_EMPLOYEE," +
+                                           "FIRST_NAME," +
+                                           "LAST_NAME," +
+                                           "EMAIL," +
+                                           "CUSTOMER," +
+                                           "POSITION," +
+                                           "ID_PROFILE," +
+                                           "ID_MANAGER," +
+                                           "HIRE_DATE," +
+                                           "RANKING," +
+                                           "END_DATE " +
+                                           "FROM EMPLOYEE WHERE ID_EMPLOYEE = '" + ID + "'";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        employee = new Employee();
+                        employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
+                        employee.LastName = Convert.ToString(Read["LAST_NAME"]);
+                        employee.Email = Convert.ToString(Read["EMAIL"]);
+                        employee.Customer = Convert.ToString(Read["CUSTOMER"]);
+                        employee.Position = Convert.ToString(Read["POSITION"]);
+                        employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
+                        employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
                         employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         employee.Ranking = Convert.ToInt32(Read["RANKING"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
@@ -90,23 +152,24 @@ namespace PES.Services
         //Get all employees
         public List<Employee> GetAll()
         {
-            List<Employee> employees = null;
-            Employee employee = null;
+            List<Employee> employees = new List<Employee>();
+            Employee employee = new Employee();
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = "SELECT ID_EMLPOYEE" +
-                                           "FIRST_NAME," +
-                                           "LAST_NAME," +
-                                           "EMAIL," +
-                                           "CUSTOMER," +
-                                           "POSITION," +
-                                           "ID_MANAGER," +
-                                           "HIRE_DATE," +
-                                           "RANKING," +
-                                           "END_DATE)" +
+                    string Query = "SELECT ID_EMPLOYEE, " +
+                                           "FIRST_NAME, " +
+                                           "LAST_NAME, " +
+                                           "EMAIL, " +
+                                           "CUSTOMER, " +
+                                           "POSITION, " +
+                                           "ID_PROFILE," +
+                                           "ID_MANAGER, " +
+                                           "HIRE_DATE, " +
+                                           "RANKING, " +
+                                           "END_DATE " +
                                            "FROM EMPLOYEE";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -123,7 +186,7 @@ namespace PES.Services
                         employee.Customer = Convert.ToString(Read["CUSTOMER"]);
                         employee.Position = Convert.ToString(Read["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
-                        employee.ManagerId = Convert.ToInt32(Read["iD_MANAGER"]);
+                        employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
                         employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         employee.Ranking = Convert.ToInt32(Read["RANKING"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
@@ -206,7 +269,7 @@ namespace PES.Services
                 {
                     db.Open();
                     string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
-                    string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
+                    string QueryName = "SELECT FIST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
                     OracleCommand Comand = new OracleCommand(QueryProfile, db);
                     OracleDataReader Read = Comand.ExecuteReader();
 
@@ -240,23 +303,24 @@ namespace PES.Services
         //Get Users Name By Manager Id
         public List<Employee> GetEmployeeByManager(int ManageerId)
         {
-            List<Employee> Employees = null;
-            Employee employee = null;
+            List<Employee> Employees = new List<Employee>();
+            Employee employee = new Employee();
             try
             {
                 using(OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string GetEmployees = "SELECT ID_EMPLOYEE"+ 
-                                       "FIRST_NAME," +
-                                       "LAST_NAME," +
-                                       "EMAIL," +
-                                       "CUSTOMER," +
-                                       "POSITION," +
-                                       "ID_MANAGER," +
-                                       "HIRE_DATE," +
-                                       "RANKING," +
-                                       "END_DATE)" +
+                    string GetEmployees = "SELECT ID_EMPLOYEE, "+ 
+                                       "FIRST_NAME, " +
+                                       "LAST_NAME, " +
+                                       "EMAIL, " +
+                                       "CUSTOMER, " +
+                                       "POSITION, " +
+                                       "ID_PROFILE, "+
+                                       "ID_MANAGER, " +
+                                       "HIRE_DATE, " +
+                                       "RANKING, " +
+                                       "END_DATE " +
                                        "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId;
                     OracleCommand Command = new OracleCommand(GetEmployees, db);
                     Command.ExecuteNonQuery();
@@ -271,6 +335,7 @@ namespace PES.Services
                         employee.Email = Convert.ToString(Reader["EMAIL"]);
                         employee.Customer = Convert.ToString(Reader["CUSTOMER"]);
                         employee.Position = Convert.ToString(Reader["POSITION"]);
+                        employee.ManagerId = Convert.ToInt32(Reader["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Reader["ID_MANAGER"]);
                         employee.HireDate = Convert.ToDateTime(Reader["HIRE_DATE"]);
                         employee.Ranking = Convert.ToInt32(Reader["RANKING"]);
@@ -406,7 +471,7 @@ namespace PES.Services
                                 newEmployee.FirstName = columnsData[ResourceColumns.FirstName].ToArray<string>()[i];
                                 newEmployee.LastName = columnsData[ResourceColumns.LastName].ToArray<string>()[i];
                                 newEmployee.Email = columnsData[ResourceColumns.Email].ToArray<string>()[i];
-                                newEmployee.Customer = string.Empty; // Column not comming from excel file
+                                newEmployee.Customer = "No Customer"; // Column not comming from excel file
                                 newEmployee.Position = columnsData[ResourceColumns.JobCode].ToArray<string>()[i];
 
                                 #region Set profile
@@ -438,7 +503,7 @@ namespace PES.Services
                                 // --] Set profile
                                 #endregion
 
-                                newEmployee.ManagerId = 0; // Set as 0 for now: Create a function to update later when table is already populated
+                                newEmployee.ManagerId = 2; // Set as 2 for now: Create a function to update later when table is already populated
                                 newEmployee.HireDate = DateTime.Now; // Set as today due to not comming from excel
                                 newEmployee.Ranking = 0;
 
@@ -453,7 +518,7 @@ namespace PES.Services
                                     newEmployee.EndDate = DateTime.Now;
                                 }
                                 
-                                newEmployee.Project = string.Empty; // Column not comming from excel file
+                                newEmployee.Project = "No project"; // Column not comming from excel file
 
                                 //Add employee to the list 
                                 employees.Add(newEmployee);

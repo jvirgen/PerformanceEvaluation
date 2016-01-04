@@ -77,14 +77,19 @@ namespace PES.Models
     {
         public Employee employee { get; set; }
         public Employee manager { get; set; }
+        public double totalScore { get; set; }
+        public int? rank { get; set; }
     }
 
     public class EmployeeChoosePeriodViewModel 
     {
-        public decimal totalEvaluation { get; set; }
-        public decimal totalPerforformance { get; set; }
-        public decimal totalCompetences { get; set; }
-        public decimal totalEnglish { get; set; }
+        public int employeeid { get; set; }
+        public int pesid { get; set; }
+        public DateTime period { get; set; }
+        public double totalEvaluation { get; set; }
+        public double totalPerforformance { get; set; }
+        public double totalCompetences { get; set; }
+        public double totalEnglish { get; set; }
     }
 
     public enum ProfileUser

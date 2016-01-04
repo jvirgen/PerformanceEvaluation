@@ -25,7 +25,9 @@ namespace PES.Controllers
             return View();
         }
 
+        
         [HttpPost]
+       // [Authorize(Order=1 ,Roles="UserEmail", Users="Employee")]
         public ActionResult Login(Login user)
         {
             var isAuthenticated = user.Authentication(user.UserEmail, user.Password);
@@ -42,14 +44,15 @@ namespace PES.Controllers
                     //Store the Resource profile in a variable session
                     Session["UserProfile"] = (int)resource.ProfileId;
 
+
                     //Store the Resource user name in a variable session
-                    Session["UserName"] = resource.Email;
+                    Session["UserEmail"] = resource.Email;
 
                     //Deside if the user is a Resouce
                     if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                     {
                         //Return the Resource's view 
-                        return RedirectToAction("ChoosePeriod", "PerformanceEvaluation");
+                        return RedirectToAction("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = resource.Email, employeeID = resource.EmployeeId });
                     }
                     //Check if the user is a Manager or Director 
                     else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
