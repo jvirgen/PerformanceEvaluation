@@ -669,7 +669,9 @@ namespace PES.Controllers
                         pesid = userPE.PEId,
                         period = userPE.EvaluationPeriod,
                         totalEvaluation = userPE.Total,
-                        totalEnglish = userPE.EnglishScore
+                        totalEnglish = userPE.EnglishScore,
+                        totalPerforformance = userPE.PerformanceScore,
+                        totalCompetences = userPE.CompeteneceScore
                     };
 
                     choosePeriodVM.Add(chooseVM);
