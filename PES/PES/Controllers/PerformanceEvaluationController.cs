@@ -661,6 +661,7 @@ namespace PES.Controllers
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
+        [HttpGet]
         public ActionResult ChoosePeriod(string employeeEmail, int employeeID)
         {
             // Get user 
@@ -683,7 +684,10 @@ namespace PES.Controllers
                         employeeid = userPE.EmployeeId,
                         pesid = userPE.PEId,
                         period = userPE.EvaluationPeriod,
-                        totalEvaluation = userPE.Total
+                        totalEvaluation = userPE.Total,
+                        totalEnglish = userPE.EnglishScore,
+                        totalPerforformance = userPE.PerformanceScore,
+                        totalCompetences = userPE.CompeteneceScore
                     };
 
                     choosePeriodVM.Add(chooseVM);
