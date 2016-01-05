@@ -97,13 +97,14 @@ namespace PES.Controllers
             PESc.pes.EvaluatorId = evaluator.EmployeeId;
             PESc.pes.EvaluationPeriod = DateTime.Now.Date;
 
-
+            // *****************
             PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
             PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
             PESc.empleado.Position = excelSheet.Cells[4, 3].Value;
             PESc.empleado.Customer = excelSheet.Cells[5, 3].Value;
             PESc.empleado.Project = excelSheet.Cells[6, 3].Value;
             PESc.empleado.Email = user.Email;
+
 
             PESc.title1.Name = excelSheet.Cells[19, 2].Value;
             PESc.title2.Name = excelSheet.Cells[39, 2].Value;
