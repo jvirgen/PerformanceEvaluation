@@ -48,6 +48,7 @@
 @section Styles
 {
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css")
 }
 
 
@@ -55,10 +56,24 @@
 {
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js")
+   
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js")
+    @Scripts.Render("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js")
+    @Scripts.Render("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js")
+    @Scripts.Render("https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js")
+    
+
+
+
+
 
     <script type="text/javascript">
     $(document).ready(function () {
         $('#Tableview').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf'            ],
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
             pageLength: 25
         });
