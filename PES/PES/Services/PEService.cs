@@ -61,7 +61,9 @@ namespace PES.Services
                                            "ID_EVALUATOR," +
                                            "ID_STATUS," +
                                            "TOTAL," +
-                                           "ENGLISH_SCORE " +
+                                           "ENGLISH_SCORE," +
+                                           "PERFORMANCE_SCORE," +
+                                           "COMPETENCE_SCORE " +
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -79,6 +81,8 @@ namespace PES.Services
                         pes.StatusId = Convert.ToInt32(Read["ID_STATUS"]);
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
                         pes.EnglishScore = Convert.ToDouble(Read["ENGLISH_SCORE"]);
+                        pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
+                        pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
 
                         listPES.Add(pes);
                     }
