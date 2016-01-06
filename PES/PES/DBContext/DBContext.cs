@@ -10,15 +10,15 @@ namespace PES.DBContext
     {
         public string DataSource
         {
-            get { return "localhost"; }
+            get { return "localhost:1521/xe"; }
         }
         public string UserId
         {
-            get { return "system"; }
+            get { return "pe"; }
         }
         public string Password
         {
-            get { return "4colima"; }
+            get { return "colima4"; }
         }
         public string ConnectionString
         {

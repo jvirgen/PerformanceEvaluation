@@ -24,6 +24,7 @@ namespace PES.Controllers
         private CommentService _commentService;
         private SkillService _skillService;
         private LM_SkillService _lm_skillService;
+        private StatusService _statusService;
 
         public PerformanceEvaluationController() 
         {
@@ -36,6 +37,7 @@ namespace PES.Controllers
             _commentService = new CommentService();
             _skillService = new SkillService();
             _lm_skillService = new LM_SkillService();
+            _statusService = new StatusService();
         }
 
         // GET: PerformanceEvaluation
@@ -92,29 +94,49 @@ namespace PES.Controllers
             Excel.Worksheet excelSheet = wb.ActiveSheet;
             PESComplete PESc = new PESComplete();
 
+            #region Performance Evaluation - insert
             PESc.pes.Total = excelSheet.Cells[6,9].Value;
             PESc.pes.EmployeeId = user.EmployeeId;
             PESc.pes.EvaluatorId = evaluator.EmployeeId;
             PESc.pes.EvaluationPeriod = DateTime.Now.Date;
+            var status = _statusService.GetStatusByDescription("imported");
+            PESc.pes.StatusId = status != null ? status.StatusId : 0; 
+            PESc.pes.EnglishScore = 0;
+            PESc.pes.PerformanceScore = 0;
+            PESc.pes.CompeteneceScore = 0;
+            #endregion
 
-            // *****************
+            #region Employee - update
+            // data from user
+            PESc.empleado.EmployeeId = user.EmployeeId;
+            PESc.empleado.Email = user.Email;
+            PESc.empleado.ProfileId = user.ProfileId;
+            PESc.empleado.ManagerId = user.ManagerId;
+            PESc.empleado.HireDate = user.HireDate;
+            PESc.empleado.Ranking = user.Ranking;
+            PESc.empleado.EndDate = user.EndDate;
+
+            // data from excel
             PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
             PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
             PESc.empleado.Position = excelSheet.Cells[4, 3].Value;
             PESc.empleado.Customer = excelSheet.Cells[5, 3].Value;
             PESc.empleado.Project = excelSheet.Cells[6, 3].Value;
-            PESc.empleado.Email = user.Email;
+            #endregion
 
-
+            #region Title - insert
             PESc.title1.Name = excelSheet.Cells[19, 2].Value;
             PESc.title2.Name = excelSheet.Cells[39, 2].Value;
+            #endregion
 
+            #region Subtitle - insert
             PESc.subtitle1.Name = excelSheet.Cells[23, 2].Value;
             PESc.subtitle2.Name = excelSheet.Cells[32, 2].Value;
             PESc.subtitle3.Name = excelSheet.Cells[43, 2].Value;
             PESc.subtitle4.Name = excelSheet.Cells[52, 2].Value;
             PESc.subtitle5.Name = excelSheet.Cells[59, 2].Value;
             PESc.subtitle6.Name = excelSheet.Cells[67, 2].Value;
+            #endregion
 
             PESc.description1.DescriptionText = excelSheet.Cells[24, 2].Value;
             PESc.description2.DescriptionText = excelSheet.Cells[25, 2].Value;
@@ -518,7 +540,8 @@ namespace PES.Controllers
 
                         if(user != null)
                         {
-                            PESComplete file = ReadPerformanceFile(path, user);
+                            var evaluator = _employeeService.GetByID(user.ManagerId);
+                            PESComplete file = ReadPerformanceFile(path, user, evaluator);
                             if (file != null)
                             {
                                 // Load file into db
