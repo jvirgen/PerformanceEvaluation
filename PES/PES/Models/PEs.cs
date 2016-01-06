@@ -46,12 +46,12 @@ namespace PES.Models
         public double EnglishScore { get; set; }
 
         /// <summary>
-        /// English Score
+        /// Performance Score
         /// </summary>
         public double PerformanceScore { get; set; }
 
         /// <summary>
-        /// English Score
+        /// Competence Score
         /// </summary>
         public double CompeteneceScore { get; set; }
         

@@ -139,10 +139,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CompetencesSection.cs" />
     <Compile Include="Models\Description.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\LM_Skill.cs" />
+    <Compile Include="Models\PerformancSection.cs" />
     <Compile Include="Models\PEs.cs" />
     <Compile Include="Models\PESComplete.cs" />
     <Compile Include="Models\Profile.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Models\ResourceColumns.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Skill.cs" />
+    <Compile Include="Models\SkillsSection.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Subtitle.cs" />
     <Compile Include="Models\Title.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="Services\SkillService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\SubtitleService.cs" />
     <Compile Include="Services\TitleService.cs" />
   </ItemGroup>
