@@ -169,6 +169,7 @@
     <Compile Include="Services\SkillService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\SubtitleService.cs" />
     <Compile Include="Services\TitleService.cs" />
   </ItemGroup>

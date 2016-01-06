@@ -7,7 +7,7 @@ namespace PES.Models
 {
     public static class SkillsSection
     {
-        public static Skill Skill 
+        //public static Skill Skill 
 
     }
 }

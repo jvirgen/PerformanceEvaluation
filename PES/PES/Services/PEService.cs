@@ -45,6 +45,12 @@ namespace PES.Services
             
             return status;
         }
+        
+        public PEs GetPerformanceEvaluationByDate(int userId, DateTime date)
+        {
+            // complete function
+            return new PEs();
+        }
 
         public List<PEs> GetPerformanceEvaluationByUserID(int userid) 
         {
