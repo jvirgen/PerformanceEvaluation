@@ -14,11 +14,11 @@ namespace PES.DBContext
         }
         public string UserId
         {
-            get { return "pe"; }
+            get { return "system"; }
         }
         public string Password
         {
-            get { return "colima4"; }
+            get { return "4colima"; }
         }
         public string ConnectionString
         {
