@@ -46,7 +46,7 @@ namespace PES.Models
         public Description descriptionPuctuality = new Description();
         public Description descriptionPolicies = new Description();
         public Description descriptionValues = new Description();
-        public Description subtotalQuality = new Description();
+        public Description subtotalDescQuality = new Description();
         public Description subtotalOpportunity = new Description();
         public Description subtotalSkills = new Description();
         public Description subtotalInterpersonal = new Description();
@@ -81,7 +81,7 @@ namespace PES.Models
         public Score policies = new Score();
         public Score values = new Score();
         public Score scoreQuality = new Score();
-        public Score scoreOpportunity = new Score();
+        public Score scoreOpportunity = new Score(); 
         public Score scoreSkills = new Score();
         public Score scoreInterpersonal = new Score();
         public Score scoreGrowth = new Score();
