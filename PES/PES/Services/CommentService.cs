@@ -13,6 +13,44 @@ namespace PES.Services
     {
         private PESDBContext dbContext = new PESDBContext();
 
+        // Get Comments of the PE to the DB by peID
+        public List<Comment> GetCommentByPE(int peId) 
+        {
+            List<Comment> Comments = new List<Comment>();
+            Comment Comment = new Comment();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string SelectComments = "SELECT TRAINNING_EMPLOYEE, " +
+                                                    "TRAINNING_EVALUATOR, " +
+                                                    "ACKNOWLEDGE_EVALUATOR, " +
+                                                    "\"comm/recomm_employee\", " +
+                                                    "\"comm/recomm_evaluator\"" +
+                                                    "FROM COMMENT WHERE ID_PE = " + peId;
+                    OracleCommand Command = new OracleCommand(SelectComments, db);
+                    Command.ExecuteReader();
+                    OracleDataReader Reader = Command.ExecuteReader();
+                    while (Reader.Read())
+                    {
+                        Comments = new List<Comment>();
+                        Comment.TrainningEmployee = Convert.ToString(Reader["TRAINNING_EMPLOYEE"]);
+                        Comment.TrainningEvaluator = Convert.ToString(Reader["TRAINNING_EVALUATOR"]);
+                        Comment.AcknowledgeEvaluator = Convert.ToString(Reader["ACKNOWLEDGE_EVALUATOR"]);
+                        Comment.CommRecommEmployee = Convert.ToString(Reader["comm/recomm_employee"]);
+                        Comment.CommRecommEvaluator = Convert.ToString(Reader["comm/recomm_evaluator"]);
+                        Comments.Add(Comment);
+                    }
+                    db.Close();
+                }
+            }
+            catch
+            {
+                Comments = null;
+            }
+            return Comments;
+        }
 
         public bool InsertComment(Comment comment)
         {

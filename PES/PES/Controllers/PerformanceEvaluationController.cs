@@ -723,14 +723,16 @@ namespace PES.Controllers
             return View(choosePeriodVM);
         }
 
-        // GET: PerformanceEvaluation/SearchInfoRank
-        public ActionResult SearchInfoRank()
+        //GET: PerformanceEvaluation/PEVisualization
+        public ActionResult PEVisualization()
         {
+            PESComplete peComplete = new PESComplete();
+
             return View();
         }
 
-        //GET: PerformanceEvaluation/PEVisualization
-        public ActionResult PEVisualization()
+        // GET: PerformanceEvaluation/SearchInfoRank
+        public ActionResult SearchInfoRank()
         {
             return View();
         }

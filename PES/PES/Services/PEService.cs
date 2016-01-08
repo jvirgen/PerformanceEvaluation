@@ -11,6 +11,12 @@ namespace PES.Services
     public class PEService
     {
         private PESDBContext dbContext = new PESDBContext();
+        private EmployeeService _employeeService;
+
+        public PEService()
+        {
+            _employeeService = new EmployeeService();
+        }
 
 
         public bool InsertPE(PEs pe)
@@ -50,6 +56,16 @@ namespace PES.Services
         {
             // complete function
             return new PEs();
+        }
+
+        public PEs GetPerformanceEvaluationByDateEmail(string email, DateTime date) 
+        {
+            // Get user
+            var user = _employeeService.GetByEmail(email);
+
+            PEs pe = GetPerformanceEvaluationByDate(user.EmployeeId, date);
+
+            return pe;
         }
 
         public List<PEs> GetPerformanceEvaluationByUserID(int userid) 
