@@ -278,7 +278,7 @@ namespace PES.Services
                                                                "POSITION='" + employee.Position + "', " +
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
                                                                "ID_MANAGER='" + employee.ManagerId + "', " +
-                                                               "HIRE_DATE='" + employee.HireDate + "', " +
+                                                               "HIRE_DATE=' TO_DATE('" + employee.HireDate + "', " +
                                                                "RANKING='" + employee.Ranking + "', " +
                                                                "END_DATE='" + employee.EndDate + "'" +
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";

@@ -22,16 +22,22 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string InsertQuery = "INSERT INTO PE (EVALUATION_PERIOD," +
-                                          "ID_EMPLOYEE," +
-                                          "ID_EVALUATOR," +
-                                          "ID_STATUS," +
-                                          "TOTAL) " +
-                                          "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','DD-MM-YYYY ')," +
-                                                      pe.EmployeeId + "," +
-                                                      pe.EvaluatorId + "," +
-                                                      pe.StatusId + "," +
-                                                      pe.Total + ")";
+                    string InsertQuery = "INSERT INTO PE (EVALUATION_PERIOD, " +
+                                          "ID_EMPLOYEE, " +
+                                          "ID_EVALUATOR, " +
+                                          "ID_STATUS, " +
+                                          "TOTAL, " +
+                                          "ENGLISH_SCORE, " +
+                                          "PERFORMANCE_SCORE, " +
+                                          "COMPETENCE_SCORE) " +
+                                          "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','MM-DD-YYYY '), " +
+                                                      pe.EmployeeId + ", " +
+                                                      pe.EvaluatorId + ", " +
+                                                      pe.StatusId + ", " +
+                                                      pe.Total + ", " +
+                                                      pe.EnglishScore + ", " +
+                                                      pe.PerformanceScore + ", " +
+                                                      pe.CompeteneceScore + ")";
                     OracleCommand Command = new OracleCommand(InsertQuery, db);
                     Command.ExecuteNonQuery();
                     status = true;
