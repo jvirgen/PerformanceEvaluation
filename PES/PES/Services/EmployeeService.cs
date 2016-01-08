@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -45,7 +45,8 @@ namespace PES.Services
                                            "ID_MANAGER," +
                                            "HIRE_DATE," +
                                            "RANKING," +
-                                           "END_DATE " +
+                                           "END_DATE, " +
+                                           "PROJECT " +
                                            "FROM EMPLOYEE WHERE EMAIL = '" + email + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -66,6 +67,7 @@ namespace PES.Services
                         employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         employee.Ranking = Convert.ToInt32(Read["RANKING"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
+                        employee.Project = Convert.ToString(Read["PROJECT"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
@@ -107,7 +109,8 @@ namespace PES.Services
                                            "ID_MANAGER," +
                                            "HIRE_DATE," +
                                            "RANKING," +
-                                           "END_DATE " +
+                                           "END_DATE, " +
+                                           "PROJECT " +
                                            "FROM EMPLOYEE WHERE ID_EMPLOYEE = '" + ID + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -128,6 +131,7 @@ namespace PES.Services
                         employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         employee.Ranking = Convert.ToInt32(Read["RANKING"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
+                        employee.Project = Convert.ToString(Read["PROJECT"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
@@ -169,7 +173,8 @@ namespace PES.Services
                                            "ID_MANAGER, " +
                                            "HIRE_DATE, " +
                                            "RANKING, " +
-                                           "END_DATE " +
+                                           "END_DATE, " +
+                                           "PROJECT " +
                                            "FROM EMPLOYEE";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -190,6 +195,7 @@ namespace PES.Services
                         employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         employee.Ranking = Convert.ToInt32(Read["RANKING"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
+                        employee.Project = Convert.ToString(Read["PROJECT"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
@@ -229,21 +235,23 @@ namespace PES.Services
                                                                "EMAIL," +
                                                                "CUSTOMER," +
                                                                "POSITION," +
-                                                               "ID_PROFILE,"+
+                                                               "ID_PROFILE," +
                                                                "ID_MANAGER," +
                                                                "HIRE_DATE," +
                                                                "RANKING," +
-                                                               "END_DATE)" +
+                                                               "END_DATE, " +
+                                                               "PROJECT)" +
                                      " VALUES ('" + employee.FirstName + "', '" +
                                                employee.LastName + "', '" +
                                                employee.Email + "', '" +
                                                employee.Customer + "', '" +
                                                employee.Position + "', '" +
-                                               employee.ProfileId+ "', '" +
+                                               employee.ProfileId + "', '" +
                                                employee.ManagerId + "', '" +
                                                employee.HireDate.ToShortDateString() + "', '" +
                                                employee.Ranking + "', '" +
-                                               (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : null) + "')";
+                                               (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : null) + "', '" +
+                                               employee.Project + "')";
 
                     OracleCommand Comand = new OracleCommand(InsertQuery, db);
                     Comand.ExecuteNonQuery();
@@ -271,16 +279,15 @@ namespace PES.Services
                     {
                         db.Open();
 
-                        string InsertQuery =  "UPDATE EMPLOYEE SET FIRST_NAME='" + employee.FirstName + "', " +
-                                                               "LAST_NAME='" + employee.LastName + "', " +
-                                                               "EMAIL='" + employee.Email + "', " +
+                        string InsertQuery =  "UPDATE EMPLOYEE SET EMAIL='" + employee.Email + "', " +
                                                                "CUSTOMER='" + employee.Customer + "', " +
                                                                "POSITION='" + employee.Position + "', " +
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
                                                                "ID_MANAGER='" + employee.ManagerId + "', " +
-                                                               "HIRE_DATE=' TO_DATE('" + employee.HireDate + "', " +
+                                                               "HIRE_DATE= TO_DATE('" + employee.HireDate.ToShortDateString() + "', 'MM-DD-YYYY'), " +
                                                                "RANKING='" + employee.Ranking + "', " +
-                                                               "END_DATE='" + employee.EndDate + "'" +
+                                                               "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : "") + "', 'MM-DD-YYYY'), " +
+                                                               "PROJECT='" + employee.Project +"' " +
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
@@ -358,7 +365,8 @@ namespace PES.Services
                                        "ID_MANAGER, " +
                                        "HIRE_DATE, " +
                                        "RANKING, " +
-                                       "END_DATE " +
+                                       "END_DATE, " +
+                                       "PROJECT " +
                                        "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId;
                     OracleCommand Command = new OracleCommand(GetEmployees, db);
                     Command.ExecuteNonQuery();
@@ -378,6 +386,7 @@ namespace PES.Services
                         employee.HireDate = Convert.ToDateTime(Reader["HIRE_DATE"]);
                         employee.Ranking = Convert.ToInt32(Reader["RANKING"]);
                         string endDate = Convert.ToString(Reader["END_DATE"]);
+                        employee.Project = Convert.ToString(Reader["PROJECT"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
