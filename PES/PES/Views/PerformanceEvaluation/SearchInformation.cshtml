@@ -46,6 +46,7 @@
 @section Styles
 {
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
 }
 
 
@@ -53,10 +54,21 @@
 {
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/jszip.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/pdfmake.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
+
+
+
 
     <script type="text/javascript">
     $(document).ready(function () {
         $('#Tableview').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf'],
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
             pageLength: 25
         });

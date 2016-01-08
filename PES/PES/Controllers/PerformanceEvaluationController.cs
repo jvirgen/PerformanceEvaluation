@@ -111,7 +111,7 @@ namespace PES.Controllers
             PESc.empleado.EmployeeId = user.EmployeeId;
             PESc.empleado.Email = user.Email;
             PESc.empleado.ProfileId = user.ProfileId;
-            PESc.empleado.ManagerId = user.ManagerId;
+            PESc.empleado.ManagerId = user.ManagerId; 
             PESc.empleado.HireDate = user.HireDate;
             PESc.empleado.Ranking = user.Ranking;
             PESc.empleado.EndDate = user.EndDate;
@@ -125,53 +125,56 @@ namespace PES.Controllers
             #endregion
 
             #region Title - insert
-            PESc.title1.Name = excelSheet.Cells[19, 2].Value;
-            PESc.title2.Name = excelSheet.Cells[39, 2].Value;
+            //PESc.title1.Name = excelSheet.Cells[19, 2].Value;
+            //PESc.title2.Name = excelSheet.Cells[39, 2].Value;
             #endregion
 
             #region Subtitle - insert
-            PESc.subtitle1.Name = excelSheet.Cells[23, 2].Value;
-            PESc.subtitle2.Name = excelSheet.Cells[32, 2].Value;
-            PESc.subtitle3.Name = excelSheet.Cells[43, 2].Value;
-            PESc.subtitle4.Name = excelSheet.Cells[52, 2].Value;
-            PESc.subtitle5.Name = excelSheet.Cells[59, 2].Value;
-            PESc.subtitle6.Name = excelSheet.Cells[67, 2].Value;
+            //PESc.subtitle1.Name = excelSheet.Cells[23, 2].Value;
+            //PESc.subtitle2.Name = excelSheet.Cells[32, 2].Value;
+            //PESc.subtitle3.Name = excelSheet.Cells[43, 2].Value;
+            //PESc.subtitle4.Name = excelSheet.Cells[52, 2].Value;
+            //PESc.subtitle5.Name = excelSheet.Cells[59, 2].Value;
+            //PESc.subtitle6.Name = excelSheet.Cells[67, 2].Value;
             #endregion
 
-            PESc.description1.DescriptionText = excelSheet.Cells[24, 2].Value;
-            PESc.description2.DescriptionText = excelSheet.Cells[25, 2].Value;
-            PESc.description3.DescriptionText = excelSheet.Cells[26, 2].Value;
-            PESc.description4.DescriptionText = excelSheet.Cells[27, 2].Value;
-            PESc.description5.DescriptionText = excelSheet.Cells[28, 2].Value;
-            PESc.description6.DescriptionText = excelSheet.Cells[29, 2].Value;
-            PESc.description7.DescriptionText = excelSheet.Cells[33, 2].Value;
-            PESc.description8.DescriptionText = excelSheet.Cells[34, 2].Value;
-            PESc.description9.DescriptionText = excelSheet.Cells[35, 2].Value;
-            PESc.description10.DescriptionText = excelSheet.Cells[44, 2].Value;
-            PESc.description11.DescriptionText = excelSheet.Cells[45, 2].Value;
-            PESc.description12.DescriptionText = excelSheet.Cells[46, 2].Value;
-            PESc.description13.DescriptionText = excelSheet.Cells[47, 2].Value;
-            PESc.description14.DescriptionText = excelSheet.Cells[48, 2].Value;
-            PESc.description15.DescriptionText = excelSheet.Cells[49, 2].Value;
-            PESc.description16.DescriptionText = excelSheet.Cells[53, 2].Value;
-            PESc.description17.DescriptionText = excelSheet.Cells[54, 2].Value;
-            PESc.description18.DescriptionText = excelSheet.Cells[55, 2].Value;
-            PESc.description19.DescriptionText = excelSheet.Cells[56, 2].Value;
-            PESc.description21.DescriptionText = excelSheet.Cells[61, 2].Value;
-            PESc.description22.DescriptionText = excelSheet.Cells[62, 2].Value;
-            PESc.description24.DescriptionText = excelSheet.Cells[64, 2].Value;
-            PESc.descriptionPuctuality.DescriptionText = excelSheet.Cells[68, 2].Value;
-            PESc.descriptionPolicies.DescriptionText = excelSheet.Cells[69, 2].Value;
-            PESc.descriptionValues.DescriptionText = excelSheet.Cells[70, 2].Value;
-            PESc.subtotalQuality.DescriptionText = excelSheet.Cells[30, 2].Value;
-            PESc.subtotalOpportunity.DescriptionText = excelSheet.Cells[36, 2].Value;
-            PESc.totalPerformance.DescriptionText = excelSheet.Cells[37, 2].Value;
-            PESc.subtotalSkills.DescriptionText = excelSheet.Cells[50, 2].Value;
-            PESc.subtotalInterpersonal.DescriptionText = excelSheet.Cells[57, 2].Value;
-            PESc.subtotalGrowth.DescriptionText = excelSheet.Cells[65, 2].Value;
-            PESc.subtotalPolicies.DescriptionText = excelSheet.Cells[71, 2].Value;
-            PESc.totalCompetences.DescriptionText = excelSheet.Cells[73, 2].Value;
+            #region Description - insert
+            //PESc.description1.DescriptionText = excelSheet.Cells[24, 2].Value;
+            //PESc.description2.DescriptionText = excelSheet.Cells[25, 2].Value;
+            //PESc.description3.DescriptionText = excelSheet.Cells[26, 2].Value;
+            //PESc.description4.DescriptionText = excelSheet.Cells[27, 2].Value;
+            //PESc.description5.DescriptionText = excelSheet.Cells[28, 2].Value;
+            //PESc.description6.DescriptionText = excelSheet.Cells[29, 2].Value;
+            //PESc.description7.DescriptionText = excelSheet.Cells[33, 2].Value;
+            //PESc.description8.DescriptionText = excelSheet.Cells[34, 2].Value;
+            //PESc.description9.DescriptionText = excelSheet.Cells[35, 2].Value;
+            //PESc.description10.DescriptionText = excelSheet.Cells[44, 2].Value;
+            //PESc.description11.DescriptionText = excelSheet.Cells[45, 2].Value;
+            //PESc.description12.DescriptionText = excelSheet.Cells[46, 2].Value;
+            //PESc.description13.DescriptionText = excelSheet.Cells[47, 2].Value;
+            //PESc.description14.DescriptionText = excelSheet.Cells[48, 2].Value;
+            //PESc.description15.DescriptionText = excelSheet.Cells[49, 2].Value;
+            //PESc.description16.DescriptionText = excelSheet.Cells[53, 2].Value;
+            //PESc.description17.DescriptionText = excelSheet.Cells[54, 2].Value;
+            //PESc.description18.DescriptionText = excelSheet.Cells[55, 2].Value;
+            //PESc.description19.DescriptionText = excelSheet.Cells[56, 2].Value;
+            //PESc.description21.DescriptionText = excelSheet.Cells[61, 2].Value;
+            //PESc.description22.DescriptionText = excelSheet.Cells[62, 2].Value;
+            //PESc.description24.DescriptionText = excelSheet.Cells[64, 2].Value;
+            //PESc.descriptionPuctuality.DescriptionText = excelSheet.Cells[68, 2].Value;
+            //PESc.descriptionPolicies.DescriptionText = excelSheet.Cells[69, 2].Value;
+            //PESc.descriptionValues.DescriptionText = excelSheet.Cells[70, 2].Value;
+            //PESc.subtotalQuality.DescriptionText = excelSheet.Cells[30, 2].Value;
+            //PESc.subtotalOpportunity.DescriptionText = excelSheet.Cells[36, 2].Value;
+            //PESc.totalPerformance.DescriptionText = excelSheet.Cells[37, 2].Value;
+            //PESc.subtotalSkills.DescriptionText = excelSheet.Cells[50, 2].Value;
+            //PESc.subtotalInterpersonal.DescriptionText = excelSheet.Cells[57, 2].Value;
+            //PESc.subtotalGrowth.DescriptionText = excelSheet.Cells[65, 2].Value;
+            //PESc.subtotalPolicies.DescriptionText = excelSheet.Cells[71, 2].Value;
+            //PESc.totalCompetences.DescriptionText = excelSheet.Cells[73, 2].Value;
+            #endregion
 
+            #region ScoreEmployee - insert
             PESc.one.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[24, 6].Value);
             PESc.two.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[25, 6].Value);
             PESc.three.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[26, 6].Value);
@@ -197,25 +200,27 @@ namespace PES.Controllers
             PESc.punctuality.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[68, 6].Value);
             PESc.policies.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[69, 6].Value);
             PESc.values.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[70, 6].Value);
+            #endregion
 
+            #region ScoreEvaluator - insert
             PESc.one.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[24, 7].Value);
             PESc.two.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[25, 7].Value);
             PESc.three.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[26, 7].Value);
             PESc.four.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[27, 7].Value);
             PESc.five.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[28, 7].Value);
             PESc.six.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[29, 7].Value);
+            
             PESc.seven.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[33, 7].Value);
             PESc.eight.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[34, 7].Value);
             PESc.nine.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[35, 7].Value);
+
             PESc.ten.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[44, 7].Value);
             PESc.eleven.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[45, 7].Value);
-            PESc.twelve.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[46, 7].Value);
-            PESc.twelve.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[46, 7].Value);
-            PESc.twelve.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[46, 7].Value);
             PESc.twelve.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[46, 7].Value);
             PESc.thirteen.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[47, 7].Value);
             PESc.fourteen.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[48, 7].Value);
             PESc.fifteen.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[49, 7].Value);
+
             PESc.sixteen.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[53, 7].Value);
             PESc.seventeen.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[54, 7].Value);
             PESc.eighteen.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[55, 7].Value);
@@ -226,7 +231,9 @@ namespace PES.Controllers
             PESc.punctuality.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[68, 7].Value);
             PESc.policies.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[69, 7].Value);
             PESc.values.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[70, 7].Value);
+            #endregion
 
+            #region Comments - insert
             PESc.one.Comments = excelSheet.Cells[24, 8].Value;
             PESc.two.Comments = excelSheet.Cells[25, 8].Value;
             PESc.three.Comments = excelSheet.Cells[26, 8].Value;
@@ -252,7 +259,9 @@ namespace PES.Controllers
             PESc.punctuality.Comments = excelSheet.Cells[68, 8].Value;
             PESc.policies.Comments = excelSheet.Cells[69, 8].Value;
             PESc.values.Comments = excelSheet.Cells[70, 8].Value;
+            #endregion
 
+            #region Calculation - insert
             PESc.one.Calculation = excelSheet.Cells[24, 9].Value;
             PESc.two.Calculation = excelSheet.Cells[25, 9].Value;
             PESc.three.Calculation = excelSheet.Cells[26, 9].Value;
@@ -278,7 +287,9 @@ namespace PES.Controllers
             PESc.punctuality.Calculation = excelSheet.Cells[68, 9].Value;
             PESc.policies.Calculation = excelSheet.Cells[69, 9].Value;
             PESc.values.Calculation = excelSheet.Cells[70, 9].Value;
+            #endregion
 
+            #region Totals and subtotals - insert
             PESc.scoreQuality.Calculation = excelSheet.Cells[30, 9].Value;
             PESc.scoreOpportunity.Calculation = excelSheet.Cells[36, 9].Value;
             PESc.scorePerformance.Calculation = excelSheet.Cells[37, 9].Value;
@@ -287,39 +298,49 @@ namespace PES.Controllers
             PESc.scoreGrowth.Calculation = excelSheet.Cells[65, 9].Value;
             PESc.scorePolicies.Calculation = excelSheet.Cells[71, 9].Value;
             PESc.scoreCompetences.Calculation = excelSheet.Cells[73, 9].Value;
+            #endregion
 
+            #region Trainning Comment - insert
             PESc.comment1.TrainningEmployee = excelSheet.Cells[78, 2].Value;
             PESc.comment2.TrainningEmployee = excelSheet.Cells[79, 2].Value;
             PESc.comment1.TrainningEvaluator = excelSheet.Cells[80, 2].Value;
+            #endregion
 
+            #region Acknowledge Comment - insert
             PESc.comment1.AcknowledgeEvaluator = excelSheet.Cells[82, 2].Value;
             PESc.comment2.AcknowledgeEvaluator = excelSheet.Cells[83, 2].Value;
+            #endregion
 
+            #region Comments and recommendations - insert
             PESc.comment1.CommRecommEmployee = excelSheet.Cells[85, 2].Value;
             PESc.comment2.CommRecommEmployee = excelSheet.Cells[86, 2].Value;
             PESc.comment3.CommRecommEmployee = excelSheet.Cells[87, 2].Value;
             PESc.comment1.CommRecommEvaluator = excelSheet.Cells[88, 2].Value;
             PESc.comment2.CommRecommEvaluator = excelSheet.Cells[89, 2].Value;
             PESc.comment3.CommRecommEvaluator = excelSheet.Cells[90, 2].Value;
+            #endregion
 
-            PESc.skill1.Description = excelSheet.Cells[96, 2].Value;
-            PESc.skill2.Description = excelSheet.Cells[97, 2].Value;
-            PESc.skill3.Description = excelSheet.Cells[98, 2].Value;
-            PESc.skill4.Description = excelSheet.Cells[99, 2].Value;
-            PESc.skill5.Description = excelSheet.Cells[100, 2].Value;
-            PESc.skill6.Description = excelSheet.Cells[101, 2].Value;
-            PESc.skill7.Description = excelSheet.Cells[102, 2].Value;
-            PESc.skill8.Description = excelSheet.Cells[103, 2].Value;
-            PESc.skill9.Description = excelSheet.Cells[104, 2].Value;
-            PESc.skill10.Description = excelSheet.Cells[105, 2].Value;
-            PESc.skill11.Description = excelSheet.Cells[106, 2].Value;
-            PESc.skill12.Description = excelSheet.Cells[107, 2].Value;
-            PESc.skill13.Description = excelSheet.Cells[108, 2].Value;
-            PESc.skill14.Description = excelSheet.Cells[109, 2].Value;
-            PESc.skill15.Description = excelSheet.Cells[110, 2].Value;
-            PESc.skill16.Description = excelSheet.Cells[111, 2].Value;
-            PESc.skill17.Description = excelSheet.Cells[112, 2].Value;
+            #region Skill description - insert
+            //PESc.skill1.Description = excelSheet.Cells[96, 2].Value;
+            //PESc.skill2.Description = excelSheet.Cells[97, 2].Value;
+            //PESc.skill3.Description = excelSheet.Cells[98, 2].Value;
+            //PESc.skill4.Description = excelSheet.Cells[99, 2].Value;
+            //PESc.skill5.Description = excelSheet.Cells[100, 2].Value;
+            //PESc.skill6.Description = excelSheet.Cells[101, 2].Value;
+            //PESc.skill7.Description = excelSheet.Cells[102, 2].Value;
+            //PESc.skill8.Description = excelSheet.Cells[103, 2].Value;
+            //PESc.skill9.Description = excelSheet.Cells[104, 2].Value;
+            //PESc.skill10.Description = excelSheet.Cells[105, 2].Value;
+            //PESc.skill11.Description = excelSheet.Cells[106, 2].Value;
+            //PESc.skill12.Description = excelSheet.Cells[107, 2].Value;
+            //PESc.skill13.Description = excelSheet.Cells[108, 2].Value;
+            //PESc.skill14.Description = excelSheet.Cells[109, 2].Value;
+            //PESc.skill15.Description = excelSheet.Cells[110, 2].Value;
+            //PESc.skill16.Description = excelSheet.Cells[111, 2].Value;
+            //PESc.skill17.Description = excelSheet.Cells[112, 2].Value;
+            #endregion
 
+            #region skill check employee - insert
             PESc.supervises.CheckEmployee = excelSheet.Cells[96, 6].Value;
             PESc.coordinates.CheckEmployee = excelSheet.Cells[97, 6].Value;
             PESc.defines.CheckEmployee = excelSheet.Cells[98, 6].Value;
@@ -337,7 +358,9 @@ namespace PES.Controllers
             PESc.supportsUseful.CheckEmployee = excelSheet.Cells[110, 6].Value;
             PESc.welcomes.CheckEmployee = excelSheet.Cells[111, 6].Value;
             PESc.setsSpecific.CheckEmployee = excelSheet.Cells[112, 6].Value;
+            #endregion
 
+            #region skill check evaluator - insert
             PESc.supervises.CheckEvaluator = excelSheet.Cells[96, 6].Value;
             PESc.coordinates.CheckEvaluator = excelSheet.Cells[97, 6].Value;
             PESc.defines.CheckEvaluator = excelSheet.Cells[98, 6].Value;
@@ -355,6 +378,8 @@ namespace PES.Controllers
             PESc.supportsUseful.CheckEvaluator = excelSheet.Cells[110, 6].Value;
             PESc.welcomes.CheckEvaluator = excelSheet.Cells[111, 6].Value;
             PESc.setsSpecific.CheckEvaluator = excelSheet.Cells[112, 6].Value;
+            #endregion
+
 
             excel.Quit();
             
@@ -368,51 +393,71 @@ namespace PES.Controllers
                 // Call services to insert
                 _peService.InsertPE(pEFile.pes);
 
-                _employeeService.InsertEmployee(pEFile.empleado);
+                _employeeService.UpdateEmployee(pEFile.empleado);
 
-                _titleService.InsertTitle(pEFile.title1);
-                _titleService.InsertTitle(pEFile.title2);
+                #region Titles, subtitles, descriptions and skills
+                //_titleService.InsertTitle(pEFile.title1);
+                //_titleService.InsertTitle(pEFile.title2);
 
-                _subtitleService.InsertSubtitles(pEFile.subtitle1);
-                _subtitleService.InsertSubtitles(pEFile.subtitle2);
-                _subtitleService.InsertSubtitles(pEFile.subtitle3);
-                _subtitleService.InsertSubtitles(pEFile.subtitle4);
-                _subtitleService.InsertSubtitles(pEFile.subtitle5);
-                _subtitleService.InsertSubtitles(pEFile.subtitle6);
+                //_subtitleService.InsertSubtitles(pEFile.subtitle1);
+                //_subtitleService.InsertSubtitles(pEFile.subtitle2);
+                //_subtitleService.InsertSubtitles(pEFile.subtitle3);
+                //_subtitleService.InsertSubtitles(pEFile.subtitle4);
+                //_subtitleService.InsertSubtitles(pEFile.subtitle5);
+                //_subtitleService.InsertSubtitles(pEFile.subtitle6);
 
-                _descriptionService.InsertDescription(pEFile.description1);
-                _descriptionService.InsertDescription(pEFile.description2);
-                _descriptionService.InsertDescription(pEFile.description3);
-                _descriptionService.InsertDescription(pEFile.description4);
-                _descriptionService.InsertDescription(pEFile.description5);
-                _descriptionService.InsertDescription(pEFile.description6);
-                _descriptionService.InsertDescription(pEFile.description7);
-                _descriptionService.InsertDescription(pEFile.description8);
-                _descriptionService.InsertDescription(pEFile.description9);
-                _descriptionService.InsertDescription(pEFile.description10);
-                _descriptionService.InsertDescription(pEFile.description11);
-                _descriptionService.InsertDescription(pEFile.description12);
-                _descriptionService.InsertDescription(pEFile.description13);
-                _descriptionService.InsertDescription(pEFile.description14);
-                _descriptionService.InsertDescription(pEFile.description15);
-                _descriptionService.InsertDescription(pEFile.description16);
-                _descriptionService.InsertDescription(pEFile.description17);
-                _descriptionService.InsertDescription(pEFile.description18);
-                _descriptionService.InsertDescription(pEFile.description19);
-                _descriptionService.InsertDescription(pEFile.description21);
-                _descriptionService.InsertDescription(pEFile.description22);
-                _descriptionService.InsertDescription(pEFile.description24);
-                _descriptionService.InsertDescription(pEFile.descriptionPuctuality);
-                _descriptionService.InsertDescription(pEFile.descriptionPolicies);
-                _descriptionService.InsertDescription(pEFile.descriptionValues);
-                _descriptionService.InsertDescription(pEFile.subtotalQuality);
-                _descriptionService.InsertDescription(pEFile.subtotalOpportunity);
-                _descriptionService.InsertDescription(pEFile.totalPerformance);
-                _descriptionService.InsertDescription(pEFile.subtotalSkills);
-                _descriptionService.InsertDescription(pEFile.subtotalInterpersonal);
-                _descriptionService.InsertDescription(pEFile.subtotalGrowth);
-                _descriptionService.InsertDescription(pEFile.subtotalPolicies);
-                _descriptionService.InsertDescription(pEFile.totalCompetences);
+                //_descriptionService.InsertDescription(pEFile.description1);
+                //_descriptionService.InsertDescription(pEFile.description2);
+                //_descriptionService.InsertDescription(pEFile.description3);
+                //_descriptionService.InsertDescription(pEFile.description4);
+                //_descriptionService.InsertDescription(pEFile.description5);
+                //_descriptionService.InsertDescription(pEFile.description6);
+                //_descriptionService.InsertDescription(pEFile.description7);
+                //_descriptionService.InsertDescription(pEFile.description8);
+                //_descriptionService.InsertDescription(pEFile.description9);
+                //_descriptionService.InsertDescription(pEFile.description10);
+                //_descriptionService.InsertDescription(pEFile.description11);
+                //_descriptionService.InsertDescription(pEFile.description12);
+                //_descriptionService.InsertDescription(pEFile.description13);
+                //_descriptionService.InsertDescription(pEFile.description14);
+                //_descriptionService.InsertDescription(pEFile.description15);
+                //_descriptionService.InsertDescription(pEFile.description16);
+                //_descriptionService.InsertDescription(pEFile.description17);
+                //_descriptionService.InsertDescription(pEFile.description18);
+                //_descriptionService.InsertDescription(pEFile.description19);
+                //_descriptionService.InsertDescription(pEFile.description21);
+                //_descriptionService.InsertDescription(pEFile.description22);
+                //_descriptionService.InsertDescription(pEFile.description24);
+                //_descriptionService.InsertDescription(pEFile.descriptionPuctuality);
+                //_descriptionService.InsertDescription(pEFile.descriptionPolicies);
+                //_descriptionService.InsertDescription(pEFile.descriptionValues);
+                //_descriptionService.InsertDescription(pEFile.subtotalQuality);
+                //_descriptionService.InsertDescription(pEFile.subtotalOpportunity);
+                //_descriptionService.InsertDescription(pEFile.totalPerformance);
+                //_descriptionService.InsertDescription(pEFile.subtotalSkills);
+                //_descriptionService.InsertDescription(pEFile.subtotalInterpersonal);
+                //_descriptionService.InsertDescription(pEFile.subtotalGrowth);
+                //_descriptionService.InsertDescription(pEFile.subtotalPolicies);
+                //_descriptionService.InsertDescription(pEFile.totalCompetences);
+
+                //_skillService.InsertSkill(pEFile.skill1);
+                //_skillService.InsertSkill(pEFile.skill2);
+                //_skillService.InsertSkill(pEFile.skill3);
+                //_skillService.InsertSkill(pEFile.skill4);
+                //_skillService.InsertSkill(pEFile.skill5);
+                //_skillService.InsertSkill(pEFile.skill6);
+                //_skillService.InsertSkill(pEFile.skill7);
+                //_skillService.InsertSkill(pEFile.skill8);
+                //_skillService.InsertSkill(pEFile.skill9);
+                //_skillService.InsertSkill(pEFile.skill10);
+                //_skillService.InsertSkill(pEFile.skill11);
+                //_skillService.InsertSkill(pEFile.skill12);
+                //_skillService.InsertSkill(pEFile.skill13);
+                //_skillService.InsertSkill(pEFile.skill14);
+                //_skillService.InsertSkill(pEFile.skill15);
+                //_skillService.InsertSkill(pEFile.skill16);
+                //_skillService.InsertSkill(pEFile.skill17);
+                #endregion
 
                 _scoreService.InsertScore(pEFile.one);
                 _scoreService.InsertScore(pEFile.two);
@@ -451,24 +496,7 @@ namespace PES.Controllers
                 _commentService.InsertComment(pEFile.comment1);
                 _commentService.InsertComment(pEFile.comment2);
                 _commentService.InsertComment(pEFile.comment3);
-                
-                _skillService.InsertSkill(pEFile.skill1);
-                _skillService.InsertSkill(pEFile.skill2);
-                _skillService.InsertSkill(pEFile.skill3);
-                _skillService.InsertSkill(pEFile.skill4);
-                _skillService.InsertSkill(pEFile.skill5);
-                _skillService.InsertSkill(pEFile.skill6);
-                _skillService.InsertSkill(pEFile.skill7);
-                _skillService.InsertSkill(pEFile.skill8);
-                _skillService.InsertSkill(pEFile.skill9);
-                _skillService.InsertSkill(pEFile.skill10);
-                _skillService.InsertSkill(pEFile.skill11);
-                _skillService.InsertSkill(pEFile.skill12);
-                _skillService.InsertSkill(pEFile.skill13);
-                _skillService.InsertSkill(pEFile.skill14);
-                _skillService.InsertSkill(pEFile.skill15);
-                _skillService.InsertSkill(pEFile.skill16);
-                _skillService.InsertSkill(pEFile.skill17);
+
 
                 _lm_skillService.InsertLM_Skill(pEFile.supervises);
                 _lm_skillService.InsertLM_Skill(pEFile.coordinates);
