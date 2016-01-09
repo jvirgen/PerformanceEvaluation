@@ -7,6 +7,8 @@ using PES.Models;
 using Oracle.ManagedDataAccess.Client;
 using OfficeOpenXml;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PES.Services
 {
@@ -220,41 +222,88 @@ namespace PES.Services
             // Connect to the DB 
             using (OracleConnection db = dbContext.GetDBConnection())
             {
-                db.Open();
-                // insert
-                try
+                
+                #region Old insert
+                //string InsertQuery = "INSERT INTO EMPLOYEE (FIRST_NAME," +
+                //                                           "LAST_NAME," +
+                //                                           "EMAIL," +
+                //                                           "CUSTOMER," +
+                //                                           "POSITION," +
+                //                                           "ID_PROFILE,"+
+                //                                           "ID_MANAGER," +
+                //                                           "HIRE_DATE," +
+                //                                           "RANKING," +
+                //                                           "END_DATE)" +
+                //                 " VALUES ('" + employee.FirstName + "', '" +
+                //                           employee.LastName + "', '" +
+                //                           employee.Email + "', '" +
+                //                           employee.Customer + "', '" +
+                //                           employee.Position + "', '" +
+                //                           employee.ProfileId+ "', '" +
+                //                           employee.ManagerId + "', '" +
+                //                           employee.HireDate.ToShortDateString() + "', '" +
+                //                           employee.Ranking + "', '" +
+                //                           (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : null) + "')";
+
+                //SqlParameter x = new SqlParameter();
+                //x.DbType = System.Data.DbType.
+
+                //OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                //Comand.ExecuteNonQuery();
+                #endregion
+
+                #region New insert
+                string insertQuery = @" INSERT INTO EMPLOYEE (  FIRST_NAME,
+                                                                LAST_NAME,
+                                                                EMAIL,
+                                                                CUSTOMER,
+                                                                POSITION,
+                                                                ID_PROFILE,
+                                                                ID_MANAGER,
+                                                                HIRE_DATE,
+                                                                RANKING,
+                                                                END_DATE) 
+                                                        VALUES (:firstName,
+                                                                :lastName,
+                                                                :email,
+                                                                :customer,
+                                                                :position,
+                                                                :idProfile,
+                                                                :idManager,
+                                                                :hireDate,
+                                                                :ranking,
+                                                                :endDate
+                                                                )";
+
+                // Adding parameters
+                using (OracleCommand command = new OracleCommand(insertQuery, db))
                 {
-                    string InsertQuery = "INSERT INTO EMPLOYEE (FIRST_NAME," +
-                                                               "LAST_NAME," +
-                                                               "EMAIL," +
-                                                               "CUSTOMER," +
-                                                               "POSITION," +
-                                                               "ID_PROFILE,"+
-                                                               "ID_MANAGER," +
-                                                               "HIRE_DATE," +
-                                                               "RANKING," +
-                                                               "END_DATE)" +
-                                     " VALUES ('" + employee.FirstName + "', '" +
-                                               employee.LastName + "', '" +
-                                               employee.Email + "', '" +
-                                               employee.Customer + "', '" +
-                                               employee.Position + "', '" +
-                                               employee.ProfileId+ "', '" +
-                                               employee.ManagerId + "', '" +
-                                               employee.HireDate.ToShortDateString() + "', '" +
-                                               employee.Ranking + "', '" +
-                                               (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : null) + "')";
+                    command.Parameters.Add(new OracleParameter("firstName", employee.FirstName));
+                    command.Parameters.Add(new OracleParameter("lastName", employee.LastName));
+                    command.Parameters.Add(new OracleParameter("email", employee.Email));
+                    command.Parameters.Add(new OracleParameter("customer", employee.Customer));
+                    command.Parameters.Add(new OracleParameter("position", employee.Position));
+                    command.Parameters.Add(new OracleParameter("idProfile", employee.ProfileId));
+                    command.Parameters.Add(new OracleParameter("idManager", employee.ManagerId));
+                    command.Parameters.Add(new OracleParameter("hireDate", OracleDbType.Date, employee.HireDate, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("ranking", employee.Ranking));
+                    command.Parameters.Add(new OracleParameter("endDate", OracleDbType.Date, employee.EndDate, ParameterDirection.Input));
 
-                    OracleCommand Comand = new OracleCommand(InsertQuery, db);
-                    Comand.ExecuteNonQuery();
-
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                    
                     status = true;
                 }
-                catch
-                {
-                    status = false;
-                }
-                db.Close();
+                #endregion    
             }
             return status;
         }
