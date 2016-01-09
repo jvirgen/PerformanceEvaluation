@@ -174,6 +174,8 @@
     <Compile Include="Services\TitleService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\alter_pe_add_project.sql" />
+    <Content Include="App_Data\export_pe_schema_pe.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datatables\dataTables.bootstrap.min.css" />
@@ -229,9 +231,7 @@
     <Content Include="Views\PerformanceEvaluation\SearchInfoRank.cshtml" />
     <Content Include="Views\LoginUser\Login.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
