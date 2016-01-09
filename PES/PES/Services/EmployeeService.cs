@@ -228,7 +228,7 @@ namespace PES.Services
             // Connect to the DB 
             using (OracleConnection db = dbContext.GetDBConnection())
             {
-                
+
                 #region Old insert
                 //string InsertQuery = "INSERT INTO EMPLOYEE (FIRST_NAME," +
                 //                                           "LAST_NAME," +
@@ -295,8 +295,8 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("ranking", employee.Ranking));
                     command.Parameters.Add(new OracleParameter("endDate", OracleDbType.Date, employee.EndDate, ParameterDirection.Input));
 
-                try
-                {
+                    try
+                    {
                         command.Connection.Open();
                         command.ExecuteNonQuery();
                         command.Connection.Close();
@@ -309,7 +309,7 @@ namespace PES.Services
 
                     status = true;
                 }
-                #endregion    
+                #endregion
             }
             return status;
         }
