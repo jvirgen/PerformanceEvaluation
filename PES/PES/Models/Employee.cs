@@ -63,13 +63,40 @@ namespace PES.Models
         /// <summary>
         /// End Date 
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
 
         /// <summary>
-        /// End Date 
+        /// Employee project 
         /// </summary>
         public string Project { get; set; }
 
+    }
+
+    public class EmployeeManagerViewModel 
+    {
+        public Employee employee { get; set; }
+        public Employee manager { get; set; }
+        public double totalScore { get; set; }
+        public int? rank { get; set; }
+    }
+
+    public class EmployeeChoosePeriodViewModel 
+    {
+        public int employeeid { get; set; }
+        public int pesid { get; set; }
+        public DateTime period { get; set; }
+        public double totalEvaluation { get; set; }
+        public double totalPerforformance { get; set; }
+        public double totalCompetences { get; set; }
+        public double totalEnglish { get; set; }
+    }
+
+    public enum ProfileUser
+    {
+        None = 0,
+        Resource = 1,
+        Manager = 2,
+        Director = 3
     }
 }
