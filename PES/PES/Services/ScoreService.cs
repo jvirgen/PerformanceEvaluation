@@ -7,6 +7,8 @@ using PES.DBContext;
 using Oracle.ManagedDataAccess.Client;
 using OfficeOpenXml;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PES.Services
 {
@@ -21,35 +23,47 @@ namespace PES.Services
         {
             bool status= false;
             
-                try
-                {
-                    using (OracleConnection db = dbContext.GetDBConnection())
-                    {
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
 
-                        db.Open();
-                        string Insertquery = "INSERT INTO SCORE (ID_DESCRIPTION, " +
-                                                                 "ID_PE, " +
-                                                                 "SCORE_EMPLOYEE, " +
-                                                                 "SCORE_EVAULATOR, " +
-                                                                 "COMMENTS, " +
-                                                                 "CALCULATION) " +
-                                            "VALUES (" + score.DescriptionId + ", " +
-                                                      score.PEId + ", " +
-                                                      score.ScoreEmployee + ", " +
-                                                      score.ScoreEvaluator + ", " +
-                                                      score.Comments + ", " +
-                                                      score.Calculation + ")";
-                        OracleCommand Command = new OracleCommand(Insertquery, db);
+                string Insertquery = @" INSERT INTO SCORE (ID_DESCRIPTION,
+                                                                 ID_PE, 
+                                                                 SCORE_EMPLOYEE, 
+                                                                 SCORE_EVALUATOR, 
+                                                                 COMMENTS, 
+                                                                 CALCULATION) 
+                                                VALUES (:DescriptionId, 
+                                                      :PEId, 
+                                                      :ScoreEmployee, 
+                                                      :ScoreEvaluator, 
+                                                      :Comments, 
+                                                      :Calculation)";
+
+                using (OracleCommand Command = new OracleCommand(Insertquery, db))
+                {
+                    Command.Parameters.Add(new OracleParameter("DescriptionId", score.DescriptionId));
+                    Command.Parameters.Add(new OracleParameter("PEId", score.PEId));
+                    Command.Parameters.Add(new OracleParameter("ScoreEmployee", score.ScoreEmployee));
+                    Command.Parameters.Add(new OracleParameter("ScoreEvaluator", score.ScoreEvaluator));
+                    Command.Parameters.Add(new OracleParameter("Comments", score.Comments));
+                    Command.Parameters.Add(new OracleParameter("Calculation", score.Calculation));
+
+                    try
+                    {
+                        Command.Connection.Open();
                         Command.ExecuteNonQuery();
-                        status = true;
-                        db.Close();
+                        Command.Connection.Close();
                     }
 
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+
+                    status = true;
                 }
-                catch
-                {
-                    status = false;
-                }
+            }
             
             return status;
         }
