@@ -1,6 +1,12 @@
-﻿@{
-    ViewBag.Title = "Performance Evaluation System";
-}
+﻿@model IEnumerable<PES.Models.PESComplete>
+    @using PES.Models
+    @{
+        ViewBag.Title = "PEvisualization";
+
+        string userEmail = ViewBag.UserEmail != null ? (string)ViewBag.UserEmail : "";
+        int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
+        int peID = 1;
+    }
 <div class="jumbotron">
     <p class="text-right">
         <a href="@Url.Action("Logout", "LoginUser")">Logout</a>
@@ -8,7 +14,7 @@
 
     <div>
         <h2 class="text-center col-md-12">Performance Evaluation System</h2>
-        <p class="text-left col-md-8">Resource name</p>
+        <p class="text-left col-md-8">@userEmail</p>
         <p class="text-right col-md-4">Period</p>
     </div>
 
@@ -26,51 +32,66 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Title</td>
-                    <td>Subtitle</td>
-                    <td>Description</td>
-                    <td>Score</td>
-                    <td>Score</td>
-                    <td>Comment</td>
-                    <td>Score</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td>Description</td>
-                    <td>Score</td>
-                    <td>Score</td>
-                    <td>Comment</td>
-                    <td>Score</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Subtitle</td>
-                    <td>Description</td>
-                    <td>Score</td>
-                    <td>Score</td>
-                    <td>Comment</td>
-                    <td>Score</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td>Description</td>
-                    <td>Score</td>
-                    <td>Score</td>
-                    <td>Comment</td>
-                    <td>Score</td>
-                </tr>
-                <tr>
-                    <td>Title</td>
-                    <td>Subtitle</td>
-                    <td>Description</td>
-                    <td>Score</td>
-                    <td>Score</td>
-                    <td>Comment</td>
-                    <td>Score</td>
-                </tr>
+   @*             @foreach (var pe in Model)
+    {
+        if (userID == pe.pes.EmployeeId && peID == pe.pes.PEId )
+        {
+            <tr>
+                <td>@pe.scorePerformance.ScoreEmployee</td>
+                <td>@pe.scorePerformance.ScoreEvaluator</td>
+                <td>@pe.scorePerformance.Comments</td>
+                <td>@pe.scorePerformance.Calculation</td>
+            </tr>
+        }
+    }
+
+*@
+        <tr>
+        <td>Title</td>
+        <td>Subtitle</td>
+        <td>Description</td>
+        <td>Score</td>
+        <td>Score</td>
+        <td>Comment</td>
+        <td>Score</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>Description</td>
+        <td>Score</td>
+        <td>Score</td>
+        <td>Comment</td>
+        <td>Score</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Subtitle</td>
+        <td>Description</td>
+        <td>Score</td>
+        <td>Score</td>
+        <td>Comment</td>
+        <td>Score</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>Description</td>
+        <td>Score</td>
+        <td>Score</td>
+        <td>Comment</td>
+        <td>Score</td>
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td>Subtitle</td>
+        <td>Description</td>
+        <td>Score</td>
+        <td>Score</td>
+        <td>Comment</td>
+        <td>Score</td>
+    </tr>
+       
             </tbody>
         </table>
         <div>
