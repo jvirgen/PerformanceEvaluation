@@ -218,8 +218,8 @@ namespace PES.Services
                             peComplete.title1.Name = Convert.ToString(reader["TITLE"]);
                             peComplete.subtitle1.Name = Convert.ToString(reader["SUBTITLE"]);
                             peComplete.description1.DescriptionText = Convert.ToString(reader["DESCRIPTION"]);
-                            peComplete.scorePerformance.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]));
-                            peComplete.scorePerformance.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"])); 
+                            peComplete.scorePerformance.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
+                            peComplete.scorePerformance.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
                             peComplete.scorePerformance.Comments = Convert.ToString(reader["COMMENTS"]);
                             peComplete.scorePerformance.Calculation = Convert.ToInt32(reader["CALCULATION"]);
 
