@@ -42,5 +42,45 @@ namespace PES.Services
             }
             return status;
         }
+
+        public List<LM_Skill> GetSkillsBypeID(int peID)
+        {
+            List<LM_Skill> skills = new List<LM_Skill>();
+            LM_Skill skill = new LM_Skill();
+
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string SelectSkill = "SELECT ID_LMSKILL, " +
+                                                "ID_SKILL, " +
+                                                "ID_PE, " +
+                                                "CHECK_EMPLOYEE, " +
+                                                "CHECK_EVALUATOR " +
+                                                "FROM LM_SKILL WHERE ID_PE = " + peID;
+                    OracleCommand Command = new OracleCommand(SelectSkill, db);
+                    Command.ExecuteReader();
+                    OracleDataReader Reader = Command.ExecuteReader();
+                    while (Reader.Read())
+                    {
+                        skill = new LM_Skill();
+                        skill.LMSkillId = Convert.ToInt32(Reader["ID_LMSKILL"]);
+                        skill.SkillId = Convert.ToInt32(Reader["ID_SKILL"]);
+                        skill.PEId = Convert.ToInt32(Reader["ID_PE"]);
+                        skill.CheckEmployee = Convert.ToString(Reader["CHECK_EMPLOYEE"]);
+                        skill.CheckEvaluator = Convert.ToString(Reader["CHECK_EVALUATOR"]);
+                        skills.Add(skill);
+                    }
+                    db.Close();
+                }
+            }
+            catch
+            {
+                skills = null;
+            }
+
+            return skills;
+        }
     }
 }
