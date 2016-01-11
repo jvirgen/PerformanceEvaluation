@@ -31,7 +31,9 @@ namespace PES.Controllers
         public ActionResult Login(Login user)
         {
             var isAuthenticated = user.Authentication(user.UserEmail, user.Password);
-            isAuthenticated = true;
+            
+            //isAuthenticated = true; Added for testing when offline
+            
             //Check if the Email and Password exist in Office 356
             if (isAuthenticated)
             {

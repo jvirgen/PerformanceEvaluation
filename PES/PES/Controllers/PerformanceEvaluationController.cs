@@ -100,7 +100,7 @@ namespace PES.Controllers
             PESc.pes.EvaluatorId = evaluator.EmployeeId;
             PESc.pes.EvaluationPeriod = DateTime.Now.Date;
             var status = _statusService.GetStatusByDescription("imported");
-            PESc.pes.StatusId = status != null ? status.StatusId : 0; 
+            PESc.pes.StatusId = status != null ? status.StatusId : 1; 
             PESc.pes.EnglishScore = 0;
             PESc.pes.PerformanceScore = 0;
             PESc.pes.CompeteneceScore = 0;
@@ -391,7 +391,7 @@ namespace PES.Controllers
             try
             {
                 // Call services to insert
-                _peService.InsertPE(pEFile.pes);
+                bool peResult = _peService.InsertPE(pEFile.pes);
 
                 _employeeService.UpdateEmployee(pEFile.empleado);
 
