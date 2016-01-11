@@ -17,24 +17,28 @@ namespace PES.Services
         public List<Comment> GetCommentByPE(int peId) 
         {
             List<Comment> Comments = new List<Comment>();
-            Comment Comment = new Comment();
+            Comment Comment;
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string SelectComments = "SELECT TRAINNING_EMPLOYEE, " +
+                    string SelectComments = "SELECT ID_COMMENT, " +
+                                                    "ID_PE, " +
+                                                    "TRAINNING_EMPLOYEE, " +
                                                     "TRAINNING_EVALUATOR, " +
                                                     "ACKNOWLEDGE_EVALUATOR, " +
                                                     "\"comm/recomm_employee\", " +
-                                                    "\"comm/recomm_evaluator\"" +
-                                                    "FROM COMMENT WHERE ID_PE = " + peId;
+                                                    "\"comm/recomm_evaluator\" " +
+                                                    "FROM \"COMMENT\" WHERE ID_PE = " + peId;
                     OracleCommand Command = new OracleCommand(SelectComments, db);
                     Command.ExecuteReader();
                     OracleDataReader Reader = Command.ExecuteReader();
                     while (Reader.Read())
                     {
-                        Comments = new List<Comment>();
+                        Comment = new Comment();
+                        Comment.CommentId = Convert.ToInt32(Reader["ID_COMMENT"]);
+                        Comment.PEId = Convert.ToInt32(Reader["ID_PE"]);
                         Comment.TrainningEmployee = Convert.ToString(Reader["TRAINNING_EMPLOYEE"]);
                         Comment.TrainningEvaluator = Convert.ToString(Reader["TRAINNING_EVALUATOR"]);
                         Comment.AcknowledgeEvaluator = Convert.ToString(Reader["ACKNOWLEDGE_EVALUATOR"]);

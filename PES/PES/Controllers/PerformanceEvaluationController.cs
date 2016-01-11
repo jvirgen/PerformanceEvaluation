@@ -752,9 +752,85 @@ namespace PES.Controllers
         }
 
         //GET: PerformanceEvaluation/PEVisualization
-        public ActionResult PEVisualization()
+        public ActionResult PEVisualization(int peID, string email)
         {
             PESComplete peComplete = new PESComplete();
+            List<Score> peScores = new List<Score>();
+            List<Comment> peComments = new List<Comment>();
+            List<LM_Skill> peSkills = new List<LM_Skill>();
+            PEs pe = new PEs();
+            
+            //pe = _peService.
+            peScores = _scoreService.GetPEScoresbyPEID(peID); 
+            peComments = _commentService.GetCommentByPE(peID);
+            peSkills = _lm_skillService.GetSkillsBypeID(peID);
+
+            #region 
+            /*
+            #region Subtitles
+            // Peformance Quality Subtitle 
+            peComplete.subtitle1 = PerformanceSection.QualitySubtitle;
+            // Performance Opportuniyy Subtitle 
+            peComplete.subtitle2 = PerformanceSection.OpportunitySubtitle;
+            #endregion
+
+            #region Descriptions
+            // Performance Quality Descriptions
+            peComplete.description1 = PerformanceSection.AccuracyQualityDescription1;
+            peComplete.description2 = PerformanceSection.ThoroughnessQualityDescription2;
+            peComplete.description3 = PerformanceSection.ReliabilityQualityDescription3;
+            peComplete.description4 = PerformanceSection.ResponsivenessQualityDescription4;
+            peComplete.description5 = PerformanceSection.FollowQualityDescription5;
+            peComplete.description6 = PerformanceSection.JudgmentQualityDescription6;
+            peComplete.subtotalDescQuality = PerformanceSection.SubtotalQualityDescription7;
+            
+            //Performance Opportunity Description
+            peComplete.description7 = PerformanceSection.PriorityOpportunityDescription8;
+            peComplete.description8 = PerformanceSection.AmountOpportunityDescription9;
+            peComplete.description9 = PerformanceSection.WorkOpportunityDescription10;
+            peComplete.subtotalOpportunity = PerformanceSection.SubtotalOpportunityDescription11;
+            #endregion
+
+            #region Performance Scores
+            // Quality Scores
+            
+            //Accuracy
+            peComplete.one = _scoreService.GetPEScorebyPEIdDescId(pe.PEId, PerformanceSection.AccuracyQualityDescription1.DescriptionId);
+            //Thoroughness
+            peComplete.two = _scoreService.GetPEScorebyPEIdDescId(pe.PEId, PerformanceSection.ThoroughnessQualityDescription2.DescriptionId);
+            //Reliability
+            peComplete.three = _scoreService.GetPEScorebyPEIdDescId(pe.PEId, PerformanceSection.ReliabilityQualityDescription3.DescriptionId);
+            //Responsiveness
+            peComplete.four = _scoreService.GetPEScorebyPEIdDescId(pe.PEId, PerformanceSection.ResponsivenessQualityDescription4.DescriptionId);
+            //Follow
+            peComplete.five = _scoreService.GetPEScorebyPEIdDescId(pe.PEId, PerformanceSection.FollowQualityDescription5.DescriptionId);
+            //Judgment/Decision
+            peComplete.six = _scoreService.GetPEScorebyPEIdDescId(pe.PEId, PerformanceSection.JudgmentQualityDescription6.DescriptionId);
+            // Quality Subtotal
+            peComplete.subtotalDescQuality = _scoreService.GetPEScorebyPEIdDescId(pe.PEId, PerformanceSection.SubtotalQualityDescription7.DescriptionId);
+
+            #endregion
+            */
+#endregion
+
+
+
+            // Get score of 1. Accuracy or Precision
+           // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
+
+
+            foreach (var score in peScores)
+            {
+                peComplete.one = score;
+            }
+            foreach (var comment in peComments)
+            {
+                peComplete.comment1 = comment;
+            }
+            foreach (var skill in peSkills)
+            {
+                peComplete.supervises = skill;
+            }
 
             return View();
         }
