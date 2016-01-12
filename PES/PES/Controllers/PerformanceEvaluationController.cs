@@ -104,6 +104,12 @@ namespace PES.Controllers
             PESc.pes.EnglishScore = 0;
             PESc.pes.PerformanceScore = 0;
             PESc.pes.CompeteneceScore = 0;
+
+            // Insert 
+            bool peInserted = _peService.InsertPE(PESc.pes);
+
+            // Look for and get id 
+            PESc.pes = _peService.GetPerformanceEvaluationByDateEmail(user.Email, DateTime.Now);
             #endregion
 
             #region Employee - update
@@ -132,10 +138,10 @@ namespace PES.Controllers
             #endregion
 
             #region Subtitle - insert
-            PESc.subtitle1.Name = PerformanceSection.Subtitle1.Name;
-            PESc.subtitle1.TitleId = PerformanceSection.Subtitle1.TitleId;
-            PESc.subtitle2.Name = PerformanceSection.Subtitle2.Name;
-            PESc.subtitle2.TitleId = PerformanceSection.Subtitle2.TitleId;
+            PESc.subtitle1.Name = PerformanceSection.QualitySubtitle.Name;
+            PESc.subtitle1.TitleId = PerformanceSection.QualitySubtitle.TitleId;
+            PESc.subtitle2.Name = PerformanceSection.OpportunitySubtitle.Name;
+            PESc.subtitle2.TitleId = PerformanceSection.OpportunitySubtitle.TitleId;
             PESc.subtitle3.Name = CompetencesSection.SkillsSubtitle.Name;
             PESc.subtitle3.TitleId = CompetencesSection.SkillsSubtitle.TitleId;
             PESc.subtitle4.Name = CompetencesSection.InterpersonalSubtitle.Name;
@@ -153,6 +159,81 @@ namespace PES.Controllers
             #endregion
 
             #region Description - insert
+            PESc.description1.DescriptionText = PerformanceSection.AccuracyQualityDescription1.DescriptionText;
+            PESc.description1.SubtitleId = PerformanceSection.AccuracyQualityDescription1.SubtitleId;
+            PESc.description2.DescriptionText = PerformanceSection.ThoroughnessQualityDescription2.DescriptionText;
+            PESc.description2.SubtitleId = PerformanceSection.ThoroughnessQualityDescription2.SubtitleId;
+            PESc.description3.DescriptionText = PerformanceSection.ReliabilityQualityDescription3.DescriptionText;
+            PESc.description3.SubtitleId = PerformanceSection.ReliabilityQualityDescription3.SubtitleId;
+            PESc.description4.DescriptionText = PerformanceSection.ResponsivenessQualityDescription4.DescriptionText;
+            PESc.description4.SubtitleId = PerformanceSection.ResponsivenessQualityDescription4.SubtitleId;
+            PESc.description5.DescriptionText = PerformanceSection.FollowQualityDescription5.DescriptionText;
+            PESc.description5.SubtitleId = PerformanceSection.FollowQualityDescription5.SubtitleId;
+            PESc.description6.DescriptionText = PerformanceSection.JudgmentQualityDescription6.DescriptionText;
+            PESc.description6.SubtitleId = PerformanceSection.JudgmentQualityDescription6.SubtitleId;
+            PESc.subtotalDescQuality.DescriptionText = PerformanceSection.SubtotalQualityDescription7.DescriptionText;
+            PESc.subtotalDescQuality.SubtitleId = PerformanceSection.SubtotalQualityDescription7.SubtitleId;
+
+            PESc.description7.DescriptionText = PerformanceSection.PriorityOpportunityDescription8.DescriptionText;
+            PESc.description7.SubtitleId = PerformanceSection.PriorityOpportunityDescription8.SubtitleId;
+            PESc.description8.DescriptionText = PerformanceSection.AmountOpportunityDescription9.DescriptionText;
+            PESc.description8.SubtitleId = PerformanceSection.AmountOpportunityDescription9.SubtitleId;
+            PESc.description9.DescriptionText = PerformanceSection.WorkOpportunityDescription10.DescriptionText;
+            PESc.description9.SubtitleId = PerformanceSection.WorkOpportunityDescription10.SubtitleId;
+            PESc.subtotalOpportunity.DescriptionText = PerformanceSection.SubtotalOpportunityDescription11.DescriptionText;
+            PESc.subtotalOpportunity.SubtitleId = PerformanceSection.SubtotalOpportunityDescription11.SubtitleId;
+            PESc.totalPerformance.DescriptionText = PerformanceSection.TotalPerformanceDescription12.DescriptionText;
+            PESc.totalPerformance.SubtitleId = PerformanceSection.TotalPerformanceDescription12.SubtitleId;
+
+            PESc.description10.DescriptionText = CompetencesSection.JobSkillDescription13.DescriptionText;
+            PESc.description10.SubtitleId = CompetencesSection.JobSkillDescription13.SubtitleId;
+            PESc.description11.DescriptionText = CompetencesSection.AnalyzesSkillDescription14.DescriptionText;
+            PESc.description11.SubtitleId = CompetencesSection.AnalyzesSkillDescription14.SubtitleId;
+            PESc.description12.DescriptionText = CompetencesSection.FlexibleSkillDescription15.DescriptionText;
+            PESc.description12.SubtitleId = CompetencesSection.FlexibleSkillDescription15.SubtitleId;
+            PESc.description13.DescriptionText = CompetencesSection.PlanningSkillDescription16.DescriptionText;
+            PESc.description13.SubtitleId = CompetencesSection.PlanningSkillDescription16.SubtitleId;
+            PESc.description14.DescriptionText = CompetencesSection.CompetentSkillDescription17.DescriptionText;
+            PESc.description14.SubtitleId = CompetencesSection.CompetentSkillDescription17.SubtitleId;
+            PESc.description15.DescriptionText = CompetencesSection.FollowsSkillDescription18.DescriptionText;
+            PESc.description15.SubtitleId = CompetencesSection.FollowsSkillDescription18.SubtitleId;
+            PESc.subtotalSkills.DescriptionText = CompetencesSection.SubtotalSkillDescription19.DescriptionText;
+            PESc.subtotalSkills.SubtitleId = CompetencesSection.SubtotalSkillDescription19.SubtitleId;
+
+            PESc.description16.DescriptionText = CompetencesSection.SupervisorInterpersonalDescription20.DescriptionText;
+            PESc.description16.SubtitleId = CompetencesSection.SupervisorInterpersonalDescription20.SubtitleId;
+            PESc.description17.DescriptionText = CompetencesSection.OtherInterpersonalDescription21.DescriptionText;
+            PESc.description17.SubtitleId = CompetencesSection.OtherInterpersonalDescription21.SubtitleId;
+            PESc.description18.DescriptionText = CompetencesSection.ClientInterpersonalDescription22.DescriptionText;
+            PESc.description18.SubtitleId = CompetencesSection.ClientInterpersonalDescription22.SubtitleId;
+            PESc.description19.DescriptionText = CompetencesSection.CommitmentInterpersonalDescription23.DescriptionText;
+            PESc.description19.SubtitleId = CompetencesSection.CommitmentInterpersonalDescription23.SubtitleId;
+            PESc.subtotalInterpersonal.DescriptionText = CompetencesSection.SubtotalInterpersonalDescription24.DescriptionText;
+            PESc.subtotalInterpersonal.SubtitleId = CompetencesSection.SubtotalInterpersonalDescription24.SubtitleId;
+
+            PESc.description20.DescriptionText = CompetencesSection.ActivelyGrowthDescription25.DescriptionText;
+            PESc.description20.SubtitleId = CompetencesSection.ActivelyGrowthDescription25.SubtitleId;
+            PESc.description21.DescriptionText = CompetencesSection.OpenGrowthDescription26.DescriptionText;
+            PESc.description21.SubtitleId = CompetencesSection.OpenGrowthDescription26.SubtitleId;
+            PESc.description22.DescriptionText = CompetencesSection.InvolvementGrowthDescription27.DescriptionText;
+            PESc.description22.SubtitleId = CompetencesSection.InvolvementGrowthDescription27.SubtitleId;
+            PESc.description23.DescriptionText = CompetencesSection.ChallengesGrowthDescription28.DescriptionText;
+            PESc.description23.SubtitleId = CompetencesSection.ChallengesGrowthDescription28.SubtitleId;
+            PESc.description24.DescriptionText = CompetencesSection.SeeksGrowthDescription29.DescriptionText;
+            PESc.description24.SubtitleId = CompetencesSection.SeeksGrowthDescription29.SubtitleId;
+            PESc.subtotalGrowth.DescriptionText = CompetencesSection.SubtotalGrowthDescription30.DescriptionText;
+            PESc.subtotalGrowth.SubtitleId = CompetencesSection.SubtotalGrowthDescription30.SubtitleId;
+
+            PESc.descriptionPuctuality.DescriptionText = CompetencesSection.PunctualityPoliciesDescription31.DescriptionText;
+            PESc.descriptionPuctuality.SubtitleId = CompetencesSection.PunctualityPoliciesDescription31.SubtitleId;
+            PESc.descriptionPolicies.DescriptionText = CompetencesSection.PoliciesPoliciesDescription32.DescriptionText;
+            PESc.descriptionPolicies.SubtitleId = CompetencesSection.PoliciesPoliciesDescription32.SubtitleId;
+            PESc.descriptionValues.DescriptionText = CompetencesSection.ValuesPoliciesDescription33.DescriptionText;
+            PESc.descriptionValues.SubtitleId = CompetencesSection.ValuesPoliciesDescription33.SubtitleId;
+            PESc.subtotalPolicies.DescriptionText = CompetencesSection.SubtotalPoliciesDescription34.DescriptionText;
+            PESc.subtotalPolicies.SubtitleId = CompetencesSection.SubtotalPoliciesDescription34.SubtitleId;
+            PESc.totalCompetences.DescriptionText = CompetencesSection.TotalCompetencesDescription35.DescriptionText;
+            PESc.totalCompetences.SubtitleId = CompetencesSection.TotalCompetencesDescription35.SubtitleId;
 
             //PESc.description1.DescriptionText = excelSheet.Cells[24, 2].Value;
             //PESc.description2.DescriptionText = excelSheet.Cells[25, 2].Value;
@@ -189,38 +270,89 @@ namespace PES.Controllers
             //PESc.totalCompetences.DescriptionText = excelSheet.Cells[73, 2].Value;
             #endregion
 
-
             #region ScoreEmployee - insert
             PESc.one.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[24, 6].Value);
+            PESc.one.DescriptionId = PerformanceSection.AccuracyQualityDescription1.DescriptionId;
             PESc.two.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[25, 6].Value);
+            PESc.two.DescriptionId = PerformanceSection.ThoroughnessQualityDescription2.DescriptionId;
             PESc.three.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[26, 6].Value);
+            PESc.thirteen.DescriptionId = PerformanceSection.ReliabilityQualityDescription3.DescriptionId;
             PESc.four.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[27, 6].Value);
+            PESc.four.DescriptionId = PerformanceSection.ResponsivenessQualityDescription4.DescriptionId;
             PESc.five.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[28, 6].Value);
+            PESc.five.DescriptionId = PerformanceSection.FollowQualityDescription5.DescriptionId;
             PESc.six.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[29, 6].Value);
+            PESc.six.DescriptionId = PerformanceSection.JudgmentQualityDescription6.DescriptionId;
+            PESc.scoreQuality.ScoreEmployee = 0;
+            PESc.scoreQuality.DescriptionId = PerformanceSection.SubtotalQualityDescription7.DescriptionId;
+
             PESc.seven.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[33, 6].Value);
+            PESc.seven.DescriptionId = PerformanceSection.PriorityOpportunityDescription8.DescriptionId;
             PESc.eight.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[34, 6].Value);
+            PESc.eight.DescriptionId = PerformanceSection.AmountOpportunityDescription9.DescriptionId;
             PESc.nine.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[35, 6].Value);
+            PESc.nine.DescriptionId = PerformanceSection.WorkOpportunityDescription10.DescriptionId;
+            PESc.scoreOpportunity.ScoreEmployee = 0;
+            PESc.scoreOpportunity.DescriptionId = PerformanceSection.SubtotalOpportunityDescription11.DescriptionId;
+            PESc.scorePerformance.ScoreEmployee = 0;
+            PESc.scorePerformance.DescriptionId = PerformanceSection.TotalPerformanceDescription12.DescriptionId;
+
             PESc.ten.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[44, 6].Value);
+            PESc.ten.DescriptionId = CompetencesSection.JobSkillDescription13.DescriptionId;
             PESc.eleven.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[45, 6].Value);
+            PESc.eleven.DescriptionId = CompetencesSection.AnalyzesSkillDescription14.DescriptionId;
             PESc.twelve.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[46, 6].Value);
+            PESc.twelve.DescriptionId = CompetencesSection.FlexibleSkillDescription15.DescriptionId;
             PESc.thirteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[47, 6].Value);
+            PESc.thirteen.DescriptionId = CompetencesSection.PlanningSkillDescription16.DescriptionId;
             PESc.fourteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[48, 6].Value);
+            PESc.fourteen.DescriptionId = CompetencesSection.CompetentSkillDescription17.DescriptionId;
             PESc.fifteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[49, 6].Value);
+            PESc.fifteen.DescriptionId = CompetencesSection.FollowsSkillDescription18.DescriptionId;
+            PESc.scoreSkills.ScoreEmployee = 0;
+            PESc.scoreSkills.DescriptionId = CompetencesSection.SubtotalSkillDescription19.DescriptionId;
+
             PESc.sixteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[53, 6].Value);
+            PESc.sixteen.DescriptionId = CompetencesSection.SupervisorInterpersonalDescription20.DescriptionId;
             PESc.seventeen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[54, 6].Value);
+            PESc.seventeen.DescriptionId = CompetencesSection.OtherInterpersonalDescription21.DescriptionId;
             PESc.eighteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[55, 6].Value);
+            PESc.eighteen.DescriptionId = CompetencesSection.ClientInterpersonalDescription22.DescriptionId;
             PESc.nineteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[56, 6].Value);
+            PESc.nineteen.DescriptionId = CompetencesSection.CommitmentInterpersonalDescription23.DescriptionId;
+            PESc.scoreInterpersonal.ScoreEmployee = 0;
+            PESc.scoreInterpersonal.DescriptionId = CompetencesSection.SubtotalInterpersonalDescription24.DescriptionId;
+
+            PESc.twenty.ScoreEmployee = 0;
+            PESc.twenty.DescriptionId = CompetencesSection.ActivelyGrowthDescription25.DescriptionId;
             PESc.twentyone.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[61, 6].Value);
+            PESc.twentyone.DescriptionId = CompetencesSection.OpenGrowthDescription26.DescriptionId;
             PESc.twentytwo.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[62, 6].Value);
+            PESc.twentytwo.DescriptionId = CompetencesSection.InvolvementGrowthDescription27.DescriptionId;
+            PESc.twentythree.ScoreEmployee = 0;
+            PESc.twentythree.DescriptionId = CompetencesSection.ChallengesGrowthDescription28.DescriptionId;
             PESc.twentyfour.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[64, 6].Value);
+            PESc.twentyfour.DescriptionId = CompetencesSection.SeeksGrowthDescription29.DescriptionId;
+            PESc.scoreGrowth.ScoreEmployee = 0;
+            PESc.scoreGrowth.DescriptionId = CompetencesSection.SubtotalGrowthDescription30.DescriptionId;
+
             PESc.punctuality.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[68, 6].Value);
+            PESc.punctuality.DescriptionId = CompetencesSection.PunctualityPoliciesDescription31.DescriptionId;
             PESc.policies.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[69, 6].Value);
+            PESc.policies.DescriptionId = CompetencesSection.PoliciesPoliciesDescription32.DescriptionId;
             PESc.values.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[70, 6].Value);
+            PESc.values.DescriptionId = CompetencesSection.ValuesPoliciesDescription33.DescriptionId;
+            PESc.scorePolicies.ScoreEmployee = 0;
+            PESc.scorePolicies.DescriptionId = CompetencesSection.SubtotalPoliciesDescription34.DescriptionId;
+            PESc.scoreCompetences.ScoreEmployee = 0;
+            PESc.scoreCompetences.DescriptionId = CompetencesSection.TotalCompetencesDescription35.DescriptionId;
             #endregion
 
             #region ScoreEvaluator - insert
             PESc.one.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[24, 7].Value);
+            PESc.one.PEId = PESc.pes.PEId;
             PESc.two.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[25, 7].Value);
+            PESc.two.PEId = PESc.pes.PEId; 
             PESc.three.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[26, 7].Value);
             PESc.four.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[27, 7].Value);
             PESc.five.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[28, 7].Value);
