@@ -199,7 +199,7 @@ namespace PES.Services
                                        INNER JOIN DESCRIPTION D ON ST.ID_SUBTITLE = D.ID_SUBTITLE
                                         LEFT JOIN SCORE SC ON D.ID_DESCRIPTION = SC.ID_DESCRIPTION
                                             WHERE SC.ID_PE = :peId 
-                                         ORDER BY T.ID_TITLE, ST.ID_SUBTITLE, D.ID_DESCRIPTION";            
+                                         ORDER BY T.ID_TITLE, ST.ID_SUBTITLE, D.ID_DESCRIPTION";
                     using (OracleCommand command = new OracleCommand(selectQuery, db))
                     {
                         command.Parameters.Add(new OracleParameter("peId", peId));
@@ -227,7 +227,7 @@ namespace PES.Services
             catch
             {
                 pesComplete = null;
-            }
+                }
             return pesComplete;
         }
     }

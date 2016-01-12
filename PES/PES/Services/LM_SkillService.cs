@@ -62,18 +62,18 @@ namespace PES.Services
                     using (OracleCommand Command = new OracleCommand(SelectSkill, db))
                     {
                         Command.Parameters.Add(new OracleParameter("peID", peID));
-                        Command.ExecuteReader();
-                        OracleDataReader Reader = Command.ExecuteReader();
-                        while (Reader.Read())
-                        {
-                            skill = new LM_Skill();
-                            skill.LMSkillId = Convert.ToInt32(Reader["ID_LMSKILL"]);
-                            skill.SkillId = Convert.ToInt32(Reader["ID_SKILL"]);
-                            skill.PEId = Convert.ToInt32(Reader["ID_PE"]);
-                            skill.CheckEmployee = Convert.ToString(Reader["CHECK_EMPLOYEE"]);
-                            skill.CheckEvaluator = Convert.ToString(Reader["CHECK_EVALUATOR"]);
-                            skills.Add(skill);
-                        }
+                    Command.ExecuteReader();
+                    OracleDataReader Reader = Command.ExecuteReader();
+                    while (Reader.Read())
+                    {
+                        skill = new LM_Skill();
+                        skill.LMSkillId = Convert.ToInt32(Reader["ID_LMSKILL"]);
+                        skill.SkillId = Convert.ToInt32(Reader["ID_SKILL"]);
+                        skill.PEId = Convert.ToInt32(Reader["ID_PE"]);
+                        skill.CheckEmployee = Convert.ToString(Reader["CHECK_EMPLOYEE"]);
+                        skill.CheckEvaluator = Convert.ToString(Reader["CHECK_EVALUATOR"]);
+                        skills.Add(skill);
+                    }
                     }
                     db.Close();
                 }

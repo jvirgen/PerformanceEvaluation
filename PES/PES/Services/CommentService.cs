@@ -14,7 +14,7 @@ namespace PES.Services
         private PESDBContext dbContext = new PESDBContext();
 
         // Get Comments of the PE to the DB by peID
-        public List<Comment> GetCommentByPE(int peId)
+        public List<Comment> GetCommentByPE(int peId) 
         {
             List<Comment> Comments;
             Comment Comment;
@@ -37,8 +37,8 @@ namespace PES.Services
                         OracleDataReader reader = command.ExecuteReader();
                         Comments = new List<Comment>();
                         while (reader.Read())
-                        {
-                            Comment = new Comment();
+                    {
+                        Comment = new Comment();
                             Comment.CommentId = Convert.ToInt32(reader["ID_COMMENT"]);
                             Comment.PEId = Convert.ToInt32(reader["ID_PE"]);
                             Comment.TrainningEmployee = Convert.ToString(reader["TRAINNING_EMPLOYEE"]);
@@ -46,8 +46,8 @@ namespace PES.Services
                             Comment.AcknowledgeEvaluator = Convert.ToString(reader["ACKNOWLEDGE_EVALUATOR"]);
                             Comment.CommRecommEmployee = Convert.ToString(reader["comm/recomm_employee"]);
                             Comment.CommRecommEvaluator = Convert.ToString(reader["comm/recomm_evaluator"]);
-                            Comments.Add(Comment);
-                        }
+                        Comments.Add(Comment);
+                    }
 
                     }
                     db.Close();

@@ -48,7 +48,11 @@ namespace PES.Controllers
                     //Store the Resource user name in a variable session
                     Session["UserEmail"] = resource.Email;
                     //Deside if the user is a Resouce
+
+                    PEService test = new PEService();
+                    test.GetPerformanceEvaluationByIDPE(1);
                     //_employeeService.InsertEmployee(resource);
+
                     if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                     {
                         //Return the Resource's view 
