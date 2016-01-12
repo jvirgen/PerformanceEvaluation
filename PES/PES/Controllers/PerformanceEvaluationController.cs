@@ -99,7 +99,7 @@ namespace PES.Controllers
             PESc.pes.EmployeeId = user.EmployeeId;
             PESc.pes.EvaluatorId = evaluator.EmployeeId;
             PESc.pes.EvaluationPeriod = DateTime.Now.Date;
-            var status = _statusService.GetStatusByDescription("imported");
+            var status = _statusService.GetStatusByDescription("Incomplete");
             PESc.pes.StatusId = status != null ? status.StatusId : 1; 
             PESc.pes.EnglishScore = 0;
             PESc.pes.PerformanceScore = 0;
@@ -125,11 +125,25 @@ namespace PES.Controllers
             #endregion
 
             #region Title - insert
+            PESc.title1.Name = PerformanceSection.PerformanceTitle.Name;
+            PESc.title2.Name = CompetencesSection.CompetenceTitle.Name;
             //PESc.title1.Name = excelSheet.Cells[19, 2].Value;
             //PESc.title2.Name = excelSheet.Cells[39, 2].Value;
             #endregion
 
             #region Subtitle - insert
+            PESc.subtitle1.Name = PerformanceSection.Subtitle1.Name;
+            PESc.subtitle1.TitleId = PerformanceSection.Subtitle1.TitleId;
+            PESc.subtitle2.Name = PerformanceSection.Subtitle2.Name;
+            PESc.subtitle2.TitleId = PerformanceSection.Subtitle2.TitleId;
+            PESc.subtitle3.Name = CompetencesSection.SkillsSubtitle.Name;
+            PESc.subtitle3.TitleId = CompetencesSection.SkillsSubtitle.TitleId;
+            PESc.subtitle4.Name = CompetencesSection.InterpersonalSubtitle.Name;
+            PESc.subtitle4.TitleId = CompetencesSection.InterpersonalSubtitle.TitleId;
+            PESc.subtitle5.Name = CompetencesSection.GrowthSubtitle.Name;
+            PESc.subtitle5.TitleId = CompetencesSection.GrowthSubtitle.TitleId;
+            PESc.subtitle6.Name = CompetencesSection.PoliciesSubtitle.Name;
+            PESc.subtitle6.TitleId = CompetencesSection.PoliciesSubtitle.TitleId;
             //PESc.subtitle1.Name = excelSheet.Cells[23, 2].Value;
             //PESc.subtitle2.Name = excelSheet.Cells[32, 2].Value;
             //PESc.subtitle3.Name = excelSheet.Cells[43, 2].Value;
@@ -139,6 +153,7 @@ namespace PES.Controllers
             #endregion
 
             #region Description - insert
+
             //PESc.description1.DescriptionText = excelSheet.Cells[24, 2].Value;
             //PESc.description2.DescriptionText = excelSheet.Cells[25, 2].Value;
             //PESc.description3.DescriptionText = excelSheet.Cells[26, 2].Value;
@@ -173,6 +188,7 @@ namespace PES.Controllers
             //PESc.subtotalPolicies.DescriptionText = excelSheet.Cells[71, 2].Value;
             //PESc.totalCompetences.DescriptionText = excelSheet.Cells[73, 2].Value;
             #endregion
+
 
             #region ScoreEmployee - insert
             PESc.one.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[24, 6].Value);

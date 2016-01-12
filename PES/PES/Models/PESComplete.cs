@@ -21,6 +21,7 @@ namespace PES.Models
         public Subtitle subtitle5 = new Subtitle();
         public Subtitle subtitle6 = new Subtitle();
 
+        public List<Description> ListDescription = new List<Description>();
         public Description description1 = new Description();
         public Description description2 = new Description();
         public Description description3 = new Description();
