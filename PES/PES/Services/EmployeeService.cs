@@ -269,6 +269,7 @@ namespace PES.Services
                                                                 HIRE_DATE,
                                                                 RANKING,
                                                                 END_DATE) 
+
                                                         VALUES (:firstName,
                                                                 :lastName,
                                                                 :email,

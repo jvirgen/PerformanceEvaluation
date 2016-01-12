@@ -53,13 +53,15 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string SelectSkill = "SELECT ID_LMSKILL, " +
-                                                "ID_SKILL, " +
-                                                "ID_PE, " +
-                                                "CHECK_EMPLOYEE, " +
-                                                "CHECK_EVALUATOR " +
-                                                "FROM LM_SKILL WHERE ID_PE = " + peID;
-                    OracleCommand Command = new OracleCommand(SelectSkill, db);
+                    string SelectSkill = @"SELECT ID_LMSKILL,
+                                                ID_SKILL,
+                                                ID_PE, 
+                                                CHECK_EMPLOYEE,
+                                                CHECK_EVALUATOR 
+                                                FROM LM_SKILL WHERE ID_PE = :peID";
+                    using (OracleCommand Command = new OracleCommand(SelectSkill, db))
+                    {
+                        Command.Parameters.Add(new OracleParameter("peID", peID));
                     Command.ExecuteReader();
                     OracleDataReader Reader = Command.ExecuteReader();
                     while (Reader.Read())
@@ -71,6 +73,7 @@ namespace PES.Services
                         skill.CheckEmployee = Convert.ToString(Reader["CHECK_EMPLOYEE"]);
                         skill.CheckEvaluator = Convert.ToString(Reader["CHECK_EVALUATOR"]);
                         skills.Add(skill);
+                    }
                     }
                     db.Close();
                 }
