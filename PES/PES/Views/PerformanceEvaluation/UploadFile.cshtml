@@ -28,27 +28,97 @@
 
         @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
         {
-            <div class="row text-center">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
                 <div class="form-group">
-                    <p>@(Model.CurrentUser.FirstName + Model.CurrentUser.LastName)</p>
-                    @Html.Label("File to upload", new { @class = "col-md-4 control-label" })
+                    @Html.Label("fileUploaded", "Performance File", new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        <input type="file" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required  />
-                        <select id="SelectedEmployee" name="SelectedEmployee">
-                            @foreach (var employee in Model.ListEmployees)
-                            {
-                                <option value="@employee.EmployeeId">@employee.Email</option>
-                            }
-                        </select>
+                        <input type="file" style="width:100%;" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required />
                     </div>
                 </div>
 
-           </div>
-            <div class="row text-center">
-                <br />
                 <div class="form-group">
-                    <input type="submit" class="btn btn-lg btn-default" value="Load Performance Evaluation" onclick="login()" />
+                    @Html.Label("SelectedEmployee", "Employee", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @{
+                            List<SelectListItem> employeesList = new List<SelectListItem>();
+                            foreach (var employee in Model.ListEmployees)
+                            {
+                                var newItem = new SelectListItem()
+                                {
+                                    Text = employee.Email,
+                                    Value = (employee.EmployeeId).ToString(),
+                                    Selected = false
+                                };
+                                employeesList.Add(newItem);
+                            }
+                        }
+                        @Html.DropDownListFor(m => m.SelectedEmployee, employeesList, new { @class = "inlined form-control", @style = "width:100%" })
+                        @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <input type="submit" value="Load File" class="btn btn-lg btn-primary" />
+                    </div>
                 </div>
             </div>
+
+
+        @*<div class="row text-center">
+            <div class="form-group">
+                <p>@(Model.CurrentUser.FirstName + Model.CurrentUser.LastName)</p>
+                @Html.Label("File to upload", new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    <input type="file" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required />
+                    <select id="SelectedEmployee" name="SelectedEmployee">
+                        @foreach (var employee in Model.ListEmployees)
+                            {
+                            <option value="@employee.EmployeeId">@employee.Email</option>
+                            }
+                    </select>
+                </div>
+            </div>
+
+        </div>*@
+        @*<div class="row text-center">
+            <br />
+            <div class="form-group">
+                <input type="submit" class="btn btn-lg btn-default" value="Load Performance Evaluation" onclick="login()" />
+            </div>
+        </div>*@
         }
-</div>
+    </div>
+
+@section Styles{
+    @Styles.Render("~/Content/css/select2-bootstrap.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+
+    <style type="text/css">
+        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
+            width: 100% !important;
+        }
+    </style>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/select2.min.js")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#SelectedEmployee").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+                //dropdownCss: { 'min-width': '200px' },
+                //width: '100% !important',
+                //placeholder: "Select Employee",
+                //allowClear: true
+                
+            });
+        });
+    </script>
+}

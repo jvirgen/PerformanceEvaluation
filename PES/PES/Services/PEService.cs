@@ -182,15 +182,15 @@ namespace PES.Services
             List<PESComplete> pesComplete;
             PESComplete peComplete;
 
-            //try
-            //{
+            try
+            {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
                     string selectQuery = @"SELECT T.TITLE AS TITLE,
                                                   ST.SUBTITLE AS SUBTITLE,
                                                   D.DESCRIPTION AS DESCRIPTION,
-                                                  SC.SCORE_EMPLOYEE AS SCEMPLOYE, 
+                                                  SC.SCORE_EMPLOYEE AS SCEMPLOYEe, 
                                                   SC.SCORE_EVALUATOR AS SCEVALUATOR, 
                                                   SC.COMMENTS AS COMMENTS, 
                                                   SC.CALCULATION AS CALCULATION
@@ -200,11 +200,6 @@ namespace PES.Services
                                         LEFT JOIN SCORE SC ON D.ID_DESCRIPTION = SC.ID_DESCRIPTION
                                             WHERE SC.ID_PE = :peId 
                                          ORDER BY T.ID_TITLE, ST.ID_SUBTITLE, D.ID_DESCRIPTION";
-
-                    //selectQuery = selectQuery.Replace("\n", " ");
-                    //OracleCommand command = new OracleCommand(selectQuery, db);
-                    
-
                     using (OracleCommand command = new OracleCommand(selectQuery, db))
                     {
                         command.Parameters.Add(new OracleParameter("peId", peId));
@@ -226,13 +221,13 @@ namespace PES.Services
                             pesComplete.Add(peComplete);
                         }
                     }
+                    db.Close();
                 }
-
-            //}
-            //catch
-            //{
-            //    pesComplete = null;
-            //}
+            }
+            catch
+            {
+                pesComplete = null;
+                }
             return pesComplete;
         }
     }

@@ -23,8 +23,8 @@ namespace PES.Services
         {
             bool status= false;
             
-            using (OracleConnection db = dbContext.GetDBConnection())
-            {
+                    using (OracleConnection db = dbContext.GetDBConnection())
+                    {
 
                 string Insertquery = @" INSERT INTO SCORE (ID_DESCRIPTION,
                                                                  ID_PE, 
@@ -63,7 +63,7 @@ namespace PES.Services
 
                     status = true;
                 }
-            }
+                }
             
             return status;
         }
