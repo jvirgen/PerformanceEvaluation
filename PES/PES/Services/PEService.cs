@@ -182,15 +182,15 @@ namespace PES.Services
             List<PESComplete> pesComplete;
             PESComplete peComplete;
 
-            //try
-            //{
+            try
+            {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
                     string selectQuery = @"SELECT T.TITLE AS TITLE,
                                                   ST.SUBTITLE AS SUBTITLE,
                                                   D.DESCRIPTION AS DESCRIPTION,
-                                                  SC.SCORE_EMPLOYEE AS SCEMPLOYE, 
+                                                  SC.SCORE_EMPLOYEE AS SCEMPLOYEe, 
                                                   SC.SCORE_EVALUATOR AS SCEVALUATOR, 
                                                   SC.COMMENTS AS COMMENTS, 
                                                   SC.CALCULATION AS CALCULATION
@@ -199,12 +199,7 @@ namespace PES.Services
                                        INNER JOIN DESCRIPTION D ON ST.ID_SUBTITLE = D.ID_SUBTITLE
                                         LEFT JOIN SCORE SC ON D.ID_DESCRIPTION = SC.ID_DESCRIPTION
                                             WHERE SC.ID_PE = :peId 
-                                         ORDER BY T.ID_TITLE, ST.ID_SUBTITLE, D.ID_DESCRIPTION";
-
-                    //selectQuery = selectQuery.Replace("\n", " ");
-                    //OracleCommand command = new OracleCommand(selectQuery, db);
-                    
-
+                                         ORDER BY T.ID_TITLE, ST.ID_SUBTITLE, D.ID_DESCRIPTION";            
                     using (OracleCommand command = new OracleCommand(selectQuery, db))
                     {
                         command.Parameters.Add(new OracleParameter("peId", peId));
@@ -218,21 +213,21 @@ namespace PES.Services
                             peComplete.title1.Name = Convert.ToString(reader["TITLE"]);
                             peComplete.subtitle1.Name = Convert.ToString(reader["SUBTITLE"]);
                             peComplete.description1.DescriptionText = Convert.ToString(reader["DESCRIPTION"]);
-                            peComplete.scorePerformance.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]));
-                            peComplete.scorePerformance.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"])); 
+                            peComplete.scorePerformance.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
+                            peComplete.scorePerformance.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
                             peComplete.scorePerformance.Comments = Convert.ToString(reader["COMMENTS"]);
                             peComplete.scorePerformance.Calculation = Convert.ToInt32(reader["CALCULATION"]);
 
                             pesComplete.Add(peComplete);
                         }
                     }
+                    db.Close();
                 }
-
-            //}
-            //catch
-            //{
-            //    pesComplete = null;
-            //}
+            }
+            catch
+            {
+                pesComplete = null;
+            }
             return pesComplete;
         }
     }

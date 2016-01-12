@@ -14,37 +14,41 @@ namespace PES.Services
         private PESDBContext dbContext = new PESDBContext();
 
         // Get Comments of the PE to the DB by peID
-        public List<Comment> GetCommentByPE(int peId) 
+        public List<Comment> GetCommentByPE(int peId)
         {
-            List<Comment> Comments = new List<Comment>();
+            List<Comment> Comments;
             Comment Comment;
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string SelectComments = "SELECT ID_COMMENT, " +
-                                                    "ID_PE, " +
-                                                    "TRAINNING_EMPLOYEE, " +
-                                                    "TRAINNING_EVALUATOR, " +
-                                                    "ACKNOWLEDGE_EVALUATOR, " +
-                                                    "\"comm/recomm_employee\", " +
-                                                    "\"comm/recomm_evaluator\" " +
-                                                    "FROM \"COMMENT\" WHERE ID_PE = " + peId;
-                    OracleCommand Command = new OracleCommand(SelectComments, db);
-                    Command.ExecuteReader();
-                    OracleDataReader Reader = Command.ExecuteReader();
-                    while (Reader.Read())
+                    string selectComments = @"SELECT ID_COMMENT, 
+                                                    ID_PE, 
+                                                    TRAINNING_EMPLOYEE, 
+                                                    TRAINNING_EVALUATOR, 
+                                                    ACKNOWLEDGE_EVALUATOR, 
+                                                    ""comm/recomm_employee"",
+                                                    ""comm/recomm_evaluator"" 
+                                                    FROM ""COMMENT"" WHERE ID_PE = :peId";
+                    using (OracleCommand command = new OracleCommand(selectComments, db))
                     {
-                        Comment = new Comment();
-                        Comment.CommentId = Convert.ToInt32(Reader["ID_COMMENT"]);
-                        Comment.PEId = Convert.ToInt32(Reader["ID_PE"]);
-                        Comment.TrainningEmployee = Convert.ToString(Reader["TRAINNING_EMPLOYEE"]);
-                        Comment.TrainningEvaluator = Convert.ToString(Reader["TRAINNING_EVALUATOR"]);
-                        Comment.AcknowledgeEvaluator = Convert.ToString(Reader["ACKNOWLEDGE_EVALUATOR"]);
-                        Comment.CommRecommEmployee = Convert.ToString(Reader["comm/recomm_employee"]);
-                        Comment.CommRecommEvaluator = Convert.ToString(Reader["comm/recomm_evaluator"]);
-                        Comments.Add(Comment);
+                        command.Parameters.Add(new OracleParameter("peId", peId));
+                        OracleDataReader reader = command.ExecuteReader();
+                        Comments = new List<Comment>();
+                        while (reader.Read())
+                        {
+                            Comment = new Comment();
+                            Comment.CommentId = Convert.ToInt32(reader["ID_COMMENT"]);
+                            Comment.PEId = Convert.ToInt32(reader["ID_PE"]);
+                            Comment.TrainningEmployee = Convert.ToString(reader["TRAINNING_EMPLOYEE"]);
+                            Comment.TrainningEvaluator = Convert.ToString(reader["TRAINNING_EVALUATOR"]);
+                            Comment.AcknowledgeEvaluator = Convert.ToString(reader["ACKNOWLEDGE_EVALUATOR"]);
+                            Comment.CommRecommEmployee = Convert.ToString(reader["comm/recomm_employee"]);
+                            Comment.CommRecommEvaluator = Convert.ToString(reader["comm/recomm_evaluator"]);
+                            Comments.Add(Comment);
+                        }
+
                     }
                     db.Close();
                 }

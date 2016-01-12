@@ -53,24 +53,27 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string SelectSkill = "SELECT ID_LMSKILL, " +
-                                                "ID_SKILL, " +
-                                                "ID_PE, " +
-                                                "CHECK_EMPLOYEE, " +
-                                                "CHECK_EVALUATOR " +
-                                                "FROM LM_SKILL WHERE ID_PE = " + peID;
-                    OracleCommand Command = new OracleCommand(SelectSkill, db);
-                    Command.ExecuteReader();
-                    OracleDataReader Reader = Command.ExecuteReader();
-                    while (Reader.Read())
+                    string SelectSkill = @"SELECT ID_LMSKILL,
+                                                ID_SKILL,
+                                                ID_PE, 
+                                                CHECK_EMPLOYEE,
+                                                CHECK_EVALUATOR 
+                                                FROM LM_SKILL WHERE ID_PE = :peID";
+                    using (OracleCommand Command = new OracleCommand(SelectSkill, db))
                     {
-                        skill = new LM_Skill();
-                        skill.LMSkillId = Convert.ToInt32(Reader["ID_LMSKILL"]);
-                        skill.SkillId = Convert.ToInt32(Reader["ID_SKILL"]);
-                        skill.PEId = Convert.ToInt32(Reader["ID_PE"]);
-                        skill.CheckEmployee = Convert.ToString(Reader["CHECK_EMPLOYEE"]);
-                        skill.CheckEvaluator = Convert.ToString(Reader["CHECK_EVALUATOR"]);
-                        skills.Add(skill);
+                        Command.Parameters.Add(new OracleParameter("peID", peID));
+                        Command.ExecuteReader();
+                        OracleDataReader Reader = Command.ExecuteReader();
+                        while (Reader.Read())
+                        {
+                            skill = new LM_Skill();
+                            skill.LMSkillId = Convert.ToInt32(Reader["ID_LMSKILL"]);
+                            skill.SkillId = Convert.ToInt32(Reader["ID_SKILL"]);
+                            skill.PEId = Convert.ToInt32(Reader["ID_PE"]);
+                            skill.CheckEmployee = Convert.ToString(Reader["CHECK_EMPLOYEE"]);
+                            skill.CheckEvaluator = Convert.ToString(Reader["CHECK_EVALUATOR"]);
+                            skills.Add(skill);
+                        }
                     }
                     db.Close();
                 }

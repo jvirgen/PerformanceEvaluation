@@ -612,7 +612,7 @@ namespace PES.Controllers
                     //ViewBag.Error = "File type is incorrect<br>";
                     TempData["Error"] = "File is not a valid excel file";
 
-                    return View("UploadFile");
+                    return RedirectToAction("UploadFile");
                 }
 
             }
