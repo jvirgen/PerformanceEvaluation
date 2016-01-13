@@ -77,7 +77,8 @@ namespace PES.Services
                                             "ENGLISH_SCORE," +
                                             "PERFORMANCE_SCORE," +
                                             "COMPETENCE_SCORE " +
-                                            "FROM PE WHERE ID_EMPLOYEE = '" + userId + "' AND EVALUATION_PERIOD = '" + date.Date + "'";
+                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY')";
+
                     OracleCommand Command = new OracleCommand(Query, db);
                     OracleDataReader Read = Command.ExecuteReader();
                     PES = new PEs();
