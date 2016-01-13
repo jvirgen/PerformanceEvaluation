@@ -119,9 +119,7 @@ namespace PES.Controllers
             PESc.empleado.ProfileId = user.ProfileId;
             PESc.empleado.ManagerId = user.ManagerId; 
             PESc.empleado.HireDate = user.HireDate;
-            PESc.empleado.Ranking = user.Ranking;
             PESc.empleado.EndDate = user.EndDate;
-
             // data from excel
             PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
             PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
@@ -840,6 +838,8 @@ namespace PES.Controllers
                     var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
 
                     employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
+                    employeeVM.englishScore = lastPE.EnglishScore;
+                    employeeVM.rank = 1.1 ;
                 }
                 else 
                 {
