@@ -41,8 +41,10 @@ namespace PES.Models
         public Description description17 = new Description();
         public Description description18 = new Description();
         public Description description19 = new Description();
+        public Description description20 = new Description();
         public Description description21 = new Description();
         public Description description22 = new Description();
+        public Description description23 = new Description();
         public Description description24 = new Description();
         public Description descriptionPuctuality = new Description();
         public Description descriptionPolicies = new Description();
@@ -75,8 +77,10 @@ namespace PES.Models
         public Score seventeen = new Score();
         public Score eighteen = new Score();
         public Score nineteen = new Score();
+        public Score twenty = new Score();
         public Score twentyone = new Score();
         public Score twentytwo = new Score();
+        public Score twentythree = new Score();
         public Score twentyfour = new Score();
         public Score punctuality = new Score();
         public Score policies = new Score();
