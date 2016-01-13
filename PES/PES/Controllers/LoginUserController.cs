@@ -43,16 +43,14 @@ namespace PES.Controllers
                 // Validate if resource not found
                 if (resource != null)
                 {
-                    //Store the Resource profile in a variable session
+                    // Store the Resource profile in a variable session
                     Session["UserProfile"] = (int)resource.ProfileId;
-                    //Store the Resource user name in a variable session
+                    // Store the Resource user name in a variable session
                     Session["UserEmail"] = resource.Email;
-                    //Deside if the user is a Resouce
-
-                    PEService test = new PEService();
-                    test.GetPerformanceEvaluationByIDPE(1);
-                    //_employeeService.InsertEmployee(resource);
-
+                    // Set flag that user is logged in
+                    Session["UserName"] = string.Format("{0} {1}", resource.FirstName, resource.LastName);
+                    
+                    //Decide if the user is a Resouce
                     if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                     {
                         //Return the Resource's view 

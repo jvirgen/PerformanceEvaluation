@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    // Check if user is logged in
+    var userLogged = Session["UserName"] != null ? true : false;
+    var userName = Session["UserName"] != null ? (string)Session["UserName"] : "";
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,25 +13,49 @@
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("Styles", required: false)
     
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Performance Evaluation System", "Index", "PerformanceEvaluation", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="#">
+                    <img alt="4th Source" src="~/Content/images/4thSource_logo.png" height="40">
+                </a>
+                @if (userLogged)
+                {
+                    <a class="navbar-brand" href="@Url.Action("Index", "PerformanceEvaluation", new { area = "" })">Performance Evaluation System</a>
+                }
+                else
+                {
+                    <a class="navbar-brand" href="@Url.Action("Login", "LoginUser", new { area = "" })">Performance Evaluation System</a>
+                }
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "PerformanceEvaluation")</li>
-                   <!-- <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>-->
-                </ul>
+                @if (userLogged)
+                {
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("SearchInformation", "PerformanceEvaluation")">Performance Files</a></li>
+                                <li><a href="@Url.Action("UploadFile", "PerformanceEvaluation")">Upload Performance File</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+               
+                @if (userLogged)
+                {
+                    <div class="navbar-text navbar-right">
+                        <span>@userName</span>
+                        <a type="button" class="btn btn-xs btn-sm" href="@Url.Action("Logout","LoginUser")">
+                            <span class="glyphicon glyphicon-log-out"></span> Log out
+                        </a>
+                    </div>
+                }
             </div>
+            
         </div>
     </div>
     <div class="container body-content">
