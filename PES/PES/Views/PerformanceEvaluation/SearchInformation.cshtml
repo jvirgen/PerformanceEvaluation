@@ -17,12 +17,12 @@
         <tr>
             <th>Id</th>
             <th>Employee</th>
+            <th>Position</th>
+            <th>Email</th>
             @if (currentUser.ProfileId == (int)ProfileUser.Director)
             {
                 <th>Manager</th>
-            }
-            <th>Position</th>
-            <th>Email</th>
+            }           
         </tr>
     </thead>
     <tbody>

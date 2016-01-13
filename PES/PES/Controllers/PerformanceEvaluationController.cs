@@ -132,10 +132,10 @@ namespace PES.Controllers
             #endregion
 
             #region Subtitle - insert
-            PESc.subtitle1.Name = PerformanceSection.Subtitle1.Name;
-            PESc.subtitle1.TitleId = PerformanceSection.Subtitle1.TitleId;
-            PESc.subtitle2.Name = PerformanceSection.Subtitle2.Name;
-            PESc.subtitle2.TitleId = PerformanceSection.Subtitle2.TitleId;
+            //PESc.subtitle1.Name = PerformanceSection.Subtitle1.Name;
+            //PESc.subtitle1.TitleId = PerformanceSection.Subtitle1.TitleId;
+            //PESc.subtitle2.Name = PerformanceSection.Subtitle2.Name;
+            //PESc.subtitle2.TitleId = PerformanceSection.Subtitle2.TitleId;
             PESc.subtitle3.Name = CompetencesSection.SkillsSubtitle.Name;
             PESc.subtitle3.TitleId = CompetencesSection.SkillsSubtitle.TitleId;
             PESc.subtitle4.Name = CompetencesSection.InterpersonalSubtitle.Name;
