@@ -71,6 +71,7 @@ namespace PES.Controllers
                     {
                         // Return to the login screen if no profile
                         // Message: You are not allowed
+                        TempData["Error"] = "Resource not found";
                         return RedirectToAction("Login", "LoginUser");
                     }
                 }

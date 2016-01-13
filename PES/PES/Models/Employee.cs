@@ -55,10 +55,10 @@ namespace PES.Models
         /// </summary>
         public DateTime HireDate { get; set; }
 
-        /// <summary>
-        /// Employee Ranking
-        /// </summary>
-        public int Ranking { get; set;}
+        ///// <summary>
+        ///// Employee Ranking
+        ///// </summary>
+        //public int Ranking { get; set;}
 
         /// <summary>
         /// End Date 
@@ -78,7 +78,8 @@ namespace PES.Models
         public Employee employee { get; set; }
         public Employee manager { get; set; }
         public double totalScore { get; set; }
-        public int? rank { get; set; }
+        public double? rank { get; set; }
+        public double englishScore { get; set; }
     }
 
     public class EmployeeChoosePeriodViewModel 

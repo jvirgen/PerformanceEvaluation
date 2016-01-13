@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PES.Models.PESComplete>
+﻿@*@model IEnumerable<PES.Models.PESComplete>
     @using PES.Models
     @{
         ViewBag.Title = "PEvisualization";
@@ -6,7 +6,7 @@
         string userEmail = ViewBag.UserEmail != null ? (string)ViewBag.UserEmail : "";
         int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
         int peID = 1;
-    }
+    }*@
 <div class="jumbotron">
     <p class="text-right">
         <a href="@Url.Action("Logout", "LoginUser")">Logout</a>
@@ -14,7 +14,7 @@
 
     <div>
         <h2 class="text-center col-md-12">Performance Evaluation System</h2>
-        <p class="text-left col-md-8">@userEmail</p>
+        <p class="text-left col-md-8">User</p>
         <p class="text-right col-md-4">Period</p>
     </div>
 
