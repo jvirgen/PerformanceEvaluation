@@ -1157,19 +1157,14 @@ namespace PES.Controllers
         }
 
         //GET: PerformanceEvaluation/PEVisualization
-        public ActionResult PEVisualization(int peID, string email)
+        public ActionResult PEVisualization(int peID)
         {
-            PESComplete peComplete = new PESComplete();
-            List<Score> peScores = new List<Score>();
-            List<Comment> peComments = new List<Comment>();
-            List<LM_Skill> peSkills = new List<LM_Skill>();
-            PEs pe = new PEs();
-            
-            //pe = _peService.
-            peScores = _scoreService.GetPEScoresbyPEID(peID); 
-            peComments = _commentService.GetCommentByPE(peID);
-            peSkills = _lm_skillService.GetSkillsBypeID(peID);
+            List<PerformanceSectionHelper> listPerformancHelper = new List<PerformanceSectionHelper>();
+            _peService = new PEService();
 
+            listPerformancHelper = _peService.GetPerformanceEvaluationByIDPE(peID);
+            
+         
             #region 
             /*
             #region Subtitles
@@ -1222,20 +1217,6 @@ namespace PES.Controllers
 
             // Get score of 1. Accuracy or Precision
            // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
-
-
-            foreach (var score in peScores)
-            {
-                peComplete.one = score;
-            }
-            foreach (var comment in peComments)
-            {
-                peComplete.comment = comment;
-            }
-            foreach (var skill in peSkills)
-            {
-                peComplete.supervises = skill;
-            }
 
             return View();
         }

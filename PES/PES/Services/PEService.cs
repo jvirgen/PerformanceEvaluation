@@ -192,10 +192,10 @@ namespace PES.Services
         //    return null;
         //}
 
-        public List<PESComplete> GetPerformanceEvaluationByIDPE(int peId)
+        public List<PerformanceSectionHelper> GetPerformanceEvaluationByIDPE(int peId)
         {
-            List<PESComplete> pesComplete;
-            PESComplete peComplete;
+            List<PerformanceSectionHelper> listPerformanceSectionHelp;
+            PerformanceSectionHelper performanceSectionHelp;
 
             try
             {
@@ -219,21 +219,20 @@ namespace PES.Services
                     {
                         command.Parameters.Add(new OracleParameter("peId", peId));
                         OracleDataReader reader = command.ExecuteReader();
-                        pesComplete = new List<PESComplete>();
-
+                        listPerformanceSectionHelp = new List<PerformanceSectionHelper>();                     
                         while (reader.Read())
                         {
-                            peComplete = new PESComplete();
+                            performanceSectionHelp = new PerformanceSectionHelper();
 
-                            peComplete.title1.Name = Convert.ToString(reader["TITLE"]);
-                            peComplete.subtitle1.Name = Convert.ToString(reader["SUBTITLE"]);
-                            peComplete.description1.DescriptionText = Convert.ToString(reader["DESCRIPTION"]);
-                            peComplete.scorePerformance.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
-                            peComplete.scorePerformance.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
-                            peComplete.scorePerformance.Comments = Convert.ToString(reader["COMMENTS"]);
-                            peComplete.scorePerformance.Calculation = Convert.ToInt32(reader["CALCULATION"]);
+                            performanceSectionHelp.Tilte = Convert.ToString(reader["TITLE"]);
+                            performanceSectionHelp.Subtuitle = Convert.ToString(reader["SUBTITLE"]);
+                            performanceSectionHelp.Description = Convert.ToString(reader["DESCRIPTION"]);
+                            performanceSectionHelp.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
+                            performanceSectionHelp.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
+                            performanceSectionHelp.Comments = Convert.ToString(reader["COMMENTS"]);
+                            performanceSectionHelp.Calculation = Convert.ToDouble(reader["CALCULATION"]);
 
-                            pesComplete.Add(peComplete);
+                            listPerformanceSectionHelp.Add(performanceSectionHelp);
                         }
                     }
                     db.Close();
@@ -241,9 +240,44 @@ namespace PES.Services
             }
             catch
             {
-                pesComplete = null;
+                listPerformanceSectionHelp = null;
                 }
-            return pesComplete;
+            return listPerformanceSectionHelp;
+        }
+
+        public bool UpdateRank(int peId, double rank)
+        {
+            bool status = false;
+
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string updateRank = @"UPDATE PE
+                                            SET RANK = :rank
+                                          WHERE ID_PE = :peId";
+
+                using (OracleCommand command = new OracleCommand(updateRank, db))
+                {
+                    command.Parameters.Add(new OracleParameter("rank", rank));
+                    command.Parameters.Add(new OracleParameter("peId", peId));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                        status = true;
+                    }
+                    catch (OracleException xe)
+                    {
+                        throw;
+                    }
+                    catch(Exception ex)
+                    {
+                        throw;
+                    }
+                }
+            }
+            return status;
         }
     }
 }
