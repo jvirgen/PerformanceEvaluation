@@ -11,7 +11,7 @@ namespace PES.Models
         {
             get 
             {
-                Title title = new Title { TitleId = 2, Name = "Peformance" };
+                Title title = new Title { TitleId = 2, Name = "Competences" };
                 return title;
             }
         }
@@ -29,7 +29,7 @@ namespace PES.Models
         {
             get
             {
-                Subtitle subtitle2 = new Subtitle { SubtitleId = 4, TitleId = 2, Name = " INTERPERSONAL SKILLS: Effectiveness of the team member's interaction with others and as a team participant" };
+                Subtitle subtitle2 = new Subtitle { SubtitleId = 4, TitleId = 2, Name = "INTERPERSONAL SKILLS: Effectiveness of the team member´s interaction with others and as a team participant" };
                 return subtitle2;
             }
         }
@@ -271,7 +271,7 @@ namespace PES.Models
         {
             get
             {
-                Description description30 = new Description { DescriptionId = 31, SubtitleId = 6, DescriptionText = "Punctuality: Fulfillment of the company's established schedules for attendance, meetings, etc (within the company and with clients). " };
+                Description description30 = new Description { DescriptionId = 31, SubtitleId = 6, DescriptionText = "Punctuality: Fulfillment of the company´s established schedules for attendance, meetings, etc (within the company and with clients). " };
                 return description30;
             }
         }
