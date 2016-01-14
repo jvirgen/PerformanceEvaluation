@@ -156,9 +156,17 @@ namespace PES.Services
                         pes.EvaluatorId = Convert.ToInt32(Read["ID_EVALUATOR"]);
                         pes.StatusId = Convert.ToInt32(Read["ID_STATUS"]);
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
-                        pes.EnglishScore = Convert.ToDouble(Read["ENGLISH_SCORE"]);
+                        string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
+                        if (!string.IsNullOrEmpty(englishScore))
+                        {
+                            pes.EnglishScore = Convert.ToDouble(englishScore);
+                        }
+                        else 
+                        {
+                            pes.EnglishScore = 0;
+                        }
 
                         listPES.Add(pes);
                     }

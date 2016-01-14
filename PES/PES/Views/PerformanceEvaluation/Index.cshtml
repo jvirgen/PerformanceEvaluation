@@ -1,16 +1,14 @@
 ﻿@{
     ViewBag.Title = "Performance Evaluation System";
 }
-<p class="text-right">
-    <a href="@Url.Action("Logout","LoginUser")">Logout</a>
-</p>
+
 <hr />
-<div class="jumbotron">
+<div class="well">
     <div class="row text-center">
         <div class="col-md-12">
             <h2>Performance Evaluation System</h2>
         </div>
-        <br />
+        <hr />
         <div class="col-md-12">
             <p>Please choose an option</p>
         </div>
@@ -18,10 +16,10 @@
     
     <div class="row text-center">
         <div class="col-md-6">
-            <a href="@Url.Action("SearchInformation", "PerformanceEvaluation")" class="btn btn-lg btn-default">Search information</a>
+            <a href="@Url.Action("SearchInformation", "PerformanceEvaluation")" class="btn btn-lg btn-primary">Performance Files</a>
         </div>
         <div class="col-md-6">
-            <a href="@Url.Action("UploadFile", "PerformanceEvaluation")" class="btn btn-lg btn-default">Upload File</a>
+            <a href="@Url.Action("UploadFile", "PerformanceEvaluation")" class="btn btn-lg btn-primary">Upload Performance File</a>
         </div>
     </div>
 </div>

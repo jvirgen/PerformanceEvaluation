@@ -1,8 +1,8 @@
 ﻿@model PES.Models.UploadFileViewModel
 @{
-    ViewBag.Title = "Upload File";
+    ViewBag.Title = "Upload Performance File";
 }
-<!--<script src="~/Scripts/FileValidation.js"></script>-->
+
 @if (TempData["Error"] != null)
 {
     <p class="alert alert-danger">@TempData["Error"]</p>
@@ -11,86 +11,60 @@
 {
     <p class="alert alert-success">@TempData["Success"]</p>
 }
-<p class="text-right">
-    <a href="@Url.Action("Logout","LoginUser")">Logout</a>
-</p>
+
 <hr />
-<div class="jumbotron">
+<div class="well">
     <div class="row text-center">
         <div class="col-md-12">
-            <h2>Performance Evaluation System</h2>
-            <h4>Upload File</h4>
-
+            <h2>Upload Performance File</h2>
         </div>
-        <br />
     </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
 
-
-        @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-                <div class="form-group">
-                    @Html.Label("fileUploaded", "Performance File", new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        <input type="file" style="width:100%;" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required />
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.Label("fileUploaded", "Performance File", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            <input type="file" style="width:100%;" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required />
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.Label("SelectedEmployee", "Employee", new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @{
-                            List<SelectListItem> employeesList = new List<SelectListItem>();
-                            foreach (var employee in Model.ListEmployees)
-                            {
-                                var newItem = new SelectListItem()
+                    <div class="form-group">
+                        @Html.Label("SelectedEmployee", "Employee", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @{
+                                List<SelectListItem> employeesList = new List<SelectListItem>();
+                                foreach (var employee in Model.ListEmployees)
                                 {
-                                    Text = employee.Email,
-                                    Value = (employee.EmployeeId).ToString(),
-                                    Selected = false
-                                };
-                                employeesList.Add(newItem);
+                                    var newItem = new SelectListItem()
+                                    {
+                                        Text = employee.Email,
+                                        Value = (employee.EmployeeId).ToString(),
+                                        Selected = false
+                                    };
+                                    employeesList.Add(newItem);
+                                }
                             }
-                        }
-                        @Html.DropDownListFor(m => m.SelectedEmployee, employeesList, new { @class = "inlined form-control", @style = "width:100%" })
-                        @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "text-danger" })
+                            @Html.DropDownListFor(m => m.SelectedEmployee, employeesList, new { @class = "inlined form-control", @style = "width:100%" })
+                            @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="submit" value="Load File" class="btn btn-success" />
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" value="Load File" class="btn btn-lg btn-primary" />
-                    </div>
-                </div>
-            </div>
-
-
-        @*<div class="row text-center">
-            <div class="form-group">
-                <p>@(Model.CurrentUser.FirstName + Model.CurrentUser.LastName)</p>
-                @Html.Label("File to upload", new { @class = "col-md-4 control-label" })
-                <div class="col-md-8">
-                    <input type="file" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required />
-                    <select id="SelectedEmployee" name="SelectedEmployee">
-                        @foreach (var employee in Model.ListEmployees)
-                            {
-                            <option value="@employee.EmployeeId">@employee.Email</option>
-                            }
-                    </select>
-                </div>
-            </div>
-
-        </div>*@
-        @*<div class="row text-center">
-            <br />
-            <div class="form-group">
-                <input type="submit" class="btn btn-lg btn-default" value="Load Performance Evaluation" onclick="login()" />
-            </div>
-        </div>*@
-        }
-    </div>
+            }
+        </div>
+    </div>   
+</div>
 
 @section Styles{
     @Styles.Render("~/Content/css/select2-bootstrap.css")
