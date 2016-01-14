@@ -15,28 +15,31 @@ namespace PES.Services
         public bool InsertSubtitles(Subtitle subtitle)
         {
             bool status = false;
-
-            try
+            using(OracleConnection db = dbContext.GetDBConnection())
             {
-                using(OracleConnection db = dbContext.GetDBConnection())
+                string InsertQuery = @"INSERT INTO SUBTITLE (SUBTITLE, 
+                                                            ID_TITLE) 
+                                        VALUES (:Name, 
+                                                :TitleId)";
+
+                using (OracleCommand Command = new OracleCommand(InsertQuery, db))
                 {
-                    db.Open();
-                    string InsertQuery = "INSERT INTO SUBTITLE (SUBTITLE, "+
-                                                                "ID_TITLE) "+
-                                         "VALUES ('"+subtitle.Name+"', "+
-                                                    subtitle.TitleId+")";
+                    Command.Parameters.Add(new OracleParameter("Name", subtitle.Name));
+                    Command.Parameters.Add(new OracleParameter("TitleId", subtitle.TitleId));
 
-                    OracleCommand Command = new OracleCommand(InsertQuery, db);
-                    Command.ExecuteNonQuery();
-
+                    try
+                    {
+                        Command.Connection.Open();
+                        Command.ExecuteNonQuery();
+                        Command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
                     status = true;
-                    db.Close();
                 }
-
-            }
-            catch
-            {
-                status = false;
             }
             return status;
         }

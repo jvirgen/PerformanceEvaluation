@@ -5,6 +5,10 @@ using System.Web;
 using PES.DBContext;
 using PES.Models;
 using Oracle.ManagedDataAccess.Client;
+using OfficeOpenXml;
+using System.IO;
+using System.Data.SqlClient;
+using System.Data;
 
 
 namespace PES.Services
@@ -63,34 +67,44 @@ namespace PES.Services
         public bool InsertComment(Comment comment)
         {
             bool status = false ;
-            try
-            {
-                using (OracleConnection db = dbContext.GetDBConnection()) 
-                {
-                    db.Open();
-                    string InsertComment = "INSERT INTO "+ "\""+"COMMENT"+"\" "+" (ID_PE, " +
-                                                                 "TRAINNING_EMPLOYEE, " +
-                                                                 "TRAINNING_EVALUATOR, " +
-                                                                 "ACKNOWLEDGE_EVALUATOR, " +
-                                                                 "\"comm/recomm_employee\", " +
-                                                                 " \"comm/recomm_evaluator\" ) " +
-                                            "VALUES (" + comment.PEId + ", '" +
-                                                       comment.TrainningEmployee + "', '" +
-                                                       comment.TrainningEvaluator + "', '" +
-                                                       comment.AcknowledgeEvaluator+"', '"+
-                                                       comment.CommRecommEmployee + "', '" +
-                                                       comment.CommRecommEvaluator + "')";
-                    OracleCommand Command = new OracleCommand(InsertComment, db);
-                    Command.ExecuteNonQuery();
 
-                    status = true;
-                    db.Close();
-                }
-                    
-            }
-            catch
+            using (OracleConnection db = dbContext.GetDBConnection()) 
             {
-                status = false;
+                string InsertComment = @"INSERT INTO ""COMMENT"" (ID_PE, 
+                                                             TRAINNING_EMPLOYEE, 
+                                                             TRAINNING_EVALUATOR, 
+                                                             ACKNOWLEDGE_EVALUATOR, 
+                                                             ""comm/recomm_employee"", 
+                                                             ""comm/recomm_evaluator"") 
+                                            VALUES (:PEId,
+                                                   :TrainningEmployee,
+                                                   :TrainningEvaluator,
+                                                   :AcknowledgeEvaluator,
+                                                   :CommRecommEmployee,
+                                                   :CommRecommEvaluator)";
+
+                using (OracleCommand Command = new OracleCommand(InsertComment, db))
+                {
+                    Command.Parameters.Add(new OracleParameter("PEId", comment.PEId));
+                    Command.Parameters.Add(new OracleParameter("TrainningEmployee", comment.TrainningEmployee));
+                    Command.Parameters.Add(new OracleParameter("TrainningEvaluator", comment.TrainningEvaluator));
+                    Command.Parameters.Add(new OracleParameter("AcknowledgeEvaluator", comment.AcknowledgeEvaluator));
+                    Command.Parameters.Add(new OracleParameter("CommRecommEmployee", comment.CommRecommEmployee));
+                    Command.Parameters.Add(new OracleParameter("CommRecommEvaluator", comment.CommRecommEvaluator));
+
+                    try 
+                    {
+                        Command.Connection.Open();
+                        Command.ExecuteNonQuery();
+                        Command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                    status = true;
+                }                        
             }
             return status;
         }

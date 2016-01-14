@@ -105,8 +105,8 @@ namespace PES.Controllers
             var status = _statusService.GetStatusByDescription("Incomplete");
             PESc.pes.StatusId = status != null ? status.StatusId : 1; 
             PESc.pes.EnglishScore = 0;
-            PESc.pes.PerformanceScore = 0;
-            PESc.pes.CompeteneceScore = 0;
+            PESc.pes.PerformanceScore = excelSheet.Cells[37, 9].Value;
+            PESc.pes.CompeteneceScore = excelSheet.Cells[73, 9].Value;
 
             // Insert 
             bool peInserted = _peService.InsertPE(PESc.pes);
@@ -556,13 +556,13 @@ namespace PES.Controllers
             #region Totals and subtotals - insert
             PESc.scoreQuality.Calculation = excelSheet.Cells[30, 9].Value;
             PESc.scoreOpportunity.Calculation = excelSheet.Cells[36, 9].Value;
-            PESc.scorePerformance.Calculation = excelSheet.Cells[37, 9].Value;
+            PESc.scorePerformance.Calculation = PESc.pes.PerformanceScore;
 
             PESc.scoreSkills.Calculation = excelSheet.Cells[50, 9].Value;
             PESc.scoreInterpersonal.Calculation = excelSheet.Cells[57, 9].Value;
             PESc.scoreGrowth.Calculation = excelSheet.Cells[65, 9].Value;
             PESc.scorePolicies.Calculation = excelSheet.Cells[71, 9].Value;
-            PESc.scoreCompetences.Calculation = excelSheet.Cells[73, 9].Value;
+            PESc.scoreCompetences.Calculation = PESc.pes.CompeteneceScore;
 
                 bool scoreOneInserted = _scoreService.InsertScore(PESc.one);
                 bool scoreTwoInserted = _scoreService.InsertScore(PESc.two);
@@ -607,22 +607,28 @@ namespace PES.Controllers
             #endregion
 
             #region Trainning Comment - insert
-                PESc.comment.TrainningEmployee = (excelSheet.Cells[78, 2].Value + ", " + excelSheet.Cells[79, 2].Value);
+                string comment1 = excelSheet.Cells[79, 2].Value;
+                PESc.comment.TrainningEmployee = (excelSheet.Cells[78, 2].Value + (string.IsNullOrEmpty(comment1) == true ? "" : ", ") + comment1);
                 //PESc.comment2.TrainningEmployee = excelSheet.Cells[79, 2].Value;
                 PESc.comment.TrainningEvaluator = excelSheet.Cells[80, 2].Value;
                 PESc.comment.PEId = PESc.pes.PEId;
             #endregion
 
             #region Acknowledge Comment - insert
-                PESc.comment.AcknowledgeEvaluator = (excelSheet.Cells[82, 2].Value + ", " + excelSheet.Cells[83, 2].Value);
+                string comment2 = excelSheet.Cells[83, 2].Value;
+                PESc.comment.AcknowledgeEvaluator = (excelSheet.Cells[82, 2].Value + (string.IsNullOrEmpty(comment2) == true ? "" : ", ") + comment2);
                 //PESc.comment2.AcknowledgeEvaluator = excelSheet.Cells[83, 2].Value;
             #endregion
 
             #region Comments and recommendations - insert
-                PESc.comment.CommRecommEmployee = (excelSheet.Cells[85, 2].Value + ", " + excelSheet.Cells[86, 2].Value + ", " + excelSheet.Cells[87, 2].Value);
+                string comment3 = excelSheet.Cells[86, 2].Value;
+                string comment4 = excelSheet.Cells[87, 2].Value;
+                string comment5 = excelSheet.Cells[89, 2].Value;
+                string comment6 = excelSheet.Cells[90, 2].Value;
+                PESc.comment.CommRecommEmployee = (excelSheet.Cells[85, 2].Value + (string.IsNullOrEmpty(comment3) == true ? "" : ", ") + comment3 + (string.IsNullOrEmpty(comment4) == true ? "" : ", ") + comment4);
                 //PESc.comment2.CommRecommEmployee = excelSheet.Cells[86, 2].Value;
                 //PESc.comment3.CommRecommEmployee = excelSheet.Cells[87, 2].Value;
-                PESc.comment.CommRecommEvaluator = (excelSheet.Cells[88, 2].Value + ", " + excelSheet.Cells[89, 2].Value + ", " + excelSheet.Cells[90, 2].Value);
+                PESc.comment.CommRecommEvaluator = (excelSheet.Cells[88, 2].Value + (string.IsNullOrEmpty(comment5) == true ? "" : ", ") + comment5  + (string.IsNullOrEmpty(comment6) == true ? "" : ", ") + comment6);
                 //PESc.comment2.CommRecommEvaluator = excelSheet.Cells[89, 2].Value;
                 //PESc.comment3.CommRecommEvaluator = excelSheet.Cells[90, 2].Value;
 
@@ -777,12 +783,13 @@ namespace PES.Controllers
                 bool SetsSpecificSkill = _lm_skillService.InsertLM_Skill(PESc.setsSpecific);
             #endregion
 
-
-            excel.Quit();
+                excel.Workbooks.Close();
+                excel.Quit();
                 return true;
             }
             catch (Exception ex)
             {
+                excel.Workbooks.Close();
                 excel.Quit();
                 throw;
             }
@@ -932,93 +939,142 @@ namespace PES.Controllers
         public ActionResult UploadFile(UploadFileViewModel uploadVM, HttpPostedFileBase fileUploaded)
         {
             string message = "";
-                   
-            if (fileUploaded == null || fileUploaded.ContentLength == 0)
+            Excel.Application excel = new Excel.Application();
+
+            #region New Upload File
+            // Check file was submitted             
+            if (fileUploaded != null && fileUploaded.ContentLength > 0)
             {
-                //ViewBag.Error = "Please Select  a excel file<br>";
-                return View("UploadFile");
-            }
-            else
-            {
-                if(fileUploaded.FileName.EndsWith("xls") || fileUploaded.FileName.EndsWith("xlsx"))
+                if (fileUploaded.FileName.EndsWith("xls") || fileUploaded.FileName.EndsWith("xlsx")) 
                 {
-                    string path = Server.MapPath("~/Content/" + fileUploaded.FileName);
-                    if (System.IO.File.Exists(path))
-                    {
-                        System.IO.File.Delete(path);
-                    }
-                    //Save the file in the repository   
-                    fileUploaded.SaveAs(path);
-                    
-                    /*
-                    //Read Employees by a Excel file *************************************
-                    //List<Employee> employees = new List<Employee>();
-                    //EmployeeService employeeservice = new EmployeeService();
-                    //employees = employeeservice.GetEmployeesFromXLSFile(path);
-                   
-                    //// insert employees
-                    //foreach (Employee employee in employees)
-                    //{
-                    //    employeeservice.InsertEmployee(employee);
-                    //}
-                    //********************************************************************
-                    */
-                    #region comment for now
+                    string fname = "";
+                    string fullPath = "";
+
+                    //Store file temporary
+                    fname = Path.GetFileName(fileUploaded.FileName);
+                    fileUploaded.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", fname)));
+
+                    //Get full path of the file 
+                    fullPath = Request.MapPath("~/App_Data/" + fname);
+
                     try
                     {
+                        // Load file into database
                         // Get selected user
                         var user = _employeeService.GetByID(uploadVM.SelectedEmployee);
 
-                        if(user != null)
+                        if (user != null)
                         {
                             var evaluator = _employeeService.GetByID(user.ManagerId);
-                            //PESComplete file = ReadPerformanceFile(path, user, evaluator);
-                            //if (file != null)
-                            //{
-                                // Load file into db
-                                bool fileSaved = ReadPerformanceFile(path, user, evaluator);
 
-                                if (!fileSaved)
-                                {
-                                    // File not saved
-                                    TempData["Error"] = "There were some problems saving the file. Please try again later.";
-                                }
-                                else
-                                {
-                                    // File saved successfully
-                                    TempData["Success"] = "File saved successfully";
-                                }
+                            bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator);
 
-                            //}
-                            //else
-                            //{
-                            //    TempData["Error"] = "File was not read successfully";
-
-                            //}
+                            if (!fileSaved)
+                            {
+                                // File not saved
+                                TempData["Error"] = "There were some problems saving the file. Please try again later.";
+                            }
+                            else
+                            {
+                                // File saved successfully
+                                TempData["Success"] = "File saved successfully";
+                            }
+                        }
+                        else 
+                        {
+                            TempData["Error"] = "Selected resource not found. Please select a valid resource.";
                         }
                     }
                     finally
                     {
-                        //Delete the file from the repository
-                        if (System.IO.File.Exists(path))
+                        //Delete temporary file, always delete file already stored 
+                        if (System.IO.File.Exists(fullPath))
                         {
-                            
-                            System.IO.File.Delete(path);
+                            System.IO.File.Delete(fullPath);
                         }
                     }
-                    #endregion
-
-                    return RedirectToAction("UploadFile");
                 }
                 else
                 {
-                    //ViewBag.Error = "File type is incorrect<br>";
                     TempData["Error"] = "File is not a valid excel file";
-
-                    return RedirectToAction("UploadFile");
                 }
-
             }
+            else 
+            {
+                // No file uploaded
+                TempData["Error"] = "No File Uploaded";
+            }
+            #endregion
+
+            return RedirectToAction("UploadFile");
+            #region old upload file
+            //if (fileUploaded == null || fileUploaded.ContentLength == 0)
+            //{
+            //    //ViewBag.Error = "Please Select  a excel file<br>";
+            //    return View("UploadFile");
+            //}
+            //else
+            //{
+            //    if (fileUploaded.FileName.EndsWith("xls") || fileUploaded.FileName.EndsWith("xlsx"))
+            //    {
+            //        string path = Server.MapPath("~/Content/" + fileUploaded.FileName);
+            //        if (System.IO.File.Exists(path))
+            //        {
+            //            excel.Quit();
+            //            System.IO.File.Delete(path);
+            //        }
+
+            //        //Save the file in the repository   
+            //        fileUploaded.SaveAs(path);
+
+
+            //        #region comment for now
+            //        try
+            //        {
+            //            // Get selected user
+            //            var user = _employeeService.GetByID(uploadVM.SelectedEmployee);
+
+            //            if (user != null)
+            //            {
+            //                var evaluator = _employeeService.GetByID(user.ManagerId);
+
+            //                bool fileSaved = ReadPerformanceFile(path, user, evaluator);
+
+            //                if (!fileSaved)
+            //                {
+            //                    // File not saved
+            //                    TempData["Error"] = "There were some problems saving the file. Please try again later.";
+            //                }
+            //                else
+            //                {
+            //                    // File saved successfully
+            //                    TempData["Success"] = "File saved successfully";
+            //                }
+            //            }
+            //        }
+            //        finally
+            //        {
+            //            //Delete the file from the repository
+            //            if (System.IO.File.Exists(path))
+            //            {
+            //                excel.Quit();
+            //                System.IO.File.Delete(path);
+            //            }
+            //        }
+            //        #endregion
+
+            //        return RedirectToAction("UploadFile");
+            //    }
+            //    else
+            //    {
+            //        //ViewBag.Error = "File type is incorrect<br>";
+            //        TempData["Error"] = "File is not a valid excel file";
+
+            //        return RedirectToAction("UploadFile");
+            //    }
+
+            //}
+            #endregion
         }
         
         // GET: PerformanceEvaluation/UploadFile
