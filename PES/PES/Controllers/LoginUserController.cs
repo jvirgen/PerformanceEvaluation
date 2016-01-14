@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PES.Models;
 using PES.Services;
+using System.Web.Security;
 
 namespace PES.Controllers
 {
@@ -49,7 +50,8 @@ namespace PES.Controllers
                     Session["UserEmail"] = resource.Email;
                     // Set flag that user is logged in
                     Session["UserName"] = string.Format("{0} {1}", resource.FirstName, resource.LastName);
-                    
+                    // Set user as authenticated
+                    FormsAuthentication.SetAuthCookie(user.UserEmail, true);
                     //Decide if the user is a Resouce
                     if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                     {
@@ -93,6 +95,7 @@ namespace PES.Controllers
 
         public ActionResult Logout()
         {
+            FormsAuthentication.SignOut();
             Session.Clear();
             Session.Abandon();
             return RedirectToAction("Login", "LoginUser");
