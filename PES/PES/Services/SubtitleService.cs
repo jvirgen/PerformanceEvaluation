@@ -21,9 +21,9 @@ namespace PES.Services
                 using(OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string InsertQuery = "INSERT INTO SUBTITLE (SUBTITLE,"+
-                                                                "ID_TITLE)"+
-                                         "VALUES ('"+subtitle.Name+"',"+
+                    string InsertQuery = "INSERT INTO SUBTITLE (SUBTITLE, "+
+                                                                "ID_TITLE) "+
+                                         "VALUES ('"+subtitle.Name+"', "+
                                                     subtitle.TitleId+")";
 
                     OracleCommand Command = new OracleCommand(InsertQuery, db);

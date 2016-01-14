@@ -35,7 +35,8 @@ namespace PES.Services
                                           "TOTAL, " +
                                           "ENGLISH_SCORE, " +
                                           "PERFORMANCE_SCORE, " +
-                                          "COMPETENCE_SCORE) " +
+                                          "COMPETENCE_SCORE, " +
+                                          "RANK) " +
                                           "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','MM-DD-YYYY '), " +
                                                       pe.EmployeeId + ", " +
                                                       pe.EvaluatorId + ", " +
@@ -43,7 +44,8 @@ namespace PES.Services
                                                       pe.Total + ", " +
                                                       pe.EnglishScore + ", " +
                                                       pe.PerformanceScore + ", " +
-                                                      pe.CompeteneceScore + ")";
+                                                      pe.CompeteneceScore + "," +
+                                                      pe.Rank + ")";
                     OracleCommand Command = new OracleCommand(InsertQuery, db);
                     Command.ExecuteNonQuery();
                     status = true;
@@ -76,7 +78,8 @@ namespace PES.Services
                                             "TOTAL," +
                                             "ENGLISH_SCORE," +
                                             "PERFORMANCE_SCORE," +
-                                            "COMPETENCE_SCORE " +
+                                            "COMPETENCE_SCORE," +
+                                            "RANK " +
                                             "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY')";
 
                     OracleCommand Command = new OracleCommand(Query, db);
@@ -96,6 +99,7 @@ namespace PES.Services
                         pes.EnglishScore = Convert.ToDouble(Read["ENGLISH_SCORE"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
+                        pes.Rank = Convert.ToDouble(Read["RANK"]);
 
                         PES = pes;
                     }
@@ -138,7 +142,8 @@ namespace PES.Services
                                            "TOTAL," +
                                            "ENGLISH_SCORE," +
                                            "PERFORMANCE_SCORE," +
-                                           "COMPETENCE_SCORE " +
+                                           "COMPETENCE_SCORE," +
+                                           "RANK " +
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -159,6 +164,7 @@ namespace PES.Services
                         string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
+                        pes.Rank = Convert.ToDouble(Read["RANK"]);
                         if (!string.IsNullOrEmpty(englishScore))
                         {
                             pes.EnglishScore = Convert.ToDouble(englishScore);
@@ -186,10 +192,10 @@ namespace PES.Services
         //    return null;
         //}
 
-        public List<PESComplete> GetPerformanceEvaluationByIDPE(int peId)
+        public List<PerformanceSectionHelper> GetPerformanceEvaluationByIDPE(int peId)
         {
-            List<PESComplete> pesComplete;
-            PESComplete peComplete;
+            List<PerformanceSectionHelper> listPerformanceSectionHelp;
+            PerformanceSectionHelper performanceSectionHelp;
 
             try
             {
@@ -213,21 +219,20 @@ namespace PES.Services
                     {
                         command.Parameters.Add(new OracleParameter("peId", peId));
                         OracleDataReader reader = command.ExecuteReader();
-                        pesComplete = new List<PESComplete>();
-
+                        listPerformanceSectionHelp = new List<PerformanceSectionHelper>();                     
                         while (reader.Read())
                         {
-                            peComplete = new PESComplete();
+                            performanceSectionHelp = new PerformanceSectionHelper();
 
-                            peComplete.title1.Name = Convert.ToString(reader["TITLE"]);
-                            peComplete.subtitle1.Name = Convert.ToString(reader["SUBTITLE"]);
-                            peComplete.description1.DescriptionText = Convert.ToString(reader["DESCRIPTION"]);
-                            peComplete.scorePerformance.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
-                            peComplete.scorePerformance.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
-                            peComplete.scorePerformance.Comments = Convert.ToString(reader["COMMENTS"]);
-                            peComplete.scorePerformance.Calculation = Convert.ToInt32(reader["CALCULATION"]);
+                            performanceSectionHelp.Tilte = Convert.ToString(reader["TITLE"]);
+                            performanceSectionHelp.Subtuitle = Convert.ToString(reader["SUBTITLE"]);
+                            performanceSectionHelp.Description = Convert.ToString(reader["DESCRIPTION"]);
+                            performanceSectionHelp.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
+                            performanceSectionHelp.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
+                            performanceSectionHelp.Comments = Convert.ToString(reader["COMMENTS"]);
+                            performanceSectionHelp.Calculation = Convert.ToDouble(reader["CALCULATION"]);
 
-                            pesComplete.Add(peComplete);
+                            listPerformanceSectionHelp.Add(performanceSectionHelp);
                         }
                     }
                     db.Close();
@@ -235,9 +240,44 @@ namespace PES.Services
             }
             catch
             {
-                pesComplete = null;
+                listPerformanceSectionHelp = null;
                 }
-            return pesComplete;
+            return listPerformanceSectionHelp;
+        }
+
+        public bool UpdateRank(int peId, double rank)
+        {
+            bool status = false;
+
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string updateRank = @"UPDATE PE
+                                            SET RANK = :rank
+                                          WHERE ID_PE = :peId";
+
+                using (OracleCommand command = new OracleCommand(updateRank, db))
+                {
+                    command.Parameters.Add(new OracleParameter("rank", rank));
+                    command.Parameters.Add(new OracleParameter("peId", peId));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                        status = true;
+                    }
+                    catch (OracleException xe)
+                    {
+                        throw;
+                    }
+                    catch(Exception ex)
+                    {
+                        throw;
+                    }
+                }
+            }
+            return status;
         }
     }
 }

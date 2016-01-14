@@ -94,9 +94,9 @@ namespace PES.Models
         public Score scorePerformance = new Score();
         public Score scoreCompetences = new Score();
 
-        public Comment comment1 = new Comment();
-        public Comment comment2 = new Comment();
-        public Comment comment3 = new Comment();
+        public Comment comment = new Comment();
+        //public Comment comment2 = new Comment();
+        //public Comment comment3 = new Comment();
 
         public Skill skill1 = new Skill();
         public Skill skill2 = new Skill();

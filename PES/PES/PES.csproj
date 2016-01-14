@@ -144,6 +144,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\LM_Skill.cs" />
+    <Compile Include="Models\PerformanceSectionHelper.cs" />
     <Compile Include="Models\PerformancSection.cs" />
     <Compile Include="Models\PEs.cs" />
     <Compile Include="Models\PESComplete.cs" />
