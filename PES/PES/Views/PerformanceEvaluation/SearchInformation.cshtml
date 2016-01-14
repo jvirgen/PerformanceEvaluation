@@ -49,7 +49,7 @@
                         <td>@(total = employeeM.totalScore + employeeM.englishScore)</td>
                         @if (currentUser.ProfileId == (int)ProfileUser.Director)
                         {
-                            <td><input type="text" value="@employeeM.rank" /></td>
+                            <td>@employeeM.rank<input type="text" value="@employeeM.rank" /></td>
                             <td>@(employeeM.rank * total)</td>
                         }
 

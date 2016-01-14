@@ -839,7 +839,7 @@ namespace PES.Controllers
 
                     employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
                     employeeVM.englishScore = lastPE.EnglishScore;
-                    employeeVM.rank = 1.1 ;
+                    employeeVM.rank = lastPE.Rank;
                 }
                 else 
                 {

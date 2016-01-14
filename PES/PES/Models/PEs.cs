@@ -54,6 +54,11 @@ namespace PES.Models
         /// Competence Score
         /// </summary>
         public double CompeteneceScore { get; set; }
+
+        /// <summary>
+        /// Rank
+        /// </summary>
+        public double Rank { get; set; }
         
     }
 

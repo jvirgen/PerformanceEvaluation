@@ -35,7 +35,8 @@ namespace PES.Services
                                           "TOTAL, " +
                                           "ENGLISH_SCORE, " +
                                           "PERFORMANCE_SCORE, " +
-                                          "COMPETENCE_SCORE) " +
+                                          "COMPETENCE_SCORE, " +
+                                          "RANK) " +
                                           "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','MM-DD-YYYY '), " +
                                                       pe.EmployeeId + ", " +
                                                       pe.EvaluatorId + ", " +
@@ -43,7 +44,8 @@ namespace PES.Services
                                                       pe.Total + ", " +
                                                       pe.EnglishScore + ", " +
                                                       pe.PerformanceScore + ", " +
-                                                      pe.CompeteneceScore + ")";
+                                                      pe.CompeteneceScore + "," +
+                                                      pe.Rank + ")";
                     OracleCommand Command = new OracleCommand(InsertQuery, db);
                     Command.ExecuteNonQuery();
                     status = true;
@@ -76,7 +78,8 @@ namespace PES.Services
                                             "TOTAL," +
                                             "ENGLISH_SCORE," +
                                             "PERFORMANCE_SCORE," +
-                                            "COMPETENCE_SCORE " +
+                                            "COMPETENCE_SCORE," +
+                                            "RANK " +
                                             "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY')";
 
                     OracleCommand Command = new OracleCommand(Query, db);
@@ -96,6 +99,7 @@ namespace PES.Services
                         pes.EnglishScore = Convert.ToDouble(Read["ENGLISH_SCORE"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
+                        pes.Rank = Convert.ToDouble(Read["RANK"]);
 
                         PES = pes;
                     }
@@ -138,7 +142,8 @@ namespace PES.Services
                                            "TOTAL," +
                                            "ENGLISH_SCORE," +
                                            "PERFORMANCE_SCORE," +
-                                           "COMPETENCE_SCORE " +
+                                           "COMPETENCE_SCORE," +
+                                           "RANK " +
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -159,6 +164,7 @@ namespace PES.Services
                         string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
+                        pes.Rank = Convert.ToDouble(Read["RANK"]);
                         if (!string.IsNullOrEmpty(englishScore))
                         {
                             pes.EnglishScore = Convert.ToDouble(englishScore);
