@@ -30,4 +30,9 @@ namespace PES.Models
         public string CheckEvaluator { get; set; }
 
     }
+
+    public class SkillHelper : LM_Skill
+    {
+        public string SkillName { get; set; }
+    }
 }

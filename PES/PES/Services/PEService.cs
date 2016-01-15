@@ -194,8 +194,7 @@ namespace PES.Services
 
         public List<PerformanceSectionHelper> GetPerformanceEvaluationByIDPE(int peId)
         {
-            List<PerformanceSectionHelper> listPerformanceSectionHelp;
-            PerformanceSectionHelper performanceSectionHelp;
+            List<PerformanceSectionHelper> listPerformanceSectionHelp = null;
 
             try
             {
@@ -222,10 +221,10 @@ namespace PES.Services
                         listPerformanceSectionHelp = new List<PerformanceSectionHelper>();                     
                         while (reader.Read())
                         {
-                            performanceSectionHelp = new PerformanceSectionHelper();
+                            var performanceSectionHelp = new PerformanceSectionHelper();
 
-                            performanceSectionHelp.Tilte = Convert.ToString(reader["TITLE"]);
-                            performanceSectionHelp.Subtuitle = Convert.ToString(reader["SUBTITLE"]);
+                            performanceSectionHelp.Title = Convert.ToString(reader["TITLE"]);
+                            performanceSectionHelp.Subtitle = Convert.ToString(reader["SUBTITLE"]);
                             performanceSectionHelp.Description = Convert.ToString(reader["DESCRIPTION"]);
                             performanceSectionHelp.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
                             performanceSectionHelp.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
@@ -240,8 +239,8 @@ namespace PES.Services
             }
             catch
             {
-                listPerformanceSectionHelp = null;
-                }
+                throw;   
+            }
             return listPerformanceSectionHelp;
         }
 
