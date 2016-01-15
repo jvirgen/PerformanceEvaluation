@@ -5,6 +5,7 @@ using System.Web;
 using PES.DBContext;
 using PES.Models;
 using Oracle.ManagedDataAccess.Client;
+using System.Data;
 
 namespace PES.Services
 {
@@ -23,40 +24,58 @@ namespace PES.Services
         {
             bool status = false;
 
-            try
+            // Connect to the DB 
+            using (OracleConnection db = dbContext.GetDBConnection())
             {
-                using (OracleConnection db = dbContext.GetDBConnection())
+                string insertQuery = @"INSERT INTO PE (EVALUATION_PERIOD,
+                                                       ID_EMPLOYEE,
+                                                       ID_EVALUATOR,
+                                                       ID_STATUS,
+                                                       TOTAL,
+                                                       ENGLISH_SCORE,
+                                                       PERFORMANCE_SCORE,
+                                                       COMPETENCE_SCORE,
+                                                       ""RANK""
+                                                      ) 
+                                               VALUES (:evaluationPeriod,
+                                                       :employeeId,
+                                                       :evaluatorId,
+                                                       :statusId,
+                                                       :total,
+                                                       :englishScore,
+                                                       :performanceScore,
+                                                       :competenceScore,
+                                                       :rank)";
+
+                // Adding parameters
+                using (OracleCommand command = new OracleCommand(insertQuery, db))
                 {
-                    db.Open();
-                    string InsertQuery = "INSERT INTO PE (EVALUATION_PERIOD, " +
-                                          "ID_EMPLOYEE, " +
-                                          "ID_EVALUATOR, " +
-                                          "ID_STATUS, " +
-                                          "TOTAL, " +
-                                          "ENGLISH_SCORE, " +
-                                          "PERFORMANCE_SCORE, " +
-                                          "COMPETENCE_SCORE, " +
-                                          "'RANK') " +
-                                          "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','MM-DD-YYYY '), " +
-                                                      pe.EmployeeId + ", " +
-                                                      pe.EvaluatorId + ", " +
-                                                      pe.StatusId + ", " +
-                                                      pe.Total + ", " +
-                                                      pe.EnglishScore + ", " +
-                                                      pe.PerformanceScore + ", " +
-                                                      pe.CompeteneceScore + "," +
-                                                      pe.Rank + ")";
-                    OracleCommand Command = new OracleCommand(InsertQuery, db);
-                    Command.ExecuteNonQuery();
+                    command.Parameters.Add(new OracleParameter("evaluationPeriod", OracleDbType.Date, pe.EvaluationPeriod, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("employeeId", pe.EmployeeId));
+                    command.Parameters.Add(new OracleParameter("evaluatorId", pe.EvaluatorId));
+                    command.Parameters.Add(new OracleParameter("statusId", pe.StatusId));
+                    command.Parameters.Add(new OracleParameter("total", pe.Total));
+                    command.Parameters.Add(new OracleParameter("englishScore", pe.EnglishScore));
+                    command.Parameters.Add(new OracleParameter("performanceScore", pe.PerformanceScore));
+                    command.Parameters.Add(new OracleParameter("competenceScore", pe.CompeteneceScore));
+                    command.Parameters.Add(new OracleParameter("rank", pe.Rank));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+
                     status = true;
-                    db.Close();
                 }
             }
-            catch(Exception ex)
-            {
-                throw;
-            }
-            
+
             return status;
         }
         
@@ -79,7 +98,7 @@ namespace PES.Services
                                             "ENGLISH_SCORE," +
                                             "PERFORMANCE_SCORE," +
                                             "COMPETENCE_SCORE," +
-                                            "'RANK' " +
+                                            "\"RANK\"" +
                                             "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY')";
 
                     OracleCommand Command = new OracleCommand(Query, db);
@@ -143,7 +162,7 @@ namespace PES.Services
                                            "ENGLISH_SCORE," +
                                            "PERFORMANCE_SCORE," +
                                            "COMPETENCE_SCORE," +
-                                           "'RANK'" +
+                                           "\"RANK\"" +
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -251,7 +270,7 @@ namespace PES.Services
             using (OracleConnection db = dbContext.GetDBConnection())
             {
                 string updateRank = @"UPDATE PE
-                                        SET 'RANK' = :rank
+                                        SET ""RANK"" = :rank
                                        WHERE ID_PE = :peId";
 
                 using (OracleCommand command = new OracleCommand(updateRank, db))

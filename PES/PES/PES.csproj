@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\alter_pe_add_project.sql" />
+    <Content Include="App_Data\alter_pe_add_rank.sql" />
     <Content Include="App_Data\export_pe_schema_pe.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -322,7 +323,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51025</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
