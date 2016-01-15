@@ -590,16 +590,16 @@ namespace PES.Services
                                 newEmployee.HireDate = DateTime.Now; // Set as today due to not comming from excel
 
                                 var active = columnsData[ResourceColumns.Active].ToArray<string>()[i];
-                                if (string.IsNullOrEmpty(active))
-                                {
-                                    // Employee is still active
-                                    newEmployee.EndDate = null;
-                                }
-                                else 
-                                {
-                                    newEmployee.EndDate = DateTime.Now;
-                                }
-                                
+                                newEmployee.EndDate = null;
+
+                                #region Validation to check if active
+                                // Uncomment if validation will be applied, otherwhise employees will be active
+                                //if (!string.IsNullOrEmpty(active) && active.ToLower() == "no")
+                                //{
+                                //    newEmployee.EndDate = DateTime.Now;
+                                //}
+                                #endregion
+
                                 newEmployee.Project = "No project"; // Column not comming from excel file
 
                                 //Add employee to the list 
