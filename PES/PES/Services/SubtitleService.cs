@@ -38,6 +38,11 @@ namespace PES.Services
                         Console.WriteLine(ex.ToString());
                         throw;
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
                     status = true;
                 }
             }

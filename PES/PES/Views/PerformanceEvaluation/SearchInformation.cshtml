@@ -84,7 +84,8 @@
     <script type="text/javascript">
     $(document).ready(function () {
         $('#Tableview').DataTable({
-            dom: 'Bfrtip',
+            //dom: 'Bfrtip',
+            dom: '<"row"<"col-md-12"B>><"row"<"col-md-6"l><"col-md-6"f>>rtip',
             buttons: [
                 'excel', 'pdf'],
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],

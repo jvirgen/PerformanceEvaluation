@@ -1,1 +1,1 @@
-ALTER TABLE employee ADD project varchar2(100)
+ALTER TABLE EMPLOYEE ADD PROJECT varchar2(100)

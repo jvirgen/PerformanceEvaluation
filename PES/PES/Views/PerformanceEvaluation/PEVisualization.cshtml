@@ -1,22 +1,28 @@
-﻿
+﻿@model PES.ViewModels.PEVisualizationViewModel
 
 <div class="row">
     <div class="col-md-12">
-        @Html.Partial("_PerformanceMainPartial", null)
+        @Html.Partial("_PerformanceMainPartial", Model.PerformanceMain)
     </div>
 </div>
+<hr />
 <div class="row">
     <div class="col-md-12">
-        @Html.Partial("_SectionsPartial", null)
+        <h2>Sections</h2>
+        @Html.Partial("_SectionsPartial", Model.PerformanceSections)
     </div>
 </div>
+<hr />
 <div class="row">
     <div class="col-md-12">
-        @Html.Partial("_CommentsPartial", null)
+        <h2>Comments</h2>
+        @Html.Partial("_CommentsPartial", Model.PerformanceComments)
     </div>
 </div>
+<hr />
 <div class="row">
     <div class="col-md-12">
-        @Html.Partial("_SkillsPartial", null)
+        <h2>Leading / Mentoring Skills</h2>
+        @Html.Partial("_SkillsPartial", Model.PerformanceSkills)
     </div>
 </div>
