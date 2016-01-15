@@ -112,7 +112,7 @@ namespace PES.Controllers
                 bool peInserted = _peService.InsertPE(PESc.pes);
 
                 // Look for and get id 
-                PESc.pes = _peService.GetPerformanceEvaluationByDateEmail(user.Email, DateTime.Now);
+                PESc.pes = _peService.GetPerformanceEvaluationByDateEmail(user.Email, DateTime.Now.Date);
                 #endregion
 
                 #region Employee - update

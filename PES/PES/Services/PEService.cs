@@ -60,40 +60,21 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("competenceScore", pe.CompeteneceScore));
                     command.Parameters.Add(new OracleParameter("rank", pe.Rank));
 
-            try
-            {
+                    try
+                    {
                         command.Connection.Open();
                         command.ExecuteNonQuery();
                         command.Connection.Close();
+                        status = true;
                     }
-                    catch (OracleException ex)
-                {
-                    db.Open();
-                    string InsertQuery = "INSERT INTO PE (EVALUATION_PERIOD, " +
-                                          "ID_EMPLOYEE, " +
-                                          "ID_EVALUATOR, " +
-                                          "ID_STATUS, " +
-                                          "TOTAL, " +
-                                          "ENGLISH_SCORE, " +
-                                          "PERFORMANCE_SCORE, " +
-                                          "COMPETENCE_SCORE, " +
-                                          "RANK) " +
-                                          "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','MM-DD-YYYY '), " +
-                                                      pe.EmployeeId + ", " +
-                                                      pe.EvaluatorId + ", " +
-                                                      pe.StatusId + ", " +
-                                                      pe.Total + ", " +
-                                                      pe.EnglishScore + ", " +
-                                                      pe.PerformanceScore + ", " +
-                                                      pe.CompeteneceScore + "," +
-                                                      pe.Rank + ")";
-                    OracleCommand Command = new OracleCommand(InsertQuery, db);
-                    Command.ExecuteNonQuery();
-                    status = true;
+                    catch (Exception xe)
+                    {
+                        throw;
+                    }
+
+                    return status;
+                }
             }
-            }
-            
-            return status;
         }
         
         public PEs GetPerformanceEvaluationByDate(int userId, DateTime date)
@@ -105,7 +86,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-
+                    
                     string Query = "SELECT ID_PE," +
                                             "EVALUATION_PERIOD," +
                                             "ID_EMPLOYEE," +
@@ -115,8 +96,9 @@ namespace PES.Services
                                             "ENGLISH_SCORE," +
                                             "PERFORMANCE_SCORE," +
                                             "COMPETENCE_SCORE," +
-                                            "\"RANK\"" +
-                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY')";
+                                            "\"RANK\" " +
+                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('"+ Convert.ToDateTime(date).ToString("MM/dd/yyyy") +"' AND ROWNUM <=1 " +
+                                            "ORDER BY EVALUATION_PERIOD, ID_PE DESC";
 
                     OracleCommand Command = new OracleCommand(Query, db);
                     OracleDataReader Read = Command.ExecuteReader();
@@ -142,9 +124,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception xe)
             {
-                PES = null;
+                throw;
             }
 
             return PES;
@@ -183,7 +165,7 @@ namespace PES.Services
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
-                    
+
                     OracleDataReader Read = Comand.ExecuteReader();
                     listPES = new List<PEs>();
                     while (Read.Read())
@@ -205,28 +187,23 @@ namespace PES.Services
                         {
                             pes.EnglishScore = Convert.ToDouble(englishScore);
                         }
-                        else 
+                        else
                         {
                             pes.EnglishScore = 0;
                         }
 
                         listPES.Add(pes);
                     }
-                    
+
                     db.Close();
                 }
             }
-            catch
+            catch (Exception xe)
             {
-                listPES = null;
+                throw;
             }
             return listPES;
         }
-
-        //public PEs GetPerformanceEvaluationByUser(int userId)
-        //{
-        //    return null;
-        //}
 
         public List<PerformanceSectionHelper> GetPerformanceEvaluationByIDPE(int peId)
         {
@@ -254,7 +231,7 @@ namespace PES.Services
                     {
                         command.Parameters.Add(new OracleParameter("peId", peId));
                         OracleDataReader reader = command.ExecuteReader();
-                        listPerformanceSectionHelp = new List<PerformanceSectionHelper>();                     
+                        listPerformanceSectionHelp = new List<PerformanceSectionHelper>();
                         while (reader.Read())
                         {
                             var performanceSectionHelp = new PerformanceSectionHelper();
@@ -263,7 +240,7 @@ namespace PES.Services
                             performanceSectionHelp.Subtitle = Convert.ToString(reader["SUBTITLE"]);
                             performanceSectionHelp.Description = Convert.ToString(reader["DESCRIPTION"]);
                             performanceSectionHelp.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
-                            performanceSectionHelp.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
+                            performanceSectionHelp.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]);
                             performanceSectionHelp.Comments = Convert.ToString(reader["COMMENTS"]);
                             performanceSectionHelp.Calculation = Convert.ToDouble(reader["CALCULATION"]);
 
@@ -273,10 +250,10 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception xe)
             {
-                throw;   
-                }
+                throw;
+            }
             return listPerformanceSectionHelp;
         }
 
@@ -302,11 +279,6 @@ namespace PES.Services
                         command.Connection.Close();
                         status = true;
                     }
-                    catch (OracleException ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                        throw;
-                    }
                     catch(Exception ex)
                     {
                         Console.WriteLine(ex.ToString());
@@ -315,6 +287,17 @@ namespace PES.Services
                 }
             }
             return status;
+        }
+        public string testdate(DateTime date)
+        {
+            string datestring = "";
+            DateTime newdate;
+            datestring = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
+            //newdate = DateTime.ParseExact(datestring, "MM/dd/yyyy", ICustomFormatter);
+              //   Convert.ToDateTime(row("campofecha")).ToString("dd/MM/yyyy");
+
+            return datestring;
+
         }
     }
 }
