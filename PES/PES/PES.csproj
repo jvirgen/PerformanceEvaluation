@@ -191,9 +191,7 @@
     <Compile Include="ViewModels\PEVisualizationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\alter_pe_add_project.sql" />
-    <Content Include="App_Data\alter_pe_add_rank.sql" />
-    <Content Include="App_Data\export_pe_schema_pe.sql" />
+    <Content Include="App_Data\export_pe.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\select2-bootstrap.css" />

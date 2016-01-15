@@ -53,11 +53,6 @@ namespace PES.Controllers
                     // Set user as authenticated
                     FormsAuthentication.SetAuthCookie(user.UserEmail, true);
                     //Decide if the user is a Resouce
-
-                    PEService test = new PEService();
-                    test.GetPerformanceEvaluationByDate(28 , DateTime.Now);
-                    
-
                     if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                     {
                         //Return the Resource's view 

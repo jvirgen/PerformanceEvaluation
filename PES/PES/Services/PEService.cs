@@ -291,10 +291,10 @@ namespace PES.Services
         public string testdate(DateTime date)
         {
             string datestring = "";
-            DateTime newdate;
-            datestring = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
+            //DateTime newdate;
+            //datestring = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
             //newdate = DateTime.ParseExact(datestring, "MM/dd/yyyy", ICustomFormatter);
-              //   Convert.ToDateTime(row("campofecha")).ToString("dd/MM/yyyy");
+            //Convert.ToDateTime(row("campofecha")).ToString("dd/MM/yyyy");
 
             return datestring;
 
