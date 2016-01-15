@@ -37,7 +37,7 @@ namespace PES.Services
                                           "PERFORMANCE_SCORE, " +
                                           "COMPETENCE_SCORE, " +
                                           "RANK) " +
-                                          "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','MM-DD-YYYY '), " +
+                                          "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','DD-MM-YYYY '), " +
                                                       pe.EmployeeId + ", " +
                                                       pe.EvaluatorId + ", " +
                                                       pe.StatusId + ", " +
@@ -80,7 +80,7 @@ namespace PES.Services
                                             "PERFORMANCE_SCORE," +
                                             "COMPETENCE_SCORE," +
                                             "RANK " +
-                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY')";
+                                            "FROM PE WHERE ROWNUM = 1 AND ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'DD-MM-YYYY') ORDER BY ID_PE DESC";
 
                     OracleCommand Command = new OracleCommand(Query, db);
                     OracleDataReader Read = Command.ExecuteReader();

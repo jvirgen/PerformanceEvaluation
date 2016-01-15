@@ -323,8 +323,8 @@ namespace PES.Services
                                                                "POSITION='" + employee.Position + "', " +
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
                                                                "ID_MANAGER='" + employee.ManagerId + "', " +
-                                                               "HIRE_DATE= TO_DATE('" + employee.HireDate.ToShortDateString() + "', 'MM-DD-YYYY'), " +
-                                                               "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : "") + "', 'MM-DD-YYYY'), " +
+                                                               "HIRE_DATE= TO_DATE('" + employee.HireDate.ToShortDateString() + "', 'DD-MM-YYYY'), " +
+                                                               "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : "") + "', 'DD-MM-YYYY'), " +
                                                                "PROJECT='" + employee.Project +"' " +
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
 
