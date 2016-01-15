@@ -18,24 +18,28 @@ namespace PES.Services
         public bool InsertTitle(Title title)
         {
             bool status = false;
-            try
+
+            using (OracleConnection db = dbContext.GetDBConnection())
             {
-                using (OracleConnection db = dbContext.GetDBConnection())
+                string InsertTitle = @"INSERT INTO TITLE (TITLE)
+                                        VALUES (:Name)";
+                using (OracleCommand Command = new OracleCommand(InsertTitle, db))
                 {
-                    db.Open();
-                    string InsertTitle = "INSERT INTO TITLE (TITLE)" +
-                                            "VALUES ('" + title.Name + "')";
-                    OracleCommand Command = new OracleCommand(InsertTitle, db);
-                    Command.ExecuteNonQuery();
+                    Command.Parameters.Add(new OracleParameter("Name", title.Name));
 
+                    try
+                    {
+                        Command.Connection.Open();
+                        Command.ExecuteNonQuery();
+                        Command.Connection.Clone();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
                     status = true;
-                    db.Close();
                 }
-
-            }
-            catch
-            {
-                status = false;
             }
             return status;
         }

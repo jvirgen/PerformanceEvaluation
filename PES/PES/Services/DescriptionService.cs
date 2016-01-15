@@ -16,25 +16,30 @@ namespace PES.Services
         public bool InsertDescription(Description description)
         {
             bool status = false;
-            try
+            using (OracleConnection db = dbContext.GetDBConnection())
             {
-                using (OracleConnection db = dbContext.GetDBConnection())
+                string InsertDescription = @"INSERT INTO DESCRIPTION (DESCRIPTION, 
+                                                                ID_SUBTITLE)
+                                        VALUES (:DescriptionText, 
+                                                    :SubtitleId)";
+                using (OracleCommand Command = new OracleCommand(InsertDescription, db))
                 {
-                    db.Open();
-                    string InsertDescription = "INSERT INTO DESCRIPTION (DESCRIPTION," +
-                                                                 "ID_SUBTITLE)" +
-                                            "VALUES ('" + description.DescriptionText + "'," +
-                                                       description.SubtitleId + ")";
-                    OracleCommand Command = new OracleCommand(InsertDescription, db);
-                    Command.ExecuteNonQuery();
-                    status = true;
-                    db.Close();
-                }
+                    Command.Parameters.Add(new OracleParameter("DescriptionText", description.DescriptionText));
+                    Command.Parameters.Add(new OracleParameter("SubtitleId", description.SubtitleId));
 
-            }
-            catch
-            {
-                status = false;
+                    try
+                    {
+                        Command.Connection.Open();
+                        Command.ExecuteNonQuery();
+                        Command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                    status = true;
+                }
             }
             return status;
         }
