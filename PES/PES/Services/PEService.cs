@@ -36,7 +36,7 @@ namespace PES.Services
                                           "ENGLISH_SCORE, " +
                                           "PERFORMANCE_SCORE, " +
                                           "COMPETENCE_SCORE, " +
-                                          "RANK) " +
+                                          "'RANK') " +
                                           "VALUES (TO_DATE('" + pe.EvaluationPeriod.ToShortDateString() + "','MM-DD-YYYY '), " +
                                                       pe.EmployeeId + ", " +
                                                       pe.EvaluatorId + ", " +
@@ -52,9 +52,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                status = false;
+                throw;
             }
             
             return status;
@@ -79,7 +79,7 @@ namespace PES.Services
                                             "ENGLISH_SCORE," +
                                             "PERFORMANCE_SCORE," +
                                             "COMPETENCE_SCORE," +
-                                            "RANK " +
+                                            "'RANK' " +
                                             "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY')";
 
                     OracleCommand Command = new OracleCommand(Query, db);
@@ -143,7 +143,7 @@ namespace PES.Services
                                            "ENGLISH_SCORE," +
                                            "PERFORMANCE_SCORE," +
                                            "COMPETENCE_SCORE," +
-                                           "RANK " +
+                                           "'RANK'" +
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -251,8 +251,8 @@ namespace PES.Services
             using (OracleConnection db = dbContext.GetDBConnection())
             {
                 string updateRank = @"UPDATE PE
-                                            SET RANK = :rank
-                                          WHERE ID_PE = :peId";
+                                        SET 'RANK' = :rank
+                                       WHERE ID_PE = :peId";
 
                 using (OracleCommand command = new OracleCommand(updateRank, db))
                 {
@@ -266,12 +266,14 @@ namespace PES.Services
                         command.Connection.Close();
                         status = true;
                     }
-                    catch (OracleException xe)
+                    catch (OracleException ex)
                     {
+                        Console.WriteLine(ex.ToString());
                         throw;
                     }
                     catch(Exception ex)
                     {
+                        Console.WriteLine(ex.ToString());
                         throw;
                     }
                 }

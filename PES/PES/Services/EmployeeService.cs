@@ -82,9 +82,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                employee = null;
+                throw;
             }
             return employee;
         }
@@ -144,9 +144,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                employee = null;
+                throw;
             }
             return employee;
         }
@@ -207,9 +207,9 @@ namespace PES.Services
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
-                employees = null;
+                throw;
             }
             return employees;
         }
@@ -371,9 +371,9 @@ namespace PES.Services
 
                 return Profile;
             }
-            catch
+            catch (Exception ex)
             {
-                return "0";
+                throw;
             }
         }
 
@@ -438,9 +438,9 @@ namespace PES.Services
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
-                Employees = null;
+                throw;
             }
             return Employees;
         }
