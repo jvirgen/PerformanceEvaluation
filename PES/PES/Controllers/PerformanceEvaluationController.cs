@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Excel = Microsoft.Office.Interop.Excel;
 using PES.Services;
+using PES.ViewModels;
 
 namespace PES.Controllers
 {
@@ -1220,7 +1221,16 @@ namespace PES.Controllers
 
             listPerformancHelper = _peService.GetPerformanceEvaluationByIDPE(peID);
             
-         
+            // Complete view PEVisualization
+            PEVisualizationViewModel model = new PEVisualizationViewModel();
+            model.PerformanceMain = new PerformanceMainPartial();
+            //model.PerformanceMain.Employee 
+            model.PerformanceSections = new PerformanceSectionsPartial();
+            model.PerformanceSections.Sections = listPerformancHelper;
+            model.PerformanceComments = new PerformanceCommentsPartial();
+            model.PerformanceComments.Comments = new List<Comment>(); //
+            model.PerformanceSkills = new PerformanceSkilsPartial();
+            model.PerformanceSkills.Skills = new List<SkillHelper>(); //
             #region 
             /*
             #region Subtitles
@@ -1274,7 +1284,7 @@ namespace PES.Controllers
             // Get score of 1. Accuracy or Precision
            // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
 
-            return View();
+            return View(model);
         }
 
         // GET: PerformanceEvaluation/SearchInfoRank
