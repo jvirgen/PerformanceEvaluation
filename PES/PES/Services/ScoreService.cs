@@ -104,9 +104,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                Scores = null;
+                throw;
             }
             return Scores;
         }
@@ -145,9 +145,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                score = null;
+                throw;
             }
             return score;
         }

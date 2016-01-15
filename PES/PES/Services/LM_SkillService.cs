@@ -36,9 +36,10 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                status = false; 
+                Console.WriteLine(ex.ToString());
+                throw;
             }
             return status;
         }
@@ -78,9 +79,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                skills = null;
+                throw;
             }
 
             return skills;

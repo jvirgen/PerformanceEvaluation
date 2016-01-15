@@ -57,9 +57,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                Comments = null;
+                throw;
             }
             return Comments;
         }

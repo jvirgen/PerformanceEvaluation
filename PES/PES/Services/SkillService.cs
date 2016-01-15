@@ -31,9 +31,10 @@ namespace PES.Services
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
-                status = false;
+                Console.WriteLine(ex.ToString());
+                throw;
             }
             return status;
         }

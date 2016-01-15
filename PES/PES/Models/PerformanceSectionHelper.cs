@@ -10,12 +10,12 @@ namespace PES.Models
         /// <summary>
         /// Get Performance/Competece Title 
         /// </summary>
-        public string Tilte { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Get Performance/Competence Subtitles 
         /// </summary>
-        public string Subtuitle { get; set; }
+        public string Subtitle { get; set; }
 
         /// <summary>
         /// Get Performance/Competence Descriptions
