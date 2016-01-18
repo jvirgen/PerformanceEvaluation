@@ -1219,18 +1219,32 @@ namespace PES.Controllers
             List<PerformanceSectionHelper> listPerformancHelper = new List<PerformanceSectionHelper>();
             _peService = new PEService();
 
+            // Get performance evaluation 
+            var pe = _peService.GetPerformanceEvaluationById(peID);
+            var employee = _employeeService.GetByID(pe.EmployeeId);
+            var evaluator = _employeeService.GetByID(pe.EvaluatorId);
+            
             listPerformancHelper = _peService.GetPerformanceEvaluationByIDPE(peID);
             
             // Complete view PEVisualization
             PEVisualizationViewModel model = new PEVisualizationViewModel();
+
             model.PerformanceMain = new PerformanceMainPartial();
-            //model.PerformanceMain.Employee 
+            model.PerformanceMain.Employee = employee;
+            model.PerformanceMain.Evaluator = evaluator;
+            model.PerformanceMain.totalEvaluation = pe.Total;
+
+            // Initialize sections
             model.PerformanceSections = new PerformanceSectionsPartial();
             model.PerformanceSections.Sections = listPerformancHelper;
+
+            // Initializae comments
             model.PerformanceComments = new PerformanceCommentsPartial();
-            model.PerformanceComments.Comments = new List<Comment>(); //
+            model.PerformanceComments.Comments = _commentService.GetCommentByPE(peID);
+
+            // Initializae skills
             model.PerformanceSkills = new PerformanceSkilsPartial();
-            model.PerformanceSkills.Skills = new List<SkillHelper>(); //
+            model.PerformanceSkills.Skills = _lm_skillService.GetSkillsWithNameByPEId(peID);
             #region 
             /*
             #region Subtitles

@@ -212,6 +212,70 @@ namespace PES.Services
         //    return null;
         //}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="peId">Performance Evaluation Id</param>
+        /// <returns>Returns a performance evaluation</returns>
+        public PEs GetPerformanceEvaluationById(int peId) 
+        {
+            PEs pe = new PEs();
+
+            // Connect to the DB 
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string insertQuery = @" SELECT ID_PE, 
+                                            EVALUATION_PERIOD,
+                                            ID_EMPLOYEE,
+                                            ID_EVALUATOR,
+                                            ID_STATUS,
+                                            TOTAL,
+                                            ENGLISH_SCORE,
+                                            PERFORMANCE_SCORE,
+                                            COMPETENCE_SCORE,
+                                            RANK 
+                                     FROM PE 
+                                     WHERE ID_PE = :peId AND ROWNUM <=1
+                                     ORDER BY EVALUATION_PERIOD, ID_PE DESC";
+
+                // Adding parameters
+                using (OracleCommand command = new OracleCommand(insertQuery, db))
+                {
+                    command.Parameters.Add(new OracleParameter("peId", peId));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+
+                            // Store data in employee object 
+                            pe = new PEs();
+                            pe.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
+                            pe.PEId = Convert.ToInt32(reader["ID_PE"]);
+                            pe.EvaluationPeriod = Convert.ToDateTime(reader["EVALUATION_PERIOD"]);
+                            pe.EvaluatorId = Convert.ToInt32(reader["ID_EVALUATOR"]);
+                            pe.StatusId = Convert.ToInt32(reader["ID_STATUS"]);
+                            pe.Total = Convert.ToDouble(reader["TOTAL"]);
+                            pe.EnglishScore = Convert.ToDouble(reader["ENGLISH_SCORE"]);
+                            pe.PerformanceScore = Convert.ToDouble(reader["PERFORMANCE_SCORE"]);
+                            pe.CompeteneceScore = Convert.ToDouble(reader["COMPETENCE_SCORE"]);
+                            pe.Rank = Convert.ToDouble(reader["RANK"]);
+
+                        }
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                }
+            }
+            return pe;
+        }
+
         public List<PerformanceSectionHelper> GetPerformanceEvaluationByIDPE(int peId)
         {
             List<PerformanceSectionHelper> listPerformanceSectionHelp = null;
