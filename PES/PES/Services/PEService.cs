@@ -65,18 +65,16 @@ namespace PES.Services
                         command.Connection.Open();
                         command.ExecuteNonQuery();
                         command.Connection.Close();
+                        status = true;
                     }
-                    catch (OracleException ex)
+                    catch (Exception xe)
                     {
-                        Console.WriteLine(ex.ToString());
                         throw;
                     }
 
-                    status = true;
+                    return status;
                 }
             }
-
-            return status;
         }
         
         public PEs GetPerformanceEvaluationByDate(int userId, DateTime date)
@@ -98,8 +96,8 @@ namespace PES.Services
                                             "ENGLISH_SCORE," +
                                             "PERFORMANCE_SCORE," +
                                             "COMPETENCE_SCORE," +
-                                            "\"RANK\"" +
-                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('" + date.Date.ToShortDateString() + "', 'MM-DD-YYYY') AND ROWNUM <=1 " +
+                                            "\"RANK\" " +
+                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('"+ date.ToString("MM/dd/yyyy") +"', 'MM/DD/YYYY') AND ROWNUM <=1 " +
                                             "ORDER BY EVALUATION_PERIOD, ID_PE DESC";
 
                     OracleCommand Command = new OracleCommand(Query, db);
@@ -126,9 +124,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception xe)
             {
-                PES = null;
+                throw;
             }
 
             return PES;
@@ -200,9 +198,9 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception xe)
             {
-                listPES = null;
+                throw;
             }
             return listPES;
         }
@@ -321,7 +319,7 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch
+            catch (Exception xe)
             {
                 throw;   
             }
@@ -350,11 +348,6 @@ namespace PES.Services
                         command.Connection.Close();
                         status = true;
                     }
-                    catch (OracleException ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                        throw;
-                    }
                     catch(Exception ex)
                     {
                         Console.WriteLine(ex.ToString());
@@ -363,6 +356,17 @@ namespace PES.Services
                 }
             }
             return status;
+        }
+        public string testdate(DateTime date)
+        {
+            string datestring = "";
+            DateTime newdate;
+            datestring = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
+            datestring = DateTime.Now.ToString("MM/dd/yyyy");
+            //Convert.ToDateTime(row("campofecha")).ToString("dd/MM/yyyy");
+
+            return datestring;
+
         }
     }
 }
