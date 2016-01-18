@@ -97,7 +97,7 @@ namespace PES.Services
                                             "PERFORMANCE_SCORE," +
                                             "COMPETENCE_SCORE," +
                                             "\"RANK\" " +
-                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('"+ Convert.ToDateTime(date).ToString("MM/dd/yyyy") +"' AND ROWNUM <=1 " +
+                                            "FROM PE WHERE ID_EMPLOYEE = " + userId + " AND EVALUATION_PERIOD = TO_DATE('"+ date.ToString("MM/dd/yyyy") +"', 'MM/DD/YYYY') AND ROWNUM <=1 " +
                                             "ORDER BY EVALUATION_PERIOD, ID_PE DESC";
 
                     OracleCommand Command = new OracleCommand(Query, db);
@@ -291,9 +291,9 @@ namespace PES.Services
         public string testdate(DateTime date)
         {
             string datestring = "";
-            //DateTime newdate;
-            //datestring = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
-            //newdate = DateTime.ParseExact(datestring, "MM/dd/yyyy", ICustomFormatter);
+            DateTime newdate;
+            datestring = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
+            datestring = DateTime.Now.ToString("MM/dd/yyyy");
             //Convert.ToDateTime(row("campofecha")).ToString("dd/MM/yyyy");
 
             return datestring;
