@@ -86,7 +86,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    
+
                     string Query = "SELECT ID_PE," +
                                             "EVALUATION_PERIOD," +
                                             "ID_EMPLOYEE," +
@@ -165,7 +165,7 @@ namespace PES.Services
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
-
+                    
                     OracleDataReader Read = Comand.ExecuteReader();
                     listPES = new List<PEs>();
                     while (Read.Read())
@@ -187,14 +187,14 @@ namespace PES.Services
                         {
                             pes.EnglishScore = Convert.ToDouble(englishScore);
                         }
-                        else
+                        else 
                         {
                             pes.EnglishScore = 0;
                         }
 
                         listPES.Add(pes);
                     }
-
+                    
                     db.Close();
                 }
             }
@@ -231,7 +231,7 @@ namespace PES.Services
                     {
                         command.Parameters.Add(new OracleParameter("peId", peId));
                         OracleDataReader reader = command.ExecuteReader();
-                        listPerformanceSectionHelp = new List<PerformanceSectionHelper>();
+                        listPerformanceSectionHelp = new List<PerformanceSectionHelper>();                     
                         while (reader.Read())
                         {
                             var performanceSectionHelp = new PerformanceSectionHelper();
@@ -240,7 +240,7 @@ namespace PES.Services
                             performanceSectionHelp.Subtitle = Convert.ToString(reader["SUBTITLE"]);
                             performanceSectionHelp.Description = Convert.ToString(reader["DESCRIPTION"]);
                             performanceSectionHelp.ScoreEmployee = Convert.ToInt32(reader["SCEMPLOYEE"]);
-                            performanceSectionHelp.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]);
+                            performanceSectionHelp.ScoreEvaluator = Convert.ToInt32(reader["SCEVALUATOR"]); 
                             performanceSectionHelp.Comments = Convert.ToString(reader["COMMENTS"]);
                             performanceSectionHelp.Calculation = Convert.ToDouble(reader["CALCULATION"]);
 
@@ -252,7 +252,7 @@ namespace PES.Services
             }
             catch (Exception xe)
             {
-                throw;
+                throw;   
             }
             return listPerformanceSectionHelp;
         }
@@ -265,7 +265,7 @@ namespace PES.Services
             {
                 string updateRank = @"UPDATE PE
                                         SET ""RANK"" = :rank
-                                          WHERE ID_PE = :peId";
+                                       WHERE ID_PE = :peId";
 
                 using (OracleCommand command = new OracleCommand(updateRank, db))
                 {
