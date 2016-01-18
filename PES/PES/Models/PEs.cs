@@ -67,5 +67,7 @@ namespace PES.Models
         public Employee CurrentUser { get; set; }
         public List<Employee> ListEmployees { get; set; }
         public int SelectedEmployee { get; set; }
+        public List<Employee> ListAllEmployees { get; set; }
+        public int SelectedEvaluator { get; set; }
     }
 }
