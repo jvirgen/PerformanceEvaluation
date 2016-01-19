@@ -966,7 +966,7 @@ namespace PES.Controllers
 
                         if (user != null)
                         {
-                            var evaluator = _employeeService.GetByID(user.ManagerId);
+                            var evaluator = _employeeService.GetByID(uploadVM.SelectedEvaluator);
 
                             bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator);
 
@@ -1102,6 +1102,10 @@ namespace PES.Controllers
                 listEmployees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
             }
 
+            List<Employee> listAllEmployees = new List<Employee>();
+            listAllEmployees = _employeeService.GetAll();
+
+            uploadVM.ListAllEmployees = listAllEmployees;
             uploadVM.ListEmployees = listEmployees;
 
             return View(uploadVM);
