@@ -61,13 +61,7 @@ namespace PES.Controllers
                     //Check if the user is a Manager or Director 
                     else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
                     {
-                        //Return the Manager's view
-                     
-                        
-                        
-                        //authentication = new Login();
-                        //authentication.AuthorizeCore(HttpContext, 2);
-                    
+                        //Return the Manager's view                   
                         return RedirectToAction("Index", "PerformanceEvaluation");
                     }
                     else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)
