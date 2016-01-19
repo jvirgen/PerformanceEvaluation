@@ -40,7 +40,7 @@ namespace PES.Controllers
             {
                 // Get user 
                 Employee resource = _employeeService.GetByEmail(user.UserEmail);
-
+                Login authentication;
                 // Validate if resource not found
                 if (resource != null)
                 {
@@ -62,6 +62,14 @@ namespace PES.Controllers
                     else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
                     {
                         //Return the Manager's view
+                     
+                        
+                        
+                        authentication = new Login();
+                        authentication.AuthorizeCore(HttpContext, 2);
+                    
+                        
+                        
                         return RedirectToAction("Index", "PerformanceEvaluation");
                     }
                     else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)
