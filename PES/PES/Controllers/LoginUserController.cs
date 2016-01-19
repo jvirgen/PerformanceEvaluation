@@ -65,11 +65,9 @@ namespace PES.Controllers
                      
                         
                         
-                        authentication = new Login();
-                        authentication.AuthorizeCore(HttpContext, 2);
+                        //authentication = new Login();
+                        //authentication.AuthorizeCore(HttpContext, 2);
                     
-                        
-                        
                         return RedirectToAction("Index", "PerformanceEvaluation");
                     }
                     else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)

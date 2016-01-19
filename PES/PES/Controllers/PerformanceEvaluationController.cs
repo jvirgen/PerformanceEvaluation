@@ -12,7 +12,7 @@ using PES.ViewModels;
 namespace PES.Controllers
 {
 
-    [Authorize(Roles= "Manager")]
+    [Authorize]
     public class PerformanceEvaluationController : Controller
     {
         // Declare services 
