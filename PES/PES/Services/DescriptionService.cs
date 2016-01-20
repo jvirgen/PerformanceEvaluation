@@ -51,7 +51,7 @@ namespace PES.Services
             using (OracleConnection db = dbContext.GetDBConnection())
             {
                 string insertQuery = @"SELECT ID_DESCRIPTION,
-                                        DESCRIPTION
+                                        DESCRIPTION,
                                         ID_SUBTITLE
                                     FROM DESCRIPTION
                                     WHERE DESCRIPTION LIKE :descriptiontext";
