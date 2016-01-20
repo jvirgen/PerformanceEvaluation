@@ -162,7 +162,8 @@ namespace PES.Services
                                            "PERFORMANCE_SCORE," +
                                            "COMPETENCE_SCORE," +
                                            "\"RANK\"" +
-                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'";
+                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "' AND ROWNUM <=1 ORDER BY ID_PE DESC";
+                   
 
                     OracleCommand Comand = new OracleCommand(Query, db);
                     
@@ -356,17 +357,6 @@ namespace PES.Services
                 }
             }
             return status;
-        }
-        public string testdate(DateTime date)
-        {
-            string datestring = "";
-            DateTime newdate;
-            datestring = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
-            datestring = DateTime.Now.ToString("MM/dd/yyyy");
-            //Convert.ToDateTime(row("campofecha")).ToString("dd/MM/yyyy");
-
-            return datestring;
-
         }
     }
 }
