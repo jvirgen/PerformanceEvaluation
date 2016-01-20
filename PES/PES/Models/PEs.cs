@@ -58,7 +58,7 @@ namespace PES.Models
         /// <summary>
         /// Rank
         /// </summary>
-        public double Rank { get; set; }
+        public double? Rank { get; set; }
         
     }
 
