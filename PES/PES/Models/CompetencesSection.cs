@@ -303,12 +303,21 @@ namespace PES.Models
             }
         }
 
-        public static Description TotalCompetencesDescription35
+        public static Description EnglishEvaluationDescription
         {
             get
             {
-                Description description34 = new Description { DescriptionId = 35, SubtitleId = 6, DescriptionText = "Total  Competences" };
+                Description description34 = new Description { DescriptionId = 35, SubtitleId = 6, DescriptionText = "ENGLISH EVALUATION result" };
                 return description34;
+            }
+        }
+
+        public static Description TotalCompetencesDescription36
+        {
+            get
+            {
+                Description description35 = new Description { DescriptionId = 36, SubtitleId = 6, DescriptionText = "Total  Competences" };
+                return description35;
             }
         }
 
