@@ -325,7 +325,7 @@ namespace PES.Controllers
 
                 #region ScoreEmployee - insert
                 PESc.one.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[24, 6].Value);
-                PESc.one.DescriptionId = PerformanceSection.AccuracyQualityDescription1.DescriptionId;
+                PESc.one.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.AccuracyQualityDescription1.DescriptionText).DescriptionId;
                 PESc.two.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[25, 6].Value);
                 PESc.two.DescriptionId = PerformanceSection.ThoroughnessQualityDescription2.DescriptionId;
                 PESc.three.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[26, 6].Value);
