@@ -37,10 +37,10 @@
                                     @scoreM.period
                                 </a>
                             </td>
-                            <td>@scoreM.totalPerforformance</td>
-                            <td>@scoreM.totalCompetences</td>
-                            <td>@scoreM.totalEnglish</td>
-                            <td>@scoreM.totalEvaluation</td>
+                            <td>@Math.Round(scoreM.totalPerforformance, 2)</td>
+                            <td>@Math.Round(scoreM.totalCompetences, 2)</td>
+                            <td>@Math.Round(scoreM.totalEnglish, 2)</td>
+                            <td>@Math.Round(scoreM.totalEvaluation, 2)</td>
                         </tr>
                     }
                 }
