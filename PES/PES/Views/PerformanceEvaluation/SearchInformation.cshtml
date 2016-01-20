@@ -19,7 +19,7 @@
                 <tr>
 
                     <th>Employee</th>
-                    <th>Position</th>
+                    <th class="col-md-2">Position</th>
                     @if (currentUser.ProfileId == (int)ProfileUser.Director)
                     {
                         <th>Manager</th>
@@ -29,7 +29,7 @@
                     <th>Total 1</th>
                     @if (currentUser.ProfileId == (int)ProfileUser.Director)
                     {
-                        <th>Rank</th>
+                        <th style="width: 5%">Rank</th>
                         <th>T1 * Rank</th>
                     }
                 </tr>
@@ -49,7 +49,7 @@
                         <td id="total1@(employeeM.employee.EmployeeId)">@Math.Round(total = employeeM.totalScore + employeeM.englishScore, 2)</td>
                         @if (currentUser.ProfileId == (int)ProfileUser.Director)
                         {
-                            <td id="rank@(employeeM.employee.EmployeeId)"><input type="text" value="@employeeM.rank" onchange="calculate(@employeeM.employee.EmployeeId, this);"/></td>
+                            <td id="rank@(employeeM.employee.EmployeeId)"><input type="text" style="width: 100%" value="@employeeM.rank" onchange="calculate(@employeeM.employee.EmployeeId, this);" /></td>
                             <td id="t1Rank@(employeeM.employee.EmployeeId)">@Math.Round(Convert.ToDecimal(employeeM.rank * total))</td>
                         }
 
