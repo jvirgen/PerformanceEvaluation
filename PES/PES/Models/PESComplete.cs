@@ -57,6 +57,7 @@ namespace PES.Models
         public Description subtotalPolicies = new Description();
         public Description totalPerformance = new Description();
         public Description totalCompetences = new Description();
+        public Description EnglishEvaluationDescription = new Description();
         
         public Score one = new Score();
         public Score two = new Score();
@@ -93,6 +94,7 @@ namespace PES.Models
         public Score scorePolicies = new Score();
         public Score scorePerformance = new Score();
         public Score scoreCompetences = new Score();
+        public Score englishScore = new Score();
 
         public Comment comment = new Comment();
         //public Comment comment2 = new Comment();

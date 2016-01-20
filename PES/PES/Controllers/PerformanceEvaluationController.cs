@@ -105,7 +105,7 @@ namespace PES.Controllers
                 PESc.pes.EvaluationPeriod = DateTime.Now.Date;
                 var status = _statusService.GetStatusByDescription("Incomplete");
                 PESc.pes.StatusId = status != null ? status.StatusId : 1;
-                PESc.pes.EnglishScore = 0;
+                PESc.pes.EnglishScore = Convert.ToInt32(excelSheet.Cells[72, 7].Value);
                 PESc.pes.PerformanceScore = excelSheet.Cells[37, 9].Value;
                 PESc.pes.CompeteneceScore = excelSheet.Cells[73, 9].Value;
 
@@ -246,6 +246,8 @@ namespace PES.Controllers
                 //PESc.descriptionValues.SubtitleId = CompetencesSection.ValuesPoliciesDescription33.SubtitleId;
                 //PESc.subtotalPolicies.DescriptionText = CompetencesSection.SubtotalPoliciesDescription34.DescriptionText;
                 //PESc.subtotalPolicies.SubtitleId = CompetencesSection.SubtotalPoliciesDescription34.SubtitleId;
+                //PESc.EnglishEvaluationDescription.DescriptionText = CompetencesSection.EnglishEvaluationDescription.DescriptionText;
+                //PESc.EnglishEvaluationDescription.SubtitleId = CompetencesSection.EnglishEvaluationDescription.SubtitleId;
                 //PESc.totalCompetences.DescriptionText = CompetencesSection.TotalCompetencesDescription35.DescriptionText;
                 //PESc.totalCompetences.SubtitleId = CompetencesSection.TotalCompetencesDescription35.SubtitleId;
 
@@ -317,6 +319,7 @@ namespace PES.Controllers
                 //bool descriptionPoliciesInserted = _descriptionService.InsertDescription(PESc.descriptionPolicies);
                 //bool descriptionValuesInserted = _descriptionService.InsertDescription(PESc.descriptionValues);
                 //bool descriptionSubtotalPoliciesInserted = _descriptionService.InsertDescription(PESc.subtotalPolicies);
+                //bool descriptionEnglishEvalationInserted = _descriptionService.InsertDescription(PESc.EnglishEvaluationDescription);
                 //bool descriptionTotalCompetencesInserted = _descriptionService.InsertDescription(PESc.totalCompetences);
                 #endregion
 
@@ -395,7 +398,9 @@ namespace PES.Controllers
                 PESc.scorePolicies.ScoreEmployee = 0;
                 PESc.scorePolicies.DescriptionId = CompetencesSection.SubtotalPoliciesDescription34.DescriptionId;
                 PESc.scoreCompetences.ScoreEmployee = 0;
-                PESc.scoreCompetences.DescriptionId = CompetencesSection.TotalCompetencesDescription35.DescriptionId;
+                PESc.scoreCompetences.DescriptionId = CompetencesSection.TotalCompetencesDescription36.DescriptionId;
+                PESc.englishScore.ScoreEmployee = 0;
+                PESc.englishScore.DescriptionId = CompetencesSection.EnglishEvaluationDescription.DescriptionId;
                 #endregion
 
                 #region ScoreEvaluator - insert
@@ -474,6 +479,8 @@ namespace PES.Controllers
                 PESc.scorePolicies.PEId = PESc.pes.PEId;
                 PESc.scoreCompetences.ScoreEvaluator = 0;
                 PESc.scoreCompetences.PEId = PESc.pes.PEId;
+                PESc.englishScore.ScoreEvaluator = Convert.ToInt32(excelSheet.Cells[72, 7].Value);
+                PESc.englishScore.PEId = PESc.pes.PEId;
                 #endregion
 
                 #region Comments - insert
@@ -517,6 +524,7 @@ namespace PES.Controllers
                 PESc.values.Comments = excelSheet.Cells[70, 8].Value;
                 PESc.scorePolicies.Comments = "";
                 PESc.scoreCompetences.Comments = "";
+                PESc.englishScore.Comments = excelSheet.Cells[72, 8].Value;
                 #endregion
 
                 #region Calculation - insert
@@ -564,6 +572,7 @@ namespace PES.Controllers
                 PESc.scoreGrowth.Calculation = excelSheet.Cells[65, 9].Value;
                 PESc.scorePolicies.Calculation = excelSheet.Cells[71, 9].Value;
                 PESc.scoreCompetences.Calculation = PESc.pes.CompeteneceScore;
+                PESc.englishScore.Calculation = excelSheet.Cells[72, 9].Value;
 
                 bool scoreOneInserted = _scoreService.InsertScore(PESc.one);
                 bool scoreTwoInserted = _scoreService.InsertScore(PESc.two);
@@ -605,6 +614,7 @@ namespace PES.Controllers
                 bool scoreValuesInserted = _scoreService.InsertScore(PESc.values);
                 bool scoreScorePolicesInserted = _scoreService.InsertScore(PESc.scorePolicies);
                 bool scoreScoreCompetencesInserted = _scoreService.InsertScore(PESc.scoreCompetences);
+                bool scoreEnglishEvaluationInserted = _scoreService.InsertScore(PESc.englishScore);
                 #endregion
 
                 #region Trainning Comment - insert
@@ -946,7 +956,7 @@ namespace PES.Controllers
             // Check file was submitted             
             if (fileUploaded != null && fileUploaded.ContentLength > 0)
             {
-                if (fileUploaded.FileName.EndsWith("xls") || fileUploaded.FileName.EndsWith("xlsx")) 
+                if (fileUploaded.FileName.EndsWith("xls") || fileUploaded.FileName.EndsWith("xlsx") || fileUploaded.FileName.EndsWith("XLSX") || fileUploaded.FileName.EndsWith("XLS")) 
                 {
                     string fname = "";
                     string fullPath = "";
@@ -1201,6 +1211,7 @@ namespace PES.Controllers
                     {
                         employeeid = userPE.EmployeeId,
                         pesid = userPE.PEId,
+
                         period = userPE.EvaluationPeriod,
                         totalEvaluation = userPE.Total,
                         totalEnglish = userPE.EnglishScore,
