@@ -1223,6 +1223,7 @@ namespace PES.Controllers
                 }
             }
 
+            ViewBag.UserName = user.FirstName + " " + user.LastName;
             ViewBag.UserEmail = employeeEmail;
             ViewBag.UserID = employeeID;
             return View(choosePeriodVM);

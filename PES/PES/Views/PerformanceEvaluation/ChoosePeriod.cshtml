@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Period";
 
+    string userName = ViewBag.UserName != null ? (string)ViewBag.UserName : "";
     string userEmail = ViewBag.UserEmail != null ? (string)ViewBag.UserEmail : "";
     int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
 }
@@ -10,7 +11,7 @@
 <div class="row text-center">
     <div class="col-md-12">
         <h2>Performance Evaluation Files For:</h2>
-        <h3 class="text-center">@userEmail</h3>
+        <h3 class="text-center">@userName</h3>
     </div>
 </div>
 <hr />
