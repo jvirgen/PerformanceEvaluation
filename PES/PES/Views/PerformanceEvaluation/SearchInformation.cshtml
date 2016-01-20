@@ -44,13 +44,13 @@
                         {
                             <td>@(employeeM.manager.FirstName + " " + employeeM.manager.LastName)</td>
                         }
-                        <td>@(employeeM.totalScore)</td>
-                        <td>@(employeeM.englishScore)</td>
-                        <td id="total1@(employeeM.employee.EmployeeId)">@(total = employeeM.totalScore + employeeM.englishScore)</td>
+                        <td>@Math.Round(employeeM.totalScore, 2)</td>
+                        <td>@Math.Round(employeeM.englishScore, 2)</td>
+                        <td id="total1@(employeeM.employee.EmployeeId)">@Math.Round(total = employeeM.totalScore + employeeM.englishScore, 2)</td>
                         @if (currentUser.ProfileId == (int)ProfileUser.Director)
                         {
                             <td id="rank@(employeeM.employee.EmployeeId)"><input type="text" value="@employeeM.rank" onchange="calculate(@employeeM.employee.EmployeeId, this);"/></td>
-                            <td id="t1Rank@(employeeM.employee.EmployeeId)">@(employeeM.rank * total)</td>
+                            <td id="t1Rank@(employeeM.employee.EmployeeId)">@Math.Round(Convert.ToDecimal(employeeM.rank * total))</td>
                         }
 
                     </tr>

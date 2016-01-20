@@ -19,10 +19,10 @@
                 <td>@sectionP.Title</td>
                 <td>@sectionP.Subtitle</td>
                 <td>@sectionP.Description</td>
-                <td>@sectionP.ScoreEmployee</td>
-                <td>@sectionP.ScoreEvaluator</td>
+                <td>@Math.Round(Convert.ToDecimal(sectionP.ScoreEmployee), 2)</td>
+                <td>@Math.Round(Convert.ToDecimal(sectionP.ScoreEvaluator), 2)</td>
                 <td>@sectionP.Comments</td>
-                <td>@sectionP.Calculation</td>
+                <td>@Math.Round(sectionP.Calculation, 2)</td>
             </tr>
         }
     </tbody>
