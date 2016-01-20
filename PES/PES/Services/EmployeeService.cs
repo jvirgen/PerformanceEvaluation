@@ -323,8 +323,8 @@ namespace PES.Services
                                                                "POSITION='" + employee.Position + "', " +
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
                                                                "ID_MANAGER='" + employee.ManagerId + "', " +
-                                                               "HIRE_DATE= TO_DATE('" + employee.HireDate.ToShortDateString() + "', 'MM-DD-YYYY'), " +
-                                                               "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToShortDateString() : "") + "', 'MM-DD-YYYY'), " +
+                                                               "HIRE_DATE= TO_DATE('" + employee.HireDate.ToString("MM-dd-yyyy") + "', 'MM-DD-YYYY'), " +
+                                                               "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToString("MM-dd-yyyy") : "") + "', 'MM-DD-YYYY'), " +
                                                                "PROJECT='" + employee.Project +"' " +
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
 
@@ -590,15 +590,15 @@ namespace PES.Services
                                 newEmployee.HireDate = DateTime.Now; // Set as today due to not comming from excel
 
                                 var active = columnsData[ResourceColumns.Active].ToArray<string>()[i];
-                                if (string.IsNullOrEmpty(active))
-                                {
-                                    // Employee is still active
                                     newEmployee.EndDate = null;
-                                }
-                                else 
-                                {
-                                    newEmployee.EndDate = DateTime.Now;
-                                }
+
+                                #region Validation to check if active
+                                // Uncomment if validation will be applied, otherwhise employees will be active
+                                //if (!string.IsNullOrEmpty(active) && active.ToLower() == "no")
+                                //{
+                                //    newEmployee.EndDate = DateTime.Now;
+                                //}
+                                #endregion
                                 
                                 newEmployee.Project = "No project"; // Column not comming from excel file
 

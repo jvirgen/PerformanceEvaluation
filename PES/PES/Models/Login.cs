@@ -38,7 +38,21 @@ namespace PES.Models
                 return false;
             }
             return false;
-
         }
-    }
+
+
+        public bool AuthorizeCore(HttpContextBase httpContext, int profile)
+        {
+            var user = httpContext.User;
+            if (profile == 2)
+            {
+                user.IsInRole("Manager");
+            }
+            else if (profile == 3)
+            {
+                user.IsInRole("Director");
+            }
+            return true;
+        }
+    }     
 }
