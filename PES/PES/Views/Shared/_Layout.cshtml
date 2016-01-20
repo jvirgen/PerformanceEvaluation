@@ -1,7 +1,9 @@
-﻿@{
+﻿@using PES.Models
+@{
     // Check if user is logged in
     var userLogged = Session["UserName"] != null ? true : false;
     var userName = Session["UserName"] != null ? (string)Session["UserName"] : "";
+    ProfileUser userProfile = Session["UserProfile"] != null ? (ProfileUser)Session["UserProfile"] : ProfileUser.None;
 }
 <!DOCTYPE html>
 <html>
@@ -32,7 +34,7 @@
                 }
             </div>
             <div class="navbar-collapse collapse">
-                @if (userLogged)
+                @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager))
                 {
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
