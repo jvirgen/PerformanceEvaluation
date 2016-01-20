@@ -183,7 +183,8 @@ namespace PES.Services
                         string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
-                        pes.Rank = Convert.ToDouble(Read["RANK"]);
+                        double? rank = Read["RANK"] as double?;
+                        pes.Rank = rank;
                         if (!string.IsNullOrEmpty(englishScore))
                         {
                             pes.EnglishScore = Convert.ToDouble(englishScore);

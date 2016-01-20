@@ -191,7 +191,7 @@
     <Compile Include="ViewModels\PEVisualizationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\export_pe.sql" />
+    <Content Include="App_Data\export_pedb.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\select2-bootstrap.css" />
@@ -270,7 +270,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
-    <Content Include="Scripts\utilities.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
