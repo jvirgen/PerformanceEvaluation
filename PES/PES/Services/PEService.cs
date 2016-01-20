@@ -114,10 +114,19 @@ namespace PES.Services
                         pes.EvaluatorId = Convert.ToInt32(Read["ID_EVALUATOR"]);
                         pes.StatusId = Convert.ToInt32(Read["ID_STATUS"]);
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
-                        pes.EnglishScore = Convert.ToDouble(Read["ENGLISH_SCORE"]);
+                        string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
+                        if (!string.IsNullOrEmpty(englishScore))
+                        {
+                            pes.EnglishScore = Convert.ToDouble(englishScore);
+                        }
+                        else
+                        {
+                            pes.EnglishScore = 0;
+                        }
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
-                        pes.Rank = Convert.ToDouble(Read["RANK"]);
+                        double? rank = Read["RANK"] as double?;
+                        pes.Rank = rank;
 
                         PES = pes;
                     }
@@ -180,11 +189,11 @@ namespace PES.Services
                         pes.EvaluatorId = Convert.ToInt32(Read["ID_EVALUATOR"]);
                         pes.StatusId = Convert.ToInt32(Read["ID_STATUS"]);
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
-                        string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
                         double? rank = Read["RANK"] as double?;
                         pes.Rank = rank;
+                        string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
                         if (!string.IsNullOrEmpty(englishScore))
                         {
                             pes.EnglishScore = Convert.ToDouble(englishScore);
@@ -258,10 +267,21 @@ namespace PES.Services
                             pe.EvaluatorId = Convert.ToInt32(reader["ID_EVALUATOR"]);
                             pe.StatusId = Convert.ToInt32(reader["ID_STATUS"]);
                             pe.Total = Convert.ToDouble(reader["TOTAL"]);
-                            pe.EnglishScore = Convert.ToDouble(reader["ENGLISH_SCORE"]);
+                            //pe.EnglishScore = Convert.ToDouble(reader["ENGLISH_SCORE"]);
                             pe.PerformanceScore = Convert.ToDouble(reader["PERFORMANCE_SCORE"]);
                             pe.CompeteneceScore = Convert.ToDouble(reader["COMPETENCE_SCORE"]);
-                            pe.Rank = Convert.ToDouble(reader["RANK"]);
+                            //pe.Rank = Convert.ToDouble(reader["RANK"]);
+                            double? rank = reader["RANK"] as double?;
+                            pe.Rank = rank;
+                            string englishScore = Convert.ToString(reader["ENGLISH_SCORE"]);
+                            if (!string.IsNullOrEmpty(englishScore))
+                            {
+                                pe.EnglishScore = Convert.ToDouble(englishScore);
+                            }
+                            else
+                            {
+                                pe.EnglishScore = 0;
+                            }
 
                         }
                         command.Connection.Close();
