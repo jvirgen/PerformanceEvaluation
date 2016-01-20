@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Period";
 
+    string userName = ViewBag.UserName != null ? (string)ViewBag.UserName : "";
     string userEmail = ViewBag.UserEmail != null ? (string)ViewBag.UserEmail : "";
     int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
 }
@@ -10,7 +11,7 @@
 <div class="row text-center">
     <div class="col-md-12">
         <h2>Performance Evaluation Files For:</h2>
-        <h3 class="text-center">@userEmail</h3>
+        <h3 class="text-center">@userName</h3>
     </div>
 </div>
 <hr />
@@ -37,10 +38,10 @@
                                     @scoreM.period.ToShortDateString()
                                 </a>
                             </td>
-                            <td>@scoreM.totalPerforformance</td>
-                            <td>@scoreM.totalCompetences</td>
-                            <td>@scoreM.totalEnglish</td>
-                            <td>@scoreM.totalEvaluation</td>
+                            <td>@Math.Round(scoreM.totalPerforformance, 2)</td>
+                            <td>@Math.Round(scoreM.totalCompetences, 2)</td>
+                            <td>@Math.Round(scoreM.totalEnglish, 2)</td>
+                            <td>@Math.Round(scoreM.totalEvaluation, 2)</td>
                         </tr>
                     }
                 }
