@@ -49,7 +49,8 @@
                         <td id="total1@(employeeM.employee.EmployeeId)">@Math.Round(total = employeeM.totalScore + employeeM.englishScore, 2)</td>
                         @if (currentUser.ProfileId == (int)ProfileUser.Director)
                         {
-                            <td id="rank@(employeeM.employee.EmployeeId)"><input type="text" style="width: 100%" value="@employeeM.rank" onchange="calculate(@employeeM.employee.EmployeeId, this);" /></td>
+
+                            <td id="rank@(employeeM.employee.EmployeeId)"><input type="text" style="width: 100%" value="@employeeM.rank" onchange="calculate(@employeeM.employee.EmployeeId, this);" /><span style="display:none;"></span></td>
                             <td id="t1Rank@(employeeM.employee.EmployeeId)">@Math.Round(Convert.ToDecimal(employeeM.rank * total))</td>
                         }
 
@@ -86,10 +87,29 @@
                 dom: '<"row"<"col-md-12"B>><"row"<"col-md-6"l><"col-md-6"f>>rtip',
                 buttons: [
                     'excel', 'pdf'],
-                lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
-                pageLength: 25
+                    lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                    pageLength: 25,
+                    "tableTools":{
+                        "buttons":[
+                            {
+                                "sExtends":"excel",
+                                "fnCellRender": renderColumn
+                            },
+                            {
+                                "sExtends":"pdf",
+                                "fnCellRender": renderColumn
+                            }
+                        ]
+                    }
             });
         });
+        // This extracts the value from the checkboxes
+        function renderColumn(value, column, row, iDataIndex) {
+            if ($(value).find()) {
+                return $(value).find().prop('checked');
+            }
+            return value;
+        }
 
         function calculate(id, element) {
             // total1 
