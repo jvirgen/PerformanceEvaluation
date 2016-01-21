@@ -40,15 +40,16 @@
                 }
                 @if (employeeM.lastPe != null)
                 {
-                    double total1 = 0;
+                    double total1 = Math.Round(employeeM.lastPe.Total + employeeM.lastPe.EnglishScore, 2);
+                    var calculation = Convert.ToDecimal((employeeM.lastPe.Rank.HasValue ? employeeM.lastPe.Rank : 0) * total1);
                     @*@Html.Hidden("performanceId" + employeeM.lastPe.PEId, employeeM.lastPe.PEId)*@
                     <td>@Math.Round(employeeM.lastPe.Total, 2)</td>
                     <td>@Math.Round(employeeM.lastPe.EnglishScore, 2)</td>
-                    <td id="total1@(employeeM.employee.EmployeeId)">@Math.Round(total1 = employeeM.lastPe.Total + employeeM.lastPe.EnglishScore, 2)</td>
+                    <td id="total1@(employeeM.lastPe.PEId)">@total1</td>
                     if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
                     {
-                        <td id="rank@(employeeM.lastPe.PEId)"><input type="text" style="width: 100%" value="@employeeM.lastPe.Rank" onchange="calculate(@employeeM.lastPe.PEId, this);" /></td>
-                        <td id="t1Rank@(employeeM.lastPe.PEId)">@Math.Round(Convert.ToDecimal((employeeM.lastPe.Rank.HasValue ? employeeM.lastPe.Rank : 0) * total1))</td>
+                        <td id="rank@(employeeM.lastPe.PEId)"><input type="text" style="width: 100%" value="@employeeM.lastPe.Rank" onchange="calculate(@employeeM.lastPe.PEId, this);" /><span style="display:none">@employeeM.lastPe.Rank</span></td>
+                        <td id="t1Rank@(employeeM.lastPe.PEId)">@Math.Round(calculation, 2)</td>
                     }
                 }
                 else
