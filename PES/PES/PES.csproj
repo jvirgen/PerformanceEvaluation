@@ -274,6 +274,9 @@
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Shared\_PerformanceFilesPartial.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -301,7 +304,6 @@
     <Content Include="Views\Shared\_SectionsPartial.cshtml" />
     <Content Include="Views\Shared\_CommentsPartial.cshtml" />
     <Content Include="Views\Shared\_SkillsPartial.cshtml" />
-    <Content Include="Views\Shared\_PerformanceFilesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
