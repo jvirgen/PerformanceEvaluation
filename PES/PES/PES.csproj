@@ -188,9 +188,12 @@
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\SubtitleService.cs" />
     <Compile Include="Services\TitleService.cs" />
+    <Compile Include="ViewModels\PerformanceRankHelper.cs" />
+    <Compile Include="ViewModels\PerformanceFilesPartial.cs" />
     <Compile Include="ViewModels\PEVisualizationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\create_user_pe.sql" />
     <Content Include="App_Data\export_pedb.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -298,6 +301,7 @@
     <Content Include="Views\Shared\_SectionsPartial.cshtml" />
     <Content Include="Views\Shared\_CommentsPartial.cshtml" />
     <Content Include="Views\Shared\_SkillsPartial.cshtml" />
+    <Content Include="Views\Shared\_PerformanceFilesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Excel = Microsoft.Office.Interop.Excel;
 using PES.Services;
 using PES.ViewModels;
+using System.Web.Script.Serialization;
 
 namespace PES.Controllers
 {
@@ -44,46 +45,7 @@ namespace PES.Controllers
         // GET: PerformanceEvaluation
         public ActionResult Index()
         {
-            List<PES.Models.PEs> performanceEvaluations = new List<Models.PEs>();
-
-            // Get performance evaluation
-            string queryPEs;
-            //Whille()
-            // 
-
-            //string userId = "1";
-            //string managerId = "2";
-            //// Get user 
-
-            //Employee e;
-            //e = new Employee();
-            //e.HireDate = DateTime.Now;
-            //e.Ranking = 0;
-            
-
-            // Get manager of user 
-
-
-            // Insert employee 
-
-            //foreach(var pe in performanceEvaluations)
-            //{
-            //    // Get comments 
-            //    string queryComments;
-                
-            //    // Get employee
-            //    string query = "select * from Employee where Employee_id =  " + pe.EmployeeId;
-            //    PES.Models.Employee employee;
-            //    employee = new PES.Models.Employee();
-            //    //employee; 
-            //    // Get 
-            //}
-
-            
-
             return View();
-
-
         }
 
         public bool ReadPerformanceFile(string path, Employee user, Employee evaluator) 
@@ -325,82 +287,82 @@ namespace PES.Controllers
 
                 #region ScoreEmployee - insert
                 PESc.one.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[24, 6].Value);
-                PESc.one.DescriptionId = PerformanceSection.AccuracyQualityDescription1.DescriptionId;
+                PESc.one.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.AccuracyQualityDescription1.DescriptionText).DescriptionId;
                 PESc.two.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[25, 6].Value);
-                PESc.two.DescriptionId = PerformanceSection.ThoroughnessQualityDescription2.DescriptionId;
+                PESc.two.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.ThoroughnessQualityDescription2.DescriptionText).DescriptionId;
                 PESc.three.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[26, 6].Value);
-                PESc.three.DescriptionId = PerformanceSection.ReliabilityQualityDescription3.DescriptionId;
+                PESc.three.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.ReliabilityQualityDescription3.DescriptionText).DescriptionId;
                 PESc.four.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[27, 6].Value);
-                PESc.four.DescriptionId = PerformanceSection.ResponsivenessQualityDescription4.DescriptionId;
+                PESc.four.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.ResponsivenessQualityDescription4.DescriptionText).DescriptionId;
                 PESc.five.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[28, 6].Value);
-                PESc.five.DescriptionId = PerformanceSection.FollowQualityDescription5.DescriptionId;
+                PESc.five.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.FollowQualityDescription5.DescriptionText).DescriptionId;
                 PESc.six.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[29, 6].Value);
-                PESc.six.DescriptionId = PerformanceSection.JudgmentQualityDescription6.DescriptionId;
+                PESc.six.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.JudgmentQualityDescription6.DescriptionText).DescriptionId;
                 PESc.scoreQuality.ScoreEmployee = 0;
-                PESc.scoreQuality.DescriptionId = PerformanceSection.SubtotalQualityDescription7.DescriptionId;
+                PESc.scoreQuality.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.SubtotalQualityDescription7.DescriptionText).DescriptionId;
 
                 PESc.seven.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[33, 6].Value);
-                PESc.seven.DescriptionId = PerformanceSection.PriorityOpportunityDescription8.DescriptionId;
+                PESc.seven.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.PriorityOpportunityDescription8.DescriptionText).DescriptionId;
                 PESc.eight.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[34, 6].Value);
-                PESc.eight.DescriptionId = PerformanceSection.AmountOpportunityDescription9.DescriptionId;
+                PESc.eight.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.AmountOpportunityDescription9.DescriptionText).DescriptionId;
                 PESc.nine.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[35, 6].Value);
-                PESc.nine.DescriptionId = PerformanceSection.WorkOpportunityDescription10.DescriptionId;
+                PESc.nine.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.WorkOpportunityDescription10.DescriptionText).DescriptionId;
                 PESc.scoreOpportunity.ScoreEmployee = 0;
-                PESc.scoreOpportunity.DescriptionId = PerformanceSection.SubtotalOpportunityDescription11.DescriptionId;
+                PESc.scoreOpportunity.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.SubtotalOpportunityDescription11.DescriptionText).DescriptionId;
                 PESc.scorePerformance.ScoreEmployee = 0;
-                PESc.scorePerformance.DescriptionId = PerformanceSection.TotalPerformanceDescription12.DescriptionId;
+                PESc.scorePerformance.DescriptionId = _descriptionService.GetDescriptionByText(PerformanceSection.TotalPerformanceDescription12.DescriptionText).DescriptionId;
 
                 PESc.ten.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[44, 6].Value);
-                PESc.ten.DescriptionId = CompetencesSection.JobSkillDescription13.DescriptionId;
+                PESc.ten.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.JobSkillDescription13.DescriptionText).DescriptionId;
                 PESc.eleven.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[45, 6].Value);
-                PESc.eleven.DescriptionId = CompetencesSection.AnalyzesSkillDescription14.DescriptionId;
+                PESc.eleven.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.AnalyzesSkillDescription14.DescriptionText).DescriptionId;
                 PESc.twelve.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[46, 6].Value);
-                PESc.twelve.DescriptionId = CompetencesSection.FlexibleSkillDescription15.DescriptionId;
+                PESc.twelve.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.FlexibleSkillDescription15.DescriptionText).DescriptionId;
                 PESc.thirteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[47, 6].Value);
-                PESc.thirteen.DescriptionId = CompetencesSection.PlanningSkillDescription16.DescriptionId;
+                PESc.thirteen.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.PlanningSkillDescription16.DescriptionText).DescriptionId;
                 PESc.fourteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[48, 6].Value);
-                PESc.fourteen.DescriptionId = CompetencesSection.CompetentSkillDescription17.DescriptionId;
+                PESc.fourteen.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.CompetentSkillDescription17.DescriptionText).DescriptionId;
                 PESc.fifteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[49, 6].Value);
-                PESc.fifteen.DescriptionId = CompetencesSection.FollowsSkillDescription18.DescriptionId;
+                PESc.fifteen.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.FollowsSkillDescription18.DescriptionText).DescriptionId;
                 PESc.scoreSkills.ScoreEmployee = 0;
-                PESc.scoreSkills.DescriptionId = CompetencesSection.SubtotalSkillDescription19.DescriptionId;
+                PESc.scoreSkills.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.SubtotalSkillDescription19.DescriptionText).DescriptionId;
 
                 PESc.sixteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[53, 6].Value);
-                PESc.sixteen.DescriptionId = CompetencesSection.SupervisorInterpersonalDescription20.DescriptionId;
+                PESc.sixteen.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.SupervisorInterpersonalDescription20.DescriptionText).DescriptionId;
                 PESc.seventeen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[54, 6].Value);
-                PESc.seventeen.DescriptionId = CompetencesSection.OtherInterpersonalDescription21.DescriptionId;
+                PESc.seventeen.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.OtherInterpersonalDescription21.DescriptionText).DescriptionId;
                 PESc.eighteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[55, 6].Value);
-                PESc.eighteen.DescriptionId = CompetencesSection.ClientInterpersonalDescription22.DescriptionId;
+                PESc.eighteen.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.ClientInterpersonalDescription22.DescriptionText).DescriptionId;
                 PESc.nineteen.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[56, 6].Value);
-                PESc.nineteen.DescriptionId = CompetencesSection.CommitmentInterpersonalDescription23.DescriptionId;
+                PESc.nineteen.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.CommitmentInterpersonalDescription23.DescriptionText).DescriptionId;
                 PESc.scoreInterpersonal.ScoreEmployee = 0;
-                PESc.scoreInterpersonal.DescriptionId = CompetencesSection.SubtotalInterpersonalDescription24.DescriptionId;
+                PESc.scoreInterpersonal.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.SubtotalInterpersonalDescription24.DescriptionText).DescriptionId;
 
                 PESc.twenty.ScoreEmployee = 0;
-                PESc.twenty.DescriptionId = CompetencesSection.ActivelyGrowthDescription25.DescriptionId;
+                PESc.twenty.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.ActivelyGrowthDescription25.DescriptionText).DescriptionId;
                 PESc.twentyone.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[61, 6].Value);
-                PESc.twentyone.DescriptionId = CompetencesSection.OpenGrowthDescription26.DescriptionId;
+                PESc.twentyone.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.OpenGrowthDescription26.DescriptionText).DescriptionId;
                 PESc.twentytwo.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[62, 6].Value);
-                PESc.twentytwo.DescriptionId = CompetencesSection.InvolvementGrowthDescription27.DescriptionId;
+                PESc.twentytwo.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.InvolvementGrowthDescription27.DescriptionText).DescriptionId;
                 PESc.twentythree.ScoreEmployee = 0;
-                PESc.twentythree.DescriptionId = CompetencesSection.ChallengesGrowthDescription28.DescriptionId;
+                PESc.twentythree.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.ChallengesGrowthDescription28.DescriptionText).DescriptionId;
                 PESc.twentyfour.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[64, 6].Value);
-                PESc.twentyfour.DescriptionId = CompetencesSection.SeeksGrowthDescription29.DescriptionId;
+                PESc.twentyfour.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.SeeksGrowthDescription29.DescriptionText).DescriptionId;
                 PESc.scoreGrowth.ScoreEmployee = 0;
-                PESc.scoreGrowth.DescriptionId = CompetencesSection.SubtotalGrowthDescription30.DescriptionId;
+                PESc.scoreGrowth.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.SubtotalGrowthDescription30.DescriptionText).DescriptionId;
 
                 PESc.punctuality.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[68, 6].Value);
-                PESc.punctuality.DescriptionId = CompetencesSection.PunctualityPoliciesDescription31.DescriptionId;
+                PESc.punctuality.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.PunctualityPoliciesDescription31.DescriptionText).DescriptionId;
                 PESc.policies.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[69, 6].Value);
-                PESc.policies.DescriptionId = CompetencesSection.PoliciesPoliciesDescription32.DescriptionId;
+                PESc.policies.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.PoliciesPoliciesDescription32.DescriptionText).DescriptionId;
                 PESc.values.ScoreEmployee = Convert.ToInt32(excelSheet.Cells[70, 6].Value);
-                PESc.values.DescriptionId = CompetencesSection.ValuesPoliciesDescription33.DescriptionId;
+                PESc.values.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.ValuesPoliciesDescription33.DescriptionText).DescriptionId;
                 PESc.scorePolicies.ScoreEmployee = 0;
-                PESc.scorePolicies.DescriptionId = CompetencesSection.SubtotalPoliciesDescription34.DescriptionId;
+                PESc.scorePolicies.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.SubtotalPoliciesDescription34.DescriptionText).DescriptionId;
                 PESc.scoreCompetences.ScoreEmployee = 0;
-                PESc.scoreCompetences.DescriptionId = CompetencesSection.TotalCompetencesDescription36.DescriptionId;
+                PESc.scoreCompetences.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.TotalCompetencesDescription36.DescriptionText).DescriptionId;
                 PESc.englishScore.ScoreEmployee = 0;
-                PESc.englishScore.DescriptionId = CompetencesSection.EnglishEvaluationDescription.DescriptionId;
+                PESc.englishScore.DescriptionId = _descriptionService.GetDescriptionByText(CompetencesSection.EnglishEvaluationDescription.DescriptionText).DescriptionId;
                 #endregion
 
                 #region ScoreEvaluator - insert
@@ -807,145 +769,6 @@ namespace PES.Controllers
             
         }
 
-        //public bool SavePEFile(PESComplete pEFile) 
-        //{
-        //    try
-        //    {
-        //        // Call services to insert
-        //        bool peResult = _peService.InsertPE(pEFile.pes);
-
-        //        _employeeService.UpdateEmployee(pEFile.empleado);
-
-        //        #region Titles, subtitles, descriptions and skills
-        //        //_titleService.InsertTitle(pEFile.title1);
-        //        //_titleService.InsertTitle(pEFile.title2);
-
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle1);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle2);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle3);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle4);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle5);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle6);
-
-        //        //_descriptionService.InsertDescription(pEFile.description1);
-        //        //_descriptionService.InsertDescription(pEFile.description2);
-        //        //_descriptionService.InsertDescription(pEFile.description3);
-        //        //_descriptionService.InsertDescription(pEFile.description4);
-        //        //_descriptionService.InsertDescription(pEFile.description5);
-        //        //_descriptionService.InsertDescription(pEFile.description6);
-        //        //_descriptionService.InsertDescription(pEFile.description7);
-        //        //_descriptionService.InsertDescription(pEFile.description8);
-        //        //_descriptionService.InsertDescription(pEFile.description9);
-        //        //_descriptionService.InsertDescription(pEFile.description10);
-        //        //_descriptionService.InsertDescription(pEFile.description11);
-        //        //_descriptionService.InsertDescription(pEFile.description12);
-        //        //_descriptionService.InsertDescription(pEFile.description13);
-        //        //_descriptionService.InsertDescription(pEFile.description14);
-        //        //_descriptionService.InsertDescription(pEFile.description15);
-        //        //_descriptionService.InsertDescription(pEFile.description16);
-        //        //_descriptionService.InsertDescription(pEFile.description17);
-        //        //_descriptionService.InsertDescription(pEFile.description18);
-        //        //_descriptionService.InsertDescription(pEFile.description19);
-        //        //_descriptionService.InsertDescription(pEFile.description21);
-        //        //_descriptionService.InsertDescription(pEFile.description22);
-        //        //_descriptionService.InsertDescription(pEFile.description24);
-        //        //_descriptionService.InsertDescription(pEFile.descriptionPuctuality);
-        //        //_descriptionService.InsertDescription(pEFile.descriptionPolicies);
-        //        //_descriptionService.InsertDescription(pEFile.descriptionValues);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalQuality);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalOpportunity);
-        //        //_descriptionService.InsertDescription(pEFile.totalPerformance);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalSkills);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalInterpersonal);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalGrowth);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalPolicies);
-        //        //_descriptionService.InsertDescription(pEFile.totalCompetences);
-
-        //        //_skillService.InsertSkill(pEFile.skill1);
-        //        //_skillService.InsertSkill(pEFile.skill2);
-        //        //_skillService.InsertSkill(pEFile.skill3);
-        //        //_skillService.InsertSkill(pEFile.skill4);
-        //        //_skillService.InsertSkill(pEFile.skill5);
-        //        //_skillService.InsertSkill(pEFile.skill6);
-        //        //_skillService.InsertSkill(pEFile.skill7);
-        //        //_skillService.InsertSkill(pEFile.skill8);
-        //        //_skillService.InsertSkill(pEFile.skill9);
-        //        //_skillService.InsertSkill(pEFile.skill10);
-        //        //_skillService.InsertSkill(pEFile.skill11);
-        //        //_skillService.InsertSkill(pEFile.skill12);
-        //        //_skillService.InsertSkill(pEFile.skill13);
-        //        //_skillService.InsertSkill(pEFile.skill14);
-        //        //_skillService.InsertSkill(pEFile.skill15);
-        //        //_skillService.InsertSkill(pEFile.skill16);
-        //        //_skillService.InsertSkill(pEFile.skill17);
-        //        #endregion
-
-        //        _scoreService.InsertScore(pEFile.one);
-        //        _scoreService.InsertScore(pEFile.two);
-        //        _scoreService.InsertScore(pEFile.three);
-        //        _scoreService.InsertScore(pEFile.four);
-        //        _scoreService.InsertScore(pEFile.five);
-        //        _scoreService.InsertScore(pEFile.six);
-        //        _scoreService.InsertScore(pEFile.seven);
-        //        _scoreService.InsertScore(pEFile.eight);
-        //        _scoreService.InsertScore(pEFile.nine);
-        //        _scoreService.InsertScore(pEFile.ten);
-        //        _scoreService.InsertScore(pEFile.eleven);
-        //        _scoreService.InsertScore(pEFile.twelve);
-        //        _scoreService.InsertScore(pEFile.thirteen);
-        //        _scoreService.InsertScore(pEFile.fourteen);
-        //        _scoreService.InsertScore(pEFile.fifteen);
-        //        _scoreService.InsertScore(pEFile.sixteen);
-        //        _scoreService.InsertScore(pEFile.seventeen);
-        //        _scoreService.InsertScore(pEFile.eighteen);
-        //        _scoreService.InsertScore(pEFile.nineteen);
-        //        _scoreService.InsertScore(pEFile.twentyone);
-        //        _scoreService.InsertScore(pEFile.twentytwo);
-        //        _scoreService.InsertScore(pEFile.twentyfour);
-        //        _scoreService.InsertScore(pEFile.policies);
-        //        _scoreService.InsertScore(pEFile.punctuality);
-        //        _scoreService.InsertScore(pEFile.values);
-        //        _scoreService.InsertScore(pEFile.scoreQuality);
-        //        _scoreService.InsertScore(pEFile.scoreOpportunity);
-        //        _scoreService.InsertScore(pEFile.scorePerformance);
-        //        _scoreService.InsertScore(pEFile.scoreSkills);
-        //        _scoreService.InsertScore(pEFile.scoreInterpersonal);
-        //        _scoreService.InsertScore(pEFile.scoreGrowth);
-        //        _scoreService.InsertScore(pEFile.scorePolicies);
-        //        _scoreService.InsertScore(pEFile.scoreCompetences);
-
-        //        _commentService.InsertComment(pEFile.comment);
-        //        _commentService.InsertComment(pEFile.comment2);
-        //        _commentService.InsertComment(pEFile.comment3);
-
-
-        //        _lm_skillService.InsertLM_Skill(pEFile.supervises);
-        //        _lm_skillService.InsertLM_Skill(pEFile.coordinates);
-        //        _lm_skillService.InsertLM_Skill(pEFile.defines);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supports);
-        //        _lm_skillService.InsertLM_Skill(pEFile.keeps);
-        //        _lm_skillService.InsertLM_Skill(pEFile.generates);
-        //        _lm_skillService.InsertLM_Skill(pEFile.trains);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supportsExperimentation);
-        //        _lm_skillService.InsertLM_Skill(pEFile.evaluates);
-        //        _lm_skillService.InsertLM_Skill(pEFile.faces);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supportsResponsible);
-        //        _lm_skillService.InsertLM_Skill(pEFile.helps);
-        //        _lm_skillService.InsertLM_Skill(pEFile.instills);
-        //        _lm_skillService.InsertLM_Skill(pEFile.sets);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supportsUseful);
-        //        _lm_skillService.InsertLM_Skill(pEFile.welcomes);
-        //        _lm_skillService.InsertLM_Skill(pEFile.setsSpecific);
-                
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-
-        //    return true; 
-        //}
-
         [HttpPost]
         public ActionResult UploadFile(UploadFileViewModel uploadVM, HttpPostedFileBase fileUploaded)
         {
@@ -1124,9 +947,6 @@ namespace PES.Controllers
         // GET: PeformanceEvaluation/SearchIformation
         public ActionResult SearchInformation()
         {
-
-            // Read from database
- 
             // Get current users by using email in Session
             // Get current user 
             Employee currentUser = new Employee();
@@ -1134,58 +954,16 @@ namespace PES.Controllers
 
             currentUser = _employeeService.GetByEmail(userEmail);
 
-            List<Employee> employees = new List<Employee>();
-            if(currentUser.ProfileId == (int)ProfileUser.Director)
-            {
-                // Get all
-                employees = _employeeService.GetAll();
-            }
-            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
-            {
-                // Get by manager 
-                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-            }
-            else
+            if(currentUser.ProfileId == (int)ProfileUser.Resource)
             {
                 // user is resource not allowed, return to home 
                 // send error
                 return RedirectToAction("ChoosePeriod");
             }
 
-            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
-            foreach(var employee in employees)
-            {
-                var employeeVM = new EmployeeManagerViewModel();
-                employeeVM.employee = employee;
-                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
-                
-                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-
-                if (listPE != null && listPE.Count > 0)
-                {
-                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
-
-                    employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
-                    employeeVM.englishScore = lastPE.EnglishScore;
-                    employeeVM.rank = lastPE.Rank;
-                }
-                else 
-                {
-                    employeeVM.totalScore = 0;
-                }
-
-                listEmployeeVM.Add(employeeVM);
-            }
-
-            ViewBag.currentEmployee = currentUser;
+            PerformanceFilesPartial model = FillPerformancePartial(currentUser);
             
-            return View(listEmployeeVM);
-        }
-        
-        // GET: PeformanceEvaluation/SearchIformation
-        public ActionResult Login()
-        {
-            return View();
+            return View(model);
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
@@ -1307,12 +1085,10 @@ namespace PES.Controllers
 
             #endregion
             */
-#endregion
-
-
+            #endregion
 
             // Get score of 1. Accuracy or Precision
-           // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
+            // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
 
             return View(model);
         }
@@ -1323,123 +1099,69 @@ namespace PES.Controllers
             return View();
         }
 
-        public ActionResult LoadPerformanceEvaluationFile(HttpPostedFileBase fileUploaded)
+
+        public ActionResult UpdateRank(List<PerformanceRankHelper> listPerformances)
         {
-            string errorMessage = "";
-            try
+            int countUpdated = 0;
+
+            // Update each performance record
+            foreach (var peformance in listPerformances)
             {
-               
-                bool result = false;
-
-                // Check file was submitted             
-                if (fileUploaded != null && fileUploaded.ContentLength > 0)
+                var updated = _peService.UpdateRank(peformance.performanceId, peformance.rankValue);
+                if (updated)
                 {
-                    string fname = "";
-                    string fullPath = "";
-
-                    //Store file temporary
-                    fname = Path.GetFileName(fileUploaded.FileName);
-                    fileUploaded.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", fname)));
-
-                    //Get full path of the file 
-                    fullPath = Request.MapPath("~/App_Data/" + fname);
-
-                    try
-                    {
-                        // Load file into database
-                        //result = await _userService.LoadUsersFromXLSFile(fullPath);
-                    }
-                    finally
-                    {
-                        //Delete temporary file, always delete file already stored 
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
-                    }
-                }
-
-                //If there are users 
-                if (result != false)
-                {
-                    // File loaded successfuly
-                    return View("SaveUsers", result);
-                }
-                else
-                {
-                    // Problem loading the file
-                    errorMessage = "There was a problem trying to load the file. Please review file and try again.";
+                    countUpdated++;
                 }
             }
-            catch (Exception ex)
-            {
-                errorMessage = "There was a problem trying to load the file. Please review file and try again. " + ex.Message;
-            }
 
-            return View();
+            var userEmail = (string)Session["UserEmail"];
+
+            Employee currentUser = _employeeService.GetByEmail(userEmail);
+
+            PerformanceFilesPartial partial = FillPerformancePartial(currentUser);
+            partial.countRankUpdated = countUpdated;
+
+            return PartialView("_PerformanceFilesPartial", partial);
         }
 
-        private bool SavePerformanceEvaluationFile(string pathFileString)
+        public PerformanceFilesPartial FillPerformancePartial(Employee currentUser) 
         {
-            //Declare variables
+            currentUser = _employeeService.GetByEmail(currentUser.Email);
 
-            #region Load XLS file with EPPlus
-            //Validate path file 
-            //if (!String.IsNullOrEmpty(pathFileString))
-            //{
-            //    FileInfo file;
+            List<Employee> employees = new List<Employee>();
+            if (currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all
+                employees = _employeeService.GetAll();
+            }
+            else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
 
-            //    try
-            //    {
-            //        //Creates a new file
-            //        file = new FileInfo(pathFileString);
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            foreach (var employee in employees)
+            {
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
 
-            //        //Excel file valid extensions
-            //        var validExtensions = new string[] { ".xls", ".xlsx" };
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
-            //        //Validate extesion of file selected
-            //        if (!validExtensions.Contains(file.Extension))
-            //        {
-            //            throw new System.IO.FileFormatException("Excel file not found in specified path");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
+                if (listPE != null && listPE.Count > 0)
+                {
+                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
 
-            //        throw;
-            //    }
+                    employeeVM.lastPe = lastPE;
+                }
 
-            //    // Open and read the XlSX file.
-            //    ExcelPackage package = null;
-            //    try
-            //    {
-            //        package = new ExcelPackage(file);
-            //    }
-            //    catch (System.IO.FileFormatException ex)
-            //    {
-            //        throw new System.IO.FileFormatException("Unable to read excel file");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw;
-            //    }
+                listEmployeeVM.Add(employeeVM);
+            }
 
-            //    using (package)
-            //    {
-            //        // Get the work book in the file
-            //        ExcelWorkbook workBook = package.Workbook;
+            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
 
-            //        //If there is a workbook
-            //        if (workBook != null && workBook.Worksheets.Count > 0)
-            //        {
-            //            // Get the first worksheet
-            //            ExcelWorksheet sheet = workBook.Worksheets.First();
-            //        }
-            //    }
-            //}
-            #endregion
-
-            return false;
+            return partial;
         }
     }
 }

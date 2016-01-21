@@ -77,9 +77,10 @@ namespace PES.Models
     {
         public Employee employee { get; set; }
         public Employee manager { get; set; }
-        public double totalScore { get; set; }
-        public double? rank { get; set; }
-        public double englishScore { get; set; }
+        public PEs lastPe { get; set; }
+        //public double totalScore { get; set; }
+        //public double? rank { get; set; }
+        //public double englishScore { get; set; }
     }
 
     public class EmployeeChoosePeriodViewModel 
