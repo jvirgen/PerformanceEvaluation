@@ -125,8 +125,15 @@ namespace PES.Services
                         }
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
-                        double? rank = Read["RANK"] as double?;
-                        pes.Rank = rank;
+                        string rank = Convert.ToString(Read["RANK"]);
+                        if (!string.IsNullOrEmpty(rank))
+                        {
+                            pes.Rank = double.Parse(rank);
+                        }
+                        else
+                        {
+                            pes.Rank = null;
+                        }
 
                         PES = pes;
                     }
@@ -191,8 +198,16 @@ namespace PES.Services
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
-                        double? rank = Read["RANK"] as double?;
-                        pes.Rank = rank;
+
+                        string rank = Convert.ToString(Read["RANK"]);
+                        if (!string.IsNullOrEmpty(rank))
+                        {
+                            pes.Rank = double.Parse(rank);
+                        }
+                        else 
+                        {
+                            pes.Rank = null;
+                        }
                         string englishScore = Convert.ToString(Read["ENGLISH_SCORE"]);
                         if (!string.IsNullOrEmpty(englishScore))
                         {
@@ -271,8 +286,15 @@ namespace PES.Services
                             pe.PerformanceScore = Convert.ToDouble(reader["PERFORMANCE_SCORE"]);
                             pe.CompeteneceScore = Convert.ToDouble(reader["COMPETENCE_SCORE"]);
                             //pe.Rank = Convert.ToDouble(reader["RANK"]);
-                            double? rank = reader["RANK"] as double?;
-                            pe.Rank = rank;
+                            string rank = Convert.ToString(reader["RANK"]);
+                            if (!string.IsNullOrEmpty(rank))
+                            {
+                                pe.Rank = double.Parse(rank);
+                            }
+                            else
+                            {
+                                pe.Rank = null;
+                            }
                             string englishScore = Convert.ToString(reader["ENGLISH_SCORE"]);
                             if (!string.IsNullOrEmpty(englishScore))
                             {

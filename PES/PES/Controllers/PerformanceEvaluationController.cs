@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Excel = Microsoft.Office.Interop.Excel;
 using PES.Services;
 using PES.ViewModels;
+using System.Web.Script.Serialization;
 
 namespace PES.Controllers
 {
@@ -946,9 +947,6 @@ namespace PES.Controllers
         // GET: PeformanceEvaluation/SearchIformation
         public ActionResult SearchInformation()
         {
-
-            // Read from database
- 
             // Get current users by using email in Session
             // Get current user 
             Employee currentUser = new Employee();
@@ -956,54 +954,17 @@ namespace PES.Controllers
 
             currentUser = _employeeService.GetByEmail(userEmail);
 
-            List<Employee> employees = new List<Employee>();
-            if(currentUser.ProfileId == (int)ProfileUser.Director)
-            {
-                // Get all
-                employees = _employeeService.GetAll();
-            }
-            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
-            {
-                // Get by manager 
-                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-            }
-            else
+            if(currentUser.ProfileId == (int)ProfileUser.Resource)
             {
                 // user is resource not allowed, return to home 
                 // send error
                 return RedirectToAction("ChoosePeriod");
             }
 
-            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
-            foreach(var employee in employees)
-            {
-                var employeeVM = new EmployeeManagerViewModel();
-                employeeVM.employee = employee;
-                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
-                
-                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-
-                if (listPE != null && listPE.Count > 0)
-                {
-                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
-
-                    employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
-                    employeeVM.englishScore = lastPE.EnglishScore;
-                    employeeVM.rank = lastPE.Rank;
-                }
-                else 
-                {
-                    employeeVM.totalScore = 0;
-                }
-
-                listEmployeeVM.Add(employeeVM);
-            }
-
-            ViewBag.currentEmployee = currentUser;
+            PerformanceFilesPartial model = FillPerformancePartial(currentUser);
             
-            return View(listEmployeeVM);
+            return View(model);
         }
-        
 
         // GET: PerformanceEvaluation/ChoosePeriod
         [HttpGet]
@@ -1124,12 +1085,10 @@ namespace PES.Controllers
 
             #endregion
             */
-#endregion
-
-
+            #endregion
 
             // Get score of 1. Accuracy or Precision
-           // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
+            // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
 
             return View(model);
         }
@@ -1140,6 +1099,69 @@ namespace PES.Controllers
             return View();
         }
 
-        
+
+        public ActionResult UpdateRank(List<PerformanceRankHelper> listPerformances)
+        {
+            int countUpdated = 0;
+
+            // Update each performance record
+            foreach (var peformance in listPerformances)
+            {
+                var updated = _peService.UpdateRank(peformance.performanceId, peformance.rankValue);
+                if (updated)
+                {
+                    countUpdated++;
+                }
+            }
+
+            var userEmail = (string)Session["UserEmail"];
+
+            Employee currentUser = _employeeService.GetByEmail(userEmail);
+
+            PerformanceFilesPartial partial = FillPerformancePartial(currentUser);
+            partial.countRankUpdated = countUpdated;
+
+            return PartialView("_PerformanceFilesPartial", partial);
+        }
+
+        public PerformanceFilesPartial FillPerformancePartial(Employee currentUser) 
+        {
+            currentUser = _employeeService.GetByEmail(currentUser.Email);
+
+            List<Employee> employees = new List<Employee>();
+            if (currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all
+                employees = _employeeService.GetAll();
+            }
+            else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
+
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            foreach (var employee in employees)
+            {
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                if (listPE != null && listPE.Count > 0)
+                {
+                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+
+                    employeeVM.lastPe = lastPE;
+                }
+
+                listEmployeeVM.Add(employeeVM);
+            }
+
+            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+            return partial;
+        }
     }
 }
