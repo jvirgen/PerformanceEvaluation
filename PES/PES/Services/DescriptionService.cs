@@ -43,5 +43,43 @@ namespace PES.Services
             }
             return status;
         }
+
+        public Description GetDescriptionByText(string DescriptionText)
+        {
+            Description description = new Description();
+
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string insertQuery = @"SELECT ID_DESCRIPTION,
+                                        DESCRIPTION,
+                                        ID_SUBTITLE
+                                    FROM DESCRIPTION
+                                    WHERE DESCRIPTION LIKE :descriptiontext";
+                using (OracleCommand command = new OracleCommand(insertQuery, db))
+                {
+                    command.Parameters.Add(new OracleParameter("descriptiontext", DescriptionText));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            description = new Description();
+                            description.DescriptionId = Convert.ToInt32(reader["ID_DESCRIPTION"]);
+                            description.DescriptionText = Convert.ToString(reader["DESCRIPTION"]);
+                            description.SubtitleId = Convert.ToInt32(reader["ID_SUBTITLE"]);
+                        }
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                }
+            }
+            return description;
+        }
     }
 }
