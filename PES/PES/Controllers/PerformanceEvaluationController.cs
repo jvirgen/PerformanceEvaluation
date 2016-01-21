@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Excel = Microsoft.Office.Interop.Excel;
 using PES.Services;
 using PES.ViewModels;
+using System.Web.Script.Serialization;
 
 namespace PES.Controllers
 {
@@ -44,46 +45,7 @@ namespace PES.Controllers
         // GET: PerformanceEvaluation
         public ActionResult Index()
         {
-            List<PES.Models.PEs> performanceEvaluations = new List<Models.PEs>();
-
-            // Get performance evaluation
-            string queryPEs;
-            //Whille()
-            // 
-
-            //string userId = "1";
-            //string managerId = "2";
-            //// Get user 
-
-            //Employee e;
-            //e = new Employee();
-            //e.HireDate = DateTime.Now;
-            //e.Ranking = 0;
-            
-
-            // Get manager of user 
-
-
-            // Insert employee 
-
-            //foreach(var pe in performanceEvaluations)
-            //{
-            //    // Get comments 
-            //    string queryComments;
-                
-            //    // Get employee
-            //    string query = "select * from Employee where Employee_id =  " + pe.EmployeeId;
-            //    PES.Models.Employee employee;
-            //    employee = new PES.Models.Employee();
-            //    //employee; 
-            //    // Get 
-            //}
-
-            
-
             return View();
-
-
         }
 
         public bool ReadPerformanceFile(string path, Employee user, Employee evaluator) 
@@ -807,145 +769,6 @@ namespace PES.Controllers
             
         }
 
-        //public bool SavePEFile(PESComplete pEFile) 
-        //{
-        //    try
-        //    {
-        //        // Call services to insert
-        //        bool peResult = _peService.InsertPE(pEFile.pes);
-
-        //        _employeeService.UpdateEmployee(pEFile.empleado);
-
-        //        #region Titles, subtitles, descriptions and skills
-        //        //_titleService.InsertTitle(pEFile.title1);
-        //        //_titleService.InsertTitle(pEFile.title2);
-
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle1);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle2);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle3);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle4);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle5);
-        //        //_subtitleService.InsertSubtitles(pEFile.subtitle6);
-
-        //        //_descriptionService.InsertDescription(pEFile.description1);
-        //        //_descriptionService.InsertDescription(pEFile.description2);
-        //        //_descriptionService.InsertDescription(pEFile.description3);
-        //        //_descriptionService.InsertDescription(pEFile.description4);
-        //        //_descriptionService.InsertDescription(pEFile.description5);
-        //        //_descriptionService.InsertDescription(pEFile.description6);
-        //        //_descriptionService.InsertDescription(pEFile.description7);
-        //        //_descriptionService.InsertDescription(pEFile.description8);
-        //        //_descriptionService.InsertDescription(pEFile.description9);
-        //        //_descriptionService.InsertDescription(pEFile.description10);
-        //        //_descriptionService.InsertDescription(pEFile.description11);
-        //        //_descriptionService.InsertDescription(pEFile.description12);
-        //        //_descriptionService.InsertDescription(pEFile.description13);
-        //        //_descriptionService.InsertDescription(pEFile.description14);
-        //        //_descriptionService.InsertDescription(pEFile.description15);
-        //        //_descriptionService.InsertDescription(pEFile.description16);
-        //        //_descriptionService.InsertDescription(pEFile.description17);
-        //        //_descriptionService.InsertDescription(pEFile.description18);
-        //        //_descriptionService.InsertDescription(pEFile.description19);
-        //        //_descriptionService.InsertDescription(pEFile.description21);
-        //        //_descriptionService.InsertDescription(pEFile.description22);
-        //        //_descriptionService.InsertDescription(pEFile.description24);
-        //        //_descriptionService.InsertDescription(pEFile.descriptionPuctuality);
-        //        //_descriptionService.InsertDescription(pEFile.descriptionPolicies);
-        //        //_descriptionService.InsertDescription(pEFile.descriptionValues);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalQuality);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalOpportunity);
-        //        //_descriptionService.InsertDescription(pEFile.totalPerformance);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalSkills);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalInterpersonal);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalGrowth);
-        //        //_descriptionService.InsertDescription(pEFile.subtotalPolicies);
-        //        //_descriptionService.InsertDescription(pEFile.totalCompetences);
-
-        //        //_skillService.InsertSkill(pEFile.skill1);
-        //        //_skillService.InsertSkill(pEFile.skill2);
-        //        //_skillService.InsertSkill(pEFile.skill3);
-        //        //_skillService.InsertSkill(pEFile.skill4);
-        //        //_skillService.InsertSkill(pEFile.skill5);
-        //        //_skillService.InsertSkill(pEFile.skill6);
-        //        //_skillService.InsertSkill(pEFile.skill7);
-        //        //_skillService.InsertSkill(pEFile.skill8);
-        //        //_skillService.InsertSkill(pEFile.skill9);
-        //        //_skillService.InsertSkill(pEFile.skill10);
-        //        //_skillService.InsertSkill(pEFile.skill11);
-        //        //_skillService.InsertSkill(pEFile.skill12);
-        //        //_skillService.InsertSkill(pEFile.skill13);
-        //        //_skillService.InsertSkill(pEFile.skill14);
-        //        //_skillService.InsertSkill(pEFile.skill15);
-        //        //_skillService.InsertSkill(pEFile.skill16);
-        //        //_skillService.InsertSkill(pEFile.skill17);
-        //        #endregion
-
-        //        _scoreService.InsertScore(pEFile.one);
-        //        _scoreService.InsertScore(pEFile.two);
-        //        _scoreService.InsertScore(pEFile.three);
-        //        _scoreService.InsertScore(pEFile.four);
-        //        _scoreService.InsertScore(pEFile.five);
-        //        _scoreService.InsertScore(pEFile.six);
-        //        _scoreService.InsertScore(pEFile.seven);
-        //        _scoreService.InsertScore(pEFile.eight);
-        //        _scoreService.InsertScore(pEFile.nine);
-        //        _scoreService.InsertScore(pEFile.ten);
-        //        _scoreService.InsertScore(pEFile.eleven);
-        //        _scoreService.InsertScore(pEFile.twelve);
-        //        _scoreService.InsertScore(pEFile.thirteen);
-        //        _scoreService.InsertScore(pEFile.fourteen);
-        //        _scoreService.InsertScore(pEFile.fifteen);
-        //        _scoreService.InsertScore(pEFile.sixteen);
-        //        _scoreService.InsertScore(pEFile.seventeen);
-        //        _scoreService.InsertScore(pEFile.eighteen);
-        //        _scoreService.InsertScore(pEFile.nineteen);
-        //        _scoreService.InsertScore(pEFile.twentyone);
-        //        _scoreService.InsertScore(pEFile.twentytwo);
-        //        _scoreService.InsertScore(pEFile.twentyfour);
-        //        _scoreService.InsertScore(pEFile.policies);
-        //        _scoreService.InsertScore(pEFile.punctuality);
-        //        _scoreService.InsertScore(pEFile.values);
-        //        _scoreService.InsertScore(pEFile.scoreQuality);
-        //        _scoreService.InsertScore(pEFile.scoreOpportunity);
-        //        _scoreService.InsertScore(pEFile.scorePerformance);
-        //        _scoreService.InsertScore(pEFile.scoreSkills);
-        //        _scoreService.InsertScore(pEFile.scoreInterpersonal);
-        //        _scoreService.InsertScore(pEFile.scoreGrowth);
-        //        _scoreService.InsertScore(pEFile.scorePolicies);
-        //        _scoreService.InsertScore(pEFile.scoreCompetences);
-
-        //        _commentService.InsertComment(pEFile.comment);
-        //        _commentService.InsertComment(pEFile.comment2);
-        //        _commentService.InsertComment(pEFile.comment3);
-
-
-        //        _lm_skillService.InsertLM_Skill(pEFile.supervises);
-        //        _lm_skillService.InsertLM_Skill(pEFile.coordinates);
-        //        _lm_skillService.InsertLM_Skill(pEFile.defines);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supports);
-        //        _lm_skillService.InsertLM_Skill(pEFile.keeps);
-        //        _lm_skillService.InsertLM_Skill(pEFile.generates);
-        //        _lm_skillService.InsertLM_Skill(pEFile.trains);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supportsExperimentation);
-        //        _lm_skillService.InsertLM_Skill(pEFile.evaluates);
-        //        _lm_skillService.InsertLM_Skill(pEFile.faces);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supportsResponsible);
-        //        _lm_skillService.InsertLM_Skill(pEFile.helps);
-        //        _lm_skillService.InsertLM_Skill(pEFile.instills);
-        //        _lm_skillService.InsertLM_Skill(pEFile.sets);
-        //        _lm_skillService.InsertLM_Skill(pEFile.supportsUseful);
-        //        _lm_skillService.InsertLM_Skill(pEFile.welcomes);
-        //        _lm_skillService.InsertLM_Skill(pEFile.setsSpecific);
-                
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-
-        //    return true; 
-        //}
-
         [HttpPost]
         public ActionResult UploadFile(UploadFileViewModel uploadVM, HttpPostedFileBase fileUploaded)
         {
@@ -1124,9 +947,6 @@ namespace PES.Controllers
         // GET: PeformanceEvaluation/SearchIformation
         public ActionResult SearchInformation()
         {
-
-            // Read from database
- 
             // Get current users by using email in Session
             // Get current user 
             Employee currentUser = new Employee();
@@ -1134,58 +954,16 @@ namespace PES.Controllers
 
             currentUser = _employeeService.GetByEmail(userEmail);
 
-            List<Employee> employees = new List<Employee>();
-            if(currentUser.ProfileId == (int)ProfileUser.Director)
-            {
-                // Get all
-                employees = _employeeService.GetAll();
-            }
-            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
-            {
-                // Get by manager 
-                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-            }
-            else
+            if(currentUser.ProfileId == (int)ProfileUser.Resource)
             {
                 // user is resource not allowed, return to home 
                 // send error
                 return RedirectToAction("ChoosePeriod");
             }
 
-            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
-            foreach(var employee in employees)
-            {
-                var employeeVM = new EmployeeManagerViewModel();
-                employeeVM.employee = employee;
-                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
-                
-                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-
-                if (listPE != null && listPE.Count > 0)
-                {
-                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
-
-                    employeeVM.totalScore = listPE != null ? lastPE.Total : 0;
-                    employeeVM.englishScore = lastPE.EnglishScore;
-                    employeeVM.rank = lastPE.Rank;
-                }
-                else 
-                {
-                    employeeVM.totalScore = 0;
-                }
-
-                listEmployeeVM.Add(employeeVM);
-            }
-
-            ViewBag.currentEmployee = currentUser;
+            PerformanceFilesPartial model = FillPerformancePartial(currentUser);
             
-            return View(listEmployeeVM);
-        }
-        
-        // GET: PeformanceEvaluation/SearchIformation
-        public ActionResult Login()
-        {
-            return View();
+            return View(model);
         }
 
         // GET: PerformanceEvaluation/ChoosePeriod
@@ -1307,12 +1085,10 @@ namespace PES.Controllers
 
             #endregion
             */
-#endregion
-
-
+            #endregion
 
             // Get score of 1. Accuracy or Precision
-           // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
+            // var score = _scoreService.GetPEScoreByPEIdDescId(pe.PEId, PerformanceSection.);
 
             return View(model);
         }
@@ -1323,123 +1099,69 @@ namespace PES.Controllers
             return View();
         }
 
-        public ActionResult LoadPerformanceEvaluationFile(HttpPostedFileBase fileUploaded)
+
+        public ActionResult UpdateRank(List<PerformanceRankHelper> listPerformances)
         {
-            string errorMessage = "";
-            try
+            int countUpdated = 0;
+
+            // Update each performance record
+            foreach (var peformance in listPerformances)
             {
-               
-                bool result = false;
-
-                // Check file was submitted             
-                if (fileUploaded != null && fileUploaded.ContentLength > 0)
+                var updated = _peService.UpdateRank(peformance.performanceId, peformance.rankValue);
+                if (updated)
                 {
-                    string fname = "";
-                    string fullPath = "";
-
-                    //Store file temporary
-                    fname = Path.GetFileName(fileUploaded.FileName);
-                    fileUploaded.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", fname)));
-
-                    //Get full path of the file 
-                    fullPath = Request.MapPath("~/App_Data/" + fname);
-
-                    try
-                    {
-                        // Load file into database
-                        //result = await _userService.LoadUsersFromXLSFile(fullPath);
-                    }
-                    finally
-                    {
-                        //Delete temporary file, always delete file already stored 
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
-                    }
-                }
-
-                //If there are users 
-                if (result != false)
-                {
-                    // File loaded successfuly
-                    return View("SaveUsers", result);
-                }
-                else
-                {
-                    // Problem loading the file
-                    errorMessage = "There was a problem trying to load the file. Please review file and try again.";
+                    countUpdated++;
                 }
             }
-            catch (Exception ex)
-            {
-                errorMessage = "There was a problem trying to load the file. Please review file and try again. " + ex.Message;
-            }
 
-            return View();
+            var userEmail = (string)Session["UserEmail"];
+
+            Employee currentUser = _employeeService.GetByEmail(userEmail);
+
+            PerformanceFilesPartial partial = FillPerformancePartial(currentUser);
+            partial.countRankUpdated = countUpdated;
+
+            return PartialView("_PerformanceFilesPartial", partial);
         }
 
-        private bool SavePerformanceEvaluationFile(string pathFileString)
+        public PerformanceFilesPartial FillPerformancePartial(Employee currentUser) 
         {
-            //Declare variables
+            currentUser = _employeeService.GetByEmail(currentUser.Email);
 
-            #region Load XLS file with EPPlus
-            //Validate path file 
-            //if (!String.IsNullOrEmpty(pathFileString))
-            //{
-            //    FileInfo file;
+            List<Employee> employees = new List<Employee>();
+            if (currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all
+                employees = _employeeService.GetAll();
+            }
+            else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
 
-            //    try
-            //    {
-            //        //Creates a new file
-            //        file = new FileInfo(pathFileString);
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            foreach (var employee in employees)
+            {
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
 
-            //        //Excel file valid extensions
-            //        var validExtensions = new string[] { ".xls", ".xlsx" };
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
-            //        //Validate extesion of file selected
-            //        if (!validExtensions.Contains(file.Extension))
-            //        {
-            //            throw new System.IO.FileFormatException("Excel file not found in specified path");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
+                if (listPE != null && listPE.Count > 0)
+                {
+                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
 
-            //        throw;
-            //    }
+                    employeeVM.lastPe = lastPE;
+                }
 
-            //    // Open and read the XlSX file.
-            //    ExcelPackage package = null;
-            //    try
-            //    {
-            //        package = new ExcelPackage(file);
-            //    }
-            //    catch (System.IO.FileFormatException ex)
-            //    {
-            //        throw new System.IO.FileFormatException("Unable to read excel file");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw;
-            //    }
+                listEmployeeVM.Add(employeeVM);
+            }
 
-            //    using (package)
-            //    {
-            //        // Get the work book in the file
-            //        ExcelWorkbook workBook = package.Workbook;
+            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
 
-            //        //If there is a workbook
-            //        if (workBook != null && workBook.Worksheets.Count > 0)
-            //        {
-            //            // Get the first worksheet
-            //            ExcelWorksheet sheet = workBook.Worksheets.First();
-            //        }
-            //    }
-            //}
-            #endregion
-
-            return false;
+            return partial;
         }
     }
 }
