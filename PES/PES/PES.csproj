@@ -296,7 +296,6 @@
     <Content Include="Views\PerformanceEvaluation\PEVisualization.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\PerformanceEvaluation\ChoosePeriod.cshtml" />
-    <Content Include="Views\PerformanceEvaluation\SearchInfoRank.cshtml" />
     <Content Include="Views\LoginUser\Login.cshtml" />
     <Content Include="Views\Shared\_PerformanceMainPartial.cshtml" />
     <Content Include="Views\Shared\_SectionsPartial.cshtml" />
