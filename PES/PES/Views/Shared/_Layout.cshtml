@@ -26,7 +26,15 @@
                 </a>
                 @if (userLogged)
                 {
-                    <a class="navbar-brand" href="@Url.Action("Index", "PerformanceEvaluation", new { area = "" })">Performance Evaluation System</a>
+                    if (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager)
+                    {
+                        <a class="navbar-brand" href="@Url.Action("Index", "PerformanceEvaluation", new { area = "" })">Performance Evaluation System</a>
+                    }
+                    else if (userProfile == ProfileUser.Resource)
+                    {
+                        <span class="navbar-brand">Performance Evaluation System</span>
+                    }
+
                 }
                 else
                 {
