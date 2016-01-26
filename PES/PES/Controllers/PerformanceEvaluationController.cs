@@ -970,7 +970,12 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult ChoosePeriod(string employeeEmail, int employeeID)
         {
-            // Get user 
+            //Get current user
+            Employee currentUser = new Employee();
+            var currentuserEmail = (string)Session["UserEmail"];
+            currentUser = _employeeService.GetByEmail(currentuserEmail);
+
+            // Get user
             var user = _employeeService.GetByEmail(employeeEmail);
             var userid = _employeeService.GetByID(employeeID);
             // -- Get performance evaluation data
@@ -1004,6 +1009,7 @@ namespace PES.Controllers
             ViewBag.UserName = user.FirstName + " " + user.LastName;
             ViewBag.UserEmail = employeeEmail;
             ViewBag.UserID = employeeID;
+            ViewBag.CurrentUserProfile = currentUser.ProfileId;
             return View(choosePeriodVM);
         }
 
@@ -1039,6 +1045,7 @@ namespace PES.Controllers
             // Initializae skills
             model.PerformanceSkills = new PerformanceSkilsPartial();
             model.PerformanceSkills.Skills = _lm_skillService.GetSkillsWithNameByPEId(peID);
+
             #region 
             /*
             #region Subtitles
