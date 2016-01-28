@@ -18,14 +18,16 @@
         <div id="performancePartial">
             @Html.Partial("_PerformanceFilesPartial", Model)
         </div>
-
-        <div class="form-horizontal">
-            <div class="form-group">
-                <div class="col-md-offset-5 col-md-7">
-                    <input id="submitFilesChanges" type="button" value="Save Changes" class="btn btn-primary" />
+        @if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-offset-5 col-md-7">
+                        <input id="submitFilesChanges" type="button" value="Save Changes" class="btn btn-primary" />
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </div>
 
