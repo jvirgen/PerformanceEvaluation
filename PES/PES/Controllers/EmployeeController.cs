@@ -26,5 +26,22 @@ namespace PES.Controllers
             Employee = Getemployee.GetByEmail(Mail.UserEmail);
             return View(Employee);
         }
+
+        public ActionResult InsertEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult InsertEmployee(Employee employee)
+        {
+            EmployeeService Insert = new EmployeeService();
+            employee.Customer = "No Customer";
+            employee.Position = "No spicified";
+            employee.Project = null;
+
+            Insert.InsertEmployee(employee);
+            return View("Index");
+        }
     }
 }

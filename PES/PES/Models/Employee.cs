@@ -58,7 +58,7 @@ namespace PES.Models
         ///// <summary>
         ///// Employee Ranking
         ///// </summary>
-        //public int Ranking { get; set;}
+        //public int Ranking { get; set; }
 
         /// <summary>
         /// End Date 
