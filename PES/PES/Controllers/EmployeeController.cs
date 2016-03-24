@@ -41,7 +41,14 @@ namespace PES.Controllers
             employee.Project = null;
 
             Insert.InsertEmployee(employee);
-            return View("Index");
+            RedirectToAction("ViewEmployees");
+            return View("ViewEmployees");
+        }
+
+        public ActionResult ViewEmployees()
+        {
+            EmployeeService ViewEmployees = new EmployeeService();
+            return View(ViewEmployees.GetAll());
         }
     }
 }

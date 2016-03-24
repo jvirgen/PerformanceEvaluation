@@ -302,6 +302,7 @@
     <Content Include="Views\Shared\_CommentsPartial.cshtml" />
     <Content Include="Views\Shared\_SkillsPartial.cshtml" />
     <Content Include="Views\Employee\InsertEmployee.cshtml" />
+    <Content Include="Views\Employee\ViewEmployees.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
