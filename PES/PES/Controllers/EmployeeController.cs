@@ -16,10 +16,12 @@ namespace PES.Controllers
     {
         // Declare services here
         //private ProfileService _profileService;
+        private EmployeeService _employeeService;
 
         public EmployeeController() 
         {
             //_profileService = new ProfileService();
+            _employeeService = new EmployeeService();
         }
 
         // GET: Employee
@@ -53,6 +55,23 @@ namespace PES.Controllers
                     Selected = false
                 };
                 profilesList.Add(newItem);
+            }
+
+            // Get managers 
+            List<Employee> managers = _employeeService.GetAll();
+
+
+            //Populate managers
+            List<SelectListItem> managersList = new List<SelectListItem>();
+            foreach(var manager in managers)
+            {
+                var newItem = new SelectListItem()
+                {
+                    Text = manager.FirstName + " " + manager.LastName,
+                    Value = (manager.EmployeeId).ToString(),
+                    Selected = false
+                };
+                managersList.Add(newItem);
             }
 
             #region Set data
