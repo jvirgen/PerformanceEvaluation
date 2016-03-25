@@ -19,16 +19,22 @@ namespace PES.Models
         /// <summary>
         /// First Name
         /// </summary>
+        [Required(ErrorMessage = "First Name is required")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Last Name
         /// </summary>
+        /// 
+        [Required(ErrorMessage = "Last Name is requiered")]
         public string LastName { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
+        /// 
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "The Email has not the correct format")]
         public string Email { get; set; }
 
         /// <summary>
@@ -44,11 +50,15 @@ namespace PES.Models
         /// <summary>
         /// Employee Profile Id
         /// </summary>
+        /// 
+        [Required(ErrorMessage = "Porfile ID is requiered")]
         public int ProfileId { get; set; }
 
         /// <summary>
         /// Manager Id
         /// </summary>
+        /// 
+        [Required(ErrorMessage = "Manager ID is required")]
         public int ManagerId { get; set;}
 
         /// <summary>
@@ -65,7 +75,7 @@ namespace PES.Models
         /// <summary>
         /// End Date 
         /// </summary>
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date, ErrorMessage = "Hire date is required")]
         public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
 
