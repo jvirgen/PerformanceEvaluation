@@ -959,6 +959,7 @@ namespace PES.Controllers
         }
 
         // GET: PeformanceEvaluation/SearchIformation
+        [HttpGet]
         public ActionResult SearchInformation()
         {
             // Get current users by using email in Session
