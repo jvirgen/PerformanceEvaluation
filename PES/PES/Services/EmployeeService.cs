@@ -214,6 +214,71 @@ namespace PES.Services
             return employees;
         }
 
+        //Get employees by porfile id
+        public List<Employee> getByPorfileId(int porfileId)
+        {
+            List<Employee> employees = new List<Employee>();
+            Employee employee = new Employee();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = "SELECT ID_EMPLOYEE, " +
+                                           "FIRST_NAME, " +
+                                           "LAST_NAME, " +
+                                           "EMAIL, " +
+                                           "CUSTOMER, " +
+                                           "POSITION, " +
+                                           "ID_PROFILE," +
+                                           "ID_MANAGER, " +
+                                           "HIRE_DATE, " +
+                                           "END_DATE, " +
+                                           "PROJECT " +
+                                           "FROM EMPLOYEE" +
+                                           "WHERE ID_PORFILE = " +
+                                           porfileId;
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        employee = new Employee();
+                        employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
+                        employee.LastName = Convert.ToString(Read["LAST_NAME"]);
+                        employee.Email = Convert.ToString(Read["EMAIL"]);
+                        employee.Customer = Convert.ToString(Read["CUSTOMER"]);
+                        employee.Position = Convert.ToString(Read["POSITION"]);
+                        employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
+                        employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
+                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        string endDate = Convert.ToString(Read["END_DATE"]);
+                        employee.Project = Convert.ToString(Read["PROJECT"]);
+
+                        if (!string.IsNullOrEmpty(endDate))
+                        {
+                            employee.EndDate = Convert.ToDateTime(endDate);
+                        }
+                        else
+                        {
+                            employee.EndDate = null;
+                        }
+                        employees.Add(employee);
+                    }
+                    db.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return employees;
+        }
+
         // Insert a employee data in the DB
         public bool InsertEmployee(Employee employee)
         {

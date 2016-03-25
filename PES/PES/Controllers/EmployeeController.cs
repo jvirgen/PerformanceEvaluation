@@ -27,9 +27,35 @@ namespace PES.Controllers
             return View(Employee);
         }
 
+        [HttpGet]
         public ActionResult InsertEmployee()
         {
-            return View();
+            // Current session
+            // Get current user  
+            Employee currentUser = new Employee();
+            EmployeeService EmployeeService = new EmployeeService();
+            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
+
+
+            if (currentUser.ProfileId == (int)ProfileUser.Resource)
+            {
+                // user is resource not allowed, return to home  
+                // send error 
+                return RedirectToAction("ViewEmployees");
+            }
+            ViewBag.currentUserProfileId = currentUser.ProfileId;
+
+
+            // Get profiles 
+
+            // Get managers 
+
+            // Set data 
+
+            // Return model
+            Employee model = new Employee();
+
+            return View(model);
         }
 
         [HttpPost]
@@ -38,11 +64,9 @@ namespace PES.Controllers
             EmployeeService Insert = new EmployeeService();
             employee.Customer = "No Customer";
             employee.Position = "No spicified";
-            employee.Project = null;
 
             Insert.InsertEmployee(employee);
-            RedirectToAction("ViewEmployees");
-            return View("ViewEmployees");
+            return View(ViewEmployees());
         }
 
         public ActionResult ViewEmployees()
