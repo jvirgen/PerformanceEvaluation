@@ -86,16 +86,25 @@ namespace PES.Controllers
         }
 
         [HttpPost]
-        public ActionResult InsertEmployee(Employee employee)
+        public ActionResult InsertEmployee(InsertEmployeeViewModel employeeModel)
         {
-            EmployeeService Insert = new EmployeeService();
-            employee.Customer = "No Customer";
-            employee.Position = "No spicified";
-            employee.Project = null;
+            Employee newEmployee = new Employee();
 
-            Insert.InsertEmployee(employee);
-            RedirectToAction("ViewEmployees");
-            return View("ViewEmployees");
+            newEmployee.FirstName = employeeModel.FirstName;
+            newEmployee.LastName = employeeModel.LastName;
+            newEmployee.Email = employeeModel.Email;
+            newEmployee.ProfileId = employeeModel.SelectedProfile;
+            newEmployee.ManagerId = employeeModel.SelectedManager;
+            newEmployee.HireDate = employeeModel.HireDate;
+            newEmployee.Customer = "No Customer";
+            newEmployee.Position = "No Specified";
+            newEmployee.Project = employeeModel.Project;
+
+            _employeeService.InsertEmployee(newEmployee);
+
+            // Add success message
+
+            return RedirectToAction("ViewEmployees");
         }
 
         public ActionResult ViewEmployees()
