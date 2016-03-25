@@ -188,6 +188,7 @@
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\SubtitleService.cs" />
     <Compile Include="Services\TitleService.cs" />
+    <Compile Include="ViewModels\InsertEmployeeViewModel.cs" />
     <Compile Include="ViewModels\PerformanceRankHelper.cs" />
     <Compile Include="ViewModels\PerformanceFilesPartial.cs" />
     <Compile Include="ViewModels\PEVisualizationViewModel.cs" />
