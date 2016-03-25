@@ -7,13 +7,20 @@ using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using PES.Models;
 using PES.Services;
+using PES.ViewModels;
 
 namespace PES.Controllers
 {
     [AllowAnonymous]
     public class EmployeeController : Controller
     {
-        
+        // Declare services here
+        //private ProfileService _profileService;
+
+        public EmployeeController() 
+        {
+            //_profileService = new ProfileService();
+        }
 
         // GET: Employee
         public ActionResult Index()
@@ -29,7 +36,33 @@ namespace PES.Controllers
 
         public ActionResult InsertEmployee()
         {
-            return View();
+            InsertEmployeeViewModel model = new InsertEmployeeViewModel();
+
+            // Get profiles
+            // test empty list of profiles, replace this line with a call to service to get the profiles
+            var profiles = new List<Profile>();
+
+            // Populate profiles 
+            List<SelectListItem> profilesList = new List<SelectListItem>();
+            foreach (var profile in profiles)
+            {
+                var newItem = new SelectListItem()
+                {
+                    Text = profile.Name,
+                    Value = (profile.ProfileId).ToString(),
+                    Selected = false
+                };
+                profilesList.Add(newItem);
+            }
+
+            #region Set data
+            // Set profiles
+            model.ListProfiles = profilesList;
+
+            #endregion
+
+
+            return View(model);
         }
 
         [HttpPost]
