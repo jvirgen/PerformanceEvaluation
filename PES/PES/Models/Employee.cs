@@ -75,6 +75,7 @@ namespace PES.Models
         /// <summary>
         /// End Date 
         /// </summary>
+        [DataType(DataType.Date, ErrorMessage = "Hire date is required")]
         //odcfdcfdooo
         public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
