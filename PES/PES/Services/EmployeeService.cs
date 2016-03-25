@@ -404,7 +404,7 @@ namespace PES.Services
                                        "HIRE_DATE, " +
                                        "END_DATE, " +
                                        "PROJECT " +
-                                       "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId;
+                                       "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId + " OR ID_EMPLOYEE = " + ManageerId;
                     OracleCommand Command = new OracleCommand(GetEmployees, db);
                     Command.ExecuteNonQuery();
                     OracleDataReader Reader = Command.ExecuteReader();

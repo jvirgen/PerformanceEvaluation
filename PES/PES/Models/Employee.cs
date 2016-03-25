@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -53,16 +54,18 @@ namespace PES.Models
         /// <summary>
         /// Hire Date
         /// </summary>
+        [DataType(DataType.Date)]
         public DateTime HireDate { get; set; }
 
         ///// <summary>
         ///// Employee Ranking
         ///// </summary>
-        //public int Ranking { get; set;}
+        //public int Ranking { get; set; }
 
         /// <summary>
         /// End Date 
         /// </summary>
+        [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
 

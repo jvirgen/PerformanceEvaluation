@@ -6,6 +6,7 @@
     string userName = ViewBag.UserName != null ? (string)ViewBag.UserName : "";
     string userEmail = ViewBag.UserEmail != null ? (string)ViewBag.UserEmail : "";
     int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
+    int currentUserProfile = ViewBag.CurrentUserProfile != null ? (int)ViewBag.CurrentUserProfile : 1;
 }
 <hr/>
 <div class="row text-center">
@@ -50,10 +51,14 @@
     </div>
 </div>
 
-<hr />
-<div>
-    @Html.ActionLink("Back to Performance Files", "SearchInformation", "PerformanceEvaluation")
-</div>
+@if (currentUserProfile != (int)ProfileUser.Resource)
+{
+    <hr />
+    <div> 
+        @Html.ActionLink("Back to Performance Files", "SearchInformation", "PerformanceEvaluation")
+    </div>
+}
+
 @section Styles
 {
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
