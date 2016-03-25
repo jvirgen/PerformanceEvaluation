@@ -1,0 +1,91 @@
+﻿@model IEnumerable<PES.Models.Employee>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <div>
+                <div class="col-md-6">
+                    <p>
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                </div>>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    @*<th>
+                    @Html.DisplayNameFor(model => model.Customer)
+                </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.Position)
+                    </th>
+                    @*<th>
+                    @Html.DisplayNameFor(model => model.ProfileId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManagerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HireDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Project)
+                </th>*@
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        @*<td>
+                        @Html.DisplayFor(modelItem => item.Customer)
+                    </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        @*<td>
+                        @Html.DisplayFor(modelItem => item.ProfileId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManagerId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HireDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Project)
+                    </td>*@
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }) |
+                            @Html.ActionLink("Disable", "Delete", new { id = item.EmployeeId })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+

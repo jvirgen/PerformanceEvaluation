@@ -1,0 +1,90 @@
+﻿@model PES.Models.Employee
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <div class="form-horizontal">
+                <h4>New Employee</h4>
+                 @using (Html.BeginForm("InsertEmployee","Employee",FormMethod.Post))
+                {
+                     @Html.AntiForgeryToken()
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProfileId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.DropDownList("Porfile", new List<SelectListItem>
+                            {
+                                new SelectListItem {Text = "Employee", Value = "1" },
+                                new SelectListItem {Text = "Manager", Value = "2" },
+                                new SelectListItem {Text = "Director", Value = "3"}
+                            }, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProfileId, "", new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => model.ManagerId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @*@{ 
+                                List<SelectListItem> managers = new List<SelectListItem>();
+                                foreach(var employee in Model)
+                                {
+                                    var newItem = new SelectListItem
+                                    {
+                                        Text = employee.FirstName + " " + employee.LastName + " (" + employee.Email + ")",
+                                        Value = (employee.EmployeeId).ToString(),
+                                        Selected = false
+                                    };
+                                    managers.Add(newItem);
+                                }
+                            }
+                            @Html.DropDownList("Manager", managers, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.ManagerId, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                 }
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
