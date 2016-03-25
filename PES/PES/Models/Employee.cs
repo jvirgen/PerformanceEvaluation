@@ -75,7 +75,7 @@ namespace PES.Models
         /// <summary>
         /// End Date 
         /// </summary>
-        [DataType(DataType.Date, ErrorMessage = "Hire date is required")]
+        
         public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
 
@@ -83,6 +83,8 @@ namespace PES.Models
         /// Employee project 
         /// </summary>
         public string Project { get; set; }
+
+        //ggfhfh
 
     }
 
