@@ -15,12 +15,12 @@ namespace PES.Controllers
     public class EmployeeController : Controller
     {
         // Declare services here
-        //private ProfileService _profileService;
+        private ProfileService _profileService;
         private EmployeeService _employeeService;
 
         public EmployeeController() 
         {
-            //_profileService = new ProfileService();
+            _profileService = new ProfileService();
             _employeeService = new EmployeeService();
         }
 
@@ -42,7 +42,7 @@ namespace PES.Controllers
 
             // Get profiles
             // test empty list of profiles, replace this line with a call to service to get the profiles
-            var profiles = new List<Profile>();
+            var profiles = _profileService.GetAllProfiles();
 
             // Populate profiles 
             List<SelectListItem> profilesList = new List<SelectListItem>();
@@ -77,6 +77,7 @@ namespace PES.Controllers
             #region Set data
             // Set profiles
             model.ListProfiles = profilesList;
+            model.ListManagers = managersList;
 
             #endregion
 

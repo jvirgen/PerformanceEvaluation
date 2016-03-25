@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using PES.Models;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace PES.ViewModels
 {
@@ -15,6 +16,7 @@ namespace PES.ViewModels
         public string Email { get; set; }
         public List<SelectListItem> ListProfiles { get; set; }
         public int SelectedProfile { get; set; }
+        [DataType(DataType.Date)]
         public DateTime HireDate { get; set; }
         public string Position { get; set; }
         public string Project { get; set; }

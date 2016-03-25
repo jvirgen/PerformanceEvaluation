@@ -26,7 +26,7 @@ namespace PES.Models
         /// Last Name
         /// </summary>
         /// 
-        [Required(ErrorMessage = "Last Name is requiered")]
+        [Required(ErrorMessage = "Last Name is required")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -75,8 +75,7 @@ namespace PES.Models
         /// <summary>
         /// End Date 
         /// </summary>
-        [DataType(DataType.Date, ErrorMessage = "Hire date is required")]
-        //odcfdcfdooo
+        [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
 
@@ -85,7 +84,7 @@ namespace PES.Models
         /// </summary>
         public string Project { get; set; }
 
-        //ggfhfh
+        
 
     }
 

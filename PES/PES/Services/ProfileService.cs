@@ -11,6 +11,11 @@ namespace PES.Services
     {
         private PESDBContext dbContext;
 
+        public ProfileService()
+        {
+            dbContext = new PESDBContext();
+        }
+
         // Get from table PROFILES the profile name by ID
         public Profile GetProfileByID(int profileId)
         {
