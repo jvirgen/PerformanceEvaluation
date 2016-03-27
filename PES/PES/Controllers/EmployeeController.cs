@@ -36,9 +36,15 @@ namespace PES.Controllers
             return View(Employee);
         }
 
+        [HttpGet]
         public ActionResult InsertEmployee()
         {
             InsertEmployeeViewModel model = new InsertEmployeeViewModel();
+           
+            // Get current user  
+            Employee currentUser = new Employee();
+            EmployeeService EmployeeService = new EmployeeService();
+            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);            
 
             // Get profiles
             // test empty list of profiles, replace this line with a call to service to get the profiles
@@ -81,7 +87,15 @@ namespace PES.Controllers
 
             #endregion
 
+            if (currentUser.ProfileId == (int)ProfileUser.Resource)
+            {
+                // user is resource not allowed, return to home  
+                // send error
+                //TempData["Error"] = "You're resource. You're not allowed to insert employees.";
+                return RedirectToAction("Index", "PerformanceEvaluation");
+            }
 
+            ViewBag.currentUserProfileId = currentUser.ProfileId;
             return View(model);
         }
 
@@ -97,12 +111,13 @@ namespace PES.Controllers
             newEmployee.ManagerId = employeeModel.SelectedManager;
             newEmployee.HireDate = employeeModel.HireDate;
             newEmployee.Customer = "No Customer";
-            newEmployee.Position = "No Specified";
+            newEmployee.Position = "Not Specified";
             newEmployee.Project = employeeModel.Project;
 
             _employeeService.InsertEmployee(newEmployee);
 
             // Add success message
+            //TempData["notice"] = "Successfully registered";
 
             return RedirectToAction("ViewEmployees");
         }
