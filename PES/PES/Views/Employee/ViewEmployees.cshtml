@@ -78,7 +78,7 @@
                         @Html.DisplayFor(modelItem => item.Project)
                     </td>*@
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }) |
+                            @Html.ActionLink("Edit", "UpdateEmployee", new { id = item.EmployeeId }) |
                             @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }) |
                             @Html.ActionLink("Disable", "Delete", new { id = item.EmployeeId })
                         </td>
