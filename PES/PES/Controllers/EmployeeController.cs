@@ -109,8 +109,14 @@ namespace PES.Controllers
 
         public ActionResult ViewEmployees()
         {
-            EmployeeService ViewEmployees = new EmployeeService();
-            return View(ViewEmployees.GetAll());
+            return View(_employeeService.GetAll());
+        }
+
+
+        [HttpGet]
+        public ActionResult EmployeeDetails(int EmployeeId)
+        {
+            return View(_employeeService.GetByID(EmployeeId));
         }
     }
 }

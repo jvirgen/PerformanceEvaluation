@@ -341,6 +341,7 @@
     <Content Include="Views\Employee\InsertEmployee.cshtml" />
     <Content Include="Views\Employee\ViewEmployees.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Employee\EmployeeDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
