@@ -210,7 +210,7 @@ namespace PES.Controllers
                     newEmployee.FirstName = employeeModel.FirstName;
                     newEmployee.LastName = employeeModel.LastName;
                     newEmployee.Email = employeeModel.Email;
-                    newEmployee.ProfileId = employeeModel.SelectedProfile;
+                    newEmployee.ProfileId = employeeModel.SelectedProfile;   
                     newEmployee.ManagerId = employeeModel.SelectedManager;
                     newEmployee.HireDate = employeeModel.HireDate;
                     newEmployee.EndDate = employeeModel.EndDate;
