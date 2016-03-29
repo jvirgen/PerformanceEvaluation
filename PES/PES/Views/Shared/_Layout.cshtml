@@ -81,10 +81,11 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")
-    <script>
+   <script>
         $(function () {
             $(".jqueryui-marker-datepicker").datepicker({
                 dateFormat: "dd/mm/yy",
+                defaultDate: 0,
                 changeMonth: true,
                 changeYear: true,
                 showOn: "button"
@@ -94,6 +95,8 @@
                 label: "Select a date",
                 text: false
             });
+            @*@if (($oneEVENT['start_ts'] == null)
+                $(".jqueryui-marker-datepicker").datepicker().datepicker("setDate", new Date());*@
         });
     </script> 
     @RenderSection("Scripts", required: false)

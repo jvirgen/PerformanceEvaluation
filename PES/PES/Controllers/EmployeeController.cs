@@ -94,6 +94,7 @@ namespace PES.Controllers
                 return RedirectToAction("Index", "PerformanceEvaluation");
             }
 
+            model.HireDate = DateTime.Today;
             ViewBag.currentUserProfileId = currentUser.ProfileId;
             return View(model);
         }
