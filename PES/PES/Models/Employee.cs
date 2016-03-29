@@ -53,7 +53,7 @@ namespace PES.Models
         /// Employee Profile Id
         /// </summary>
         /// 
-        [Required(ErrorMessage = "Porfile ID is requiered")]
+        [Required(ErrorMessage = "Porfile is requiered")]
         [Display(Name = "Porfile")]
         public int ProfileId { get; set; }
 
@@ -61,7 +61,7 @@ namespace PES.Models
         /// Manager Id
         /// </summary>
         /// 
-        [Required(ErrorMessage = "Manager ID is required")]
+        [Required(ErrorMessage = "Manager is required")]
         [Display(Name = "Manager")]
         public int ManagerId { get; set;}
 
