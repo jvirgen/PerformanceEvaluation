@@ -210,14 +210,45 @@ namespace PES.Controllers
 
         public ActionResult ViewEmployees()
         {
-            return View(_employeeService.GetAll());
+
+            //get Employees
+            List<Employee> EmployeeList = _employeeService.GetAll();
+
+            List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
+            foreach(var employee in EmployeeList)
+            {
+                EmployeeDetailsViewModel modelo = new EmployeeDetailsViewModel();
+
+                //get porfiles
+                var porfile = _profileService.GetProfileByID(employee.ProfileId);
+                var manager = _employeeService.GetByID(employee.ManagerId);
+
+                modelo.EmployeeId = employee.EmployeeId;
+                modelo.FirstName = employee.FirstName;
+                modelo.LastName = employee.LastName;
+                modelo.Email = employee.Email;
+                modelo.Customer = employee.Customer;
+                modelo.Position = employee.Position;
+                modelo.ProfileId = employee.ProfileId;
+                modelo.ManagerId = employee.ManagerId;
+                modelo.HireDate = employee.HireDate;
+                modelo.EndDate = employee.EndDate;
+                modelo.Project = employee.Project;
+                modelo.Profile = porfile;
+                modelo.Manager = manager;
+
+                ModelList.Add(modelo);
+            }
+
+
+            return View(ModelList);
         }
 
 
         [HttpGet]
-        public ActionResult EmployeeDetails(int EmployeeId)
+        public ActionResult EmployeeDetails(int id)
         {
-            var employee = _employeeService.GetByID(EmployeeId);
+            var employee = _employeeService.GetByID(id);
 
             // Get manager
             var manager = _employeeService.GetByID(employee.ManagerId);

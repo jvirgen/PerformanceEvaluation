@@ -20,6 +20,7 @@ namespace PES.Models
         /// First Name
         /// </summary>
         [Required(ErrorMessage = "First Name is required")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -27,6 +28,7 @@ namespace PES.Models
         /// </summary>
         /// 
         [Required(ErrorMessage = "Last Name is required")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -52,6 +54,7 @@ namespace PES.Models
         /// </summary>
         /// 
         [Required(ErrorMessage = "Porfile ID is requiered")]
+        [Display(Name = "Porfile")]
         public int ProfileId { get; set; }
 
         /// <summary>
@@ -59,12 +62,14 @@ namespace PES.Models
         /// </summary>
         /// 
         [Required(ErrorMessage = "Manager ID is required")]
+        [Display(Name = "Manager")]
         public int ManagerId { get; set;}
 
         /// <summary>
         /// Hire Date
         /// </summary>
         [DataType(DataType.Date)]
+        [Display(Name = "Hire Date")]
         public DateTime HireDate { get; set; }
 
         ///// <summary>
@@ -76,6 +81,7 @@ namespace PES.Models
         /// End Date 
         /// </summary>
         [DataType(DataType.Date)]
+        [Display(Name = "End Date")]
         public DateTime? EndDate { get; set; }
         //public string EndDate { get; set; }
 
