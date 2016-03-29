@@ -177,7 +177,7 @@ namespace PES.Controllers
                 //TempData["Error"] = "You're resource. You're not allowed to update employees.";
                 return RedirectToAction("Index", "PerformanceEvaluation");
             }
-   
+
             var employee =_employeeService.GetByID(id);
 
             model.EmployeeId = employee.EmployeeId;
@@ -205,24 +205,24 @@ namespace PES.Controllers
                 //{
                     var newEmployee = new Employee();
 
-                    newEmployee.EmployeeId = employeeModel.EmployeeId;
-                    newEmployee.FirstName = employeeModel.FirstName;
-                    newEmployee.LastName = employeeModel.LastName;
-                    newEmployee.Email = employeeModel.Email;
-                    newEmployee.ProfileId = employeeModel.SelectedProfile;   
-                    newEmployee.ManagerId = employeeModel.SelectedManager;
-                    newEmployee.HireDate = employeeModel.HireDate;
-                    newEmployee.EndDate = employeeModel.EndDate;
-                    newEmployee.Customer = employeeModel.Customer;
-                    newEmployee.Position = employeeModel.Position;
-                    newEmployee.Project = employeeModel.Project;
+            newEmployee.EmployeeId = employeeModel.EmployeeId;
+            newEmployee.FirstName = employeeModel.FirstName;
+            newEmployee.LastName = employeeModel.LastName;
+            newEmployee.Email = employeeModel.Email;
+            newEmployee.ProfileId = employeeModel.SelectedProfile;
+            newEmployee.ManagerId = employeeModel.SelectedManager;
+            newEmployee.HireDate = employeeModel.HireDate;
+            newEmployee.EndDate = employeeModel.EndDate;
+            newEmployee.Customer = employeeModel.Customer;
+            newEmployee.Position = employeeModel.Position;
+            newEmployee.Project = employeeModel.Project;
 
-                    _employeeService.UpdateEmployee(newEmployee);
+            _employeeService.UpdateEmployee(newEmployee);
 
-                    // Add success message
-                    //TempData["notice"] = "Successfully registered";
+            // Add success message
+            //TempData["notice"] = "Successfully registered";
 
-                    return RedirectToAction("ViewEmployees");
+            return RedirectToAction("ViewEmployees");
                 //}
  
             //}
@@ -241,7 +241,29 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult EmployeeDetails(int EmployeeId)
         {
-            return View(_employeeService.GetByID(EmployeeId));
+            var employee = _employeeService.GetByID(EmployeeId);
+
+            // Get manager
+            var manager = _employeeService.GetByID(employee.ManagerId);
+            // Get profile
+            var porfile = _profileService.GetProfileByID(employee.ProfileId);
+
+            EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+
+            model.FirstName = employee.FirstName;
+            model.LastName = employee.LastName;
+            model.Email = employee.Email;
+            model.Customer = employee.Customer;
+            model.Position = employee.Position;
+            model.ProfileId = employee.ProfileId;
+            model.ManagerId = employee.ManagerId;
+            model.HireDate = employee.HireDate;
+            model.EndDate = employee.EndDate;
+            model.Project = employee.Project;
+            model.Profile = porfile;
+            model.Manager = manager;
+    
+            return View(model);
         }
     }
 }
