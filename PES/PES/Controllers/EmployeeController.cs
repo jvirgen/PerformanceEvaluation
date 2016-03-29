@@ -66,7 +66,6 @@ namespace PES.Controllers
             // Get managers 
             List<Employee> managers = _employeeService.GetAll();
 
-
             //Populate managers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach(var manager in managers)
