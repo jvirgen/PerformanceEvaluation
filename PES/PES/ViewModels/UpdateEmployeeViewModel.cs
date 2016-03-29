@@ -10,7 +10,7 @@ namespace PES.ViewModels
 {
     public class UpdateEmployeeViewModel
     {
-        public int EmployeeId { get; }
+        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Customer { get; set; }
@@ -20,7 +20,7 @@ namespace PES.ViewModels
         [DataType(DataType.Date)]
         public DateTime HireDate { get; set; }
         [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string Position { get; set; }
         public string Project { get; set; }
         public List<SelectListItem> ListManagers { get; set; }

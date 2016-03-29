@@ -1,15 +1,14 @@
 ﻿@model PES.ViewModels.UpdateEmployeeViewModel
 @using PES.Models 
+
 @{
-    ViewBag.Title = "UpdateEmployee";
-}
-@{
-    ViewBag.Title = "Insert employee";
+    ViewBag.Title = "Update employee";
     int currentUserProfileId = (int)ViewBag.currentUserProfileId;
 }
+
 <h2>UpdateEmployee</h2>
 
-@using (Html.BeginForm("UpdateEmployee", "Employee", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
@@ -17,6 +16,7 @@
         <h4>UpdateEmployeeViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.EmployeeId)
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

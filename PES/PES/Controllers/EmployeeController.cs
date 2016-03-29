@@ -66,7 +66,6 @@ namespace PES.Controllers
             // Get managers 
             List<Employee> managers = _employeeService.GetAll();
 
-
             //Populate managers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach(var manager in managers)
@@ -175,9 +174,23 @@ namespace PES.Controllers
             {
                 // user is resource not allowed, return to home  
                 // send error
-                //TempData["Error"] = "You're resource. You're not allowed to insert employees.";
+                //TempData["Error"] = "You're resource. You're not allowed to update employees.";
                 return RedirectToAction("Index", "PerformanceEvaluation");
             }
+
+            var employee =_employeeService.GetByID(id);
+
+            model.EmployeeId = employee.EmployeeId;
+            model.FirstName = employee.FirstName;
+            model.LastName = employee.LastName;
+            model.Email = employee.Email;
+            model.SelectedProfile = employee.ProfileId;
+            model.SelectedManager = employee.ManagerId;
+            model.HireDate = employee.HireDate;
+            model.EndDate = employee.EndDate;
+            model.Customer = employee.Customer;
+            model.Position = employee.Position;
+            model.Project = employee.Project;
 
             ViewBag.currentUserProfileId = currentUser.ProfileId;
             return View(model);
@@ -186,7 +199,11 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult UpdateEmployee(UpdateEmployeeViewModel employeeModel)
         {
-            Employee newEmployee = new Employee();
+            //try
+            //{
+                //if (ModelState.IsValid)
+                //{
+                    var newEmployee = new Employee();
 
             newEmployee.EmployeeId = employeeModel.EmployeeId;
             newEmployee.FirstName = employeeModel.FirstName;
@@ -206,6 +223,13 @@ namespace PES.Controllers
             //TempData["notice"] = "Successfully registered";
 
             return RedirectToAction("ViewEmployees");
+                //}
+ 
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         public ActionResult ViewEmployees()
