@@ -11,19 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @(Model.FirstName + " " + Model.LastName)
         </dd>
 
         <dt>
@@ -32,22 +24,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Customer)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Position)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Position)
         </dd>
 
         <dt>
@@ -63,7 +39,7 @@
         </dt>
 
         <dd>
-            @(Model.Manager.FirstName + Model.LastName)
+            @(Model.Manager.FirstName + " " + Model.LastName)
         </dd>
 
         <dt>
@@ -81,16 +57,6 @@
         <dd>
             @Html.DisplayFor(model => model.EndDate)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Project)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Project)
-        </dd>
-
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId }) |

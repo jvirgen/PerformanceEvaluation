@@ -10,11 +10,15 @@ namespace PES.ViewModels
 {
     public class InsertEmployeeViewModel
     {
+        [Required(ErrorMessage = "First Name is required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "Last Name is required")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string Customer { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid")]
         public string Email { get; set; }
         public List<SelectListItem> ListProfiles { get; set; }
         [Display(Name = "Profile")]
