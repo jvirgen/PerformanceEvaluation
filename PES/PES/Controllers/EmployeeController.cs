@@ -217,7 +217,29 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult EmployeeDetails(int EmployeeId)
         {
-            return View(_employeeService.GetByID(EmployeeId));
+            var employee = _employeeService.GetByID(EmployeeId);
+
+            // Get manager
+            var manager = _employeeService.GetByID(employee.ManagerId);
+            // Get profile
+            var porfile = _profileService.GetProfileByID(employee.ProfileId);
+
+            EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+
+            model.FirstName = employee.FirstName;
+            model.LastName = employee.LastName;
+            model.Email = employee.Email;
+            model.Customer = employee.Customer;
+            model.Position = employee.Position;
+            model.ProfileId = employee.ProfileId;
+            model.ManagerId = employee.ManagerId;
+            model.HireDate = employee.HireDate;
+            model.EndDate = employee.EndDate;
+            model.Project = employee.Project;
+            model.Profile = porfile;
+            model.Manager = manager;
+    
+            return View(model);
         }
     }
 }

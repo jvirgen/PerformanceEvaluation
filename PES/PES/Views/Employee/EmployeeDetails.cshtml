@@ -1,4 +1,4 @@
-﻿@model PES.Models.Employee
+﻿@model PES.ViewModels.EmployeeDetailsViewModel
 
 @{
     ViewBag.Title = "EmployeDetails";
@@ -51,19 +51,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ProfileId)
+            Porfile
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProfileId)
+            @Html.DisplayFor(model => model.Profile.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ManagerId)
+            Manager
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ManagerId)
+            @(Model.Manager.FirstName + Model.LastName)
         </dd>
 
         <dt>
@@ -93,6 +93,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
+    @Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId }) |
     @Html.ActionLink("Back to List", "ViewEmployees")
 </p>
