@@ -322,5 +322,23 @@ namespace PES.Controllers
     
             return View(model);
         }
+
+        public ActionResult DisableEmployee (int id)
+        {
+            var disabledEmployee = _employeeService.GetByID(id);
+            disabledEmployee.EndDate = DateTime.Now;
+            _employeeService.UpdateEmployee(disabledEmployee);
+
+            return RedirectToAction("ViewEmployees");
+        }
+
+        public ActionResult EnableEmployee(int id)
+        {
+            var enabledEmployee = _employeeService.GetByID(id);
+            enabledEmployee.EndDate = null;
+            _employeeService.UpdateEmployee(enabledEmployee);
+
+            return RedirectToAction("ViewEmployees");
+        }
     }
 }
