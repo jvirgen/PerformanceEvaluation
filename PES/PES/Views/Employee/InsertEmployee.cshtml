@@ -6,11 +6,12 @@
 }*@
 @{
     ViewBag.Title = "Insert employee";
-    //int currentUserProfileId = (int)ViewBag.currentUserProfileId;
+    //var currentUserProfile = (ProfileUser)Session["UserProfile"];
 }
 <hr />
 <div class="row">
     <div class="col-md-12 well">
+      
         <h4>New Employee</h4>
             @using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
             {
@@ -22,7 +23,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
-                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control"} })
                                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
                             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -51,9 +52,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2"})
                             <div class="col-md-3">
-                                @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control jqueryui-datepicker" } })
+                                @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -69,14 +70,9 @@
             <div>
                 @Html.ActionLink("Back to List", "ViewEmployees")
             </div>
-
         
     </div>
 </div>
-
-@section Scripts{
-    @Scripts.Render("~/Scripts/input-datepicker.js")
-}
 
 
 

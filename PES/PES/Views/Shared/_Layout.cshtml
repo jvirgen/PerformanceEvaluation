@@ -71,6 +71,18 @@
         </div>
     </div>
     <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                @if (TempData["Error"] != null)
+                {
+                    <p class="alert alert-danger">@TempData["Error"]</p>
+                }
+                @if (TempData["Success"] != null)
+                {
+                    <p class="alert alert-success">@TempData["Success"]</p>
+                }
+            </div>
+        </div>
         @RenderBody()
         <hr />
         <footer>

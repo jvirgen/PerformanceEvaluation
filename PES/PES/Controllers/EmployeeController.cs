@@ -40,99 +40,67 @@ namespace PES.Controllers
         public ActionResult InsertEmployee()
         {
             InsertEmployeeViewModel model = new InsertEmployeeViewModel();
-           
-            // Get current user  
-            //Employee currentUser = new Employee();
-            //EmployeeService EmployeeService = new EmployeeService();
-            //currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);            
 
-            // Get profiles
-            // test empty list of profiles, replace this line with a call to service to get the profiles
-            var profiles = _profileService.GetAllProfiles();
+            // Get profile current user 
+            var profileUser = Session["UserProfile"];
 
-            // Populate profiles 
-            List<SelectListItem> profilesList = new List<SelectListItem>();
-            foreach (var profile in profiles)
+            if (profileUser == null)
             {
-                var newItem = new SelectListItem()
-                {
-                    Text = profile.Name,
-                    Value = (profile.ProfileId).ToString(),
-                    Selected = false
-                };
-                profilesList.Add(newItem);
+                return RedirectToAction("Login", "LoginUser");
             }
-
-            // Get managers 
-            List<Employee> managers = _employeeService.GetAll();
-
-            //Populate managers
-            List<SelectListItem> managersList = new List<SelectListItem>();
-            foreach(var manager in managers)
-            {
-                var newItem = new SelectListItem()
-                {
-                    Text = manager.FirstName + " " + manager.LastName,
-                    Value = (manager.EmployeeId).ToString(),
-                    Selected = false
-                };
-                managersList.Add(newItem);
-            }
-
-            #region Set data
-            // Set profiles
-            model.ListProfiles = profilesList;
-            model.ListManagers = managersList;
-
-            #endregion
-
-            //if (currentUser.ProfileId == (int)ProfileUser.Resource)
-            //{
-            //    // user is resource not allowed, return to home  
-            //    // send error
-            //    //TempData["Error"] = "You're resource. You're not allowed to insert employees.";
-            //    return RedirectToAction("Index", "PerformanceEvaluation");
-            //}
-
-            ////model.HireDate = DateTime.Today;
-            //ViewBag.currentUserProfileId = currentUser.ProfileId;
-            model.HireDate = DateTime.Now.Date;
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult InsertEmployee(InsertEmployeeViewModel employeeModel)
-        {
-            Employee newEmployee = new Employee();
-
-            newEmployee.FirstName = employeeModel.FirstName;
-            newEmployee.LastName = employeeModel.LastName;
-            newEmployee.Email = employeeModel.Email;
-            newEmployee.ProfileId = employeeModel.SelectedProfile;
-            newEmployee.ManagerId = employeeModel.SelectedManager;
-            newEmployee.HireDate = employeeModel.HireDate;
-            newEmployee.Customer = "No Customer";
-            newEmployee.Position = "Not Specified";
-            newEmployee.Project = employeeModel.Project;
-
-            _employeeService.InsertEmployee(newEmployee);
-
-            // Add success message
-            //TempData["notice"] = "Successfully registered";
-
-            return RedirectToAction("ViewEmployees");
-        }
-
-        [HttpGet]
-        public ActionResult UpdateEmployee(int id)
-        {
-            UpdateEmployeeViewModel model = new UpdateEmployeeViewModel();
 
             // Get current user  
             Employee currentUser = new Employee();
             EmployeeService EmployeeService = new EmployeeService();
             currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
 
+            model = SetUpDropdowns(model);
+
+            if (currentUser.ProfileId == (int)ProfileUser.Resource)
+            {
+                // user is resource not allowed, return to home  
+                // send error
+                //TempData["Error"] = "You're resource. You're not allowed to insert employees.";
+                return RedirectToAction("Index", "PerformanceEvaluation");
+            }
+
+            model.HireDate = DateTime.Today;
+            ViewBag.currentUserProfileId = currentUser.ProfileId;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult InsertEmployee(InsertEmployeeViewModel employeeModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Employee newEmployee = new Employee();
+
+                newEmployee.FirstName = employeeModel.FirstName;
+                newEmployee.LastName = employeeModel.LastName;
+                newEmployee.Email = employeeModel.Email;
+                newEmployee.ProfileId = employeeModel.SelectedProfile;
+                newEmployee.ManagerId = employeeModel.SelectedManager;
+                newEmployee.HireDate = employeeModel.HireDate;
+                newEmployee.Customer = "No Customer";
+                newEmployee.Position = "Not Specified";
+                newEmployee.Project = employeeModel.Project;
+
+                _employeeService.InsertEmployee(newEmployee);
+
+                // Add success message
+                TempData["Success"] = "Successfully registered";
+
+                return RedirectToAction("ViewEmployees");
+            }
+
+            employeeModel = SetUpDropdowns(employeeModel);
+
+            return View(employeeModel);
+        }
+
+        private InsertEmployeeViewModel SetUpDropdowns(InsertEmployeeViewModel model)
+        {
             // Get profiles
             // test empty list of profiles, replace this line with a call to service to get the profiles
             var profiles = _profileService.GetAllProfiles();
@@ -170,7 +138,68 @@ namespace PES.Controllers
             // Set profiles
             model.ListProfiles = profilesList;
             model.ListManagers = managersList;
+
             #endregion
+
+            return model;
+        }
+
+        private UpdateEmployeeViewModel SetUpDropdowns(UpdateEmployeeViewModel model)
+        {
+            // Get profiles
+            // test empty list of profiles, replace this line with a call to service to get the profiles
+            var profiles = _profileService.GetAllProfiles();
+
+            // Populate profiles 
+            List<SelectListItem> profilesList = new List<SelectListItem>();
+            foreach (var profile in profiles)
+            {
+                var newItem = new SelectListItem()
+                {
+                    Text = profile.Name,
+                    Value = (profile.ProfileId).ToString(),
+                    Selected = false
+                };
+                profilesList.Add(newItem);
+            }
+
+            // Get managers 
+            List<Employee> managers = _employeeService.GetAll();
+
+            //Populate managers
+            List<SelectListItem> managersList = new List<SelectListItem>();
+            foreach (var manager in managers)
+            {
+                var newItem = new SelectListItem()
+                {
+                    Text = manager.FirstName + " " + manager.LastName,
+                    Value = (manager.EmployeeId).ToString(),
+                    Selected = false
+                };
+                managersList.Add(newItem);
+            }
+
+            #region Set data
+            // Set profiles
+            model.ListProfiles = profilesList;
+            model.ListManagers = managersList;
+
+            #endregion
+
+            return model;
+        }
+
+        [HttpGet]
+        public ActionResult UpdateEmployee(int id)
+        {
+            UpdateEmployeeViewModel model = new UpdateEmployeeViewModel();
+
+            // Get current user  
+            Employee currentUser = new Employee();
+            EmployeeService EmployeeService = new EmployeeService();
+            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
+
+            model = SetUpDropdowns(model);
 
             if (currentUser.ProfileId == (int)ProfileUser.Resource)
             {
@@ -201,37 +230,32 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult UpdateEmployee(UpdateEmployeeViewModel employeeModel)
         {
-            //try
-            //{
-                //if (ModelState.IsValid)
-                //{
-                    var newEmployee = new Employee();
+            if (ModelState.IsValid)
+            {
+                var newEmployee = new Employee();
 
-            newEmployee.EmployeeId = employeeModel.EmployeeId;
-            newEmployee.FirstName = employeeModel.FirstName;
-            newEmployee.LastName = employeeModel.LastName;
-            newEmployee.Email = employeeModel.Email;
-            newEmployee.ProfileId = employeeModel.SelectedProfile;
-            newEmployee.ManagerId = employeeModel.SelectedManager;
-            newEmployee.HireDate = employeeModel.HireDate;
-            newEmployee.EndDate = employeeModel.EndDate;
-            newEmployee.Customer = employeeModel.Customer;
-            newEmployee.Position = employeeModel.Position;
-            newEmployee.Project = employeeModel.Project;
+                newEmployee.EmployeeId = employeeModel.EmployeeId;
+                newEmployee.FirstName = employeeModel.FirstName;
+                newEmployee.LastName = employeeModel.LastName;
+                newEmployee.Email = employeeModel.Email;
+                newEmployee.ProfileId = employeeModel.SelectedProfile;
+                newEmployee.ManagerId = employeeModel.SelectedManager;
+                newEmployee.HireDate = employeeModel.HireDate;
+                newEmployee.EndDate = employeeModel.EndDate;
+                newEmployee.Customer = employeeModel.Customer;
+                newEmployee.Position = employeeModel.Position;
+                newEmployee.Project = employeeModel.Project;
 
-            _employeeService.UpdateEmployee(newEmployee);
+                _employeeService.UpdateEmployee(newEmployee);
 
-            // Add success message
-            //TempData["notice"] = "Successfully registered";
+                // Add success message
+                TempData["Success"] = "Successfully registered";
 
-            return RedirectToAction("ViewEmployees");
-                //}
- 
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+                return RedirectToAction("ViewEmployees");
+            }
+            employeeModel = SetUpDropdowns(employeeModel);
+
+            return View(employeeModel);
         }
 
         public ActionResult ViewEmployees()
