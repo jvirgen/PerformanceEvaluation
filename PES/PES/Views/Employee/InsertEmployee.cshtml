@@ -6,15 +6,14 @@
 }*@
 @{
     ViewBag.Title = "Insert employee";
-    int currentUserProfileId = (int)ViewBag.currentUserProfileId;
+    //var currentUserProfile = (ProfileUser)Session["UserProfile"];
 }
 <hr />
 <div class="row">
     <div class="col-md-12 well">
-        @if (currentUserProfileId == (int)ProfileUser.Director || currentUserProfileId == (int)ProfileUser.Manager)
-        {
+      
         <h4>New Employee</h4>
-            using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
+            @using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
             {
                 <hr />
                 <div class="form-horizontal">
@@ -24,7 +23,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
-                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @required = "required"} })
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control"} })
                                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
                             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -53,7 +52,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2"})
                             <div class="col-md-3">
                                 @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
@@ -71,12 +70,7 @@
             <div>
                 @Html.ActionLink("Back to List", "ViewEmployees")
             </div>
-        }
-        else
-        {
-            <h4>You are not logged in.</h4>
-            @Html.ActionLink("Go to Login", "Login", "LoginUser");
-        }
+        
     </div>
 </div>
 

@@ -19,6 +19,7 @@ namespace PES.ViewModels
         public string Customer { get; set; }
         [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid")]
+        [EmailAddress(ErrorMessage = "Please input an email address")]
         public string Email { get; set; }
         public List<SelectListItem> ListProfiles { get; set; }
         [Display(Name = "Profile")]
