@@ -6,15 +6,13 @@
 }*@
 @{
     ViewBag.Title = "Insert employee";
-    int currentUserProfileId = (int)ViewBag.currentUserProfileId;
+    //int currentUserProfileId = (int)ViewBag.currentUserProfileId;
 }
 <hr />
 <div class="row">
     <div class="col-md-12 well">
-        @if (currentUserProfileId == (int)ProfileUser.Director || currentUserProfileId == (int)ProfileUser.Manager)
-        {
         <h4>New Employee</h4>
-            using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
+            @using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
             {
                 <hr />
                 <div class="form-horizontal">
@@ -55,7 +53,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
-                                @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control jqueryui-datepicker" } })
                                 @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -71,14 +69,14 @@
             <div>
                 @Html.ActionLink("Back to List", "ViewEmployees")
             </div>
-        }
-        else
-        {
-            <h4>You are not logged in.</h4>
-            @Html.ActionLink("Go to Login", "Login", "LoginUser");
-        }
+
+        
     </div>
 </div>
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/input-datepicker.js")
+}
 
 
 

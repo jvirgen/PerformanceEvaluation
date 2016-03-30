@@ -42,9 +42,9 @@ namespace PES.Controllers
             InsertEmployeeViewModel model = new InsertEmployeeViewModel();
            
             // Get current user  
-            Employee currentUser = new Employee();
-            EmployeeService EmployeeService = new EmployeeService();
-            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);            
+            //Employee currentUser = new Employee();
+            //EmployeeService EmployeeService = new EmployeeService();
+            //currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);            
 
             // Get profiles
             // test empty list of profiles, replace this line with a call to service to get the profiles
@@ -86,16 +86,17 @@ namespace PES.Controllers
 
             #endregion
 
-            if (currentUser.ProfileId == (int)ProfileUser.Resource)
-            {
-                // user is resource not allowed, return to home  
-                // send error
-                //TempData["Error"] = "You're resource. You're not allowed to insert employees.";
-                return RedirectToAction("Index", "PerformanceEvaluation");
-            }
+            //if (currentUser.ProfileId == (int)ProfileUser.Resource)
+            //{
+            //    // user is resource not allowed, return to home  
+            //    // send error
+            //    //TempData["Error"] = "You're resource. You're not allowed to insert employees.";
+            //    return RedirectToAction("Index", "PerformanceEvaluation");
+            //}
 
-            model.HireDate = DateTime.Today;
-            ViewBag.currentUserProfileId = currentUser.ProfileId;
+            ////model.HireDate = DateTime.Today;
+            //ViewBag.currentUserProfileId = currentUser.ProfileId;
+            model.HireDate = DateTime.Now.Date;
             return View(model);
         }
 
