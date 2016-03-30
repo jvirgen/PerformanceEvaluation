@@ -93,24 +93,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")
-   <script>
-        $(function () {
-            $(".jqueryui-marker-datepicker").datepicker({
-                dateFormat: "dd/mm/yy",
-                defaultDate: 0,
-                changeMonth: true,
-                changeYear: true,
-                showOn: "button"
-            }).css("display", "inline-block")
-            .next("button").button({
-                icons: { primary: "ui-icon-calendar" },
-                label: "Select a date",
-                text: false
-            });
-            @*@if (($oneEVENT['start_ts'] == null)
-                $(".jqueryui-marker-datepicker").datepicker().datepicker("setDate", new Date());*@
-        });
-    </script> 
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

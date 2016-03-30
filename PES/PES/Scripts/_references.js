@@ -7,6 +7,7 @@
 /// <reference path="exportdatatables/pdfmake.min.js" />
 /// <reference path="exportdatatables/vfs_fonts.js" />
 /// <reference path="filevalidation.js" />
+/// <reference path="input-datepicker.js" />
 /// <reference path="jquery.datatables.min.js" />
 /// <reference path="jquery.validate.js" />
 /// <reference path="jquery.validate.unobtrusive.js" />

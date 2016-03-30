@@ -24,9 +24,12 @@ namespace PES.ViewModels
         public List<SelectListItem> ListProfiles { get; set; }
         [Display(Name = "Profile")]
         public int SelectedProfile { get; set; }
+
         [Display(Name = "Hire Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/mm/y}", ApplyFormatInEditMode = true)]
         public DateTime HireDate { get; set; }
+
         public string Position { get; set; }
         public string Project { get; set; }
         public List<SelectListItem> ListManagers { get; set; }
