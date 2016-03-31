@@ -38,28 +38,56 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="itemData">
-                             @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        <td class="itemData">
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td class="itemData">
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td class="itemData">
-                        @(item.Profile.Name)
-                        </td>
-                        <td class="itemData">
-                            @(item.Manager.FirstName + " " + item.Manager.LastName)
-                        </td>
-                        <td>
-                                @Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, null) |
+                        @if (item.EndDate == null)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @(item.Profile.Name)
+                            </td>
+                            <td>
+                                @(item.Manager.FirstName + " " + item.Manager.LastName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, null ) |
                                 @Html.ActionLink("Details", "EmployeeDetails", "Employee", new { id = item.EmployeeId }, null) |
-                                @Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption"})
-                        </td>
+                                @Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption" })
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="text-decoration:line-through">
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td style="text-decoration:line-through">
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td style="text-decoration:line-through">
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td style="text-decoration:line-through">
+                                @(item.Profile.Name)
+                            </td>
+            
+                            <td style="text-decoration:line-through">
+                                @(item.Manager.FirstName + " " + item.Manager.LastName)
+                            </td>
+            
+                            <td>
+                                @Html.ActionLink("Edit", null) |
+                                @Html.ActionLink("Details", null) |
+                                @Html.ActionLink("Enable", "EnableEmployee", "Employee", new { id = item.EmployeeId }, null)
+                            </td>
+                         }
                     </tr>
-                           }
+                }
                 </tbody>
             </table>
         </div>
