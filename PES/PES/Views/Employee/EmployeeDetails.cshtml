@@ -1,4 +1,5 @@
 ﻿@model PES.ViewModels.EmployeeDetailsViewModel
+@using PES.Models;
 
 @{
     ViewBag.Title = "EmployeDetails";
@@ -58,7 +59,11 @@
             @Html.DisplayFor(model => model.EndDate)
         </dd>
 </div>
-<p>
-    @Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId }) |
-    @Html.ActionLink("Back to List", "ViewEmployees")
-</p>
+@if ((int)Session["UserProfile"] != (int)ProfileUser.Resource)
+{
+    <p>
+        @Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId }) |
+        @Html.ActionLink("Back to List", "ViewEmployees")
+    </p>
+}
+
