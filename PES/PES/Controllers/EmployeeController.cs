@@ -82,9 +82,8 @@ namespace PES.Controllers
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
                 newEmployee.ManagerId = employeeModel.SelectedManager;
                 newEmployee.HireDate = employeeModel.HireDate;
-                newEmployee.Customer = "No Customer";
-                newEmployee.Position = "Not Specified";
-                newEmployee.Project = employeeModel.Project;
+                newEmployee.Customer = "No customer";
+                newEmployee.Position = "Not specified";
 
                 _employeeService.InsertEmployee(newEmployee);
 
@@ -217,11 +216,6 @@ namespace PES.Controllers
             model.Email = employee.Email;
             model.SelectedProfile = employee.ProfileId;
             model.SelectedManager = employee.ManagerId;
-            model.HireDate = employee.HireDate;
-            model.EndDate = employee.EndDate;
-            model.Customer = employee.Customer;
-            model.Position = employee.Position;
-            model.Project = employee.Project;
 
             ViewBag.currentUserProfileId = currentUser.ProfileId;
             return View(model);
@@ -240,16 +234,11 @@ namespace PES.Controllers
                 newEmployee.Email = employeeModel.Email;
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
                 newEmployee.ManagerId = employeeModel.SelectedManager;
-                newEmployee.HireDate = employeeModel.HireDate;
-                newEmployee.EndDate = employeeModel.EndDate;
-                newEmployee.Customer = employeeModel.Customer;
-                newEmployee.Position = employeeModel.Position;
-                newEmployee.Project = employeeModel.Project;
 
                 _employeeService.UpdateEmployee(newEmployee);
 
                 // Add success message
-                TempData["Success"] = "Successfully registered";
+                TempData["Success"] = "Successfully updated";
 
                 return RedirectToAction("ViewEmployees");
             }
@@ -260,12 +249,11 @@ namespace PES.Controllers
 
         public ActionResult ViewEmployees()
         {
-
-            //get Employees
+            // Get all employees
             List<Employee> EmployeeList = _employeeService.GetAll();
-
             List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
-            foreach(var employee in EmployeeList)
+
+            foreach (var employee in EmployeeList)
             {
                 EmployeeDetailsViewModel modelo = new EmployeeDetailsViewModel();
 
@@ -290,7 +278,6 @@ namespace PES.Controllers
                 ModelList.Add(modelo);
             }
 
-
             return View(ModelList);
         }
 
@@ -309,21 +296,18 @@ namespace PES.Controllers
 
             model.FirstName = employee.FirstName;
             model.LastName = employee.LastName;
-            model.Email = employee.Email;
-            model.Customer = employee.Customer;
-            model.Position = employee.Position;
+            model.Email = employee.Email;            
             model.ProfileId = employee.ProfileId;
             model.ManagerId = employee.ManagerId;
             model.HireDate = employee.HireDate;
             model.EndDate = employee.EndDate;
-            model.Project = employee.Project;
             model.Profile = porfile;
             model.Manager = manager;
     
             return View(model);
         }
 
-        public ActionResult DisableEmployee (int id)
+        public ActionResult DisableEmployee(int id)
         {
             var disabledEmployee = _employeeService.GetByID(id);
             disabledEmployee.EndDate = DateTime.Now;
