@@ -46,6 +46,8 @@ namespace PES.Controllers
 
             if (profileUser == null)
             {
+                // user not logged in, return home
+                TempData["Error"] = "You need to log in first.";
                 return RedirectToAction("Login", "LoginUser");
             }
 
@@ -59,13 +61,12 @@ namespace PES.Controllers
             if (currentUser.ProfileId == (int)ProfileUser.Resource)
             {
                 // user is resource not allowed, return to home  
-                // send error
-                //TempData["Error"] = "You're resource. You're not allowed to insert employees.";
+                TempData["Error"] = "You're resource. You're not allowed to insert employees.";
                 return RedirectToAction("Index", "PerformanceEvaluation");
             }
 
             model.HireDate = DateTime.Today;
-            ViewBag.currentUserProfileId = currentUser.ProfileId;
+            //ViewBag.currentUserProfileId = currentUser.ProfileId;
             return View(model);
         }
 
@@ -75,7 +76,6 @@ namespace PES.Controllers
             if (ModelState.IsValid)
             {
                 Employee newEmployee = new Employee();
-
 
                 newEmployee.FirstName = employeeModel.FirstName;
                 newEmployee.LastName = employeeModel.LastName;
@@ -90,24 +90,22 @@ namespace PES.Controllers
                 {
                     _employeeService.InsertEmployee(newEmployee);
 
-                    // Add success message
+                    // Success message
                     TempData["Success"] = "Successfully registered";
 
                     return RedirectToAction("ViewEmployees");
                 }
                 else
                 {
-                    // Add error message
-                    TempData["Error"] = "Email already is registered";
+                    // Error message
+                    TempData["Error"] = "This email is already registered";
 
                     employeeModel = SetUpDropdowns(employeeModel);
                     return View(employeeModel);
-                }
-               
+                }              
             }
 
             employeeModel = SetUpDropdowns(employeeModel);
-
             return View(employeeModel);
         }
 
@@ -124,20 +122,14 @@ namespace PES.Controllers
                 {
                     counter++;
                     if(counter > 0)
-                    {
                         break;
-                    }
                 }
             }
 
             if(counter == 0)
-            {
-                return true;
-            }
+                return true; 
             else
-            {
                 return false;
-            }
         }
         #endregion
 
@@ -237,6 +229,16 @@ namespace PES.Controllers
         {
             UpdateEmployeeViewModel model = new UpdateEmployeeViewModel();
 
+            // Get profile current user 
+            var profileUser = Session["UserProfile"];
+
+            if (profileUser == null)
+            {
+                // user not logged in, return home
+                TempData["Error"] = "You need to log in first.";
+                return RedirectToAction("Login", "LoginUser");
+            }
+
             // Get current user  
             Employee currentUser = new Employee();
             EmployeeService EmployeeService = new EmployeeService();
@@ -247,8 +249,7 @@ namespace PES.Controllers
             if (currentUser.ProfileId == (int)ProfileUser.Resource)
             {
                 // user is resource not allowed, return to home  
-                // send error
-                //TempData["Error"] = "You're resource. You're not allowed to update employees.";
+                TempData["Error"] = "You're resource. You're not allowed to update employees.";
                 return RedirectToAction("Index", "PerformanceEvaluation");
             }
 
@@ -261,7 +262,7 @@ namespace PES.Controllers
             model.SelectedProfile = employee.ProfileId;
             model.SelectedManager = employee.ManagerId;
 
-            ViewBag.currentUserProfileId = currentUser.ProfileId;
+            //ViewBag.currentUserProfileId = currentUser.ProfileId;
             return View(model);
         }
 
@@ -281,13 +282,12 @@ namespace PES.Controllers
 
                 _employeeService.UpdateEmployee(newEmployee);
 
-                // Add success message
+                // Success message
                 TempData["Success"] = "Successfully updated";
 
                 return RedirectToAction("ViewEmployees");
             }
             employeeModel = SetUpDropdowns(employeeModel);
-
             return View(employeeModel);
         }
 
@@ -299,27 +299,27 @@ namespace PES.Controllers
 
             foreach (var employee in EmployeeList)
             {
-                EmployeeDetailsViewModel modelo = new EmployeeDetailsViewModel();
+                EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
 
                 //get porfiles
                 var porfile = _profileService.GetProfileByID(employee.ProfileId);
                 var manager = _employeeService.GetByID(employee.ManagerId);
 
-                modelo.EmployeeId = employee.EmployeeId;
-                modelo.FirstName = employee.FirstName;
-                modelo.LastName = employee.LastName;
-                modelo.Email = employee.Email;
-                modelo.Customer = employee.Customer;
-                modelo.Position = employee.Position;
-                modelo.ProfileId = employee.ProfileId;
-                modelo.ManagerId = employee.ManagerId;
-                modelo.HireDate = employee.HireDate;
-                modelo.EndDate = employee.EndDate;
-                modelo.Project = employee.Project;
-                modelo.Profile = porfile;
-                modelo.Manager = manager;
+                model.EmployeeId = employee.EmployeeId;
+                model.FirstName = employee.FirstName;
+                model.LastName = employee.LastName;
+                model.Email = employee.Email;
+                model.Customer = employee.Customer;
+                model.Position = employee.Position;
+                model.ProfileId = employee.ProfileId;
+                model.ManagerId = employee.ManagerId;
+                model.HireDate = employee.HireDate;
+                model.EndDate = employee.EndDate;
+                model.Project = employee.Project;
+                model.Profile = porfile;
+                model.Manager = manager;
 
-                ModelList.Add(modelo);
+                ModelList.Add(model);
             }
 
             return View(ModelList);
