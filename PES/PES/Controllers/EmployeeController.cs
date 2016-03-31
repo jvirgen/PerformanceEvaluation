@@ -18,7 +18,7 @@ namespace PES.Controllers
         private ProfileService _profileService;
         private EmployeeService _employeeService;
 
-        public EmployeeController() 
+        public EmployeeController()
         {
             _profileService = new ProfileService();
             _employeeService = new EmployeeService();
@@ -26,7 +26,7 @@ namespace PES.Controllers
 
         // GET: Employee
         public ActionResult Index()
-        {   
+        {
 
             Login Mail = new Login();
             EmployeeService Getemployee = new EmployeeService();
@@ -76,6 +76,7 @@ namespace PES.Controllers
             {
                 Employee newEmployee = new Employee();
 
+
                 newEmployee.FirstName = employeeModel.FirstName;
                 newEmployee.LastName = employeeModel.LastName;
                 newEmployee.Email = employeeModel.Email;
@@ -85,18 +86,60 @@ namespace PES.Controllers
                 newEmployee.Customer = "No customer";
                 newEmployee.Position = "Not specified";
 
-                _employeeService.InsertEmployee(newEmployee);
+                if (uniqueEmail(newEmployee))
+                {
+                    _employeeService.InsertEmployee(newEmployee);
 
-                // Add success message
-                TempData["Success"] = "Successfully registered";
+                    // Add success message
+                    TempData["Success"] = "Successfully registered";
 
-                return RedirectToAction("ViewEmployees");
+                    return RedirectToAction("ViewEmployees");
+                }
+                else
+                {
+                    // Add error message
+                    TempData["Error"] = "Email already is registered";
+
+                    employeeModel = SetUpDropdowns(employeeModel);
+                    return View(employeeModel);
+                }
+               
             }
 
             employeeModel = SetUpDropdowns(employeeModel);
 
             return View(employeeModel);
         }
+
+        #region verify uniqueEmail
+        private bool uniqueEmail (Employee employee)
+        {
+            var counter = 0;
+            List<Employee> EmployeeList = new List<Employee>();
+            EmployeeList = _employeeService.GetAll();
+
+            foreach(var item in EmployeeList)
+            {
+                if(employee.Email == item.Email)
+                {
+                    counter++;
+                    if(counter > 0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if(counter == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
 
         private InsertEmployeeViewModel SetUpDropdowns(InsertEmployeeViewModel model)
         {
@@ -187,6 +230,7 @@ namespace PES.Controllers
 
             return model;
         }
+
 
         [HttpGet]
         public ActionResult UpdateEmployee(int id)
