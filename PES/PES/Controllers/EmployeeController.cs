@@ -293,36 +293,92 @@ namespace PES.Controllers
 
         public ActionResult ViewEmployees()
         {
-            // Get all employees
-            List<Employee> EmployeeList = _employeeService.GetAll();
-            List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
+            // Get current users by using email in Session
+            // Get current user 
+            Employee currentUser = new Employee();
+            var userEmail = (string)Session["UserEmail"];
 
-            foreach (var employee in EmployeeList)
+            currentUser = _employeeService.GetByEmail(userEmail);
+
+            if (currentUser.ProfileId == (int)ProfileUser.Resource)
             {
-                EmployeeDetailsViewModel modelo = new EmployeeDetailsViewModel();
-
-                //get porfiles
-                var porfile = _profileService.GetProfileByID(employee.ProfileId);
-                var manager = _employeeService.GetByID(employee.ManagerId);
-
-                modelo.EmployeeId = employee.EmployeeId;
-                modelo.FirstName = employee.FirstName;
-                modelo.LastName = employee.LastName;
-                modelo.Email = employee.Email;
-                modelo.Customer = employee.Customer;
-                modelo.Position = employee.Position;
-                modelo.ProfileId = employee.ProfileId;
-                modelo.ManagerId = employee.ManagerId;
-                modelo.HireDate = employee.HireDate;
-                modelo.EndDate = employee.EndDate;
-                modelo.Project = employee.Project;
-                modelo.Profile = porfile;
-                modelo.Manager = manager;
-
-                ModelList.Add(modelo);
+                //Resource is only allowed to view his own info
+                return RedirectToAction("EmployeeDetails/" + currentUser.EmployeeId);
             }
+            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                //Get employees of manager org
+                List<Employee> EmployeeList = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
 
-            return View(ModelList);
+                foreach (var employee in EmployeeList)
+                {
+                    EmployeeDetailsViewModel modelo = new EmployeeDetailsViewModel();
+
+                    //get porfiles
+                    var porfile = _profileService.GetProfileByID(employee.ProfileId);
+                    var manager = _employeeService.GetByID(employee.ManagerId);
+
+                    modelo.EmployeeId = employee.EmployeeId;
+                    modelo.FirstName = employee.FirstName;
+                    modelo.LastName = employee.LastName;
+                    modelo.Email = employee.Email;
+                    modelo.Customer = employee.Customer;
+                    modelo.Position = employee.Position;
+                    modelo.ProfileId = employee.ProfileId;
+                    modelo.ManagerId = employee.ManagerId;
+                    modelo.HireDate = employee.HireDate;
+                    modelo.EndDate = employee.EndDate;
+                    modelo.Project = employee.Project;
+                    modelo.Profile = porfile;
+                    modelo.Manager = manager;
+
+                    ModelList.Add(modelo);
+                }
+
+                return View(ModelList);
+            }
+            else if(currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all employees
+                List<Employee> EmployeeList = _employeeService.GetAll();
+                List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
+
+                foreach (var employee in EmployeeList)
+                {
+                    EmployeeDetailsViewModel modelo = new EmployeeDetailsViewModel();
+
+                    //get porfiles
+                    var porfile = _profileService.GetProfileByID(employee.ProfileId);
+                    var manager = _employeeService.GetByID(employee.ManagerId);
+
+                    modelo.EmployeeId = employee.EmployeeId;
+                    modelo.FirstName = employee.FirstName;
+                    modelo.LastName = employee.LastName;
+                    modelo.Email = employee.Email;
+                    modelo.Customer = employee.Customer;
+                    modelo.Position = employee.Position;
+                    modelo.ProfileId = employee.ProfileId;
+                    modelo.ManagerId = employee.ManagerId;
+                    modelo.HireDate = employee.HireDate;
+                    modelo.EndDate = employee.EndDate;
+                    modelo.Project = employee.Project;
+                    modelo.Profile = porfile;
+                    modelo.Manager = manager;
+
+                    ModelList.Add(modelo);
+                }
+
+                return View(ModelList);
+            }
+            else
+            {
+                //Mesage if not logedin
+                TempData["Error"] = "You are not loged in. Please login to access";
+
+                return RedirectToAction("Login");
+            }
+               
         }
 
 
