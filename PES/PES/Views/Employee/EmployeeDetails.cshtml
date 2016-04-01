@@ -66,4 +66,9 @@
         @Html.ActionLink("Back to List", "ViewEmployees")
     </p>
 }
-
+else if((int)Session["UserProfile"] == (int)ProfileUser.Resource)
+{
+    <p>
+        @Html.ActionLink("Back to Performance Evaluations", "ChoosePeriod", "PerformanceEvaluation", new { @employeeEmail = Model.Email, @employeeID = Model.ProfileId }, null)
+    </p>
+}

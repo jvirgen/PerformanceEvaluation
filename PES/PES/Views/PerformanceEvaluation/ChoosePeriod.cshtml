@@ -58,6 +58,13 @@
         @Html.ActionLink("Back to Performance Files", "SearchInformation", "PerformanceEvaluation")
     </div>
 }
+else if (currentUserProfile == (int)ProfileUser.Resource)
+{
+    <hr />
+    <div>
+        @Html.ActionLink("View Employee Details", "ViewEmployees", "Employee", new { @id = userID }, null)
+    </div>
+}
 
 @section Styles
 {
