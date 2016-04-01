@@ -21,6 +21,7 @@ namespace PES.ViewModels
         [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid")]
         [EmailAddress(ErrorMessage = "The email address doesn't have the correct format.")]
+        //[RegularExpression("(.*?)@4thsource.com" , ErrorMessage = "This email is not a 4th Source account" )]
         public string Email { get; set; }
 
         public List<SelectListItem> ListProfiles { get; set; }
