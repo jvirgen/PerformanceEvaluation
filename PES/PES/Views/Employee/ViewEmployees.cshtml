@@ -82,7 +82,7 @@
             
                             <td>
                                 @Html.ActionLink("Edit", null) |
-                                @Html.ActionLink("Details", null) |
+                                @Html.ActionLink("Details", "EmployeeDetails", "Employee", new {id = item.EmployeeId}, null) |
                                 @Html.ActionLink("Enable", "EnableEmployee", "Employee", new { id = item.EmployeeId }, null)
                             </td>
                          }

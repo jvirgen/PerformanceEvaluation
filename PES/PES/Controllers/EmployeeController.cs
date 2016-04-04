@@ -159,13 +159,16 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                var newItem = new SelectListItem()
+                if(manager.ProfileId == 2)
                 {
-                    Text = manager.FirstName + " " + manager.LastName,
-                    Value = (manager.EmployeeId).ToString(),
-                    Selected = false
-                };
-                managersList.Add(newItem);
+                    var newItem = new SelectListItem()
+                    {
+                        Text = manager.FirstName + " " + manager.LastName,
+                        Value = (manager.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    managersList.Add(newItem);
+                }
             }
 
             #region Set data
@@ -204,13 +207,16 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                var newItem = new SelectListItem()
+                if (manager.ProfileId == 2)
                 {
-                    Text = manager.FirstName + " " + manager.LastName,
-                    Value = (manager.EmployeeId).ToString(),
-                    Selected = false
-                };
-                managersList.Add(newItem);
+                    var newItem = new SelectListItem()
+                    {
+                        Text = manager.FirstName + " " + manager.LastName,
+                        Value = (manager.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    managersList.Add(newItem);
+                }
             }
 
             #region Set data
@@ -424,5 +430,17 @@ namespace PES.Controllers
 
             return RedirectToAction("ViewEmployees");
         }
+
+        //[HttpGet]
+        //public ActionResult ChangeProfile()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult ChangeProfile()
+        //{
+        //    return View();
+        //}
     }
 }
