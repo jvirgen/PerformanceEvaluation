@@ -41,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SelectedProfile, new { htmlAttributes = new { @class = "form-control" } })
+               @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%" })
                 @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,23 +49,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SelectedManager, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%" })
                 @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.NewManager, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NewManager, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%" })
                 @Html.ValidationMessageFor(model => model.NewManager, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -81,3 +72,37 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+@section Styles{
+    @Styles.Render("~/Content/css/select2-bootstrap.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+    <style type="text/css">
+        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
+            width: 100% !important;
+        }
+    </style>
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/select2.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#SelectedManager").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+            $("#SelectedProfile").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+            $("#SelectedManager").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+        });
+    </script>
+}
