@@ -45,7 +45,7 @@ namespace PES.Services
                                            "POSITION," +
                                            "ID_PROFILE," +
                                            "ID_MANAGER," +
-                                           "HIRE_DATE," +
+                                           //"HIRE_DATE," +
                                            "END_DATE, " +
                                            "PROJECT " +
                                            "FROM EMPLOYEE WHERE EMAIL = '" + email + "'";
@@ -65,7 +65,7 @@ namespace PES.Services
                         employee.Position = Convert.ToString(Read["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
-                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        //employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
 
@@ -107,7 +107,7 @@ namespace PES.Services
                                            "POSITION," +
                                            "ID_PROFILE," +
                                            "ID_MANAGER," +
-                                           "HIRE_DATE," +
+                                           //"HIRE_DATE," +
                                            "END_DATE, " +
                                            "PROJECT " +
                                            "FROM EMPLOYEE WHERE ID_EMPLOYEE = '" + ID + "'";
@@ -127,7 +127,7 @@ namespace PES.Services
                         employee.Position = Convert.ToString(Read["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
-                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        //employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
 
@@ -169,7 +169,7 @@ namespace PES.Services
                                            "POSITION, " +
                                            "ID_PROFILE," +
                                            "ID_MANAGER, " +
-                                           "HIRE_DATE, " +
+                                           //"HIRE_DATE, " +
                                            "END_DATE, " +
                                            "PROJECT " +
                                            "FROM EMPLOYEE";
@@ -189,7 +189,7 @@ namespace PES.Services
                         employee.Position = Convert.ToString(Read["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
-                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        //employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
 
@@ -232,7 +232,7 @@ namespace PES.Services
                                            "POSITION, " +
                                            "ID_PROFILE," +
                                            "ID_MANAGER, " +
-                                           "HIRE_DATE, " +
+                                           //"HIRE_DATE, " +
                                            "END_DATE, " +
                                            "PROJECT " +
                                            "FROM EMPLOYEE" +
@@ -254,7 +254,7 @@ namespace PES.Services
                         employee.Position = Convert.ToString(Read["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
-                        employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
+                        //employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
 
@@ -325,7 +325,7 @@ namespace PES.Services
                                                                 POSITION,
                                                                 ID_PROFILE,
                                                                 ID_MANAGER,
-                                                                HIRE_DATE,
+                                                                //HIRE_DATE,
                                                                 END_DATE) 
 
                                                         VALUES (:firstName,
@@ -335,7 +335,7 @@ namespace PES.Services
                                                                 :position,
                                                                 :idProfile,
                                                                 :idManager,
-                                                                :hireDate,
+                                                                //:hireDate,
                                                                 :endDate
                                                                 )";
 
@@ -349,7 +349,7 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("position", employee.Position));
                     command.Parameters.Add(new OracleParameter("idProfile", employee.ProfileId));
                     command.Parameters.Add(new OracleParameter("idManager", employee.ManagerId));
-                    command.Parameters.Add(new OracleParameter("hireDate", OracleDbType.Date, employee.HireDate, ParameterDirection.Input));
+                    //command.Parameters.Add(new OracleParameter("hireDate", OracleDbType.Date, employee.HireDate, ParameterDirection.Input));
                     command.Parameters.Add(new OracleParameter("endDate", OracleDbType.Date, employee.EndDate, ParameterDirection.Input));
 
                     try
@@ -397,7 +397,8 @@ namespace PES.Services
                                                                "LAST_NAME='" + employee.LastName + "', " +
                                                                "EMAIL='" + employee.Email + "', " +
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
-                                                               "ID_MANAGER='" + employee.ManagerId + "' " +                                                                                                                             
+                                                               "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToString("MM-dd-yyyy") : "") + "', 'MM-DD-YYYY'), " +
+                                                               "ID_MANAGER='" + employee.ManagerId + "' " +                                                                                                                                                                                      
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
@@ -473,7 +474,7 @@ namespace PES.Services
                                        "POSITION, " +
                                        "ID_PROFILE, "+
                                        "ID_MANAGER, " +
-                                       "HIRE_DATE, " +
+                                       //"HIRE_DATE, " +
                                        "END_DATE, " +
                                        "PROJECT " +
                                        "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId + " OR ID_EMPLOYEE = " + ManageerId;
@@ -492,7 +493,7 @@ namespace PES.Services
                         employee.Position = Convert.ToString(Reader["POSITION"]);
                         employee.ManagerId = Convert.ToInt32(Reader["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Reader["ID_MANAGER"]);
-                        employee.HireDate = Convert.ToDateTime(Reader["HIRE_DATE"]);
+                        //employee.HireDate = Convert.ToDateTime(Reader["HIRE_DATE"]);
                         string endDate = Convert.ToString(Reader["END_DATE"]);
                         employee.Project = Convert.ToString(Reader["PROJECT"]);
 
@@ -659,7 +660,7 @@ namespace PES.Services
                                 #endregion
 
                                 newEmployee.ManagerId = 2; // Set as 2 for now: Create a function to update later when table is already populated
-                                newEmployee.HireDate = DateTime.Now; // Set as today due to not comming from excel
+                               /* newEmployee.HireDate = DateTime.Now; */// Set as today due to not comming from excel
 
                                 var active = columnsData[ResourceColumns.Active].ToArray<string>()[i];
                                     newEmployee.EndDate = null;

@@ -18,9 +18,9 @@ namespace PES.ViewModels
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid")]
-        [EmailAddress(ErrorMessage = "The email address doesn't have the correct format.")]
+        [Required]
+        //[DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid")]
+        //[EmailAddress(ErrorMessage = "The email address doesn't have the correct format.")]
         //[RegularExpression("(.*?)@4thsource.com" , ErrorMessage = "This email is not a 4th Source account" )]
         public string Email { get; set; }
 
@@ -32,9 +32,9 @@ namespace PES.ViewModels
         [Display(Name = "Manager")]
         public int SelectedManager { get; set; }
 
-        [Display(Name = "Hire Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/y}", ApplyFormatInEditMode = true)]
-        public DateTime HireDate { get; set; }     
+        //[Display(Name = "Hire Date")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd/mm/y}", ApplyFormatInEditMode = true)]
+        //public DateTime HireDate { get; set; }     
     }
 }
