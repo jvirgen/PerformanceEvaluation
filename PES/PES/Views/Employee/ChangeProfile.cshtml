@@ -1,29 +1,25 @@
-﻿@model PES.ViewModels.InsertEmployeeViewModel
-@using PES.Models 
-@*@if (TempData["Error"] != null)
-{
-    <p class="alert alert-danger">@TempData["Error"]</p>
-}*@
+﻿@model PES.ViewModels.InsertEmployeeViewModel;
+
 @{
-    ViewBag.Title = "Insert employee";
-    //var currentUserProfile = (ProfileUser)Session["UserProfile"];
+    ViewBag.Title = "ChangeProfile";
 }
+
 <hr />
 <div class="row">
     <div class="col-md-12 well">
-      
-        <h3>New Employee</h3>
-            @using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
+
+        <h3>Change Profile</h3>
+        @using (Html.BeginForm("ChangeProfile", "Employee", FormMethod.Post))
             {
-                <hr />
+            <hr />
                 <div class="form-horizontal">
-                    @Html.AntiForgeryToken()                    
+                    @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <fieldset>
                         <div class="form-group">
                             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
-                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control"} })
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
                             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -51,54 +47,15 @@
                                 @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        @*<div class="form-group">
-                            @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2"})
-                            <div class="col-md-3">
-                                @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control jqueryui-datepicker" } })
-                                @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-default" />
-                            </div>
-                        </div>
+               
                     </fieldset>
                 </div>
-            }
-            
-        
+
+        }
+
+
     </div>
 </div>
-<div>
-    @Html.ActionLink("Back to List", "ViewEmployees")
-</div>
-
-@section Styles{
-    @Styles.Render("~/Content/css/select2-bootstrap.css")
-    @Styles.Render("~/Content/css/select2.min.css")
-    <style type="text/css">
-        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
-            width: 100% !important;
-        }
-    </style>
-}
-
-@section Scripts{
-    @*@Scripts.Render("~/Scripts/input-datepicker.js")*@
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/select2.min.js")
-    <script type="text/javascript">
-            $(document).ready(function () {
-                $("#SelectedManager").select2({
-                    
-                });
-
-                $("#test").select2();
-            });
-    </script>
-}
-
 
 
 

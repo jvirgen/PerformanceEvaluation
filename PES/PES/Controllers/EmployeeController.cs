@@ -430,5 +430,17 @@ namespace PES.Controllers
 
             return RedirectToAction("ViewEmployees");
         }
+
+        //[HttpGet]
+        //public ActionResult ChangeProfile()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult ChangeProfile()
+        //{
+        //    return View();
+        //}
     }
 }

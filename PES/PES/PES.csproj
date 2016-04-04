@@ -347,6 +347,7 @@
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Employee\UpdateEmployee.cshtml" />
     <Content Include="Views\Employee\EmployeeDetails.cshtml" />
+    <Content Include="Views\Employee\ChangeProfile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
