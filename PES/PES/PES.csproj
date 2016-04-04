@@ -342,12 +342,12 @@
     <Content Include="Views\Shared\_SectionsPartial.cshtml" />
     <Content Include="Views\Shared\_CommentsPartial.cshtml" />
     <Content Include="Views\Shared\_SkillsPartial.cshtml" />
-    <Content Include="Views\Employee\InsertEmployee.cshtml" />
     <Content Include="Views\Employee\ViewEmployees.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Employee\UpdateEmployee.cshtml" />
     <Content Include="Views\Employee\EmployeeDetails.cshtml" />
     <Content Include="Views\Employee\ChangeProfile.cshtml" />
+    <Content Include="Views\Employee\InsertEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -416,6 +416,36 @@ namespace PES.Services
             return true;
         }
 
+        public bool TransferAllEmployees(Employee employee)
+        {
+            try
+            {
+                var user = this.GetByID(employee.EmployeeId);
+
+                if (user != null)
+                {
+                    using (OracleConnection db = dbContext.GetDBConnection())
+                    {
+                        db.Open();
+
+                        string InsertQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + employee.ManagerId + "' " +                                                          
+                                     "WHERE ID_MANAGER='" + employee.ManagerId + "'";
+
+                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                        Comand.ExecuteNonQuery();
+
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return true;
+        }
+
         //Get ID_Profile from the DB 
         public string GetUserProfile(string userEmail)
         {
