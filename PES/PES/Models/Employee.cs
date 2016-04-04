@@ -35,8 +35,8 @@ namespace PES.Models
         /// Email
         /// </summary>
         /// 
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "The Email has not the correct format")]
+        [Required]
+        
         public string Email { get; set; }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace PES.Models
         /// <summary>
         /// Hire Date
         /// </summary>
-        [DataType(DataType.Date)]
-        [Display(Name = "Hire Date")]
-        public DateTime HireDate { get; set; }
+        //[DataType(DataType.Date)]
+        //[Display(Name = "Hire Date")]
+        //public DateTime HireDate { get; set; }
 
         ///// <summary>
         ///// Employee Ranking

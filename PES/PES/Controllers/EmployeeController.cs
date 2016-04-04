@@ -65,7 +65,7 @@ namespace PES.Controllers
                 return RedirectToAction("Index", "PerformanceEvaluation");
             }
 
-            model.HireDate = DateTime.Today;
+            //model.HireDate = DateTime.Today;
             //ViewBag.currentUserProfileId = currentUser.ProfileId;
             return View(model);
         }
@@ -79,10 +79,10 @@ namespace PES.Controllers
 
                 newEmployee.FirstName = employeeModel.FirstName;
                 newEmployee.LastName = employeeModel.LastName;
-                newEmployee.Email = employeeModel.Email;
+                newEmployee.Email = employeeModel.Email + "@4thsource.com";
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
                 newEmployee.ManagerId = employeeModel.SelectedManager;
-                newEmployee.HireDate = employeeModel.HireDate;
+                //newEmployee.HireDate = employeeModel.HireDate;
                 newEmployee.Customer = "No customer";
                 newEmployee.Position = "Not specified";
 
@@ -327,7 +327,7 @@ namespace PES.Controllers
                     model.Position = employee.Position;
                     model.ProfileId = employee.ProfileId;
                     model.ManagerId = employee.ManagerId;
-                    model.HireDate = employee.HireDate;
+                    //model.HireDate = employee.HireDate;
                     model.EndDate = employee.EndDate;
                     model.Project = employee.Project;
                     model.Profile = porfile;
@@ -360,7 +360,7 @@ namespace PES.Controllers
                 model.Position = employee.Position;
                 model.ProfileId = employee.ProfileId;
                 model.ManagerId = employee.ManagerId;
-                model.HireDate = employee.HireDate;
+                //model.HireDate = employee.HireDate;
                 model.EndDate = employee.EndDate;
                 model.Project = employee.Project;
                 model.Profile = porfile;
@@ -399,7 +399,7 @@ namespace PES.Controllers
             model.Email = employee.Email;            
             model.ProfileId = employee.ProfileId;
             model.ManagerId = employee.ManagerId;
-            model.HireDate = employee.HireDate;
+            //model.HireDate = employee.HireDate;
             model.EndDate = employee.EndDate;
             model.Profile = porfile;
             model.Manager = manager;
