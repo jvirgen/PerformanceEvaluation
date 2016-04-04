@@ -229,6 +229,54 @@ namespace PES.Controllers
             return model;
         }
 
+        //private ChangeProfileViewModel SetUpDropdowns(ChangeProfileViewModel model)
+        //{
+        //    // Get profiles
+        //    // test empty list of profiles, replace this line with a call to service to get the profiles
+        //    var profiles = _profileService.GetAllProfiles();
+
+        //    // Populate profiles 
+        //    List<SelectListItem> profilesList = new List<SelectListItem>();
+        //    foreach (var profile in profiles)
+        //    {
+        //        var newItem = new SelectListItem()
+        //        {
+        //            Text = profile.Name,
+        //            Value = (profile.ProfileId).ToString(),
+        //            Selected = false
+        //        };
+        //        profilesList.Add(newItem);
+        //    }
+
+        //    // Get managers 
+        //    List<Employee> managers = _employeeService.GetAll();
+
+        //    //Populate managers
+        //    List<SelectListItem> managersList = new List<SelectListItem>();
+        //    foreach (var manager in managers)
+        //    {
+        //        if (manager.ProfileId == 2)
+        //        {
+        //            var newItem = new SelectListItem()
+        //            {
+        //                Text = manager.FirstName + " " + manager.LastName,
+        //                Value = (manager.EmployeeId).ToString(),
+        //                Selected = false
+        //            };
+        //            managersList.Add(newItem);
+        //        }
+        //    }
+
+        //    #region Set data
+        //    // Set profiles
+        //    model.ListProfiles = profilesList;
+        //    model.ListManagers = managersList;
+
+        //    #endregion
+
+        //    return model;
+        //}
+
 
         [HttpGet]
         public ActionResult UpdateEmployee(int id)
@@ -432,14 +480,27 @@ namespace PES.Controllers
         }
 
         //[HttpGet]
-        //public ActionResult ChangeProfile()
-        //{
-        //    return View();
-        //}
+        public ActionResult ChangeProfile()
+        {
+            // Get current user  
+            Employee currentUser = new Employee();
+            ChangeProfileViewModel ChangedEmployee = new ChangeProfileViewModel();
+            currentUser = _employeeService.GetByEmail((string)Session["UserEmail"]);
+
+            ChangedEmployee.FirstName = currentUser.FirstName;
+            ChangedEmployee.LastName = currentUser.LastName;
+            ChangedEmployee.Email = currentUser.Email;
+            ChangedEmployee.SelectedProfile = currentUser.ProfileId;
+            ChangedEmployee.SelectedManager = currentUser.ManagerId;
+            SetUpDropdowns(ChangedEmployee);
+
+            return View(ChangedEmployee);
+        }
 
         //[HttpPost]
-        //public ActionResult ChangeProfile()
+        //public ActionResult ChangeProfile(ChangeProfileViewModel model)
         //{
+        //    //Sent info to service
         //    return View();
         //}
     }
