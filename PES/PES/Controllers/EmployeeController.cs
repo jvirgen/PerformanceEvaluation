@@ -313,27 +313,27 @@ namespace PES.Controllers
 
                 foreach (var employee in EmployeeList)
                 {
-                    EmployeeDetailsViewModel modelo = new EmployeeDetailsViewModel();
+                    EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
 
                     //get porfiles
                     var porfile = _profileService.GetProfileByID(employee.ProfileId);
                     var manager = _employeeService.GetByID(employee.ManagerId);
 
-                    modelo.EmployeeId = employee.EmployeeId;
-                    modelo.FirstName = employee.FirstName;
-                    modelo.LastName = employee.LastName;
-                    modelo.Email = employee.Email;
-                    modelo.Customer = employee.Customer;
-                    modelo.Position = employee.Position;
-                    modelo.ProfileId = employee.ProfileId;
-                    modelo.ManagerId = employee.ManagerId;
-                    modelo.HireDate = employee.HireDate;
-                    modelo.EndDate = employee.EndDate;
-                    modelo.Project = employee.Project;
-                    modelo.Profile = porfile;
-                    modelo.Manager = manager;
+                    model.EmployeeId = employee.EmployeeId;
+                    model.FirstName = employee.FirstName;
+                    model.LastName = employee.LastName;
+                    model.Email = employee.Email;
+                    model.Customer = employee.Customer;
+                    model.Position = employee.Position;
+                    model.ProfileId = employee.ProfileId;
+                    model.ManagerId = employee.ManagerId;
+                    model.HireDate = employee.HireDate;
+                    model.EndDate = employee.EndDate;
+                    model.Project = employee.Project;
+                    model.Profile = porfile;
+                    model.Manager = manager;
 
-                    ModelList.Add(modelo);
+                    ModelList.Add(model);
                 }
 
                 return View(ModelList);
@@ -373,8 +373,8 @@ namespace PES.Controllers
         }
             else
             {
-                //Mesage if not logedin
-                TempData["Error"] = "You are not loged in. Please login to access";
+                // Error if not logged in
+                TempData["Error"] = "You are not logged in.";
 
                 return RedirectToAction("Login");
             }

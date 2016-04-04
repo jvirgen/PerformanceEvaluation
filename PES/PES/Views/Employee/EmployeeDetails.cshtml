@@ -43,7 +43,7 @@
                 </dt>
 
                 <dd>
-                    @(Model.Manager.FirstName + " " + Model.LastName)
+                    @(Model.Manager.FirstName + " " + Model.Manager.LastName)
                 </dd>
                 <br />
                 <dt>
@@ -67,7 +67,7 @@
         @if ((int)Session["UserProfile"] != (int)ProfileUser.Resource)
         {
             <p>
-                @Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId }) |
+                @*@Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId }) |*@
                 @Html.ActionLink("Back to List", "ViewEmployees")
             </p>
         }

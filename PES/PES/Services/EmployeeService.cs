@@ -383,14 +383,21 @@ namespace PES.Services
                     {
                         db.Open();
 
-                        string InsertQuery =  "UPDATE EMPLOYEE SET EMAIL='" + employee.Email + "', " +
-                                                               "CUSTOMER='" + employee.Customer + "', " +
-                                                               "POSITION='" + employee.Position + "', " +
+                        //string InsertQuery =  "UPDATE EMPLOYEE SET EMAIL='" + employee.Email + "', " +
+                        //                                       "CUSTOMER='" + employee.Customer + "', " +
+                        //                                       "POSITION='" + employee.Position + "', " +
+                        //                                       "ID_PROFILE='" + employee.ProfileId + "', " +
+                        //                                       "ID_MANAGER='" + employee.ManagerId + "', " +
+                        //                                       "HIRE_DATE= TO_DATE('" + employee.HireDate.ToString("MM-dd-yyyy") + "', 'MM-DD-YYYY'), " +
+                        //                                       "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToString("MM-dd-yyyy") : "") + "', 'MM-DD-YYYY'), " +
+                        //                                       "PROJECT='" + employee.Project +"' " +
+                        //             "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
+
+                        string InsertQuery = "UPDATE EMPLOYEE SET FIRST_NAME='" + employee.FirstName + "', " +
+                                                               "LAST_NAME='" + employee.LastName + "', " +
+                                                               "EMAIL='" + employee.Email + "', " +
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
-                                                               "ID_MANAGER='" + employee.ManagerId + "', " +
-                                                               "HIRE_DATE= TO_DATE('" + employee.HireDate.ToString("MM-dd-yyyy") + "', 'MM-DD-YYYY'), " +
-                                                               "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToString("MM-dd-yyyy") : "") + "', 'MM-DD-YYYY'), " +
-                                                               "PROJECT='" + employee.Project +"' " +
+                                                               "ID_MANAGER='" + employee.ManagerId + "' " +                                                                                                                             
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);

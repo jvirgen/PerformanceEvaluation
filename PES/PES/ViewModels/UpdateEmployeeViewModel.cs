@@ -32,5 +32,9 @@ namespace PES.ViewModels
         public List<SelectListItem> ListManagers { get; set; }
         [Display(Name = "Manager")]
         public int SelectedManager { get; set; }
+
+        //public string Customer { get; set; }
+        //public string Position { get; set; }
+        //public string Project { get; set; }
     }
 }

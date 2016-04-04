@@ -189,6 +189,7 @@
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\SubtitleService.cs" />
     <Compile Include="Services\TitleService.cs" />
+    <Compile Include="ViewModels\ChangeProfileViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\UpdateEmployeeViewModel.cs" />
     <Compile Include="ViewModels\InsertEmployeeViewModel.cs" />
