@@ -159,7 +159,7 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if(manager.ProfileId == 2)
+                if(manager.ProfileId == 2 || manager.ProfileId == 3)
                 {
                     var newItem = new SelectListItem()
                     {
@@ -207,7 +207,7 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if (manager.ProfileId == 2)
+                if (manager.ProfileId == 2 || manager.ProfileId == 3)
                 {
                     var newItem = new SelectListItem()
                     {
@@ -228,54 +228,6 @@ namespace PES.Controllers
 
             return model;
         }
-
-        //private ChangeProfileViewModel SetUpDropdowns(ChangeProfileViewModel model)
-        //{
-        //    // Get profiles
-        //    // test empty list of profiles, replace this line with a call to service to get the profiles
-        //    var profiles = _profileService.GetAllProfiles();
-
-        //    // Populate profiles 
-        //    List<SelectListItem> profilesList = new List<SelectListItem>();
-        //    foreach (var profile in profiles)
-        //    {
-        //        var newItem = new SelectListItem()
-        //        {
-        //            Text = profile.Name,
-        //            Value = (profile.ProfileId).ToString(),
-        //            Selected = false
-        //        };
-        //        profilesList.Add(newItem);
-        //    }
-
-        //    // Get managers 
-        //    List<Employee> managers = _employeeService.GetAll();
-
-        //    //Populate managers
-        //    List<SelectListItem> managersList = new List<SelectListItem>();
-        //    foreach (var manager in managers)
-        //    {
-        //        if (manager.ProfileId == 2)
-        //        {
-        //            var newItem = new SelectListItem()
-        //            {
-        //                Text = manager.FirstName + " " + manager.LastName,
-        //                Value = (manager.EmployeeId).ToString(),
-        //                Selected = false
-        //            };
-        //            managersList.Add(newItem);
-        //        }
-        //    }
-
-        //    #region Set data
-        //    // Set profiles
-        //    model.ListProfiles = profilesList;
-        //    model.ListManagers = managersList;
-
-        //    #endregion
-
-        //    return model;
-        //}
 
 
         [HttpGet]
@@ -486,22 +438,39 @@ namespace PES.Controllers
             Employee currentUser = new Employee();
             ChangeProfileViewModel ChangedEmployee = new ChangeProfileViewModel();
             currentUser = _employeeService.GetByEmail((string)Session["UserEmail"]);
+            if (_employeeService.GetEmployeeByManager(currentUser.EmployeeId).Count > 1)
+            {
+                ChangedEmployee.FirstName = currentUser.FirstName;
+                ChangedEmployee.LastName = currentUser.LastName;
+                ChangedEmployee.Email = currentUser.Email;
+                ChangedEmployee.SelectedProfile = currentUser.ProfileId;
+                ChangedEmployee.SelectedManager = currentUser.ManagerId;
+                SetUpDropdowns(ChangedEmployee);
 
-            ChangedEmployee.FirstName = currentUser.FirstName;
-            ChangedEmployee.LastName = currentUser.LastName;
-            ChangedEmployee.Email = currentUser.Email;
-            ChangedEmployee.SelectedProfile = currentUser.ProfileId;
-            ChangedEmployee.SelectedManager = currentUser.ManagerId;
-            SetUpDropdowns(ChangedEmployee);
-
-            return View(ChangedEmployee);
+                return View(ChangedEmployee);
+            }
+            else
+            {
+                TempData["Error"] = "You do not have employees in you org to transfer";
+                return RedirectToAction("ViewEmployees");
+            }
+            
         }
 
-        //[HttpPost]
-        //public ActionResult ChangeProfile(ChangeProfileViewModel model)
-        //{
-        //    //Sent info to service
-        //    return View();
-        //}
+        [HttpPost]
+        public ActionResult ChangeProfile(ChangeProfileViewModel model)
+        {
+
+            Employee changedEmployee = new Employee();
+            changedEmployee = _employeeService.GetByEmail(model.Email);
+            
+            changedEmployee.ManagerId = model.SelectedManager;
+            changedEmployee.ProfileId = model.SelectedProfile;
+
+            //Send info to service
+            _employeeService.TransferAllEmployees(changedEmployee, model.NewManager);
+            return View();
+            
+        }
     }
 }
