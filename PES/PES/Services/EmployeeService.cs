@@ -416,7 +416,7 @@ namespace PES.Services
             return true;
         }
 
-        public bool TransferAllEmployees(Employee employee)
+        public bool TransferAllEmployees(Employee employee, int newManager)
         {
             try
             {
@@ -428,11 +428,15 @@ namespace PES.Services
                     {
                         db.Open();
 
-                        string InsertQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + employee.ManagerId + "' " +                                                          
+                        string InsertQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + newManager + "' " +                                                          
                                      "WHERE ID_MANAGER='" + employee.ManagerId + "'";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
                         Comand.ExecuteNonQuery();
+
+                        InsertQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + employee.ManagerId + "' " +
+                                     "ID_PROFILE='" + employee.ProfileId + "'" +
+                                     "WHERE ID_MANAGER='" + employee.ManagerId + "'";
 
                         db.Close();
                     }

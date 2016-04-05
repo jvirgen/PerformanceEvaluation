@@ -10,6 +10,8 @@ namespace PES.ViewModels
 {
     public class InsertEmployeeViewModel
     {
+        public int EmployeeId { get; set; }
+
         [Required(ErrorMessage = "First name is required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
