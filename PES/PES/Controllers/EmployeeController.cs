@@ -268,7 +268,12 @@ namespace PES.Controllers
                     model.EmployeeId = employee.EmployeeId;
                     model.FirstName = employee.FirstName;
                     model.LastName = employee.LastName;
-                    model.Email = employee.Email;
+                    //model.Email = employee.Email;
+
+                    string email = employee.Email;
+                    var emailUsername = email.Split('@');
+
+                    model.Email = emailUsername[0];
                     model.SelectedProfile = employee.ProfileId;
                     model.SelectedManager = employee.ManagerId;
 
@@ -299,7 +304,7 @@ namespace PES.Controllers
                 newEmployee.EmployeeId = employeeModel.EmployeeId;
                 newEmployee.FirstName = employeeModel.FirstName;
                 newEmployee.LastName = employeeModel.LastName;
-                newEmployee.Email = employeeModel.Email;
+                newEmployee.Email = employeeModel.Email + "@4thsource.com";
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
                 newEmployee.ManagerId = employeeModel.SelectedManager;
 
