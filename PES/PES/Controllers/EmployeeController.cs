@@ -268,7 +268,12 @@ namespace PES.Controllers
                     model.EmployeeId = employee.EmployeeId;
                     model.FirstName = employee.FirstName;
                     model.LastName = employee.LastName;
-                    model.Email = employee.Email;
+                    //model.Email = employee.Email;
+
+                    string email = employee.Email;
+                    var emailUsername = email.Split('@');
+
+                    model.Email = emailUsername[0];
                     model.SelectedProfile = employee.ProfileId;
                     model.SelectedManager = employee.ManagerId;
 
@@ -299,7 +304,7 @@ namespace PES.Controllers
                 newEmployee.EmployeeId = employeeModel.EmployeeId;
                 newEmployee.FirstName = employeeModel.FirstName;
                 newEmployee.LastName = employeeModel.LastName;
-                newEmployee.Email = employeeModel.Email;
+                newEmployee.Email = employeeModel.Email + "@4thsource.com";
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
                 newEmployee.ManagerId = employeeModel.SelectedManager;
 
@@ -483,7 +488,7 @@ namespace PES.Controllers
             }
             else
             {
-                TempData["Error"] = "You are not loged in";
+                TempData["Error"] = "You are not logged in.";
                 return RedirectToAction("Login", "LoginUser");
             }
             
@@ -505,18 +510,18 @@ namespace PES.Controllers
                 if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
                 {
                     _employeeService.UpdateEmployee(changedEmployee);
-                    TempData["Success"] = "Employes in your org have been transfered successfuly";
+                    TempData["Success"] = "Employees in your org have been transfered successfully.";
                     return RedirectToAction("Logout", "LoginUser");
                 }
                 else
                 {
-                    TempData["Error"] = "Employyes transfering error. Please verify your information.";
+                    TempData["Error"] = "Employees transfering error. Please verify your information.";
                     return View(model);
                 }
             }
             else
             {
-                TempData["Error"] = "Invalid Manager. Please select an employee with profile higher than you";
+                TempData["Error"] = "Invalid manager. Please select an employee with a profile higher than you.";
                 return View(model);
             }
             

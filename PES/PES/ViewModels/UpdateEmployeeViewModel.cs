@@ -21,8 +21,8 @@ namespace PES.ViewModels
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage = "The email address doesn't have the correct format")]
+        //[DataType(DataType.EmailAddress)]
+        //[EmailAddress(ErrorMessage = "The email address doesn't have the correct format")]
         public string Email { get; set; }
 
         public List<SelectListItem> ListProfiles { get; set; }
