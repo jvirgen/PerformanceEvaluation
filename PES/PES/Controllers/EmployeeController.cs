@@ -460,12 +460,7 @@ namespace PES.Controllers
 
             return View(model);
         }
-
-        private int DetailsByEmail(string email)
-        {
-            return _employeeService.GetByEmail(email).EmployeeId;
-        }
-
+        
         public ActionResult DisableEmployee(int id)
         {
             var disabledEmployee = _employeeService.GetByID(id);
