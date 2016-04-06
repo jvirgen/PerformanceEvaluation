@@ -488,7 +488,7 @@ namespace PES.Controllers
             }
             else
             {
-                TempData["Error"] = "You are not loged in";
+                TempData["Error"] = "You are not logged in.";
                 return RedirectToAction("Login", "LoginUser");
             }
             
@@ -510,18 +510,18 @@ namespace PES.Controllers
                 if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
                 {
                     _employeeService.UpdateEmployee(changedEmployee);
-                    TempData["Success"] = "Employes in your org have been transfered successfuly";
+                    TempData["Success"] = "Employees in your org have been transfered successfully.";
                     return RedirectToAction("Logout", "LoginUser");
                 }
                 else
                 {
-                    TempData["Error"] = "Employyes transfering error. Please verify your information.";
+                    TempData["Error"] = "Employees transfering error. Please verify your information.";
                     return View(model);
                 }
             }
             else
             {
-                TempData["Error"] = "Invalid Manager. Please select an employee with profile higher than you";
+                TempData["Error"] = "Invalid manager. Please select an employee with a profile higher than you.";
                 return View(model);
             }
             
