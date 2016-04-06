@@ -57,7 +57,7 @@
                             </td>
                             <td>
                                 @Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, null ) |
-                                @Html.ActionLink("Details", "EmployeeDetails", "Employee", new { id = item.EmployeeId }, null) |
+                                @Html.ActionLink("Details", "EmployeeDetails", "Employee", new { email = item.Email }, null) |
                                 @Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption" })
                             </td>
                         }
@@ -79,10 +79,9 @@
                             <td style="text-decoration:line-through">
                                 @(item.Manager.FirstName + " " + item.Manager.LastName)
                             </td>
-            
                             <td>
                                 @Html.ActionLink("Edit", null) |
-                                @Html.ActionLink("Details", "EmployeeDetails", "Employee", new {id = item.EmployeeId}, null) |
+                                @Html.ActionLink("Details", "EmployeeDetails", "Employee", new {email = item.Email}, null) |
                                 @Html.ActionLink("Enable", "EnableEmployee", "Employee", new { id = item.EmployeeId }, null)
                             </td>
                          }
