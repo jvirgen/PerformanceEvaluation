@@ -325,7 +325,6 @@ namespace PES.Services
                                                                 POSITION,
                                                                 ID_PROFILE,
                                                                 ID_MANAGER,
-                                                                //HIRE_DATE,
                                                                 END_DATE) 
 
                                                         VALUES (:firstName,
@@ -335,7 +334,6 @@ namespace PES.Services
                                                                 :position,
                                                                 :idProfile,
                                                                 :idManager,
-                                                                //:hireDate,
                                                                 :endDate
                                                                 )";
 
@@ -349,7 +347,6 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("position", employee.Position));
                     command.Parameters.Add(new OracleParameter("idProfile", employee.ProfileId));
                     command.Parameters.Add(new OracleParameter("idManager", employee.ManagerId));
-                    //command.Parameters.Add(new OracleParameter("hireDate", OracleDbType.Date, employee.HireDate, ParameterDirection.Input));
                     command.Parameters.Add(new OracleParameter("endDate", OracleDbType.Date, employee.EndDate, ParameterDirection.Input));
 
                     try
@@ -416,11 +413,11 @@ namespace PES.Services
             return true;
         }
 
-        public bool TransferAllEmployees(Employee employee, int newManager)
+        public bool TransferAllEmployees(int manager, int newManager)
         {
             try
             {
-                var user = this.GetByID(employee.EmployeeId);
+                var user = this.GetByID(manager);
 
                 if (user != null)
                 {
@@ -429,14 +426,10 @@ namespace PES.Services
                         db.Open();
 
                         string InsertQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + newManager + "' " +                                                          
-                                     "WHERE ID_MANAGER='" + employee.ManagerId + "'";
+                                     "WHERE ID_MANAGER='" + manager + "'";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
                         Comand.ExecuteNonQuery();
-
-                        InsertQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + employee.ManagerId + "' " +
-                                     "ID_PROFILE='" + employee.ProfileId + "'" +
-                                     "WHERE ID_MANAGER='" + employee.ManagerId + "'";
 
                         db.Close();
                     }
