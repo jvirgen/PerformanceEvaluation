@@ -235,9 +235,9 @@ namespace PES.Services
                                            //"HIRE_DATE, " +
                                            "END_DATE, " +
                                            "PROJECT " +
-                                           "FROM EMPLOYEE" +
-                                           "WHERE ID_PORFILE = " +
-                                           porfileId;
+                                           "FROM EMPLOYEE " +
+                                           "WHERE ID_PROFILE = '" +
+                                           porfileId + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
                     OracleDataReader Read = Comand.ExecuteReader();
