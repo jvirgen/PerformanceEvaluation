@@ -135,8 +135,9 @@ namespace PES.Controllers
 
         private InsertEmployeeViewModel SetUpDropdowns(InsertEmployeeViewModel model)
         {
+            // Get profile current user 
+            var profileUser = Session["UserProfile"];
             // Get profiles
-            // test empty list of profiles, replace this line with a call to service to get the profiles
             var profiles = _profileService.GetAllProfiles();
 
             // Populate profiles 
@@ -149,7 +150,15 @@ namespace PES.Controllers
                     Value = (profile.ProfileId).ToString(),
                     Selected = false
                 };
-                profilesList.Add(newItem);
+                if((int)profileUser == (int)ProfileUser.Director)
+                {
+                    profilesList.Add(newItem);
+                }
+                else if((int)profileUser == (int)ProfileUser.Manager && newItem.Text == "Resource")
+                {
+                    profilesList.Add(newItem);
+                }
+                
             }
 
             // Get managers 
@@ -159,7 +168,7 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if(manager.ProfileId == 2 || manager.ProfileId == 3)
+                if ((int)profileUser == (int)ProfileUser.Director && manager.ProfileId == (int)ProfileUser.Director || manager.ProfileId == (int)ProfileUser.Manager)
                 {
                     var newItem = new SelectListItem()
                     {
@@ -169,6 +178,17 @@ namespace PES.Controllers
                     };
                     managersList.Add(newItem);
                 }
+                else if((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == (int)ProfileUser.Manager)
+                {
+                    var newItem = new SelectListItem()
+                    {
+                        Text = manager.FirstName + " " + manager.LastName,
+                        Value = (manager.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    managersList.Add(newItem);
+                }
+                
             }
 
             #region Set data
@@ -183,8 +203,9 @@ namespace PES.Controllers
 
         private UpdateEmployeeViewModel SetUpDropdowns(UpdateEmployeeViewModel model)
         {
+            // Get profile current user 
+            var profileUser = Session["UserProfile"];
             // Get profiles
-            // test empty list of profiles, replace this line with a call to service to get the profiles
             var profiles = _profileService.GetAllProfiles();
 
             // Populate profiles 
@@ -197,7 +218,14 @@ namespace PES.Controllers
                     Value = (profile.ProfileId).ToString(),
                     Selected = false
                 };
-                profilesList.Add(newItem);
+                if ((int)profileUser == (int)ProfileUser.Director)
+                {
+                    profilesList.Add(newItem);
+                }
+                else if ((int)profileUser == (int)ProfileUser.Manager && newItem.Text == "Resource")
+                {
+                    profilesList.Add(newItem);
+                }
             }
 
             // Get managers 
@@ -283,9 +311,6 @@ namespace PES.Controllers
             {
                 var employee = _employeeService.GetByID(id);
 
-                if (_employeeService.GetEmployeeByManager(model.EmployeeId).Count == 0)
-                {
-
                     model.EmployeeId = employee.EmployeeId;
                     model.FirstName = employee.FirstName;
                     model.LastName = employee.LastName;
@@ -300,12 +325,6 @@ namespace PES.Controllers
 
                     //ViewBag.currentUserProfileId = currentUser.ProfileId;
                     return View(model);
-                }
-                else
-                {
-                    TempData["Error"] = "You have employees in your org. Please transfer them.";
-                    return RedirectToAction("ChangeProfile");
-                }
             }
         }
 
@@ -316,7 +335,6 @@ namespace PES.Controllers
             Employee currentUser = new Employee();
             EmployeeService EmployeeService = new EmployeeService();
             currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
-
 
             if (ModelState.IsValid)
             {
@@ -333,8 +351,14 @@ namespace PES.Controllers
 
                 // Success message
                 TempData["Success"] = "Successfully updated";
-
-                return RedirectToAction("Logout", "LoginUser");
+                if(currentUser.ProfileId != newEmployee.ProfileId)
+                {
+                    return RedirectToAction("Logout", "LoginUser");
+                }
+                else
+                {
+                    return RedirectToAction("ViewEmployees", "Employee");
+                }
             }
             employeeModel = SetUpDropdowns(employeeModel);
             return View(employeeModel);
@@ -427,16 +451,16 @@ namespace PES.Controllers
                 // Error if not logged in
                 TempData["Error"] = "You are not logged in.";
 
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "UserLogin");
             }
                
         }
 
 
         [HttpGet]
-        public ActionResult EmployeeDetails(int id)
+        public ActionResult EmployeeDetails(string email)
         {
-            var employee = _employeeService.GetByID(id);
+            var employee = _employeeService.GetByEmail(email);
 
             // Get manager
             var manager = _employeeService.GetByID(employee.ManagerId);
@@ -447,17 +471,17 @@ namespace PES.Controllers
 
             model.FirstName = employee.FirstName;
             model.LastName = employee.LastName;
-            model.Email = employee.Email;            
+            model.Email = employee.Email;
             model.ProfileId = employee.ProfileId;
             model.ManagerId = employee.ManagerId;
             //model.HireDate = employee.HireDate;
             model.EndDate = employee.EndDate;
             model.Profile = porfile;
             model.Manager = manager;
-    
+
             return View(model);
         }
-
+        
         public ActionResult DisableEmployee(int id)
         {
             var disabledEmployee = _employeeService.GetByID(id);
@@ -485,7 +509,7 @@ namespace PES.Controllers
             currentUser = _employeeService.GetByEmail((string)Session["UserEmail"]);
             if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
             {
-                if (_employeeService.GetEmployeeByManager(currentUser.EmployeeId).Count > 0)
+                if (_employeeService.GetEmployeeByManager(currentUser.EmployeeId).Count > 1)
                 {
                     ChangedEmployee.FirstName = currentUser.FirstName;
                     ChangedEmployee.LastName = currentUser.LastName;

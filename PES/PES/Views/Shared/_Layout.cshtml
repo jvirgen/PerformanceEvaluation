@@ -52,7 +52,7 @@
                                 <li><a href="@Url.Action("SearchInformation", "PerformanceEvaluation")">Performance Files</a></li>
                                 <li><a href="@Url.Action("UploadFile", "PerformanceEvaluation")">Upload Performance File</a></li>
                                 <li><a href="@Url.Action("ViewEmployees","Employee")">User Administration</a></li>
-                                <li><a href="@Url.Action("ChangeProfile","Employee")">Change Profile</a></li>
+                                @*<li><a href="@Url.Action("ChangeProfile","Employee")">Change Profile</a></li>*@
                             </ul>
                         </li>
                     </ul>
@@ -65,6 +65,14 @@
                         <a type="button" class="btn btn-xs btn-sm" href="@Url.Action("Logout","LoginUser")">
                             <span class="glyphicon glyphicon-log-out"></span> Log out
                         </a>
+                        @if (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager)
+                        {
+                        <div class="text-center">
+                            <span class="glyphicon glyphicon-check"></span>
+                            <a class="btn-link" href="@Url.Action("EmployeeDetails", "Employee", new { email = Session["UserEmail"]})">View my information</a>
+                            
+                        </div>
+                        }
                     </div>
                 }
             </div>
