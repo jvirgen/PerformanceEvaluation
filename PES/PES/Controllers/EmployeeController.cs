@@ -229,6 +229,27 @@ namespace PES.Controllers
             return model;
         }
 
+        public JsonResult GetEmployeesProifile(int profile = 0)
+        {
+            // Get profile
+            //var profile = _profileService.get
+
+            // Get employees depending on the profile
+            //var employees = _employeeService.getByPorfileId((int)ProfileUser.Manager);
+            var employee1 = new Employee()
+            {
+                EmployeeId = 0,
+                FirstName = "Victor",
+                LastName = "Leon",
+                Email = "test@4thsource.com",
+                ProfileId = 2,
+                ManagerId = 0
+            };
+            var employees = new List<Employee>() { employee1 };
+
+            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+        } 
+
 
         [HttpGet]
         public ActionResult UpdateEmployee(int id)
@@ -525,6 +546,11 @@ namespace PES.Controllers
                 return View(model);
             }
             
+        }
+
+        public ActionResult getDropdownItems(int id)
+        {
+            return Json("chamara", JsonRequestBehavior.AllowGet);
         }
     }
 }
