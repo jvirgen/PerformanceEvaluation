@@ -232,7 +232,6 @@ namespace PES.Services
                                            "POSITION, " +
                                            "ID_PROFILE," +
                                            "ID_MANAGER, " +
-                                           //"HIRE_DATE, " +
                                            "END_DATE, " +
                                            "PROJECT " +
                                            "FROM EMPLOYEE " +
@@ -254,7 +253,6 @@ namespace PES.Services
                         employee.Position = Convert.ToString(Read["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
-                        //employee.HireDate = Convert.ToDateTime(Read["HIRE_DATE"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
 
