@@ -32,20 +32,22 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-2">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "textemail form-control" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
-                    <strong>@@4thsource.com</strong>
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.textEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
-                        @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%" })
+                        @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
                         @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
                     </div>
-                    @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
                     <div class="col-md-3">
-                        @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%" })
+                        @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
                         @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -66,21 +68,26 @@
     @Styles.Render("~/Content/css/select2-bootstrap.css")
     @Styles.Render("~/Content/css/select2.min.css")
     <style type="text/css">
+        .textemail
+        {
+            text-align: right;
+        }
         .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
             width: 100% !important;
         }
     </style>
 }
 @section Scripts{
+    @Scripts.Render("~/Scripts/validations.js")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/select2.min.js")
     <script type="text/javascript">
         $(document).ready(function () {
             $("#SelectedManager").select2({
-                multiple: false,
-                minimumInputLength: 0,
-                placeholder: "Search for resources",
+
             });
+
+            $("#test").select2();
         });
     </script>
 }
