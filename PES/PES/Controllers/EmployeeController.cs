@@ -437,7 +437,7 @@ namespace PES.Controllers
                
         }
 
-        public JsonResult GetEmployeesStatus(string email)
+        public JsonResult GetEmployeeStatus(string email)
         {
             //Get all employees depending profile
             var employees = _employeeService.GetByEmail(email);
