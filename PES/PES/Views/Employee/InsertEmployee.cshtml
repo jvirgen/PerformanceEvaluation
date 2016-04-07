@@ -48,11 +48,13 @@
                                 @Html.DropDownListFor(m => m.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
                                 @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
                             </div>
-                            @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
-                            <div class="col-md-3">
-                                @Html.DropDownListFor(m => m.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
-                                @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
-                            </div>
+                            <div id="dropdownManager">
+                                @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(m => m.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
+                                    @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
+                                </div>
+                            </div>                           
                         </div>
                         @*<div class="form-group">
                                 @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2"})
@@ -99,7 +101,9 @@
 
                 });
 
-                $("#test").select2();
+                //$("#selectedManager").validations({
+
+                //});
             });
     </script>
 }
