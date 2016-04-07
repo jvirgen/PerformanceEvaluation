@@ -257,24 +257,12 @@ namespace PES.Controllers
             return model;
         }
 
-        public JsonResult GetEmployeesProifile(int profile = 0)
+        public JsonResult GetEmployeesProifile(int profile)
         {
-            // Get profile
-            //var profile = _profileService.get
-
-            // Get employees depending on the profile
-            //var employees = _employeeService.getByPorfileId((int)ProfileUser.Manager);
-            var employee1 = new Employee()
-            {
-                EmployeeId = 0,
-                FirstName = "Victor",
-                LastName = "Leon",
-                Email = "test@4thsource.com",
-                ProfileId = 2,
-                ManagerId = 0
-            };
-            var employees = new List<Employee>() { employee1 };
-
+            //Get all employees depending profile
+            var employees = _employeeService.getByPorfileId((profile + 1));
+           
+            //Return employees json file
             return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
         } 
 
@@ -351,14 +339,7 @@ namespace PES.Controllers
 
                 // Success message
                 TempData["Success"] = "Successfully updated";
-                if(currentUser.ProfileId != newEmployee.ProfileId)
-                {
-                    return RedirectToAction("Logout", "LoginUser");
-                }
-                else
-                {
-                    return RedirectToAction("ViewEmployees", "Employee");
-                }
+                return RedirectToAction("ViewEmployees", "Employee");
             }
             employeeModel = SetUpDropdowns(employeeModel);
             return View(employeeModel);
@@ -456,6 +437,15 @@ namespace PES.Controllers
                
         }
 
+        public JsonResult GetEmployeeStatus(string email)
+        {
+            //Get all employees depending profile
+            var employees = _employeeService.GetByEmail(email);
+
+            //Return employees json file
+            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public ActionResult EmployeeDetails(string email)
@@ -500,7 +490,7 @@ namespace PES.Controllers
             return RedirectToAction("ViewEmployees");
         }
 
-        //[HttpGet]
+        [HttpGet]
         public ActionResult ChangeProfile()
         {
             // Get current user  
@@ -572,9 +562,5 @@ namespace PES.Controllers
             
         }
 
-        public ActionResult getDropdownItems(int id)
-        {
-            return Json("chamara", JsonRequestBehavior.AllowGet);
-        }
     }
 }

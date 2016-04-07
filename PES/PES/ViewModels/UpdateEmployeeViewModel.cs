@@ -33,6 +33,19 @@ namespace PES.ViewModels
         [Display(Name = "Manager")]
         public int SelectedManager { get; set; }
 
+        string _textEmail = "@4thsource.com";
+        public string textEmail
+        {
+            get
+            {
+                return _textEmail;
+            }
+            set
+            {
+                _textEmail = value;
+            }
+        }
+
         //public string Customer { get; set; }
         //public string Position { get; set; }
         //public string Project { get; set; }

@@ -2,32 +2,38 @@
     $('#selectedProfile').change(function () {
         var profile = parseInt($('#selectedProfile').val());
 
-        $.getJSON('/Employee/GetEmployeesProifile/' + profile, function (data) {
+        $.getJSON('/Employee/GetEmployeesProifile?profile=' + profile, function (data) {
 
             if (profile == 1) {
-                $('#profileLabel').val("Manager");
+                $('#profileLabel').text("Manager");
+                $('#profileLabel').show();
+                $('#selectedManager').show();
+                // Remove current options dropdown
+                $('#selectedManager').children().remove();
+                // Loop data from ajax call
+                for (var i = 0; i < data.employees.length; i++) {
+                    var employee = data.employees[i];
+                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
+
             }
             else if (profile == 2) {
-                $('#profileLabel').val("Director");
+                $('#profileLabel').text("Director");
+                $('#profileLabel').show();
+                $('#selectedManager').show();
+                // Remove current options dropdown
+                $('#selectedManager').children().remove();
+                // Loop data from ajax call
+                for (var i = 0; i < data.employees.length; i++)
+                {
+                    var employee = data.employees[i];
+                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
             }
             else if (profile == 3) {
                 $('#profileLabel').hide();
                 $('#selectedManager').hide();
             }
-
-            // Remove current options dropdown
-            $('#selectedManager').children().remove();
-
-            $('#selectedManager').show();
-
-            // Loop data from ajax call
-            for (var i = 0; i < data.employees.length; i++) {
-                var employee = data.employees[i];
-
-                $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-
-            }
-
         });
     });
 
