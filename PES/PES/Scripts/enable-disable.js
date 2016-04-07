@@ -1,38 +1,24 @@
 ﻿$(document).ready(function () {
     $('#DisableOption').click(function () {
-        var email = parseInt($(this).parent().siblings().first().next().next());
+        var email = parseInt($(this).parent().siblings().first().next().next().text());
 
-        $.getJSON('/Employee/GetEmployeesProifile?email=' + profile, function (data) {
+        $.getJSON('/Employee/GetEmployeeStatus?email=' + email, function (data) {
 
-            if (profile == 1) {
-                $('#profileLabel').text("Manager");
+            if (data.EndDate != null) {
+                $(this).parent().siblings().text().css()
                 $('#profileLabel').show();
                 $('#selectedManager').show();
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
-                // Loop data from ajax call
-                for (var i = 0; i < data.employees.length; i++) {
-                    var employee = data.employees[i];
-                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                }
-
             }
-            else if (profile == 2) {
+            else if (data.EndDate == null) {
                 $('#profileLabel').text("Director");
                 $('#profileLabel').show();
                 $('#selectedManager').show();
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
-                // Loop data from ajax call
-                for (var i = 0; i < data.employees.length; i++)
-                {
-                    var employee = data.employees[i];
-                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                }
             }
-            else if (profile == 3) {
-                $('#profileLabel').hide();
-                $('#selectedManager').hide();
-            }
+
         });
     });
+});

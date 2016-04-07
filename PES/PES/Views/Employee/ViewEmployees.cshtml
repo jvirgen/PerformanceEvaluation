@@ -61,7 +61,7 @@
                                 @Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption" })
                             </td>
                         }
-                        else
+                        @*else
                         {
                             <td style="text-decoration:line-through">
                                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -82,9 +82,9 @@
                             <td>
                                 @Html.ActionLink("Edit", null) |
                                 @Html.ActionLink("Details", "EmployeeDetails", "Employee", new {email = item.Email}, null) |
-                                @Html.ActionLink("Enable", "EnableEmployee", "Employee", new { id = item.EmployeeId }, null)
+                                @Html.ActionLink("Enable", "EnableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption"})
                             </td>
-                         }
+                         }*@
                     </tr>
                 }
                 </tbody>

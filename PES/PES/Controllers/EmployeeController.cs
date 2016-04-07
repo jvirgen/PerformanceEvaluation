@@ -339,14 +339,7 @@ namespace PES.Controllers
 
                 // Success message
                 TempData["Success"] = "Successfully updated";
-                if(currentUser.ProfileId != newEmployee.ProfileId)
-                {
-                    return RedirectToAction("Logout", "LoginUser");
-                }
-                else
-                {
-                    return RedirectToAction("ViewEmployees", "Employee");
-                }
+                return RedirectToAction("ViewEmployees", "Employee");
             }
             employeeModel = SetUpDropdowns(employeeModel);
             return View(employeeModel);
@@ -442,6 +435,15 @@ namespace PES.Controllers
                 return RedirectToAction("Login", "UserLogin");
             }
                
+        }
+
+        public JsonResult GetEmployeesStatus(string email)
+        {
+            //Get all employees depending profile
+            var employees = _employeeService.GetByEmail(email);
+
+            //Return employees json file
+            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
         }
 
 
