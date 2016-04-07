@@ -249,6 +249,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\enable-disable.js" />
     <Content Include="Scripts\ExportDataTables\buttons.html5.min.js" />
     <Content Include="Scripts\ExportDataTables\dataTables.buttons.min.js" />
     <Content Include="Scripts\ExportDataTables\jszip.min.js" />
