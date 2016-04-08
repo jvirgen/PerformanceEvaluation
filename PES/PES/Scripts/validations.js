@@ -7,6 +7,7 @@
             $('#profileLabel').text("Manager");
             //Remove span option
             $("#select2-selectedManager-container").text("Select a Manager--");
+            $("#select2-selectedManager-container").attr("title", "");
             // Remove current options dropdown
             $('#selectedManager').children().remove();
             // Loop data from ajax call
@@ -23,6 +24,7 @@
             $('#profileLabel').text("Director");
             //Remove span option
             $("#select2-selectedManager-container").text("Select a Director--");
+            $("#select2-selectedManager-container").attr("title", "");
             // Remove current options dropdown
             $('#selectedManager').children().remove();
             // Loop data from ajax call
@@ -51,6 +53,7 @@
                 //$('#selectedManager').show();
                 //Remove span option
                 $("#select2-selectedManager-container").text("Select a Manager--");
+                $("#select2-selectedManager-container").attr("title", "");
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
                 // Loop data from ajax call
@@ -69,6 +72,7 @@
                 //$('#selectedManager').show();
                 //Remove span option
                 $("#select2-selectedManager-container").text("Select a Director--");
+                $("#select2-selectedManager-container").attr("title", "");
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
                 // Loop data from ajax call

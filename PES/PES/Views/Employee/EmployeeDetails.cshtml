@@ -36,11 +36,11 @@
                 </dd>
                 <br />
                 @if ((int)Session["UserProfile"] == (int)ProfileUser.Resource){
-                    <dd>Manager</dd>
+                    <dd><strong>Manager</strong></dd>
                 }
                 else if ((int)Session["UserProfile"] == (int)ProfileUser.Manager)
                 {
-                    <dd>Director</dd>
+                    <dd><strong>Director</strong></dd>
                 }
                 else
                 {
