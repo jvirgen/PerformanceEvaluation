@@ -499,32 +499,31 @@ namespace PES.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangeProfile()
+        public ActionResult ChangeProfile(string email)
         {
-            // Get current user  
-            Employee currentUser = new Employee();
             ChangeProfileViewModel ChangedEmployee = new ChangeProfileViewModel();
-            currentUser = _employeeService.GetByEmail((string)Session["UserEmail"]);
-            if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
-            {
-                if (_employeeService.GetEmployeeByManager(currentUser.EmployeeId).Count > 1)
-                {
-                    ChangedEmployee.FirstName = currentUser.FirstName;
-                    ChangedEmployee.LastName = currentUser.LastName;
-                    ChangedEmployee.Email = currentUser.Email;
-                    ChangedEmployee.SelectedProfile = currentUser.ProfileId;
-                    ChangedEmployee.SelectedManager = currentUser.ManagerId;
-                    SetUpDropdowns(ChangedEmployee);
+            var employee = _employeeService.GetByEmail(email + "@4thsource.com");
 
-                    return View(ChangedEmployee);
+            if((int)Session["UserProfile"] != (int)ProfileUser.Resource)
+            {
+                ChangedEmployee.FirstName = employee.FirstName;
+                ChangedEmployee.LastName = employee.LastName;
+                ChangedEmployee.Email = employee.Email;
+                ChangedEmployee.SelectedProfile = employee.ProfileId;
+                ChangedEmployee.SelectedManager = employee.ManagerId;
+                SetUpDropdowns(ChangedEmployee);
+                if(_employeeService.GetEmployeeByManager(employee.EmployeeId).Count > 1)
+                {
+                    ChangedEmployee.org = true;
                 }
                 else
                 {
-                    TempData["Error"] = "You do not have employees in you org to transfer";
-                    return RedirectToAction("UpdateEmployee", new { id = currentUser.EmployeeId });
+                    ChangedEmployee.org = false;
                 }
+
+                return View(ChangedEmployee);
             }
-            else if(currentUser.ProfileId == (int)ProfileUser.Resource)
+            else if((int)Session["UserProfile"] == (int)ProfileUser.Resource)
             {
                 TempData["Error"] = "Resources are not allowed to change his profile";
                 return RedirectToAction("ViewEmployees");
@@ -540,31 +539,26 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult ChangeProfile(ChangeProfileViewModel model)
         {
-
-            Employee changedEmployee = new Employee();
-            changedEmployee = _employeeService.GetByEmail(model.Email);
-            
+            var changedEmployee = _employeeService.GetByEmail(model.Email);
             changedEmployee.ManagerId = model.SelectedManager;
             changedEmployee.ProfileId = model.SelectedProfile;
-
-            if(_employeeService.GetByID(changedEmployee.ManagerId).ProfileId > changedEmployee.ProfileId || (_employeeService.GetByID(changedEmployee.ManagerId).EmployeeId == changedEmployee.EmployeeId && changedEmployee.ProfileId == (int)ProfileUser.Director))
+            //change value of new manager in case org does not exist
+            if (!model.org)
             {
-                //Send info to service
-                if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
-                {
-                    _employeeService.UpdateEmployee(changedEmployee);
-                    TempData["Success"] = "Employees in your org have been transfered successfully.";
-                    return RedirectToAction("Logout", "LoginUser");
-                }
-                else
-                {
-                    TempData["Error"] = "Employees transfering error. Please verify your information.";
-                    return View(model);
-                }
+                model.NewManager = 0;
+            }
+
+             //Send info to service
+            if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
+            {
+                TempData["Success"] = "Employees in your org have been transfered successfully.";
+                _employeeService.UpdateEmployee(changedEmployee);
+                TempData["Success"] = "Your profile has been updated successfully.";
+                return RedirectToAction("Logout", "LoginUser");
             }
             else
             {
-                TempData["Error"] = "Invalid manager. Please select an employee with a profile higher than you.";
+                TempData["Error"] = "Employees transfering error. Please verify your information.";
                 return View(model);
             }
             

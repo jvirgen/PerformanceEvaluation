@@ -8,14 +8,19 @@
             //Remove span option
             $("#select2-selectedManager-container").text("Select a Manager--");
             $("#select2-selectedManager-container").attr("title", "");
+            $("#select2-selectedNewManager-container").text("Select a Manager--");
+            $("#select2-selectedNewManager-container").attr("title", "");
             // Remove current options dropdown
             $('#selectedManager').children().remove();
+            $('#selectedNewManager').children().remove();
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
                 $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
             }
             $('#dropdownManager').show();
+            $('#dropdownNewManager').show();
 
 
 
@@ -25,20 +30,26 @@
             //Remove span option
             $("#select2-selectedManager-container").text("Select a Director--");
             $("#select2-selectedManager-container").attr("title", "");
+            $("#select2-selectedNewManager-container").text("Select a Director--");
+            $("#select2-selectedNewManager-container").attr("title", "");
             // Remove current options dropdown
             $('#selectedManager').children().remove();
+            $('#selectedNewManager').children().remove();
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
                 $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
             }
             $('#dropdownManager').show();
-
+            $('#dropdownNewManager').show();
         }
         else if (profile == 3) {
             // Remove current options dropdown
             $('#selectedManager').children().remove();
+            $('#selectedNewManager').children().remove();
             $('#dropdownManager').hide();
+            $('#dropdownNewManager').hide();
         }
     });
 
@@ -54,16 +65,19 @@
                 //Remove span option
                 $("#select2-selectedManager-container").text("Select a Manager--");
                 $("#select2-selectedManager-container").attr("title", "");
+                $("#select2-selectedNewManager-container").text("Select a Manager--");
+                $("#select2-selectedNewManager-container").attr("title", "");
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
+                $('#selectedNewManager').children().remove();
                 // Loop data from ajax call
                 for (var i = 0; i < data.employees.length; i++) {
                     var employee = data.employees[i];
                     $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
                 }
                 $('#dropdownManager').show();
-
-               
+                $('#dropdownNewManager').show();
 
             }
             else if (profile == 2) {
@@ -73,14 +87,19 @@
                 //Remove span option
                 $("#select2-selectedManager-container").text("Select a Director--");
                 $("#select2-selectedManager-container").attr("title", "");
+                $("#select2-selectedNewManager-container").text("Select a Director--");
+                $("#select2-selectedNewManager-container").attr("title", "");
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
+                $('#selectedNewManager').children().remove();
                 // Loop data from ajax call
                 for (var i = 0; i < data.employees.length; i++) {
                     var employee = data.employees[i];
                     $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
                 }
                 $('#dropdownManager').show();
+                $('#dropdownNewManager').show();
                 
             }
             else if (profile == 3) {
@@ -88,6 +107,8 @@
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
                 $('#dropdownManager').hide();
+                $('#selectedNewManager').children().remove();
+                $('#dropdownNewManager').hide();
             }
         });
     });
