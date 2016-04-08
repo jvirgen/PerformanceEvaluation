@@ -466,7 +466,7 @@ namespace PES.Controllers
             var porfile = _profileService.GetProfileByID(employee.ProfileId);
 
             EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
-
+            model.EmployeeId = employee.EmployeeId;
             model.FirstName = employee.FirstName;
             model.LastName = employee.LastName;
             model.Email = employee.Email;

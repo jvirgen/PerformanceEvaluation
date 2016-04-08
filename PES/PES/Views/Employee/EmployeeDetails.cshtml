@@ -9,11 +9,8 @@
 <div class="row">
     <div class="col-md-12 well">
         <h3>Employee information</h3>
-
-        <div>
-
             <hr />
-            <dl class="dl-horizontal">
+            <td class="dl-horizontal">
                 <dt>
                     Name
                 </dt>
@@ -38,22 +35,24 @@
                     @Html.DisplayFor(model => model.Profile.Name)
                 </dd>
                 <br />
-                <dt>
-                    Manager
-                </dt>
-
-                <dd>
-                    @(Model.Manager.FirstName + " " + Model.Manager.LastName)
-                </dd>
+                @if ((int)Session["UserProfile"] == (int)ProfileUser.Resource){
+                    <dd>Manager</dd>
+                }
+                else if ((int)Session["UserProfile"] == (int)ProfileUser.Manager)
+                {
+                    <dd>Director</dd>
+                }
+                else
+                {
+                    <dd></dd>
+                }
+                @if ((int)Session["UserProfile"] != (int)ProfileUser.Director)
+                {
+                    <dd>
+                        @(Model.Manager.FirstName + " " + Model.Manager.LastName)
+                    </dd>
+                }
                 <br />
-                @*<dt>
-                    @Html.DisplayNameFor(model => model.HireDate)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.HireDate)
-                </dd>
-                <br />*@
                 <dt>
                     @Html.DisplayNameFor(model => model.EndDate)
                 </dt>
@@ -61,14 +60,19 @@
                 <dd>
                     @Html.DisplayFor(model => model.EndDate)
                 </dd>
-        </div>
-        </div>
+          </td>
     </div>
+</div>
         @if ((int)Session["UserProfile"] != (int)ProfileUser.Resource)
         {
             <p>
-                @*@Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId }) |*@
-                @Html.ActionLink("Back to List", "ViewEmployees")
+               
+                @Html.ActionLink("Back to List", "ViewEmployees") |
+            
+                @if ((int)Session["UserProfile"] == (int)ProfileUser.Director)
+                {
+                    @Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId})
+                }
             </p>
         }
         else if ((int)Session["UserProfile"] == (int)ProfileUser.Resource)
