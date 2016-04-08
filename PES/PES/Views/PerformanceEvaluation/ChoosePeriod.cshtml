@@ -62,7 +62,7 @@ else if (currentUserProfile == (int)ProfileUser.Resource)
 {
     <hr />
     <div>
-        @Html.ActionLink("View Employee Details", "ViewEmployees", "Employee", new { @id = userID }, null)
+        @Html.ActionLink("View Employee Details", "EmployeeDetails", "Employee", new { @email = userEmail }, null)       
     </div>
 }
 

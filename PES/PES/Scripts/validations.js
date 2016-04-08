@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    var profile = parseInt($('#selectedProfile').val());
+    // Execute validate profile function
+
     $('#selectedProfile').change(function () {
         var profile = parseInt($('#selectedProfile').val());
 
@@ -6,8 +9,10 @@
 
             if (profile == 1) {
                 $('#profileLabel').text("Manager");
-                $('#profileLabel').show();
-                $('#selectedManager').show();
+                //$('#profileLabel').show();
+                //$('#selectedManager').show();
+                $('#dropdownManager').show();
+
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
                 // Loop data from ajax call
@@ -19,8 +24,10 @@
             }
             else if (profile == 2) {
                 $('#profileLabel').text("Director");
-                $('#profileLabel').show();
-                $('#selectedManager').show();
+                //$('#profileLabel').show();
+                //$('#selectedManager').show();
+                $('#dropdownManager').show();
+
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
                 // Loop data from ajax call
@@ -31,8 +38,8 @@
                 }
             }
             else if (profile == 3) {
-                $('#profileLabel').hide();
-                $('#selectedManager').hide();
+                //$('#profileLabel').hide();
+                $('#dropdownManager').hide();
             }
         });
     });

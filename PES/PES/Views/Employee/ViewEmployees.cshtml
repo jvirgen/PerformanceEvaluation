@@ -38,8 +38,8 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        @*@if (item.EndDate == null)
-                        {*@
+                        @if (item.EndDate == null)
+                        {
                             <td>
                                 @Html.DisplayFor(modelItem => item.FirstName)
                             </td>
@@ -60,8 +60,8 @@
                                 @Html.ActionLink("Details", "EmployeeDetails", "Employee", new { email = item.Email }, null) |
                                 @Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption" + item.EmployeeId})
                             </td>
-                         @*}*@
-                        @*else
+                         }
+                        else
                         {
                             <td style="text-decoration:line-through">
                                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -84,7 +84,7 @@
                                 @Html.ActionLink("Details", "EmployeeDetails", "Employee", new {email = item.Email}, null) |
                                 @Html.ActionLink("Enable", "EnableEmployee", "Employee", new { id = item.EmployeeId }, null)
                             </td>
-                         }*@
+                         }
                     </tr>
                 }
                 </tbody>

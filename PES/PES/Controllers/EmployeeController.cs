@@ -235,7 +235,17 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if (manager.ProfileId == 2 || manager.ProfileId == 3)
+                if((int)profileUser == (int)ProfileUser.Director && (manager.ProfileId == 2 || manager.ProfileId == 3))
+                {
+                    var newItem = new SelectListItem()
+                    {
+                        Text = manager.FirstName + " " + manager.LastName,
+                        Value = (manager.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    managersList.Add(newItem);
+                }
+                else if ((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == 2)
                 {
                     var newItem = new SelectListItem()
                     {
