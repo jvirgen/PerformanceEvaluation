@@ -516,9 +516,8 @@ namespace PES.Services
                         employee.Email = Convert.ToString(Reader["EMAIL"]);
                         employee.Customer = Convert.ToString(Reader["CUSTOMER"]);
                         employee.Position = Convert.ToString(Reader["POSITION"]);
-                        employee.ManagerId = Convert.ToInt32(Reader["ID_PROFILE"]);
+                        employee.ProfileId = Convert.ToInt32(Reader["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Reader["ID_MANAGER"]);
-                        //employee.HireDate = Convert.ToDateTime(Reader["HIRE_DATE"]);
                         string endDate = Convert.ToString(Reader["END_DATE"]);
                         employee.Project = Convert.ToString(Reader["PROJECT"]);
 
