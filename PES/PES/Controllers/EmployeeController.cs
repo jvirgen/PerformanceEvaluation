@@ -82,7 +82,6 @@ namespace PES.Controllers
                 newEmployee.Email = employeeModel.Email + "@4thsource.com";
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
                 newEmployee.ManagerId = employeeModel.SelectedManager;
-                //newEmployee.HireDate = employeeModel.HireDate;
                 newEmployee.Customer = "No customer";
                 newEmployee.Position = "Not specified";
 
@@ -426,7 +425,6 @@ namespace PES.Controllers
                 model.Position = employee.Position;
                 model.ProfileId = employee.ProfileId;
                 model.ManagerId = employee.ManagerId;
-                //model.HireDate = employee.HireDate;
                 model.EndDate = employee.EndDate;
                 model.Project = employee.Project;
                 model.Profile = porfile;
@@ -468,7 +466,7 @@ namespace PES.Controllers
             var porfile = _profileService.GetProfileByID(employee.ProfileId);
 
             EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
-
+            model.EmployeeId = employee.EmployeeId;
             model.FirstName = employee.FirstName;
             model.LastName = employee.LastName;
             model.Email = employee.Email;
