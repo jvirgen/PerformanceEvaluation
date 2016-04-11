@@ -475,6 +475,129 @@ namespace PES.Services
             }
         }
 
+        public List<Employee> getEnabledEmployees()
+        {
+            List<Employee> employees = new List<Employee>();
+            Employee employee = new Employee();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = "SELECT ID_EMPLOYEE, " +
+                                           "FIRST_NAME, " +
+                                           "LAST_NAME, " +
+                                           "EMAIL, " +
+                                           "CUSTOMER, " +
+                                           "POSITION, " +
+                                           "ID_PROFILE," +
+                                           "ID_MANAGER, " +
+                                           "END_DATE, " +
+                                           "PROJECT " +
+                                           "FROM EMPLOYEE " +
+                                           "WHERE END_DATE = '" +
+                                           null + "'";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        employee = new Employee();
+                        employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
+                        employee.LastName = Convert.ToString(Read["LAST_NAME"]);
+                        employee.Email = Convert.ToString(Read["EMAIL"]);
+                        employee.Customer = Convert.ToString(Read["CUSTOMER"]);
+                        employee.Position = Convert.ToString(Read["POSITION"]);
+                        employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
+                        employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
+                        string endDate = Convert.ToString(Read["END_DATE"]);
+                        employee.Project = Convert.ToString(Read["PROJECT"]);
+
+                        if (!string.IsNullOrEmpty(endDate))
+                        {
+                            employee.EndDate = Convert.ToDateTime(endDate);
+                        }
+                        else
+                        {
+                            employee.EndDate = null;
+                        }
+                        employees.Add(employee);
+                    }
+                    db.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return employees;
+        }
+
+        public List<Employee> getDisabledEmployees()
+        {
+            List<Employee> employees = new List<Employee>();
+            Employee employee = new Employee();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = "SELECT ID_EMPLOYEE, " +
+                                           "FIRST_NAME, " +
+                                           "LAST_NAME, " +
+                                           "EMAIL, " +
+                                           "CUSTOMER, " +
+                                           "POSITION, " +
+                                           "ID_PROFILE," +
+                                           "ID_MANAGER, " +
+                                           "END_DATE, " +
+                                           "PROJECT " +
+                                           "FROM EMPLOYEE " +
+                                           "WHERE END_DATE IS NOT NULL";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        employee = new Employee();
+                        employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
+                        employee.LastName = Convert.ToString(Read["LAST_NAME"]);
+                        employee.Email = Convert.ToString(Read["EMAIL"]);
+                        employee.Customer = Convert.ToString(Read["CUSTOMER"]);
+                        employee.Position = Convert.ToString(Read["POSITION"]);
+                        employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
+                        employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
+                        string endDate = Convert.ToString(Read["END_DATE"]);
+                        employee.Project = Convert.ToString(Read["PROJECT"]);
+
+                        if (!string.IsNullOrEmpty(endDate))
+                        {
+                            employee.EndDate = Convert.ToDateTime(endDate);
+                        }
+                        else
+                        {
+                            employee.EndDate = null;
+                        }
+                        employees.Add(employee);
+                    }
+                    db.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return employees;
+        }
+
         //Get User Name to show in the Resource view 
         public string UserName()
         {
