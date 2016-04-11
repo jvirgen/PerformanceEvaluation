@@ -542,14 +542,9 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult ChangeProfile(ChangeProfileViewModel model)
         {
-            var changedEmployee = _employeeService.GetByEmail(model.Email);
+            var changedEmployee = _employeeService.GetByEmail(model.Email + "@4thsource.com");
             changedEmployee.ManagerId = model.SelectedManager;
             changedEmployee.ProfileId = model.SelectedProfile;
-            //change value of new manager in case org does not exist
-            if (!model.org)
-            {
-                model.NewManager = 0;
-            }
 
              //Send info to service
             if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
