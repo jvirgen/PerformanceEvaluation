@@ -454,6 +454,33 @@ namespace PES.Controllers
             return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetEnabledEmployees()
+        {
+            //List<EmployeeDetailsViewModel> EnabledEmployeesList = new List<EmployeeDetailsViewModel>();
+            var employees = _employeeService.getEnabledEmployees();
+            //foreach(var item in employees)
+            //{
+            //    EmployeeDetailsViewModel EnableEmployee = new EmployeeDetailsViewModel();
+            //    EnableEmployee.EmployeeId = item.EmployeeId;
+            //    EnableEmployee.FirstName = item.FirstName;
+            //    EnableEmployee.LastName = item.LastName;
+            //    EnableEmployee.Email = item.Email;
+            //    EnableEmployee.ProfileId = item.ProfileId;
+            //    EnableEmployee.ManagerId = item.ManagerId;
+            //    EnableEmployee.Profile = _profileService.GetProfileByID(item.ProfileId);
+            //    EnableEmployee.Manager = _employeeService.GetByID(item.ManagerId);
+
+            //    EnabledEmployeesList.Add(EnableEmployee);
+            //}
+            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDisabledEmployees()
+        {
+            var employees = _employeeService.getDisabledEmployees();
+            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public ActionResult EmployeeDetails(string email)
