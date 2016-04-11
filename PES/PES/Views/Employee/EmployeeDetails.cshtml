@@ -35,10 +35,10 @@
                     @Html.DisplayFor(model => model.Profile.Name)
                 </dd>
                 <br />
-                @if ((int)Session["UserProfile"] == (int)ProfileUser.Resource){
+                @if (Model.ProfileId == (int)ProfileUser.Resource){
                     <dd><strong>Manager</strong></dd>
                 }
-                else if ((int)Session["UserProfile"] == (int)ProfileUser.Manager)
+                else if (Model.ProfileId == (int)ProfileUser.Manager)
                 {
                     <dd><strong>Director</strong></dd>
                 }
@@ -46,7 +46,7 @@
                 {
                     <dd></dd>
                 }
-                @if ((int)Session["UserProfile"] != (int)ProfileUser.Director)
+                @if (Model.ProfileId != (int)ProfileUser.Director)
                 {
                     <dd>
                         @(Model.Manager.FirstName + " " + Model.Manager.LastName)
@@ -73,36 +73,19 @@
                         @Html.DisplayFor(model => model.EndDate)
                     </dd>
                 }
-
+                @if (Model.ProfileId == (int)ProfileUser.Resource)
+                {
+                    <dt><strong>Director</strong></dt>
+                    <dd>
+                        @(Model.Director.FirstName + " " + Model.Director.LastName)
+                    </dd>
+                }
+                else
+                {
+                    <dt></dt>
+                    <dd></dd>
+                }
                 <br />
-                
-                    @if (Model.ProfileId == (int)ProfileUser.Resource)
-                    {
-                        <dt>
-                            <strong>Org</strong>
-                        </dt>
-                        <dd>
-                            @(Model.FirstName + " " + Model.LastName + " > " + Model.Manager.FirstName + " " + Model.Manager.LastName + " > " + Model.Director.FirstName + " " + Model.Director.LastName)
-                        </dd>
-                    }
-                    else if (Model.ProfileId == (int)ProfileUser.Manager)
-                    {
-                        <dt>
-                            <strong>Org</strong>
-                        </dt>
-                        <dd>
-                            @(Model.FirstName + " " + Model.LastName + " > " + Model.Manager.FirstName + " " + Model.Manager.LastName)
-                        </dd>
-                    }
-                    else
-                    {
-                        <dt hidden>
-                            <strong>Org</strong>
-                        </dt>
-                        <dd hidden>
-                            
-                        </dd>
-                    }
           </td>
     </div>
 </div>
