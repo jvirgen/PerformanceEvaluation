@@ -462,6 +462,8 @@ namespace PES.Controllers
 
             // Get manager
             var manager = _employeeService.GetByID(employee.ManagerId);
+            //Get director
+            var director = _employeeService.GetByID(manager.ManagerId);
             // Get profile
             var porfile = _profileService.GetProfileByID(employee.ProfileId);
 
@@ -476,6 +478,7 @@ namespace PES.Controllers
             model.EndDate = employee.EndDate;
             model.Profile = porfile;
             model.Manager = manager;
+            model.Director = director;
 
             return View(model);
         }
