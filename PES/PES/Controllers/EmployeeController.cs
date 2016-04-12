@@ -454,6 +454,16 @@ namespace PES.Controllers
             return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
         }
 
+        //public JsonResult DisableEmployeeAjax(int id)
+        //{
+        //    var employee = _employeeService.GetByID(id);
+        //    employee.EndDate = DateTime.Now;
+        //    _employeeService.UpdateEmployee(employee);
+
+        //    //Return employees json file
+        //    return Json(new { employes = employee }, JsonRequestBehavior.AllowGet);
+        //}
+
         public JsonResult GetEnabledEmployees()
         {
             //List<EmployeeDetailsViewModel> EnabledEmployeesList = new List<EmployeeDetailsViewModel>();
