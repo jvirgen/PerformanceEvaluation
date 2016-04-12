@@ -4,9 +4,8 @@
 
     if (enableCheck) {
         $('#table-employees').children('tbody').remove();
-        $.getJSON('/Employee/GetEmployeesProifile?profile=', function (data) {
+        $.getJSON('/Employee/GetEnabledEmployees', function (data) {
 
-            //ciclo
         
         });
     }
