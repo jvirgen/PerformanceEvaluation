@@ -495,8 +495,7 @@ namespace PES.Services
                                            "END_DATE, " +
                                            "PROJECT " +
                                            "FROM EMPLOYEE " +
-                                           "WHERE END_DATE = '" +
-                                           null + "'";
+                                           "WHERE END_DATE IS NULL";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
                     OracleDataReader Read = Comand.ExecuteReader();
