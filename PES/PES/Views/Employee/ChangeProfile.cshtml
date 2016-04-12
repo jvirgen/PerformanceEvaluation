@@ -54,7 +54,7 @@
                 </div>
                 <hr />
                 
-                    @if (Model.org)
+                    @if (Model.Assigned.Count > 1)
                     {
                         <div class="form-group">
                             <div id="dropdownNewManager">
@@ -85,6 +85,66 @@
                     </div>
                 </div>
             </div>
+            @*<hr />
+            <div class="form-horizontal">
+                <div class="well">
+                    @if ((int)Session["UserProfile"] == (int)ProfileUser.Director)
+                    {
+                        <div class="col-sm-pull-6"><h4>Managers</h4></div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-pull-6"><h4>Resources</h4></div>
+                    }
+                    <table class="table" id="table-employees">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LastName)
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                @if ((int)Session["UserProfile"] == (int)ProfileUser.Director)
+                                {
+                                    <th>
+                                        New Director
+                                    </th>
+                                }
+                                else
+                                {
+                                    <th>
+                                        New Manager
+                                    </th>
+                                }
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Assigned)
+                        {
+                            <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(modelItem => item.SelectedManager, item.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager"})
+                                    </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>*@
         }
     </div>
 </div>
@@ -115,6 +175,11 @@
                 placeholder: "Search for resources",
             });
             $("#selectedNewManager").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+            $(".inlined form-control valid").select2({
                 multiple: false,
                 minimumInputLength: 0,
                 placeholder: "Search for resources",
