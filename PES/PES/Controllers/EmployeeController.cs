@@ -538,19 +538,11 @@ namespace PES.Controllers
                 ChangedEmployee.Email = employee.Email;
                 ChangedEmployee.SelectedProfile = employee.ProfileId;
                 ChangedEmployee.SelectedManager = employee.ManagerId;
+                ChangedEmployee.CurrentProfile = _profileService.GetProfileByID(employee.ProfileId);
                 SetUpDropdowns(ChangedEmployee);
 
                 foreach(var item in _employeeService.GetEmployeeByManager(employee.EmployeeId)) {
-                    UpdateEmployeeViewModel AsignedEmplyee = new UpdateEmployeeViewModel();
-                    AsignedEmplyee.EmployeeId = item.EmployeeId;
-                    AsignedEmplyee.FirstName = item.FirstName;
-                    AsignedEmplyee.LastName = item.LastName;
-                    AsignedEmplyee.SelectedManager = item.ManagerId;
-                    AsignedEmplyee.SelectedProfile = item.ProfileId;
-                    AsignedEmplyee.Email = item.Email;
-                    SetUpDropdowns(AsignedEmplyee);
-
-                    ChangedEmployee.Assigned.Add(AsignedEmplyee);
+                    ChangedEmployee.Assigned++;
                 }
 
                 return View(ChangedEmployee);

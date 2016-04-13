@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using PES.Models;
 
 namespace PES.ViewModels
 {
@@ -11,7 +12,8 @@ namespace PES.ViewModels
     {
         [Display(Name = "Transfer all to ")]
         public int NewManager { get; set; }
-        public bool org { get; set; }
-        public List<UpdateEmployeeViewModel> Assigned { get; set; } = new List<UpdateEmployeeViewModel>();
+        public int Assigned { get; set; }
+        [Display(Name = "Current Profile")]
+        public Profile CurrentProfile { get; set; } = new Profile();
     }
 }
