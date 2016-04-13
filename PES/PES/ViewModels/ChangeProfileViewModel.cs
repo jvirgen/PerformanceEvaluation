@@ -15,5 +15,6 @@ namespace PES.ViewModels
         public int Assigned { get; set; }
         [Display(Name = "Current Profile")]
         public Profile CurrentProfile { get; set; } = new Profile();
+        public List<UpdateEmployeeViewModel> Org { get; set; } = new List<UpdateEmployeeViewModel>();
     }
 }

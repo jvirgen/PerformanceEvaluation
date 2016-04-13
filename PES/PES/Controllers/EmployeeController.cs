@@ -582,6 +582,72 @@ namespace PES.Controllers
             }
             
         }
+        //Test this
+        [HttpGet]
+        public ActionResult ChangeProfile2(string email)
+        {
+            ChangeProfileViewModel ChangedEmployee = new ChangeProfileViewModel();
+            var employee = _employeeService.GetByEmail(email + "@4thsource.com");
 
+            if ((int)Session["UserProfile"] != (int)ProfileUser.Resource)
+            {
+                ChangedEmployee.FirstName = employee.FirstName;
+                ChangedEmployee.LastName = employee.LastName;
+                ChangedEmployee.Email = employee.Email;
+                ChangedEmployee.SelectedProfile = employee.ProfileId;
+                ChangedEmployee.SelectedManager = employee.ManagerId;
+                ChangedEmployee.CurrentProfile = _profileService.GetProfileByID(employee.ProfileId);
+                SetUpDropdowns(ChangedEmployee);
+
+                foreach (var item in _employeeService.GetEmployeeByManager(employee.EmployeeId))
+                {
+                    UpdateEmployeeViewModel ChangedOrgEmployee = new UpdateEmployeeViewModel();
+                    ChangedOrgEmployee.EmployeeId = item.EmployeeId;
+                    ChangedOrgEmployee.FirstName = item.FirstName;
+                    ChangedOrgEmployee.LastName = item.LastName;
+                    ChangedOrgEmployee.Email = item.Email;
+                    ChangedOrgEmployee.SelectedManager = item.ManagerId;
+                    ChangedOrgEmployee.SelectedProfile = item.ProfileId;
+
+                    ChangedEmployee.Org.Add(ChangedOrgEmployee);
+                }
+
+                return View(ChangedEmployee);
+            }
+            else if ((int)Session["UserProfile"] == (int)ProfileUser.Resource)
+            {
+                TempData["Error"] = "Resources are not allowed to change his profile";
+                return RedirectToAction("ViewEmployees");
+            }
+            else
+            {
+                TempData["Error"] = "You are not logged in.";
+                return RedirectToAction("Login", "LoginUser");
+            }
+
+        }
+        //Change this action to insert all transfered employees at the org
+        [HttpPost]
+        public ActionResult ChangeProfile2(ChangeProfileViewModel model)
+        {
+            var changedEmployee = _employeeService.GetByEmail(model.Email + "@4thsource.com");
+            changedEmployee.ManagerId = model.SelectedManager;
+            changedEmployee.ProfileId = model.SelectedProfile;
+
+            //Send info to service
+            if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
+            {
+                TempData["Success"] = "Employees in your org have been transfered successfully.";
+                _employeeService.UpdateEmployee(changedEmployee);
+                TempData["Success"] = "Your profile has been updated successfully.";
+                return RedirectToAction("Logout", "LoginUser");
+            }
+            else
+            {
+                TempData["Error"] = "Employees transfering error. Please verify your information.";
+                return View(model);
+            }
+
+        }
     }
 }
