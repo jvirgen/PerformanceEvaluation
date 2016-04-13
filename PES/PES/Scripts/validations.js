@@ -1,7 +1,20 @@
 ﻿$(document).ready(function () {
     var profile = parseInt($('#selectedProfile').val());
+    var newProfile = 0;
+    
+    if (profile == 1) {
+        // Resource was selected
+        newProfile = 2; // Manager
+    } else if (profile == 2) {
+        // Manager was selected
+        newProfile = 3; // Director
+    } else if (profile == 3) {
+        // Director was selected
+        newProfile = 3; // Director
+    }
+
     // Execute validate profile function
-    $.getJSON('/Employee/GetEmployeesProifile?profile=' + profile, function (data) {
+    $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile, function (data) {
 
         if (profile == 1) {
             $('#profileLabel').text("Manager");
@@ -51,6 +64,7 @@
             $('#dropdownManager').hide();
             $('#dropdownNewManager').hide();
         }
+            
     });
 
     $('#selectedProfile').change(function () {
@@ -85,13 +99,16 @@
                 //$('#profileLabel').show();
                 //$('#selectedManager').show();
                 //Remove span option
-                $("#select2-selectedManager-container").text("Select a Director--");
-                $("#select2-selectedManager-container").attr("title", "");
-                $("#select2-selectedNewManager-container").text("Select a Director--");
-                $("#select2-selectedNewManager-container").attr("title", "");
+                //$("#select2-selectedManager-container").text("Select a Director--");
+                //$("#select2-selectedManager-container").attr("title", "");
+                //$("#select2-selectedNewManager-container").text("Select a Director--");
+                //$("#select2-selectedNewManager-container").attr("title", "");
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
                 $('#selectedNewManager').children().remove();
+
+                $('#selectedManager').append("<option value='0'>Select a Director</option>");
+
                 // Loop data from ajax call
                 for (var i = 0; i < data.employees.length; i++) {
                     var employee = data.employees[i];
@@ -105,10 +122,26 @@
             else if (profile == 3) {
                 //$('#profileLabel').hide();
                 // Remove current options dropdown
-                $('#selectedManager').children().remove();
-                $('#dropdownManager').hide();
-                $('#selectedNewManager').children().remove();
-                $('#dropdownNewManager').hide();
+                if (data.hasOrg > 1) {
+                    $('#selectedManager').children().remove();
+                    $('#dropdownManager').hide();
+                    $("#select2-selectedNewManager-container").text("Select a Manager--");
+                    $("#select2-selectedNewManager-container").attr("title", "");
+                    // Remove current options dropdown
+                    $('#selectedNewManager').children().remove();
+                    // Loop data from ajax call
+                    for (var i = 0; i < data.employees.length; i++) {
+                        var employee = data.employees[i];
+                        $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    }
+                    $('#dropdownNewManager').show();
+                }
+                else {
+                    $('#selectedManager').children().remove();
+                    $('#selectedNewManager').children().remove();
+                    $('#dropdownManager').hide();
+                    $('#dropdownNewManager').hide();
+                }
             }
         });
     });
