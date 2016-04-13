@@ -454,6 +454,17 @@ namespace PES.Controllers
             return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
         }
 
+        public void DisableEmployeeInList(int id)
+        {
+            var employee = _employeeService.GetByID(id);
+            employee.EndDate = DateTime.Now;
+            _employeeService.UpdateEmployee(employee);
+
+            //Return employees json file
+            //return Json(new { employes = employee }, JsonRequestBehavior.AllowGet);
+            
+        }
+
         public JsonResult GetEnabledEmployees()
         {
             var employees = _employeeService.getEnabledEmployees();
