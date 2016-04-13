@@ -35,31 +35,57 @@
                     @Html.DisplayFor(model => model.Profile.Name)
                 </dd>
                 <br />
-                @if ((int)Session["UserProfile"] == (int)ProfileUser.Resource){
-                    <dd>Manager</dd>
+                @if (Model.ProfileId == (int)ProfileUser.Resource){
+                    <dd><strong>Manager</strong></dd>
                 }
-                else if ((int)Session["UserProfile"] == (int)ProfileUser.Manager)
+                else if (Model.ProfileId == (int)ProfileUser.Manager)
                 {
-                    <dd>Director</dd>
+                    <dd><strong>Director</strong></dd>
                 }
                 else
                 {
                     <dd></dd>
                 }
-                @if ((int)Session["UserProfile"] != (int)ProfileUser.Director)
+                @if (Model.ProfileId != (int)ProfileUser.Director)
                 {
                     <dd>
                         @(Model.Manager.FirstName + " " + Model.Manager.LastName)
                     </dd>
                 }
                 <br />
-                <dt>
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </dt>
+                @if (Model.EndDate != null)
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.EndDate)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.EndDate)
+                    </dd>
+                }
+                else
+                {
+                    <dt hidden>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </dt>
+
+                    <dd hidden>
+                        @Html.DisplayFor(model => model.EndDate)
+                    </dd>
+                }
+                @if (Model.ProfileId == (int)ProfileUser.Resource)
+                {
+                    <dt><strong>Director</strong></dt>
+                    <dd>
+                        @(Model.Director.FirstName + " " + Model.Director.LastName)
+                    </dd>
+                }
+                else
+                {
+                    <dt></dt>
+                    <dd></dd>
+                }
+                <br />
           </td>
     </div>
 </div>

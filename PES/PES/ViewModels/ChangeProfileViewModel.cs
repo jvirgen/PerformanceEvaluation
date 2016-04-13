@@ -11,5 +11,7 @@ namespace PES.ViewModels
     {
         [Display(Name = "Transfer all to ")]
         public int NewManager { get; set; }
+        public bool org { get; set; }
+        public List<UpdateEmployeeViewModel> Assigned { get; set; } = new List<UpdateEmployeeViewModel>();
     }
 }

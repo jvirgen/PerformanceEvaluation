@@ -405,36 +405,36 @@ namespace PES.Controllers
             }
             else if(currentUser.ProfileId == (int)ProfileUser.Director)
             {
-            // Get all employees
-            List<Employee> EmployeeList = _employeeService.GetAll();
-            List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
+                // Get all employees
+                List<Employee> EmployeeList = _employeeService.GetAll();
+                List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
 
-            foreach (var employee in EmployeeList)
-            {
-                EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+                foreach (var employee in EmployeeList)
+                {
+                    EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
 
-                //get porfiles
-                var porfile = _profileService.GetProfileByID(employee.ProfileId);
-                var manager = _employeeService.GetByID(employee.ManagerId);
+                    //get porfiles
+                    var porfile = _profileService.GetProfileByID(employee.ProfileId);
+                    var manager = _employeeService.GetByID(employee.ManagerId);
 
-                model.EmployeeId = employee.EmployeeId;
-                model.FirstName = employee.FirstName;
-                model.LastName = employee.LastName;
-                model.Email = employee.Email;
-                model.Customer = employee.Customer;
-                model.Position = employee.Position;
-                model.ProfileId = employee.ProfileId;
-                model.ManagerId = employee.ManagerId;
-                model.EndDate = employee.EndDate;
-                model.Project = employee.Project;
-                model.Profile = porfile;
-                model.Manager = manager;
+                    model.EmployeeId = employee.EmployeeId;
+                    model.FirstName = employee.FirstName;
+                    model.LastName = employee.LastName;
+                    model.Email = employee.Email;
+                    model.Customer = employee.Customer;
+                    model.Position = employee.Position;
+                    model.ProfileId = employee.ProfileId;
+                    model.ManagerId = employee.ManagerId;
+                    model.EndDate = employee.EndDate;
+                    model.Project = employee.Project;
+                    model.Profile = porfile;
+                    model.Manager = manager;
 
-                ModelList.Add(model);
+                    ModelList.Add(model);
+                }
+
+                return View(ModelList);
             }
-
-            return View(ModelList);
-        }
             else
             {
                 // Error if not logged in
@@ -454,6 +454,28 @@ namespace PES.Controllers
             return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
         }
 
+        //public JsonResult DisableEmployeeAjax(int id)
+        //{
+        //    var employee = _employeeService.GetByID(id);
+        //    employee.EndDate = DateTime.Now;
+        //    _employeeService.UpdateEmployee(employee);
+
+        //    //Return employees json file
+        //    return Json(new { employes = employee }, JsonRequestBehavior.AllowGet);
+        //}
+
+        public JsonResult GetEnabledEmployees()
+        {
+            var employees = _employeeService.getEnabledEmployees();
+            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDisabledEmployees()
+        {
+            var employees = _employeeService.getDisabledEmployees();
+            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public ActionResult EmployeeDetails(string email)
@@ -462,6 +484,8 @@ namespace PES.Controllers
 
             // Get manager
             var manager = _employeeService.GetByID(employee.ManagerId);
+            //Get director
+            var director = _employeeService.GetByID(manager.ManagerId);
             // Get profile
             var porfile = _profileService.GetProfileByID(employee.ProfileId);
 
@@ -476,6 +500,7 @@ namespace PES.Controllers
             model.EndDate = employee.EndDate;
             model.Profile = porfile;
             model.Manager = manager;
+            model.Director = director;
 
             return View(model);
         }
@@ -499,32 +524,36 @@ namespace PES.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangeProfile()
+        public ActionResult ChangeProfile(string email)
         {
-            // Get current user  
-            Employee currentUser = new Employee();
             ChangeProfileViewModel ChangedEmployee = new ChangeProfileViewModel();
-            currentUser = _employeeService.GetByEmail((string)Session["UserEmail"]);
-            if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
-            {
-                if (_employeeService.GetEmployeeByManager(currentUser.EmployeeId).Count > 1)
-                {
-                    ChangedEmployee.FirstName = currentUser.FirstName;
-                    ChangedEmployee.LastName = currentUser.LastName;
-                    ChangedEmployee.Email = currentUser.Email;
-                    ChangedEmployee.SelectedProfile = currentUser.ProfileId;
-                    ChangedEmployee.SelectedManager = currentUser.ManagerId;
-                    SetUpDropdowns(ChangedEmployee);
+            var employee = _employeeService.GetByEmail(email + "@4thsource.com");
 
-                    return View(ChangedEmployee);
+            if((int)Session["UserProfile"] != (int)ProfileUser.Resource)
+            {
+                ChangedEmployee.FirstName = employee.FirstName;
+                ChangedEmployee.LastName = employee.LastName;
+                ChangedEmployee.Email = employee.Email;
+                ChangedEmployee.SelectedProfile = employee.ProfileId;
+                ChangedEmployee.SelectedManager = employee.ManagerId;
+                SetUpDropdowns(ChangedEmployee);
+
+                foreach(var item in _employeeService.GetEmployeeByManager(employee.EmployeeId)) {
+                    UpdateEmployeeViewModel AsignedEmplyee = new UpdateEmployeeViewModel();
+                    AsignedEmplyee.EmployeeId = item.EmployeeId;
+                    AsignedEmplyee.FirstName = item.FirstName;
+                    AsignedEmplyee.LastName = item.LastName;
+                    AsignedEmplyee.SelectedManager = item.ManagerId;
+                    AsignedEmplyee.SelectedProfile = item.ProfileId;
+                    AsignedEmplyee.Email = item.Email;
+                    SetUpDropdowns(AsignedEmplyee);
+
+                    ChangedEmployee.Assigned.Add(AsignedEmplyee);
                 }
-                else
-                {
-                    TempData["Error"] = "You do not have employees in you org to transfer";
-                    return RedirectToAction("UpdateEmployee", new { id = currentUser.EmployeeId });
-                }
+
+                return View(ChangedEmployee);
             }
-            else if(currentUser.ProfileId == (int)ProfileUser.Resource)
+            else if((int)Session["UserProfile"] == (int)ProfileUser.Resource)
             {
                 TempData["Error"] = "Resources are not allowed to change his profile";
                 return RedirectToAction("ViewEmployees");
@@ -540,31 +569,21 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult ChangeProfile(ChangeProfileViewModel model)
         {
-
-            Employee changedEmployee = new Employee();
-            changedEmployee = _employeeService.GetByEmail(model.Email);
-            
+            var changedEmployee = _employeeService.GetByEmail(model.Email + "@4thsource.com");
             changedEmployee.ManagerId = model.SelectedManager;
             changedEmployee.ProfileId = model.SelectedProfile;
 
-            if(_employeeService.GetByID(changedEmployee.ManagerId).ProfileId > changedEmployee.ProfileId || (_employeeService.GetByID(changedEmployee.ManagerId).EmployeeId == changedEmployee.EmployeeId && changedEmployee.ProfileId == (int)ProfileUser.Director))
+             //Send info to service
+            if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
             {
-                //Send info to service
-                if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
-                {
-                    _employeeService.UpdateEmployee(changedEmployee);
-                    TempData["Success"] = "Employees in your org have been transfered successfully.";
-                    return RedirectToAction("Logout", "LoginUser");
-                }
-                else
-                {
-                    TempData["Error"] = "Employees transfering error. Please verify your information.";
-                    return View(model);
-                }
+                TempData["Success"] = "Employees in your org have been transfered successfully.";
+                _employeeService.UpdateEmployee(changedEmployee);
+                TempData["Success"] = "Your profile has been updated successfully.";
+                return RedirectToAction("Logout", "LoginUser");
             }
             else
             {
-                TempData["Error"] = "Invalid manager. Please select an employee with a profile higher than you.";
+                TempData["Error"] = "Employees transfering error. Please verify your information.";
                 return View(model);
             }
             
