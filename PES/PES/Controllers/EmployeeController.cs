@@ -269,10 +269,11 @@ namespace PES.Controllers
         public JsonResult GetEmployeesProifile(int profile)
         {
             //Get all employees depending profile
-            var employees = _employeeService.getByPorfileId((profile + 1));
+            var employees = _employeeService.getByPorfileId((profile));
+            var has = _employeeService.GetEmployeeByManager((_employeeService.GetByEmail(Session["UserEmail"].ToString()).EmployeeId)).Count;
            
             //Return employees json file
-            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+            return Json(new { employees = employees, hasOrg = has}, JsonRequestBehavior.AllowGet);
         } 
 
 
