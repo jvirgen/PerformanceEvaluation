@@ -36,10 +36,14 @@
                     <div class="col-md-2">
                         @Html.EditorFor(model => model.textEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     </div>
+                    @Html.LabelFor(model => model.CurrentProfile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.CurrentProfile.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Label("New Profile", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
                         @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id= "selectedProfile"})
                         @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
@@ -54,7 +58,7 @@
                 </div>
                 <hr />
                 
-                    @if (Model.Assigned.Count > 1)
+                    @if (Model.Assigned > 1)
                     {
                         <div class="form-group">
                             <div id="dropdownNewManager">

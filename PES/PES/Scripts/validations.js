@@ -17,7 +17,7 @@
     $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile, function (data) {
 
         if (profile == 1) {
-            $('#profileLabel').text("Manager");
+            $('#profileLabel').text("New Manager");
             //Remove span option
             $("#select2-selectedManager-container").text("Select a Manager--");
             $("#select2-selectedManager-container").attr("title", "");
@@ -39,7 +39,7 @@
 
         }
         else if (profile == 2) {
-            $('#profileLabel').text("Director");
+            $('#profileLabel').text("New Director");
             //Remove span option
             $("#select2-selectedManager-container").text("Select a Director--");
             $("#select2-selectedManager-container").attr("title", "");
@@ -73,7 +73,7 @@
         $.getJSON('/Employee/GetEmployeesProifile?profile=' + profile, function (data) {
 
             if (profile == 1) {
-                $('#profileLabel').text("Manager");
+                $('#profileLabel').text("New Manager");
                 //$('#profileLabel').show();
                 //$('#selectedManager').show();
                 //Remove span option
@@ -95,7 +95,7 @@
 
             }
             else if (profile == 2) {
-                $('#profileLabel').text("Director");
+                $('#profileLabel').text("New Director");
                 //$('#profileLabel').show();
                 //$('#selectedManager').show();
                 //Remove span option
