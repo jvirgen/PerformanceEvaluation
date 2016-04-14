@@ -18,11 +18,6 @@
 
         if (profile == 1) {
             $('#profileLabel').text("New Manager");
-            //Remove span option
-            $("#select2-selectedManager-container").text("Select a Manager--");
-            $("#select2-selectedManager-container").attr("title", "");
-            $("#select2-selectedNewManager-container").text("Select a Manager--");
-            $("#select2-selectedNewManager-container").attr("title", "");
             // Remove current options dropdown
             $('#selectedManager').children().remove();
             $('#selectedNewManager').children().remove();
@@ -40,14 +35,11 @@
         }
         else if (profile == 2) {
             $('#profileLabel').text("New Director");
-            //Remove span option
-            $("#select2-selectedManager-container").text("Select a Director--");
-            $("#select2-selectedManager-container").attr("title", "");
-            $("#select2-selectedNewManager-container").text("Select a Director--");
-            $("#select2-selectedNewManager-container").attr("title", "");
             // Remove current options dropdown
             $('#selectedManager').children().remove();
             $('#selectedNewManager').children().remove();
+            $('#selectedManager').append("<option value='0'>Select a Director</option>");
+                $('#selectedNewManager').append("<option value='0'>Select a Director</option>");
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -86,13 +78,6 @@
 
             if (profile == 1) {
                 $('#profileLabel').text("New Manager");
-                //$('#profileLabel').show();
-                //$('#selectedManager').show();
-                //Remove span option
-                $("#select2-selectedManager-container").text("Select a Manager--");
-                $("#select2-selectedManager-container").attr("title", "");
-                $("#select2-selectedNewManager-container").text("Select a Manager--");
-                $("#select2-selectedNewManager-container").attr("title", "");
                 // Remove current options dropdown
                 $('#selectedManager').children().remove();
                 $('#selectedNewManager').children().remove();
@@ -108,19 +93,9 @@
             }
             else if (profile == 2) {
                 $('#profileLabel').text("New Director");
-                //$('#profileLabel').show();
-                //$('#selectedManager').show();
-                //Remove span option
-                $("#select2-selectedManager-container").text("Select a Director--");
-                $("#select2-selectedManager-container").attr("title", "");
-                $("#select2-selectedNewManager-container").text("Select a Director--");
-                $("#select2-selectedNewManager-container").attr("title", "");
                  //Remove current options dropdown
                 $('#selectedManager').children().remove();
                 $('#selectedNewManager').children().remove();
-
-                $('#selectedManager').append("<option value='0'>Select a Director</option>");
-
                 // Loop data from ajax call
                 for (var i = 0; i < data.employees.length; i++) {
                     var employee = data.employees[i];
@@ -137,8 +112,6 @@
                 if (data.hasOrg > 1) {
                     $('#selectedManager').children().remove();
                     $('#dropdownManager').hide();
-                    $("#select2-selectedNewManager-container").text("Select a Manager--");
-                    $("#select2-selectedNewManager-container").attr("title", "");
                     // Remove current options dropdown
                     $('#selectedNewManager').children().remove();
                     // Loop data from ajax call
