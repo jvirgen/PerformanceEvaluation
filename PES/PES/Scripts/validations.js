@@ -10,7 +10,7 @@
         newProfile = 3; // Director
     } else if (profile == 3) {
         // Director was selected
-        newProfile = 3; // Director
+        newProfile = 2; // Director
     }
 
     // Execute validate profile function
@@ -69,8 +69,20 @@
 
     $('#selectedProfile').change(function () {
         var profile = parseInt($('#selectedProfile').val());
+        var newProfile = 0;
 
-        $.getJSON('/Employee/GetEmployeesProifile?profile=' + profile, function (data) {
+        if (profile == 1) {
+            // Resource was selected
+            newProfile = 2; // Manager
+        } else if (profile == 2) {
+            // Manager was selected
+            newProfile = 3; // Director
+        } else if (profile == 3) {
+            // Director was selected
+            newProfile = 2; // Director
+        }
+
+        $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile, function (data) {
 
             if (profile == 1) {
                 $('#profileLabel').text("New Manager");
@@ -99,11 +111,11 @@
                 //$('#profileLabel').show();
                 //$('#selectedManager').show();
                 //Remove span option
-                //$("#select2-selectedManager-container").text("Select a Director--");
-                //$("#select2-selectedManager-container").attr("title", "");
-                //$("#select2-selectedNewManager-container").text("Select a Director--");
-                //$("#select2-selectedNewManager-container").attr("title", "");
-                // Remove current options dropdown
+                $("#select2-selectedManager-container").text("Select a Director--");
+                $("#select2-selectedManager-container").attr("title", "");
+                $("#select2-selectedNewManager-container").text("Select a Director--");
+                $("#select2-selectedNewManager-container").attr("title", "");
+                 //Remove current options dropdown
                 $('#selectedManager').children().remove();
                 $('#selectedNewManager').children().remove();
 
