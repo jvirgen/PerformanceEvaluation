@@ -2,7 +2,7 @@
 @using PES.Models
 
 @{
-    ViewBag.Title = "ChangeProfile2";
+    ViewBag.Title = "View";
 }
 <hr />
 <div class="row">
@@ -41,7 +41,6 @@
                         @Html.EditorFor(model => model.CurrentProfile.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.Label("New Profile", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
@@ -58,68 +57,43 @@
                 </div>
                 <hr />
 
-                @if (Model.Assigned > 1)
+                @if (Model.Org.Count > 0)
                 {
-                    <hr />
-                        <div class="form-horizontal">
-                            <div class="well">
-                                @if ((int)Session["UserProfile"] == (int)ProfileUser.Director)
-                                {
-                                    <div class="col-sm-pull-6"><h4>Managers</h4></div>
-                                }
-                                else
-                                {
-                                    <div class="col-sm-pull-6"><h4>Resources</h4></div>
-                                }
-                                <table class="table" id="table-employees">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.FirstName)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.LastName)
-                                            </th>
-                                            <th>
-                                                Email
-                                            </th>
-                                            @if ((int)Session["UserProfile"] == (int)ProfileUser.Director)
-                                            {
-                                                <th>
-                                                    New Director
-                                                </th>
-                                            }
-                                            else
-                                            {
-                                                <th>
-                                                    New Manager
-                                                </th>
-                                            }
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach (var item in Model.Org)
-                                    {
-                                        <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.FirstName)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.LastName)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Email)
-                                                </td>
-                                                <td>
-                                                    @Html.DropDownListFor(modelItem => item.SelectedManager, item.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager"})
-                                                </td>
-                                        </tr>
-                                    }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <table class="table" id="table-employees">
+                        <thead>
+                            <tr>
+                                <th class="disableTextDecoration">
+                                    @Html.DisplayNameFor(model => model.FirstName)
+                                </th>
+                                <th class="disableTextDecoration">
+                                    @Html.DisplayNameFor(model => model.LastName)
+                                </th>
+                                <th class="disableTextDecoration">
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th class="disableTextDecoration" id="manger-director"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Org)
+                            {
+                                <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FirstName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                           @Html.DropDownListFor(modelItem => item.SelectedManager, item.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedNewManager" })
+                                        </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 }
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -139,33 +113,8 @@
 @section Styles{
     @Styles.Render("~/Content/css/select2-bootstrap.css")
     @Styles.Render("~/Content/css/select2.min.css")
-    <style type="text/css">
-        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
-            width: 100% !important;
-        }
-    </style>
 }
 @section Scripts{
     @Scripts.Render("~/scripts/validations.js")
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/select2.min.js")
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#selectedManager").select2({
-                multiple: false,
-                minimumInputLength: 0,
-                placeholder: "Search for resources",
-            });
-            $("#selectedNewManager").select2({
-                multiple: false,
-                minimumInputLength: 0,
-                placeholder: "Search for resources",
-            });
-            $(".inlined form-control valid").select2({
-                multiple: false,
-                minimumInputLength: 0,
-                placeholder: "Search for resources",
-            });
-        });
-    </script>
 }
