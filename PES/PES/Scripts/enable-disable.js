@@ -13,6 +13,61 @@
 
 });
 
+$(".enableDisable").click(function (e) {
+    // Link element clicked
+    var element = $(e.target);
+
+    var option = element.attr("data-option");
+    var employeeId = element.attr("data-employee-id");
+
+    // Call ajax
+    $.ajax({
+        url: '/Employee/DisableEmployeeInList/',
+        type: "POST",
+        data: { idEmployee: empployeeId, option: option}
+    })
+    .done(function(data){
+        // Get data from json
+        // Call was successfully executed
+
+        if (data.success) {
+            var rowElement = element.father();
+
+            if (option == "enable") {
+
+                if (rowElement.hasClass("line-through")) {
+                    rowElement.removeClass("line-through");
+                }
+
+                element.text("Disable");
+                element.attr("data-option", "disable");
+
+                // Enable edit button
+                var editElement = rowElement.find(".edit-button").first();
+                editElement.attr("disabled", false);
+            }
+            else { // Disable
+                if (!rowElement.hasClass("line-through")) {
+                    rowElement.addClass("line-through");
+                }
+
+                element.text("Enable");
+                element.attr("data-option", "enable");
+
+                // Disable edit button
+                var editElement = rowElement.find(".edit-button").first();
+                editElement.attr("disabled", true);
+            }
+        } else {
+            alert("There was an error.");
+        }
+    })
+    .fail(function(){
+    })
+    ;
+
+})
+
 $("#EnableOption").click(function () {
             $(this).parent.show();
             $(this).parent().siblings(".EnableActions").show();

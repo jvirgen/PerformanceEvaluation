@@ -587,10 +587,11 @@ namespace PES.Controllers
         public ActionResult ChangeProfile2(string email)
         {
             ChangeProfileViewModel ChangedEmployee = new ChangeProfileViewModel();
-            var employee = _employeeService.GetByEmail(email + "@4thsource.com");
+            var employee = _employeeService.GetByEmail(email);
 
             if ((int)Session["UserProfile"] != (int)ProfileUser.Resource)
             {
+                ChangedEmployee.EmployeeId = employee.EmployeeId;
                 ChangedEmployee.FirstName = employee.FirstName;
                 ChangedEmployee.LastName = employee.LastName;
                 ChangedEmployee.Email = employee.Email;
@@ -608,8 +609,11 @@ namespace PES.Controllers
                     ChangedOrgEmployee.Email = item.Email;
                     ChangedOrgEmployee.SelectedManager = item.ManagerId;
                     ChangedOrgEmployee.SelectedProfile = item.ProfileId;
-
-                    ChangedEmployee.Org.Add(ChangedOrgEmployee);
+                    SetUpDropdowns(ChangedOrgEmployee);
+                    if(ChangedOrgEmployee.EmployeeId != employee.EmployeeId)
+                    {
+                        ChangedEmployee.Org.Add(ChangedOrgEmployee);
+                    }
                 }
 
                 return View(ChangedEmployee);

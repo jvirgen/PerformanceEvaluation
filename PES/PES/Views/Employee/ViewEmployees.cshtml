@@ -46,8 +46,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        @if (item.EndDate == null)
-                        {
+                        @*@if (item.EndDate == null)
+                        {*@
+                            @Html.Hidden("Id", item.EmployeeId)
                             <td>
                                 @Html.DisplayFor(modelItem => item.FirstName)
                             </td>
@@ -60,7 +61,7 @@
                             <td>
                                 @(item.Profile.Name)
                             </td>
-                            if (item.ProfileId == (int)ProfileUser.Director)
+                            @if (item.ProfileId == (int)ProfileUser.Director)
                             {
                                 <td>
                                     @(item.FirstName + " " + item.LastName)
@@ -73,12 +74,13 @@
                                 </td>
                             }
                             <td>
-                                @Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, null ) |
+                                @Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, new { @class = "edit-button" } ) |
                                 @Html.ActionLink("Details", "EmployeeDetails", "Employee", new { email = item.Email }, null) |
                                 @Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption" + item.EmployeeId})
+                                <a href="#" class="enableDisable" data-employee-id="@item.EmployeeId" data-option="@(item.EndDate != null ? "enable" : "disable")" >@(item.EndDate != null ? "Enable" : "Disable")</a>
                             </td>
-                         }
-                        else
+                         @* } *@
+                        @*else
                         {
                             <td style="text-decoration:line-through">
                                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -101,7 +103,7 @@
                                 @Html.ActionLink("Details", "EmployeeDetails", "Employee", new {email = item.Email}, null) |
                                 @Html.ActionLink("Enable", "EnableEmployee", "Employee", new { id = item.EmployeeId }, null)
                             </td>
-                         }
+                         }*@
                     </tr>
                 }
                 </tbody>
@@ -128,4 +130,10 @@
 @section Styles{
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
     @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+
+    <style type="text/css">
+        line-through {
+            text-decoration: line-through;
+        }
+    </style>
 }
