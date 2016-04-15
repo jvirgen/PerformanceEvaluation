@@ -1,18 +1,17 @@
-﻿$(".disable_action").click(function (e) {
-    e.preventDefault();
+﻿//$(".disable_action").click(function (e) {
+//    e.preventDefault();
 
-    $.ajax({
-        url: '/Employee/DisableEmployeeInList/' + this.href,
-        type: "POST",
-        success: function (data) {
-            $(this).parent().hide();
-            $(this).parent().siblings(".DisableActions").show();
-            $(this).css("text-decoration", "line-through");
-        }
-    });
+//    $.ajax({
+//        url: '/Employee/DisableEmployeeInList/' + this.href,
+//        type: "POST",
+//        success: function (data) {
+//            $(this).parent().hide();
+//            $(this).parent().siblings(".DisableActions").show();
+//            $(this).css("text-decoration", "line-through");
+//        }
+//    });
 
-});
-
+//});
 $(".enableDisable").click(function (e) {
     // Link element clicked
     var element = $(e.target);
@@ -22,40 +21,42 @@ $(".enableDisable").click(function (e) {
 
     // Call ajax
     $.ajax({
-        url: '/Employee/DisableEmployeeInList/',
+        url: '/Employee/EnableDisableEmployee',
         type: "POST",
-        data: { idEmployee: empployeeId, option: option}
+        data: { idEmployee: employeeId, option: option}
     })
     .done(function(data){
         // Get data from json
         // Call was successfully executed
 
         if (data.success) {
-            var rowElement = element.father();
+            var rowElement = element.parent().siblings();
 
             if (option == "enable") {
 
                 if (rowElement.hasClass("line-through")) {
                     rowElement.removeClass("line-through");
+                    rowElement.removeAttr("style");
                 }
 
                 element.text("Disable");
                 element.attr("data-option", "disable");
 
                 // Enable edit button
-                var editElement = rowElement.find(".edit-button").first();
+                var editElement = rowElement.parent().find(".edit-button").first();
                 editElement.attr("disabled", false);
             }
             else { // Disable
                 if (!rowElement.hasClass("line-through")) {
                     rowElement.addClass("line-through");
+                    rowElement.css("text-decoration","line-through")
                 }
 
                 element.text("Enable");
                 element.attr("data-option", "enable");
 
                 // Disable edit button
-                var editElement = rowElement.find(".edit-button").first();
+                var editElement = rowElement.parent().find(".edit-button").first();
                 editElement.attr("disabled", true);
             }
         } else {
@@ -63,13 +64,12 @@ $(".enableDisable").click(function (e) {
         }
     })
     .fail(function(){
-    })
-    ;
+    });
 
 })
 
-$("#EnableOption").click(function () {
-            $(this).parent.show();
-            $(this).parent().siblings(".EnableActions").show();
-            $(this).css("text-decoration", "none");
-});
+//$("#EnableOption").click(function () {
+//            $(this).parent.show();
+//            $(this).parent().siblings(".EnableActions").show();
+//            $(this).css("text-decoration", "none");
+//});

@@ -77,7 +77,7 @@
                             <td>
                                 @Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, new { @class = "edit-button" } ) |
                                 @Html.ActionLink("Details", "EmployeeDetails", "Employee", new { email = item.Email }, null) |
-                                @Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption" + item.EmployeeId})
+                                @*@Html.ActionLink("Disable", "DisableEmployee", "Employee", new { id = item.EmployeeId }, new { @id = "DisableOption" + item.EmployeeId})*@
                                 <a href="#" class="enableDisable" data-employee-id="@item.EmployeeId" data-option="@(item.EndDate != null ? "enable" : "disable")" >@(item.EndDate != null ? "Enable" : "Disable")</a>
                             </td>
                          @* } *@
