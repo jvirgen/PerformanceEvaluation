@@ -53,6 +53,19 @@
                     </dd>
                 }
                 <br />
+                @if (Model.ProfileId == (int)ProfileUser.Resource)
+                {
+                    <dt><strong>Director</strong></dt>
+                    <dd>
+                        @(Model.Director.FirstName + " " + Model.Director.LastName)
+                    </dd>
+                }
+                else
+                {
+                    <dt></dt>
+                    <dd></dd>
+                }
+                <br />
                 @if (Model.EndDate != null)
                 {
                     <dt>
@@ -73,19 +86,6 @@
                         @Html.DisplayFor(model => model.EndDate)
                     </dd>
                 }
-                @if (Model.ProfileId == (int)ProfileUser.Resource)
-                {
-                    <dt><strong>Director</strong></dt>
-                    <dd>
-                        @(Model.Director.FirstName + " " + Model.Director.LastName)
-                    </dd>
-                }
-                else
-                {
-                    <dt></dt>
-                    <dd></dd>
-                }
-                <br />
           </td>
     </div>
 </div>

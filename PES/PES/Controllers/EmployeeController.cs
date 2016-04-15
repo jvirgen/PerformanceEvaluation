@@ -512,23 +512,22 @@ namespace PES.Controllers
             return View(model);
         }
         
-        public ActionResult DisableEmployee(int id)
+        public JsonResult EnableDisableEmployee(int idEmployee, string option)
         {
-            var disabledEmployee = _employeeService.GetByID(id);
-            disabledEmployee.EndDate = DateTime.Now;
+            var disabledEmployee = _employeeService.GetByID(idEmployee);
+            if(option == "enable")
+            {
+                disabledEmployee.EndDate = null;
+            }
+            else
+            {
+                disabledEmployee.EndDate = DateTime.Now;
+            }
             _employeeService.UpdateEmployee(disabledEmployee);
 
-            return RedirectToAction("ViewEmployees");
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EnableEmployee(int id)
-        {
-            var enabledEmployee = _employeeService.GetByID(id);
-            enabledEmployee.EndDate = null;
-            _employeeService.UpdateEmployee(enabledEmployee);
-
-            return RedirectToAction("ViewEmployees");
-        }
 
         [HttpGet]
         public ActionResult ChangeProfile(string email)
