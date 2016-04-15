@@ -10,11 +10,11 @@
     </div>
     <div class="pull-right">
         <span>
-            @Html.CheckBox("ShowEnables", true)
+            @Html.CheckBox("ShowEnables", true, new { @id = "showEnables" })
             Show Enables |
         </span>
         <span>
-            @Html.CheckBox("ShowDisables", true)
+            @Html.CheckBox("ShowDisables", true, new { @id = "showDisables" })
             Show Disables
         </span>
     </div>
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                 @foreach (var item in Model)
-                {
+            {
                     <tr>
                         @*@if (item.EndDate == null)
                         {*@
@@ -119,6 +119,7 @@
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
     @Scripts.Render("~/Scripts/enable-disable.js")
+    @Scripts.Render("~/Scripts/showEmployees.js")
 
     <script type="text/javascript">
         $(document).ready(function () {

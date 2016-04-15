@@ -1,22 +1,44 @@
 ﻿$(document).ready(function () {
-    var enableCheck = $('#showEnables').checked;
-    var disableCheck = $('#showDisables').checked;
+    $("#showEnables").click(function () {
+     
+    var enableChecked = $("#showEnables").is(':checked');
+    //var disableChecked = $('#showDisables').is(':checked');
+    //var bothChecked = $('#showBoth').checked;
 
-    if (enableCheck) {
-        
-
+    if (enableChecked) {
+       
         //call ajax
         $.ajax({
             type: "POST",
-            url: "Employees/GetEnabledEmployees",
+            url: "/Employee/GetEnabledEmployees",
             contentType: 'application/json; charset=utf-8',
+            dataType: "json",
             success: function (data) {
-                if (data)
+                if (data) {
+
+                    // Loop data from ajax call
+                    //for (var i = 0; i < data.employees.length; i++) {
+                        
+                    
+                    //var length = data.length;
+                    var row = "";
                     $('#table-employees').children('tbody').remove();
-            }        
+                    if (data.employees.length > 0) {
+                        for (var i = 0; i < data.employees.length; i++) {
+                            var employee = data.employees[i];
+                            txt += "<tr><td>" + employee.FirstName + "</td><td>" + employee.LastName + "</td><td>"
+                            + employee.Email + "</td><td>" + "" + "</td><td>" + "" + "</td></tr>";
+                        }
+
+                        if (row != "") {
+                            $('#table-employees').append(row);
+                        }
+                    }
+                }
+            }
         });
     }
-    else if(disableCheck){
+    //else if(disableChecked){
         //$('#table-employees').children('tbody').remove();
         //$.getJSON('/Employee/GetEmployeesProifile?profile=', function (data) {
 
@@ -24,6 +46,8 @@
         
        
     
-    }
+    //}
+    })
+
 
     });
