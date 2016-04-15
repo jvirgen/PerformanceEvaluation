@@ -475,7 +475,7 @@ namespace PES.Services
             }
         }
 
-        public List<Employee> getEnabledEmployees()
+        public List<Employee> getEnabledEmployees(int profile)
         {
             List<Employee> employees = new List<Employee>();
             Employee employee = new Employee();
@@ -494,8 +494,7 @@ namespace PES.Services
                                            "ID_MANAGER, " +
                                            "END_DATE, " +
                                            "PROJECT " +
-                                           "FROM EMPLOYEE " +
-                                           "WHERE END_DATE IS NULL";
+                                           "FROM EMPLOYEE WHERE ID_PROFILE = " + profile + " AND END_DATE IS NULL";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
                     OracleDataReader Read = Comand.ExecuteReader();

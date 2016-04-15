@@ -466,9 +466,14 @@ namespace PES.Controllers
             
         }
 
-        public JsonResult GetEnabledEmployees()
+        public JsonResult GetEnabledEmployees(int profile)
         {
-            var employees = _employeeService.getEnabledEmployees();
+            Employee currentUser = new Employee();
+            var userEmail = (string)Session["UserEmail"];
+            currentUser = _employeeService.GetByEmail(userEmail);
+            profile = currentUser.ProfileId;
+
+            var employees = _employeeService.getEnabledEmployees(profile);
             return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
         }
 
