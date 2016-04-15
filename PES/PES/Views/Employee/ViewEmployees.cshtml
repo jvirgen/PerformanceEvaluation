@@ -10,6 +10,7 @@
     </div>
     <div class="pull-right">
         <span>
+            @Html.Hidden("status", "enabled")
             @Html.CheckBox("ShowEnables", true, new { @id = "showEnables" })
             Show Enables |
         </span>

@@ -466,15 +466,84 @@ namespace PES.Controllers
             
         }
 
-        public JsonResult GetEnabledEmployees(int profile)
+        public JsonResult GetEnabledEmployees(string status)
         {
+            List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
             Employee currentUser = new Employee();
             var userEmail = (string)Session["UserEmail"];
             currentUser = _employeeService.GetByEmail(userEmail);
-            profile = currentUser.ProfileId;
+            
+            // Get profile current user 
+            int profileUser = (int)Session["UserProfile"];
+            
+            //Get enabled employees of manager org
+            List<Employee> EmployeeList = _employeeService.GetAll();
 
-            var employees = _employeeService.getEnabledEmployees(profile);
-            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
+            foreach (var employee in EmployeeList)
+            {
+
+                EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+
+                //get porfiles
+                var porfile = _profileService.GetProfileByID(employee.ProfileId);
+                var manager = _employeeService.GetByID(employee.ManagerId);
+
+                model.EmployeeId = employee.EmployeeId;
+                model.FirstName = employee.FirstName;
+                model.LastName = employee.LastName;
+                model.Email = employee.Email;
+                model.Customer = employee.Customer;
+                model.Position = employee.Position;
+                model.ProfileId = employee.ProfileId;
+                model.ManagerId = employee.ManagerId;
+                model.EndDate = employee.EndDate;
+                model.Project = employee.Project;
+                model.Profile = porfile;
+                model.Manager = manager;
+
+                if (profileUser == (int)ProfileUser.Manager)
+                {
+                    if (status == "enabled")
+                    {
+                        if (model.ManagerId == currentUser.EmployeeId && model.EndDate == null)
+                        {
+                            if (model.EmployeeId != currentUser.EmployeeId)
+                                modelList.Add(model);
+                        }
+                    }
+                    else if (status == "disabled")
+                    {
+                        if (model.ManagerId == currentUser.EmployeeId && model.EndDate != null)
+                        {
+                            if (model.EmployeeId != currentUser.EmployeeId)
+                                modelList.Add(model);
+                        }
+                    }
+                }
+                else if (profileUser == (int)ProfileUser.Director)
+                {
+                    if (status == "enabled")
+                    {
+                        if (model.EndDate == null)
+                        {
+                            if (model.EmployeeId != currentUser.EmployeeId)
+                                modelList.Add(model);
+                        }
+                    }
+                    else if (status == "disabled")
+                    {
+                        if (model.EndDate != null)
+                        {
+                            if (model.EmployeeId != currentUser.EmployeeId)
+                                modelList.Add(model);
+                        }
+                    }
+
+                }
+            }
+
+            //var employees = _employeeService.getEnabledEmployees();
+            return Json(new { employees = modelList }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDisabledEmployees()
