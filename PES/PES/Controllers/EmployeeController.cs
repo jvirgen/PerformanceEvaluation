@@ -468,7 +468,6 @@ namespace PES.Controllers
 
         public JsonResult GetFilteredEmployees(string status)
         {
-            //string status = "enabled";
             List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
             Employee currentUser = new Employee();
             var userEmail = (string)Session["UserEmail"];
@@ -520,6 +519,14 @@ namespace PES.Controllers
                                 modelList.Add(model);
                         }
                     }
+                    else if (status == "both")
+                    {
+                        if (model.ManagerId == currentUser.EmployeeId)
+                        {
+                            if (model.EmployeeId != currentUser.EmployeeId)
+                                modelList.Add(model);
+                        }
+                    }
                 }
                 else if (profileUser == (int)ProfileUser.Director)
                 {
@@ -539,7 +546,14 @@ namespace PES.Controllers
                                 modelList.Add(model);
                         }
                     }
-
+                    else if (status == "both")
+                    {
+                        if (model.EndDate == null || model.EndDate != null)
+                        {
+                            if (model.EmployeeId != currentUser.EmployeeId)
+                                modelList.Add(model);
+                        }
+                    }
                 }
             }
 

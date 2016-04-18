@@ -3,6 +3,8 @@
     $("#showEnables").click(function () {
      
         var enableChecked = $("#showEnables").is(':checked');
+        $("#showDisables").attr('checked', false);
+        $("#showBoth").attr('checked', false);
         //var status = $("#showEnables").val();
         //var bothChecked = $('#showBoth').checked;
 
@@ -41,6 +43,8 @@
     $("#showDisables").click(function () {
 
         var disableChecked = $('#showDisables').is(':checked');
+        $("#showEnables").attr('checked', false);
+        $("#showBoth").attr('checked', false);
 
         if (disableChecked) {
             //call ajax
@@ -77,6 +81,8 @@
     $("#showBoth").click(function () {
 
         var bothChecked = $("#showBoth").is(':checked');
+        $("#showDisables").attr('checked', false);
+        $("#showEnables").attr('checked', false);
 
         if (bothChecked) {
             //call ajax
