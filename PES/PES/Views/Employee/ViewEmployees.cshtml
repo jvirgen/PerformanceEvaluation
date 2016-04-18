@@ -10,13 +10,16 @@
     </div>
     <div class="pull-right">
         <span>
-            @Html.Hidden("status", "enabled")
-            @Html.CheckBox("ShowEnables", true, new { @id = "showEnables" })
+            @Html.CheckBox("ShowEnables", true, new { @id = "showEnables", @value = "enabled" })
             Show Enables |
         </span>
         <span>
-            @Html.CheckBox("ShowDisables", true, new { @id = "showDisables" })
-            Show Disables
+            @Html.CheckBox("ShowDisables", true, new { @id = "showDisables", @value = "disabled" })
+            Show Disables |
+        </span>
+        <span>
+            @Html.CheckBox("ShowBoth", true, new { @id = "showBoth", @value = "both" })
+            Show Both
         </span>
     </div>
     <hr />

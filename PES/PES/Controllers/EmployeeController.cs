@@ -466,8 +466,9 @@ namespace PES.Controllers
             
         }
 
-        public JsonResult GetEnabledEmployees(string status)
+        public JsonResult GetFilteredEmployees(string status)
         {
+            //string status = "enabled";
             List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
             Employee currentUser = new Employee();
             var userEmail = (string)Session["UserEmail"];
