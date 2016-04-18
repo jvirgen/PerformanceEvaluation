@@ -12,64 +12,70 @@
 //    });
 
 //});
-$(".enableDisable").click(function (e) {
-    // Link element clicked
-    var element = $(e.target);
+$(document).ready(function () {
 
-    var option = element.attr("data-option");
-    var employeeId = element.attr("data-employee-id");
+    if ($(".enableDisable").attr("data-option") == "disable") {
+        $(".enableDisable").parent().siblings().removeClass("line-through");
+    }
+    else if ($(".enableDisable").attr("data-option") == "enable") {
+        $(".enableDisable").parent().siblings().addClass("line-through");
+    }
 
-    // Call ajax
-    $.ajax({
-        url: '/Employee/EnableDisableEmployee',
-        type: "POST",
-        data: { idEmployee: employeeId, option: option}
-    })
-    .done(function(data){
-        // Get data from json
-        // Call was successfully executed
+    $(".enableDisable").click(function (e) {
+        // Link element clicked
+        var element = $(e.target);
 
-        if (data.success) {
-            var rowElement = element.parent().siblings();
+        var option = element.attr("data-option");
+        var employeeId = element.attr("data-employee-id");
 
-            if (option == "enable") {
+        // Call ajax
+        $.ajax({
+            url: '/Employee/EnableDisableEmployee',
+            type: "POST",
+            data: { idEmployee: employeeId, option: option}
+        })
+        .done(function(data){
+            // Get data from json
+            // Call was successfully executed
+            if (data.success) {
+                var rowElement = element.parent().siblings();
 
-                if (rowElement.hasClass("line-through")) {
-                    rowElement.removeClass("line-through");
-                    rowElement.removeAttr("style");
+                if (option == "enable") {
+
+                    if (rowElement.hasClass("line-through")) {
+                        rowElement.removeClass("line-through");
+                    }
+
+                    element.text("Disable");
+                    element.attr("data-option", "disable");
+
+                    // Enable edit button
+                    var editElement = rowElement.parent().find(".edit-button").first();
+                    editElement.attr("disabled", false);
                 }
+                else { // Disable
+                    if (!rowElement.hasClass("line-through")) {
+                        rowElement.addClass("line-through");
+                    }
 
-                element.text("Disable");
-                element.attr("data-option", "disable");
+                    element.text("Enable");
+                    element.attr("data-option", "enable");
 
-                // Enable edit button
-                var editElement = rowElement.parent().find(".edit-button").first();
-                editElement.attr("disabled", false);
-            }
-            else { // Disable
-                if (!rowElement.hasClass("line-through")) {
-                    rowElement.addClass("line-through");
-                    rowElement.css("text-decoration","line-through")
+                    // Disable edit button
+                    var editElement = rowElement.parent().find(".edit-button").first();
+                    editElement.attr("disabled", true);
                 }
-
-                element.text("Enable");
-                element.attr("data-option", "enable");
-
-                // Disable edit button
-                var editElement = rowElement.parent().find(".edit-button").first();
-                editElement.attr("disabled", true);
+            } else {
+                alert("There was an error.");
             }
-        } else {
-            alert("There was an error.");
-        }
+        })
+        .fail(function(){
+        });
     })
-    .fail(function(){
-    });
+});
 
-})
-
-//$("#EnableOption").click(function () {
-//            $(this).parent.show();
-//            $(this).parent().siblings(".EnableActions").show();
-//            $(this).css("text-decoration", "none");
-//});
+    //$("#EnableOption").click(function () {
+    //            $(this).parent.show();
+    //            $(this).parent().siblings(".EnableActions").show();
+    //            $(this).css("text-decoration", "none");
+    //});
