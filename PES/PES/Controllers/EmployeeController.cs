@@ -646,7 +646,6 @@ namespace PES.Controllers
                 TempData["Success"] = "Employees in your org have been transfered successfully.";
                 _employeeService.UpdateEmployee(changedEmployee);
                 TempData["Success"] = "Your profile has been updated successfully.";
-                return RedirectToAction("Logout", "LoginUser");
             }
             else
             {
