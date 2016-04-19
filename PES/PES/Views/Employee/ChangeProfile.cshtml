@@ -46,12 +46,14 @@
                     @Html.Label("New Profile", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
                         @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id= "selectedProfile"})
+                        <a href="#" data-toggle="popover" title="Choose a new profile" data-content="Use this list choose a profile you want to change."><span class="glyphicon glyphicon-question-sign"></span></a>
                         @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
                     </div>
                     <div id="dropdownManager">
                         @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
                         <div class="col-md-3">
                             @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
+                            <a href="#" data-toggle="popover" title="Choose a new manager/director" data-content="Use this list to choose a manager or a director depending you new choosen profile"><span class="glyphicon glyphicon-question-sign"></span></a>
                             @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -65,6 +67,7 @@
                                 @Html.LabelFor(model => model.NewManager, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-3">
                                     @Html.DropDownListFor(model => model.NewManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedNewManager" })
+                                    <a href="#" data-toggle="popover" title="Choose the new assigned employees manager" data-content="If you have assigned employees. Use this list to choose a manager or a director for you assigned employees to transfer them so you can change your profile."><span class="glyphicon glyphicon-question-sign"></span></a>
                                     @Html.ValidationMessageFor(model => model.NewManager, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -139,4 +142,9 @@
             });
         });
     </script>*@
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
 }
