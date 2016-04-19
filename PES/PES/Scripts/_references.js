@@ -18,6 +18,5 @@
 /// <reference path="modernizr-2.6.2.js" />
 /// <reference path="respond.js" />
 /// <reference path="select2.js" />
-/// <reference path="showedemployees.js" />
 /// <reference path="showemployees.js" />
 /// <reference path="validations.js" />
