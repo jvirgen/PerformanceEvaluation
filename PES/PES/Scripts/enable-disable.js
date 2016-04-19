@@ -20,15 +20,18 @@ $(document).ready(function () {
         //else if ($(".enableDisable").attr("data-option") == "enable") {
         //    $(".enableDisable").parent().siblings().addClass("line-through");
         //}
-        $(".enableDisable").each(function (index) {
-            if ($(this).attr("data-option") == "disable") {
-                $(this).parent().siblings().removeClass("line-through");
-            }
-            else {
-                $(".enableDisable").parent().siblings().addClass("line-through");
-            }
-        });
+        
     });
+
+    //$(".enableDisable").each(function (index) {
+    //    if ($(this).attr("data-option") == "disable") {
+    //        $(this).parent().siblings().removeClass("line-through");
+    //    }
+    //    else {
+    //        $(".enableDisable").parent().siblings().addClass("line-through");
+    //    }
+    //});
+
     $(".enableDisable").click(function (e) {
         // Link element clicked
         var element = $(e.target);

@@ -315,6 +315,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\showEDEmployees.js" />
     <Content Include="Scripts\showEmployees.js" />
     <Content Include="Scripts\validations.js" />
     <Content Include="Scripts\_references.js" />
