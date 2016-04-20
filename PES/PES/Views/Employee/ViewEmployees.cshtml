@@ -128,6 +128,33 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#table-employees").DataTable();
+
+            $.ajax({
+                url: "/Employee/GetEmployeesByFilter",
+                data: { 
+                    employeeId: employeeId,
+                    filter: filter
+                }})
+                .done(function (data){
+                    if (data) {
+                        //success ajax
+                        // Populate table with data from ajax call
+                        $("#divtable-employees").html(data);
+ 
+                        // Re init datatable
+                        $("#table-employees").Datatable();
+                    }
+                    else {
+                        // Error
+                        alert("Error getting employees");
+                    }
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    alert("Error while  getting employees. Please try again later.");
+                })
+                .always(function () {
+                    //alert("finished");
+                });
         })
     </script>
 }
