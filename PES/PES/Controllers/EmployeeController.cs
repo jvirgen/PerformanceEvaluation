@@ -8,6 +8,7 @@ using Oracle.ManagedDataAccess.Types;
 using PES.Models;
 using PES.Services;
 using PES.ViewModels;
+using System.Threading.Tasks;
 
 namespace PES.Controllers
 {
@@ -445,6 +446,55 @@ namespace PES.Controllers
             }
                
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetEmployeesByFilter(int employeeId, string filter)
+        {
+            // Get user 
+            var user = _employeeService.GetByID(employeeId);
+
+            // Get profile of user
+            var profile = _profileService.GetProfileByID(user.EmployeeId);
+
+            // Get employees of the user, depending on its profile
+            IEnumerable<Employee> employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
+
+            // Validate filter
+            if (filter == "enabled")
+            { 
+                employees = employees.Where(e => e.EndDate == null);
+            }
+            else if (filter == "disabled")
+            {
+                employees = employees.Where(e => e.EndDate != null);
+            }
+            else
+            {
+                //employees = employees;
+            }
+
+            // Create model (partial view)
+            EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+            List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
+
+            // Populate model with employees data
+            foreach (var item in employees)
+            {
+                model.EmployeeId = item.EmployeeId;
+                model.FirstName = item.FirstName;
+                model.LastName = item.LastName;
+                model.Email = item.Email;
+                model.Profile = _profileService.GetProfileByID(item.ProfileId);
+                model.Manager = _employeeService.GetByID(item.ManagerId);
+                model.Director = _employeeService.GetByID(model.Manager.ManagerId);
+                model.EndDate = item.EndDate;
+
+                modelList.Add(model);
+            }
+
+            return PartialView("ViewEmployeesPartial", modelList);
+        }
+
 
         public JsonResult GetEmployeeStatus(string email)
         {
