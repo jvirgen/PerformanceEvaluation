@@ -123,11 +123,26 @@
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
     @Scripts.Render("~/Scripts/enable-disable.js")
-    @Scripts.Render("~/Scripts/showEmployees.js")
+    @*@Scripts.Render("~/Scripts/showEmployees.js")*@
 
     <script type="text/javascript">
         $(document).ready(function () {
             $("#table-employees").DataTable();
+
+            var enable = $("#showEnables").is(':checked');
+            var disable = $('#showDisables').is(':checked');
+            var both = $("#showBoth").is(':checked');
+            var filter = "enable";
+
+            if (enable) {
+                filter = "enable";
+            }
+            else if (disable) {
+                filter = "disable";
+            }
+            else {
+                filter = "both";
+            }
 
             $.ajax({
                 url: "/Employee/GetEmployeesByFilter",
@@ -139,7 +154,7 @@
                     if (data) {
                         //success ajax
                         // Populate table with data from ajax call
-                        $("#divtable-employees").html(data);
+                        $("#table-div").html(data);
  
                         // Re init datatable
                         $("#table-employees").Datatable();
