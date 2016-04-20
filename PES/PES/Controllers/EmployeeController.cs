@@ -448,25 +448,39 @@ namespace PES.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetEmployeesByFilter(int employeeId, string filter)
+        public async Task<ActionResult> GetEmployeesByFilter(string employeeEmail, string filter)
         {
             // Get user 
-            var user = _employeeService.GetByID(employeeId);
+            var user = _employeeService.GetByEmail(employeeEmail);
 
             // Get profile of user
-            var profile = _profileService.GetProfileByID(user.EmployeeId);
+            var profile = _profileService.GetProfileByID(user.ProfileId);
 
             // Get employees of the user, depending on its profile
-            IEnumerable<Employee> employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
+            var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
 
             // Validate filter
-            if (filter == "enabled")
+            if (filter == "enable")
             { 
-                employees = employees.Where(e => e.EndDate == null);
+                foreach(var item in employees)
+                {
+                    if(item.EndDate != null)
+                    {
+                        employees.Remove(item);
+                    }
+                }
+                //employees = employees.Where(e => e.EndDate == null);
             }
-            else if (filter == "disabled")
+            else if (filter == "disable")
             {
-                employees = employees.Where(e => e.EndDate != null);
+                foreach(var item in employees)
+                {
+                    if(item.EndDate == null)
+                    {
+                        employees.Remove(item);
+                    }
+                }
+                //employees = employees.Where(e => e.EndDate != null);
             }
             else
             {
@@ -489,6 +503,7 @@ namespace PES.Controllers
                 model.Director = _employeeService.GetByID(model.Manager.ManagerId);
                 model.EndDate = item.EndDate;
 
+                //Check this part
                 modelList.Add(model);
             }
 

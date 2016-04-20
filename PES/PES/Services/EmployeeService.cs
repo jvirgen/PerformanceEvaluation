@@ -490,7 +490,7 @@ namespace PES.Services
                                            "EMAIL, " +
                                            "ID_PROFILE," +
                                            "ID_MANAGER, " +
-                                           "END_DATE, " +
+                                           "END_DATE " +
                                            "FROM EMPLOYEE " +
                                            "WHERE ID_MANAGER = '" +
                                            userId + "'";
@@ -510,44 +510,7 @@ namespace PES.Services
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
 
-                        if (profileId == 3)
-                        {
-                            employees.Add(employee);
-                            foreach (var item in employees)
-                            {
-                                string subQuery = "SELECT ID_EMPLOYEE, " +
-                                           "FIRST_NAME, " +
-                                           "LAST_NAME, " +
-                                           "EMAIL, " +
-                                           "ID_PROFILE," +
-                                           "ID_MANAGER, " +
-                                           "END_DATE, " +
-                                           "FROM EMPLOYEE " +
-                                           "WHERE ID_MANAGER = '" +
-                                           item.EmployeeId + "'";
-
-                                OracleCommand subComand = new OracleCommand(Query, db);
-                                OracleDataReader subRead = Comand.ExecuteReader();
-                                while (Read.Read())
-                                {
-                                    // Store data in employee object 
-                                    employee = new Employee();
-                                    employee.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
-                                    employee.FirstName = Convert.ToString(Read["FIRST_NAME"]);
-                                    employee.LastName = Convert.ToString(Read["LAST_NAME"]);
-                                    employee.Email = Convert.ToString(Read["EMAIL"]);
-                                    employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
-                                    employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
-                                    string subendDate = Convert.ToString(Read["END_DATE"]);
-
-                                    employees.Add(employee);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            employees.Add(employee);
-                        }
+                        employees.Add(employee);
                     }
                     db.Close();
                 }

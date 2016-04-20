@@ -352,7 +352,7 @@
     <Content Include="Views\Employee\ChangeProfile.cshtml" />
     <Content Include="Views\Employee\InsertEmployee.cshtml" />
     <Content Include="Views\Employee\ChangeProfile2.cshtml" />
-    <Content Include="Views\Shared\ViewEmployeesPartial.cshtml" />
+    <Content Include="Views\Shared\_ViewEmployeesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
