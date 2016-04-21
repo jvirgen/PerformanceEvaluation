@@ -9,19 +9,18 @@
             @Html.ActionLink("Create New", "InsertEmployee")
         </p>
     </div>
-    <div class="pull-right">
-        <span>
-            @Html.CheckBox("ShowEnables", true, new { @id = "showEnables", @value = "enabled" })
-            Show Enables |
-        </span>
-        <span>
-            @Html.CheckBox("ShowDisables", false, new { @id = "showDisables", @value = "disabled" })
-            Show Disables |
-        </span>
-        <span>
-            @Html.CheckBox("ShowBoth", false, new { @id = "showBoth", @value = "both" })
-            Show Both
-        </span>
+    <div class="pull-right"}>
+            @*@Html.RadioButton("ShowEnables", "enabled", false, new { @id = "showEnables"})
+            @Html.Label("Show Enables | ")
+
+            @Html.RadioButton("ShowDisables", "disabled", false, new { @id = "showDisables"})
+            @Html.Label("Show Disables | ")
+
+            @Html.RadioButton("ShowBoth", "both", true, new { @id = "showBoth"})
+            @Html.Label("Show Both ")*@
+        <input type="radio" name="showEnables" id="showEnables" value="enabled" checked> Show Enables  |  
+        <input type="radio" name="showEnables" id="showDisables" value="disabled"> Show Disables  |  
+        <input type="radio" name="ShowEnables" id="showBoth" value="both"> Show both
     </div>
     <hr />
     <div class="col-md-12">
