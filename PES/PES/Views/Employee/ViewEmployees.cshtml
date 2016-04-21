@@ -18,9 +18,9 @@
 
             @Html.RadioButton("ShowBoth", "both", true, new { @id = "showBoth"})
             @Html.Label("Show Both ")*@
-        <input type="radio" name="showEnables" id="showEnables" value="enabled" checked> Show Enables  |  
-        <input type="radio" name="showEnables" id="showDisables" value="disabled"> Show Disables  |  
-        <input type="radio" name="ShowEnables" id="showBoth" value="both"> Show both
+        <input type="radio" name="showFilter" id="showEnables" value="enabled" checked> Show Enables  |  
+        <input type="radio" name="showFilter" id="showDisables" value="disabled"> Show Disables  |  
+        <input type="radio" name="showFilter" id="showBoth" value="both"> Show Both
     </div>
     <hr />
     <div class="col-md-12">
@@ -102,21 +102,21 @@
         $(document).ready(function () {
             $("#table-employees").DataTable();
 
-            var enable = $("#showEnables").is(':checked');
-            var disable = $('#showDisables').is(':checked');
-            var both = $("#showBoth").is(':checked');
-            var filter = "enable";
-            var EmployeeEmail = $("#EmailUser").val();
+            //var enable = $("#showEnables").is(':checked');
+            //var disable = $('#showDisables').is(':checked');
+            //var both = $("#showBoth").is(':checked');
+            //var filter = "enable";
+            //var EmployeeEmail = $("#EmailUser").val();
 
-            if (enable) {
-                filter = "enable";                
-            }
-            else if (disable) {
-                filter = "disable";               
-            }
-            else {
-                filter = "both";                
-            }
+            //if (enable) {
+            //    filter = "enabled";                
+            //}
+            //else if (disable) {
+            //    filter = "disabled";               
+            //}
+            //else {
+            //    filter = "both";                
+            //}
 
             // Events 
             $("#showEnables").on("click", function (e) {
