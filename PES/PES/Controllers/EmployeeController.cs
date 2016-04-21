@@ -450,6 +450,7 @@ namespace PES.Controllers
         [HttpGet]
         public async Task<ActionResult> GetEmployeesByFilter(string employeeEmail, string filter)
         {
+            List<Employee> employeesFiltered = new List<Employee>();
             // Get user 
             var user = _employeeService.GetByEmail(employeeEmail);
 
@@ -458,28 +459,29 @@ namespace PES.Controllers
 
             // Get employees of the user, depending on its profile
             var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
-
             // Validate filter
-            if (filter == "enable")
-            { 
-                foreach(var item in employees)
-                {
-                    if(item.EndDate != null)
-                    {
-                        employees.Remove(item);
-                    }
-                }
+            if (filter == "enabled")
+            {
+                employeesFiltered = employees.Where(e => e.EndDate == null).ToList();
+                //foreach(var item in employees)
+                //{
+                //    if(item.EndDate != null)
+                //    {
+                //        employees.Remove(item);
+                //    }
+                //}
                 //employees = employees.Where(e => e.EndDate == null);
             }
-            else if (filter == "disable")
+            else if (filter == "disabled")
             {
-                foreach(var item in employees)
-                {
-                    if(item.EndDate == null)
-                    {
-                        employees.Remove(item);
-                    }
-                }
+                employeesFiltered = employees.Where(e => e.EndDate != null).ToList();
+                //foreach (var item in employees)
+                //{
+                //    if(item.EndDate == null)
+                //    {
+                //        employees.Remove(item);
+                //    }
+                //}
                 //employees = employees.Where(e => e.EndDate != null);
             }
             else
@@ -491,7 +493,7 @@ namespace PES.Controllers
             List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
 
             // Populate model with employees data
-            foreach (var item in employees)
+            foreach (var item in employeesFiltered)
             {
                 EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
 
