@@ -408,7 +408,7 @@ namespace PES.Controllers
             else if(currentUser.ProfileId == (int)ProfileUser.Director)
             {
                 // Get all employees
-                List<Employee> EmployeeList = _employeeService.GetAll();
+                List<Employee> EmployeeList = _employeeService.getEmployeesByDirector(currentUser.EmployeeId);
                 List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
 
                 foreach (var employee in EmployeeList)
