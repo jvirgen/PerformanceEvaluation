@@ -110,19 +110,13 @@
             var EmployeeEmail = $("#EmailUser").val();
 
             if (enable) {
-                filter = "enable";
-                $("#showDisables").attr('checked', false);
-                $("#showBoth").attr('checked', false);
+                filter = "enable";                
             }
             else if (disable) {
-                filter = "disable";
-                $("#showEnables").attr('checked', false);
-                $("#showBoth").attr('checked', false);
+                filter = "disable";               
             }
             else {
-                filter = "both";
-                $("#showEnables").attr('checked', false);
-                $("#showDisables").attr('checked', false);
+                filter = "both";                
             }
 
             // Events 
@@ -134,8 +128,31 @@
                 // Filter 
                 var filter = $(this).val();
 
+                validateFilters(emailUser, filter);                
+            });
+
+            // Events 
+            $("#showDisables").on("click", function (e) {
+                // Execute function 
+
+                // Email user
+                var emailUser = $("#EmailUser").val();
+                // Filter 
+                var filter = $(this).val();
+
                 validateFilters(emailUser, filter);
-                
+            });
+
+            // Events 
+            $("#showBoth").on("click", function (e) {
+                // Execute function 
+
+                // Email user
+                var emailUser = $("#EmailUser").val();
+                // Filter 
+                var filter = $(this).val();
+
+                validateFilters(emailUser, filter);
             });
            
          });
