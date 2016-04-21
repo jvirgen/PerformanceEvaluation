@@ -487,19 +487,26 @@ namespace PES.Controllers
                 //employees = employees;
             }
 
-            // Create model (partial view)
-            EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+            // Create model (partial view)            
             List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
 
             // Populate model with employees data
             foreach (var item in employees)
             {
+                EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+
+                //get porfiles
+                var porfile = _profileService.GetProfileByID(item.ProfileId);
+                var manager = _employeeService.GetByID(item.ManagerId);
+
                 model.EmployeeId = item.EmployeeId;
                 model.FirstName = item.FirstName;
                 model.LastName = item.LastName;
                 model.Email = item.Email;
-                model.Profile = _profileService.GetProfileByID(item.ProfileId);
-                model.Manager = _employeeService.GetByID(item.ManagerId);
+                model.Profile = porfile;
+                model.Manager = manager;
+                model.ProfileId = item.ProfileId;
+                model.ManagerId = item.ManagerId;
                 model.Director = _employeeService.GetByID(model.Manager.ManagerId);
                 model.EndDate = item.EndDate;
 
@@ -507,7 +514,7 @@ namespace PES.Controllers
                 modelList.Add(model);
             }
 
-            return PartialView("ViewEmployeesPartial", modelList);
+            return PartialView("_ViewEmployeesPartial", modelList);
         }
 
 

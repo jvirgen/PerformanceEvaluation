@@ -111,16 +111,23 @@
 
             if (enable) {
                 filter = "enable";
+                $("#showDisables").attr('checked', false);
+                $("#showBoth").attr('checked', false);
             }
             else if (disable) {
                 filter = "disable";
+                $("#showEnables").attr('checked', false);
+                $("#showBoth").attr('checked', false);
             }
             else {
                 filter = "both";
+                $("#showEnables").attr('checked', false);
+                $("#showDisables").attr('checked', false);
             }
 
             $.ajax({
                 url: "/Employee/GetEmployeesByFilter",
+                //dataType: "html",
                 data: { 
                     employeeEmail: EmployeeEmail,
                     filter: filter
@@ -132,7 +139,7 @@
                         $("#table-div").html(data);
  
                         // Re init datatable
-                        $("#table-employees").Datatable();
+                        $("#table-employees").DataTable();
                     }
                     else {
                         // Error
