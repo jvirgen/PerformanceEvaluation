@@ -267,11 +267,15 @@ namespace PES.Controllers
             return model;
         }
 
-        public JsonResult GetEmployeesProifile(int profile)
+        public JsonResult GetEmployeesProifile(int profile, string email)
         {
+            //Get curren employee selected
+            var currentEmployee = _employeeService.GetByEmail(email + "@4thsource.com");
             //Get all employees depending profile
             var employees = _employeeService.getByPorfileId((profile));
-            var has = _employeeService.GetEmployeeByManager((_employeeService.GetByEmail(Session["UserEmail"].ToString()).EmployeeId)).Count;
+            var item = employees.Find(x => x.EmployeeId == currentEmployee.EmployeeId);
+            employees.Remove(item);
+            var has = _employeeService.GetEmployeeByManager(currentEmployee.EmployeeId).Count;
            
             //Return employees json file
             return Json(new { employees = employees, hasOrg = has}, JsonRequestBehavior.AllowGet);
