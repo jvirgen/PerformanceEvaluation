@@ -544,13 +544,6 @@ namespace PES.Controllers
             
         }
 
-        public JsonResult GetDisabledEmployees()
-        {
-            var employees = _employeeService.getDisabledEmployees();
-            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
-        }
-
-
         [HttpGet]
         public ActionResult EmployeeDetails(string email)
         {
@@ -644,7 +637,11 @@ namespace PES.Controllers
                 TempData["Success"] = "Employees in your org have been transfered successfully.";
                 _employeeService.UpdateEmployee(changedEmployee);
                 TempData["Success"] = "Your profile has been updated successfully.";
-                return View("ViewEmployes");
+
+                if (changedEmployee.Email == Session["UserEmail"].ToString())
+                    return RedirectToAction("Logout", "LoginUser");
+                else
+                    return RedirectToAction("ViewEmployees");
             }
             else
             {
