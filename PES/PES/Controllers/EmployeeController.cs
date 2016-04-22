@@ -544,13 +544,6 @@ namespace PES.Controllers
             
         }
 
-        public JsonResult GetDisabledEmployees()
-        {
-            var employees = _employeeService.getDisabledEmployees();
-            return Json(new { employees = employees }, JsonRequestBehavior.AllowGet);
-        }
-
-
         [HttpGet]
         public ActionResult EmployeeDetails(string email)
         {
