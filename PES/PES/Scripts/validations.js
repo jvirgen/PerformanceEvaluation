@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     var profile = parseInt($('#selectedProfile').val());
+    var email = $('#Email').val();
     var newProfile = 0;
     
     if (profile == 1) {
@@ -14,7 +15,7 @@
     }
 
     // Execute validate profile function
-    $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile, function (data) {
+    $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile + "&email=" + email ,function (data) {
 
         if (profile == 1) {
             $('#profileLabel').text("New Manager");
@@ -61,6 +62,7 @@
 
     $('#selectedProfile').change(function () {
         var profile = parseInt($('#selectedProfile').val());
+        var email = $('#Email').val();
         var newProfile = 0;
 
         if (profile == 1) {
@@ -74,7 +76,7 @@
             newProfile = 2; // Director
         }
 
-        $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile, function (data) {
+        $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile + "&email=" + email, function (data) {
 
             if (profile == 1) {
                 $('#profileLabel').text("New Manager");
