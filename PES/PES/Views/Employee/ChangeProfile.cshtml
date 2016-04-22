@@ -67,7 +67,7 @@
                                 @Html.LabelFor(model => model.NewManager, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-3">
                                     @Html.DropDownListFor(model => model.NewManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedNewManager" })
-                                    <a href="#" data-toggle="popover" title="Choose the new assigned employees manager" data-content="If you have assigned employees, use this list to choose a manager or a director to transfer them so you can be able to change your profile."><span class="glyphicon glyphicon-question-sign"></span></a>
+                                    <a href="#" data-toggle="popover" title="Choose the new assigned employees manager" data-content="If you have assigned employees, use this list to choose a manager or a director to transfer them first so you can be able to change your profile."><span class="glyphicon glyphicon-question-sign"></span></a>
                                     @Html.ValidationMessageFor(model => model.NewManager, "", new { @class = "text-danger" })
                                 </div>
                             </div>
