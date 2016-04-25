@@ -191,6 +191,7 @@
     <Compile Include="Services\TitleService.cs" />
     <Compile Include="ViewModels\ChangeProfileViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
+    <Compile Include="ViewModels\TransferEmployeeViewModel.cs" />
     <Compile Include="ViewModels\UpdateEmployeeViewModel.cs" />
     <Compile Include="ViewModels\InsertEmployeeViewModel.cs" />
     <Compile Include="ViewModels\PerformanceRankHelper.cs" />
@@ -351,6 +352,7 @@
     <Content Include="Views\Employee\InsertEmployee.cshtml" />
     <Content Include="Views\Employee\ChangeProfile2.cshtml" />
     <Content Include="Views\Shared\_ViewEmployeesPartial.cshtml" />
+    <Content Include="Views\Employee\TransferEmployees.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

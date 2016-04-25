@@ -722,5 +722,35 @@ namespace PES.Controllers
             }
 
         }
-    }
-}
+
+        [HttpGet]
+        public ActionResult TransferEmployees()
+        {
+            //Get current user
+            var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+            if(currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                TransferEmployeeViewModel TransferModel = new TransferEmployeeViewModel();
+                //Seting up profile list
+                TransferModel.ProfilesList = _profileService.GetAllProfiles();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    TransferModel.ProfilesList.Find()
+                }
+
+                return View();
+            }
+            else
+            {
+                TempData["Error"] = "You are not alowed to tranfer amployes";
+                return RedirectToAction("PerformanceEvaluation");
+            }
+        }
+
+        TransferEmployeeViewModel setUpTransferModel (int profile, TransferEmployeeViewModel SetedUpModel)
+        {
+            var prfiles = _profileService.GetAllProfiles();
+            var managers = _employeeService.GetAll();
+            
+            return SetedUpModel;
+        }
