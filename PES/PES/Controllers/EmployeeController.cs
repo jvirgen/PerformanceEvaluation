@@ -634,9 +634,9 @@ namespace PES.Controllers
              //Send info to service
             if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
             {
-                TempData["Success"] = "Employees in your org have been transfered successfully.";
+                TempData["Success"] = "Employees in your org have been transferred successfully.";
                 _employeeService.UpdateEmployee(changedEmployee);
-                TempData["Success"] = "Your profile has been updated successfully.";
+                TempData["Success"] = "The profile has been successfully updated.";
 
                 if (changedEmployee.Email == Session["UserEmail"].ToString())
                     return RedirectToAction("Logout", "LoginUser");
@@ -688,7 +688,7 @@ namespace PES.Controllers
             }
             else if ((int)Session["UserProfile"] == (int)ProfileUser.Resource)
             {
-                TempData["Error"] = "Resources are not allowed to change his profile";
+                TempData["Error"] = "Resources are not allowed to change their profile";
                 return RedirectToAction("ViewEmployees");
             }
             else
