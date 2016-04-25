@@ -11,6 +11,7 @@
         if (data.success) {
             var element = $('#Id'+ employeeId).siblings('td:last').children('.enableDisable');
             var rowElement = element.parent().siblings();
+            var actionsElement = element.parent();
 
             if (option == "enable") {
 
@@ -21,9 +22,9 @@
                 element.text("Disable");
                 element.attr("data-option", "disable");
 
-                // Enable edit button
-                var editElement = element.siblings('.edit-button');
-                editElement.attr("disabled", false);
+                //Hide row
+                rowElement.fadeOut();
+                actionsElement.fadeOut();
             }
             else { // Disable
                 if (!rowElement.hasClass("line-through")) {
@@ -33,9 +34,9 @@
                 element.text("Enable");
                 element.attr("data-option", "enable");
 
-                // Disable edit button
-                var editElement = element.siblings('edit-button');
-                editElement.attr("disabled", true);
+                //Hide row
+                rowElement.fadeOut();
+                actionsElement.fadeOut();
             }
         } else {
             alert("There was an error.");
