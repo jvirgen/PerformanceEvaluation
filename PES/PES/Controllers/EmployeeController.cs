@@ -451,6 +451,27 @@ namespace PES.Controllers
                
         }
 
+        public async Task<ActionResult> GetEmployeesBySelection(int option)
+        {
+            //List<Employee> employees = new List<Employee>(); 
+            var user = _employeeService.GetByEmail((string)Session["UserEmail"]);
+            var profile = _profileService.GetProfileByID(user.ProfileId);
+
+            // Get employees of the user, depending on its profile
+            var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
+
+            if (option == (int)ProfileUser.Director)
+            {
+                // set drowdowns A and B with Director names
+                // fill first and second table with managers names
+            }
+            else {
+                // set drowdowns A and B with managers names
+                // fill first and second table with resources names
+            }
+            return View(employees);
+        }
+
         [HttpGet]
         public async Task<ActionResult> GetEmployeesByFilter(string employeeEmail, string filter)
         {
@@ -634,9 +655,9 @@ namespace PES.Controllers
              //Send info to service
             if (_employeeService.TransferAllEmployees(changedEmployee.EmployeeId, model.NewManager))
             {
-                TempData["Success"] = "Employees in your org have been transfered successfully.";
+                TempData["Success"] = "Employees in your org have been transferred successfully.";
                 _employeeService.UpdateEmployee(changedEmployee);
-                TempData["Success"] = "Your profile has been updated successfully.";
+                TempData["Success"] = "The profile has been successfully updated.";
 
                 if (changedEmployee.Email == Session["UserEmail"].ToString())
                     return RedirectToAction("Logout", "LoginUser");
@@ -688,7 +709,7 @@ namespace PES.Controllers
             }
             else if ((int)Session["UserProfile"] == (int)ProfileUser.Resource)
             {
-                TempData["Error"] = "Resources are not allowed to change his profile";
+                TempData["Error"] = "Resources are not allowed to change their profile";
                 return RedirectToAction("ViewEmployees");
             }
             else
