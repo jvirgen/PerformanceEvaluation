@@ -451,6 +451,27 @@ namespace PES.Controllers
                
         }
 
+        public async Task<ActionResult> GetEmployeesBySelection(int option)
+        {
+            //List<Employee> employees = new List<Employee>(); 
+            var user = _employeeService.GetByEmail((string)Session["UserEmail"]);
+            var profile = _profileService.GetProfileByID(user.ProfileId);
+
+            // Get employees of the user, depending on its profile
+            var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
+
+            if (option == (int)ProfileUser.Director)
+            {
+                // set drowdowns A and B with Director names
+                // fill first and second table with managers names
+            }
+            else {
+                // set drowdowns A and B with managers names
+                // fill first and second table with resources names
+            }
+            return View(employees);
+        }
+
         [HttpGet]
         public async Task<ActionResult> GetEmployeesByFilter(string employeeEmail, string filter)
         {
