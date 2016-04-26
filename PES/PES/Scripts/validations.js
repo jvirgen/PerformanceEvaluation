@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    var currentPrfile = parseInt($('#CurrentProfile_ProfileId').val());
     var profile = parseInt($('#selectedProfile').val());
     var email = $('#Email').val();
     var newProfile = 0;
@@ -14,6 +15,16 @@
         newProfile = 2; // Director
     }
 
+    //Execute validate profile manager function
+    $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentPrfile + "&email=" + email, function (data) {
+
+        $('#selectedNewManager').children().remove();
+        for (var i = 0; i < data.employees.length; i++) {
+            var employee = data.employees[i];
+            $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+        }
+        $('#dropdownNewManager').show();
+    });
     // Execute validate profile function
     $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile + "&email=" + email ,function (data) {
 
@@ -26,8 +37,14 @@
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
                 $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                //$('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
             }
+            $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentPrfile + "&email=" + email, function (data) {
+                for (var i = 0; i < data.employees.length; i++) {
+                    var employee = data.employees[i];
+                    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
+            });
             $('#dropdownManager').show();
             $('#dropdownNewManager').show();
 
@@ -40,13 +57,19 @@
             $('#selectedManager').children().remove();
             $('#selectedNewManager').children().remove();
             $('#selectedManager').append("<option value='0'>Select a Director</option>");
-                $('#selectedNewManager').append("<option value='0'>Select a Director</option>");
+                //$('#selectedNewManager').append("<option value='0'>Select a Director</option>");
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
                 $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                //$('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
             }
+            $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentPrfile + "&email=" + email, function (data) {
+                for (var i = 0; i < data.employees.length; i++) {
+                    var employee = data.employees[i];
+                    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
+            });
             $('#dropdownManager').show();
             $('#dropdownNewManager').show();
         }
@@ -87,8 +110,14 @@
                 for (var i = 0; i < data.employees.length; i++) {
                     var employee = data.employees[i];
                     $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    //$('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
                 }
+                $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentPrfile + "&email=" + email, function (data) {
+                    for (var i = 0; i < data.employees.length; i++) {
+                        var employee = data.employees[i];
+                        $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    }
+                });
                 $('#dropdownManager').show();
                 $('#dropdownNewManager').show();
 
@@ -102,8 +131,14 @@
                 for (var i = 0; i < data.employees.length; i++) {
                     var employee = data.employees[i];
                     $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    //$('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
                 }
+                $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentPrfile + "&email=" + email, function (data) {
+                    for (var i = 0; i < data.employees.length; i++) {
+                        var employee = data.employees[i];
+                        $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    }
+                });
                 $('#dropdownManager').show();
                 $('#dropdownNewManager').show();
                 
@@ -117,10 +152,17 @@
                     // Remove current options dropdown
                     $('#selectedNewManager').children().remove();
                     // Loop data from ajax call
-                    for (var i = 0; i < data.employees.length; i++) {
-                        var employee = data.employees[i];
-                        $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                    }
+                    //for (var i = 0; i < data.employees.length; i++) {
+                    //    var employee = data.employees[i];
+                    //    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    //}
+                    $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentPrfile + "&email=" + email, function (data) {
+                        for (var i = 0; i < data.employees.length; i++) {
+                            var employee = data.employees[i];
+                            $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                        }
+                    });
+
                     $('#dropdownNewManager').show();
                 }
                 else {
@@ -132,15 +174,4 @@
             }
         });
     });
-
-    //$.ajax({
-    //  url: '',
-    //  data: datos_formulario,
-    //  type: 'GET',
-    //  dataType: 'json',
-    //  success: function(datos) {
-    //    $('#resultados').text(JSON.stringify(datos, null, 4));
-    //    $('#respuesta').text(datos.respuesta).fadeIn('slow');
-    //  }
-    //});
 });

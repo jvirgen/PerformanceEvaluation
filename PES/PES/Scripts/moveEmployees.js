@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    $("#firstTable").DataTable();
-    $("#secondTable").DataTable();
+    $("#ManagerA-table").DataTable();
+    $("#ManagerB-table").DataTable();
 });
 
 function showSelectedEmployees(option, employeeA, employeeB) {

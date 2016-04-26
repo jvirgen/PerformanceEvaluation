@@ -267,6 +267,73 @@ namespace PES.Controllers
             return model;
         }
 
+        private TransferEmployeeViewModel SetUpDropdowns(TransferEmployeeViewModel model)
+        {
+            // Get profile current user 
+            var profileUser = Session["UserProfile"];
+            // Get profiles
+            var profiles = _profileService.GetAllProfiles();
+
+            // Populate profiles 
+            List<SelectListItem> profilesList = new List<SelectListItem>();
+            foreach (var profile in profiles)
+            {
+                var newItem = new SelectListItem()
+                {
+                    Text = profile.Name,
+                    Value = (profile.ProfileId).ToString(),
+                    Selected = false
+                };
+                if ((int)profileUser == (int)ProfileUser.Director && (newItem.Text == "Director" || newItem.Text == "Manager"))
+                {
+                    profilesList.Add(newItem);
+                }
+                else if ((int)profileUser == (int)ProfileUser.Manager && newItem.Text == "Manager")
+                {
+                    profilesList.Add(newItem);
+                }
+            }
+
+            // Get managers 
+            List<Employee> managers = _employeeService.GetAll();
+
+            //Populate managers
+            List<SelectListItem> managersList = new List<SelectListItem>();
+            foreach (var manager in managers)
+            {
+                if ((int)profileUser == (int)ProfileUser.Director && (manager.ProfileId == 2 || manager.ProfileId == 3))
+                {
+                    var newItem = new SelectListItem()
+                    {
+                        Text = manager.FirstName + " " + manager.LastName,
+                        Value = (manager.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    managersList.Add(newItem);
+                }
+                else if ((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == 2)
+                {
+                    var newItem = new SelectListItem()
+                    {
+                        Text = manager.FirstName + " " + manager.LastName,
+                        Value = (manager.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    managersList.Add(newItem);
+                }
+            }
+
+            #region Set data
+            // Set profiles
+            model.ProfilesList = profilesList;
+            model.ManagerAList = managersList;
+            model.ManagerBList = managersList;
+
+            #endregion
+
+            return model;
+        }
+
         public JsonResult GetEmployeesProifile(int profile, string email)
         {
             //Get curren employee selected
@@ -752,16 +819,21 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult TransferEmployees()
         {
+            TransferEmployeeViewModel TransferModel = new TransferEmployeeViewModel();
             //Get current user
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+            var profiles = _profileService.GetAllProfiles();
+
             if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
             {
-                return View();
+                SetUpDropdowns(TransferModel);
+                
+                return View(TransferModel);
             }
             else
             {
                 TempData["Error"] = "You are not alowed to tranfer amployes";
-                return RedirectToAction("PerformanceEvaluation");
+                return RedirectToAction("ViewEmployees");
             }
         }
     }

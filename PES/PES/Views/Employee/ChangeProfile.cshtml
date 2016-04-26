@@ -38,7 +38,8 @@
                     </div>
                     @Html.LabelFor(model => model.CurrentProfile, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-2">
-                        @Html.EditorFor(model => model.CurrentProfile.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.HiddenFor(model => model.CurrentProfile.ProfileId)
+                        @Html.EditorFor(model => model.CurrentProfile.Name, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly" } })
                     </div>
                 </div>
 

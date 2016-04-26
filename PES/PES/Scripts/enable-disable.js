@@ -1,4 +1,7 @@
-﻿function enableDisable(employeeId, option) {
+﻿function enableDisable(employeeId) {
+    var element = $("a[data-employee-id='" + employeeId + "']");
+    option = element.attr("data-option");
+
     // Call ajax
     $.ajax({
         url: '/Employee/EnableDisableEmployee',
@@ -9,7 +12,7 @@
         // Get data from json
         // Call was successfully executed
         if (data.success) {
-            var element = $('#Id'+ employeeId).siblings('td:last').children('.enableDisable');
+            //var element = $('#Id' + employeeId).siblings('td:last').children('.enableDisable');
             var rowElement = element.parent().siblings();
             var actionsElement = element.parent();
 
@@ -19,24 +22,34 @@
                     rowElement.removeClass("line-through");
                 }
 
+                // Set option as disable
                 element.text("Disable");
                 element.attr("data-option", "disable");
 
-                //Hide row
-                rowElement.fadeOut();
-                actionsElement.fadeOut();
+                    
+                // Enable edit button
+                var editElement = actionsElement.find(".edit-button").first();
+
+                if (editElement.length > 0) {
+                    editElement.attr("disabled", false);
+                }
             }
             else { // Disable
                 if (!rowElement.hasClass("line-through")) {
                     rowElement.addClass("line-through");
                 }
 
+                // Set option as enable
                 element.text("Enable");
                 element.attr("data-option", "enable");
 
-                //Hide row
-                rowElement.fadeOut();
-                actionsElement.fadeOut();
+                // Disable edit button
+                var editElement = actionsElement.find(".edit-button").first();
+
+                if (editElement.length > 0) {
+                    //alert("Got element");
+                    editElement.attr("disabled", true);
+                }
             }
         } else {
             alert("There was an error.");
@@ -45,6 +58,10 @@
     .fail(function () {
     });
 }
+
+$("a.edit-button").on("click", function () {
+    return ($(this).attr('disabled')) ? false : true;
+});
 
 //$(".enableDisable").on("click", function (e) {
 //    // Link element clicked
