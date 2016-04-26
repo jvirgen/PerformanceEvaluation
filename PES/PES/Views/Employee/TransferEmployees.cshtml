@@ -1,4 +1,4 @@
-﻿@*@model PES.ViewModels.EmployeeDetailsViewModel*@
+﻿@model PES.ViewModels.TransferEmployeeViewModel
 
 @{
     ViewBag.Title = "TransferEmployees";
@@ -17,14 +17,83 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div>
                     @Html.Label("Transfer employees between:" )
-
+                    @Html.DropDownListFor(model => model.SelectedProfile, Model.ProfilesList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                    @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
                 </div>
                 <div class="row">
-                    <div class="text-center form-group col-md-6">
+                    <div class="text-center form-group col-md-4">
                         <h4>Manager A</h4>
+                        @Html.DropDownListFor(model => model.SelectedManagerA, Model.ManagerAList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                        @Html.ValidationMessageFor(model => model.SelectedManagerA, "", new { @class = "text-danger" })
+                        <hr />
+                        <div>
+                            <table class="table-striped" id="ManagerA-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            
+                                        </th>
+                                        <th>
+                                            Employee Name
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var item in Model.ManagerAEmplyeeList)
+                                    {
+                                        <tr>
+                                            @Html.Hidden("Id", item.EmployeeId)
+                                            <th>
+                                                @Html.CheckBox("", false);
+                                            </th>
+                                            <th>
+                                               @Html.Display(item.FirstName + " " + item.LastName)
+                                            </th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="text-center form-group col-md-6">
+                    <div class="col-md-2 btn-group-vertical">
+                        <button class="btn-primary" id="btnToB" title="Move to Manager B"> > </button>
+                        <button class="btn-primary" id="btnToA" title="Move to Manager A"> < </button>
+                    </div>
+                    <div class="text-center form-group col-md-4">
                         <h4>Manager B</h4>
+                        @Html.DropDownListFor(model => model.SelectedManagerB, Model.ManagerBList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                        @Html.ValidationMessageFor(model => model.SelectedManagerB, "", new { @class = "text-danger" })
+                        <hr />
+                        <div>
+                            <div>
+                                <table class="table-striped" id="ManagerB-table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                
+                                            </th>
+                                            <th>
+                                                Employee Name
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ManagerBEmployeeList)
+                                        {
+                                            <tr>
+                                                @Html.Hidden("Id", item.EmployeeId)
+                                                <th>
+                                                    @Html.CheckBox("", false);
+                                                </th>
+                                                <th>
+                                                    @Html.Display(item.FirstName + " " + item.LastName)
+                                                </th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
