@@ -3,15 +3,13 @@
     $("#ManagerB-table").DataTable();
 });
 
-function showSelectedEmployees(option, employeeA, employeeB) {
-    var option = $("#firstDropdown").val();
+function showSelectedEmployees(employeeA, employeeB) {
     var employeeA = $("#DropdownA").val();
     var employeeB = $("#DropdownB").val();
 
     $.ajax({
         url: "/Employee/GetEmployeesBySelection",
         data: {
-            option: option,
             employeeA: employeeA,
             employeeB: employeeB
         }
@@ -40,11 +38,11 @@ function showSelectedEmployees(option, employeeA, employeeB) {
     });
 }
 
-function moveToRight(employee) {
-    var employeeA = $("#DropdownA").val();
+function moveEmployeeToB(employeeA) {
+    var employeeA = $("#idEmployee").val();
 
     $.ajax({
-        url: "/Employee/MoveEmployeeToRight",
+        url: "/Employee/MoveEmployeeToB",
         data: {
             employee: employee
         }
@@ -53,9 +51,10 @@ function moveToRight(employee) {
         if (data) {
             //success ajax
             // Populate table with data from ajax call
-            //$("#table-content").html("");
-            //$("#table-content").html(data).fadeOut("fast").fadeIn("slow");
+            $("#table-content").html("");
+            $("#table-content").html(data);
             
+            // si toca
 
             // Re init datatable
             $("#firstTable").DataTable();
@@ -74,9 +73,9 @@ function moveToRight(employee) {
     });
 }
 
-function moveToLeft(employee) {
+function moveEmployeeToA(employee) {
     $.ajax({
-        url: "/Employee/MoveEmployeeToLeft",
+        url: "/Employee/MoveEmployeeToA",
         data: {
             employee: employee
         }
