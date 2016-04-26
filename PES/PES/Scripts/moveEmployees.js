@@ -3,19 +3,25 @@
     $("#secondTable").DataTable();
 });
 
-function showEmployeesList(option) {
+function showSelectedEmployees(option, employeeA, employeeB) {
+    var option = $("#firstDropdown").val();
+    var employeeA = $("#DropdownA").val();
+    var employeeB = $("#DropdownB").val();
+
     $.ajax({
         url: "/Employee/GetEmployeesBySelection",
         data: {
-            option: option
+            option: option,
+            employeeA: employeeA,
+            employeeB: employeeB
         }
     })
     .done(function (data) {
         if (data) {
             //success ajax
             // Populate table with data from ajax call
-            $("#table-content").html("");
-            $("#table-content").html(data).fadeOut("fast").fadeIn("slow");
+            $("#divtable-content").html("");
+            $("#divtable-content").html(data).fadeIn("slow");
 
             // Re init datatable
             $("#firstTable").DataTable();
@@ -35,8 +41,10 @@ function showEmployeesList(option) {
 }
 
 function moveToRight(employee) {
+    var employeeA = $("#DropdownA").val();
+
     $.ajax({
-        url: "/Employee/MoveEmployeetoRight",
+        url: "/Employee/MoveEmployeeToRight",
         data: {
             employee: employee
         }
@@ -45,8 +53,9 @@ function moveToRight(employee) {
         if (data) {
             //success ajax
             // Populate table with data from ajax call
-            $("#table-content").html("");
-            $("#table-content").html(data).fadeOut("fast").fadeIn("slow");
+            //$("#table-content").html("");
+            //$("#table-content").html(data).fadeOut("fast").fadeIn("slow");
+            
 
             // Re init datatable
             $("#firstTable").DataTable();
