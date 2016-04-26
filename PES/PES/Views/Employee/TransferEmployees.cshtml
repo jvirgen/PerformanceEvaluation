@@ -12,7 +12,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h3>Transfer Employes</h3>
+                <h3>Transfer Employees</h3>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div>
@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="text-center form-group col-md-4">
                         <h4>Manager A</h4>
-                        @Html.DropDownListFor(model => model.SelectedManagerA, Model.ManagerAList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                        @Html.DropDownListFor(model => model.SelectedManagerA, Model.ManagerAList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedEmployeeA" })
                         @Html.ValidationMessageFor(model => model.SelectedManagerA, "", new { @class = "text-danger" })
                         <hr />
                         <div>
@@ -42,7 +42,7 @@
                                     @foreach(var item in Model.ManagerAEmplyeeList)
                                     {
                                         <tr>
-                                            @Html.Hidden("Id", item.EmployeeId)
+                                            @Html.Hidden("idEmployee", item.EmployeeId)
                                             <th>
                                                 @Html.CheckBox("", false);
                                             </th>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="text-center form-group col-md-4">
                         <h4>Manager B</h4>
-                        @Html.DropDownListFor(model => model.SelectedManagerB, Model.ManagerBList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                        @Html.DropDownListFor(model => model.SelectedManagerB, Model.ManagerBList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedEmployeeB" })
                         @Html.ValidationMessageFor(model => model.SelectedManagerB, "", new { @class = "text-danger" })
                         <hr />
                         <div>
@@ -81,7 +81,7 @@
                                         @foreach (var item in Model.ManagerBEmployeeList)
                                         {
                                             <tr>
-                                                @Html.Hidden("Id", item.EmployeeId)
+                                                @Html.Hidden("idEmployee", item.EmployeeId)
                                                 <th>
                                                     @Html.CheckBox("", false);
                                                 </th>

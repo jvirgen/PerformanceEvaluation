@@ -451,6 +451,13 @@ namespace PES.Controllers
 
         }
 
+        public async Task<ActionResult> MoveEmployeeToB(int idEmployee)
+        {
+            var employee = _employeeService.GetByID(idEmployee);
+
+            return View();
+        }
+
         public async Task<ActionResult> GetEmployeesBySelection(int option, string employeeA, string employeeB)
         {
             List<Employee> employees = new List<Employee>();
