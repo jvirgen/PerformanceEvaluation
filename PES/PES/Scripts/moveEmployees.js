@@ -29,6 +29,23 @@
             }
         });
     }
+
+    // Events
+    $('#selectedEmployeeA').change(function (e) {
+        // Execute function 
+
+        var employeeId = parseInt($("#selectedEmployeeA").val());
+        var option = "selectedEmployeeA";
+        showSelectedEmployees(employeeId);
+    });
+
+    $('#selectedEmployeeB').change(function (e) {
+        // Execute function 
+
+        var employeeId = parseInt($("#selectedEmployeeB").val());
+        var option = "selectedEmployeeB";
+        showSelectedEmployees(employeeId);
+    });
 });
 
 $("#selectedProfile").change(function () {
@@ -58,24 +75,7 @@ $("#selectedProfile").change(function () {
                 $('#selectedEmployeeB').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
             }
         });
-    }
-
-    // Events
-    $('#selectedEmployeeA').change(function (e) {
-        // Execute function 
-
-        var employee = parseInt($("#selectedEmployeeA").val());
-        var option = "selectedEmployeeA";
-        showSelectedEmployees(employeeId);
-});
-
-    $('#selectedEmployeeB').change(function (e) {
-        // Execute function 
-
-        var employeeId = parseInt($("#selectedEmployeeB").val());
-        var option = "selectedEmployeeB";
-        showSelectedEmployees(employeeId);
-    });
+    }   
 });
 
 function showSelectedEmployees(employeeId) {
