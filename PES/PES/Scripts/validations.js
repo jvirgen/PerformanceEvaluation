@@ -15,16 +15,6 @@
         newProfile = 2; // Director
     }
 
-    //Execute validate profile manager function
-    $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentPrfile + "&email=" + email, function (data) {
-
-        $('#selectedNewManager').children().remove();
-        for (var i = 0; i < data.employees.length; i++) {
-            var employee = data.employees[i];
-            $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-        }
-        $('#dropdownNewManager').show();
-    });
     // Execute validate profile function
     $.getJSON('/Employee/GetEmployeesProifile?profile=' + newProfile + "&email=" + email ,function (data) {
 
