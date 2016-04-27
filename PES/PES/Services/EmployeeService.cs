@@ -847,11 +847,31 @@ namespace PES.Services
             return employees;
         }
 
-        public List<Employee> UpdateManagerAssigment(List<Employee> employees) 
+        public bool UpdateManagerAssigment(int EmployeeId, int managerFrom, int managerTo) 
         {
-            // Add code 
+            List<Employee> Employees = new List<Employee>();
+            Employee employee = new Employee();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string UpdateQuery = "UPDATE EMPLOYEE SET ID_MANAGER=" + managerTo +
+                                     " WHERE ID_EMPLOYEE= " + EmployeeId + " AND ID_MANAGER= " + managerFrom;
 
-            return employees;
+                    OracleCommand Command = new OracleCommand(UpdateQuery, db);
+                    Command.ExecuteNonQuery();
+                    OracleDataReader Reader = Command.ExecuteReader();
+                    
+                    db.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return true;
         }
     }
 }

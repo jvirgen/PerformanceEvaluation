@@ -133,6 +133,8 @@ namespace PES.Controllers
         }
         #endregion
 
+        #region setting up dropdowns
+
         private InsertEmployeeViewModel SetUpDropdowns(InsertEmployeeViewModel model)
         {
             // Get profile current user 
@@ -333,6 +335,7 @@ namespace PES.Controllers
 
             return model;
         }
+        #endregion
 
         public JsonResult GetEmployeesProifile(int profile, string email)
         {
@@ -531,12 +534,14 @@ namespace PES.Controllers
 
         }
 
-        //public async Task<ActionResult> MoveEmployeeToB(int idEmployee)
-        //{
-        //    var employee = _employeeService.GetByID(idEmployee);
-
-        //    return View();
-        //}
+        public async Task<ActionResult> MoveEmployee(int managerFrom, int ManagerTo, List<Employee> employees)
+        {
+            foreach(var item in employees)
+            {
+                _employeeService.UpdateManagerAssigment(item.EmployeeId, managerFrom, ManagerTo);
+            }
+            return View();
+        }
 
         public async Task<ActionResult> GetEmployeesByManager(int employeeId)
         {
