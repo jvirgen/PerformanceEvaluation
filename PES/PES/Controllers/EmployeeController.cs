@@ -338,6 +338,10 @@ namespace PES.Controllers
         {
             //Get curren employee selected
             var currentEmployee = _employeeService.GetByEmail(email + "@4thsource.com");
+            if (currentEmployee.EmployeeId == 0)
+            {
+                currentEmployee = _employeeService.GetByEmail(email);
+            }
             //Get all employees depending profile
             var employees = _employeeService.getByPorfileId((profile));
             var item = employees.Find(x => x.EmployeeId == currentEmployee.EmployeeId);
@@ -346,6 +350,15 @@ namespace PES.Controllers
 
             //Return employees json file
             return Json(new { employees = employees, hasOrg = has }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetEmployeesByProifile(int profile)
+        {
+            //Get all employees depending profile
+            var employees = _employeeService.getByPorfileId(profile);
+
+            //Return employees json file
+            return Json(new { employees = employees}, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -829,10 +842,11 @@ namespace PES.Controllers
             TransferEmployeeViewModel TransferModel = new TransferEmployeeViewModel();
             //Get current user
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
-            var profiles = _profileService.GetAllProfiles();
 
             if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
             {
+                TransferModel.ManagerAEmployeeList = _employeeService.GetAll();
+                TransferModel.ManagerBEmployeeList = _employeeService.GetAll();
                 SetUpDropdowns(TransferModel);
                 
                 return View(TransferModel);

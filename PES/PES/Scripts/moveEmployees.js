@@ -1,6 +1,64 @@
 ﻿$(document).ready(function () {
     $("#ManagerA-table").DataTable();
     $("#ManagerB-table").DataTable();
+
+    var transferProfiles = parseInt($("#selectedProfile").val());
+
+    $("#selectedEmployeeA").children().remove();
+    $("#selectedEmployeeB").children().remove();
+
+    if (transferProfiles == 3) {
+        $("#EmployeeALabel").text("Director A");
+        $("#EmployeeBLabel").text("Director B");
+        $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
+            for (var i = 0; i < data.employees.length; i++) {
+                var employee = data.employees[i];
+                $('#selectedEmployeeA').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedEmployeeB').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+            }
+        });
+    }
+    else {
+        $("#EmployeeALabel").text("Manager A");
+        $("#EmployeeBLabel").text("Manager B");
+        $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
+            for (var i = 0; i < data.employees.length; i++) {
+                var employee = data.employees[i];
+                $('#selectedEmployeeA').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedEmployeeB').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+            }
+        });
+    }
+});
+
+$("#selectedProfile").change(function () {
+    var transferProfiles = parseInt($("#selectedProfile").val());
+
+    $("#selectedEmployeeA").children().remove();
+    $("#selectedEmployeeB").children().remove();
+
+    if (transferProfiles == 3) {
+        $("#EmployeeALabel").text("Director A");
+        $("#EmployeeBLabel").text("Director B");
+        $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
+            for (var i = 0; i < data.employees.length; i++) {
+                var employee = data.employees[i];
+                $('#selectedEmployeeA').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedEmployeeB').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+            }
+        });
+    }
+    else {
+        $("#EmployeeALabel").text("Manager A");
+        $("#EmployeeBLabel").text("Manager B");
+        $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
+            for (var i = 0; i < data.employees.length; i++) {
+                var employee = data.employees[i];
+                $('#selectedEmployeeA').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedEmployeeB').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+            }
+        });
+    }
 });
 
 function showSelectedEmployees(employeeA, employeeB) {
