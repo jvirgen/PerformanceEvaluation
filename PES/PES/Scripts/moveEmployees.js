@@ -128,7 +128,7 @@ function moveEmployeeToB(employee) {
     var employee = $("#idEmployee").val();
 
     $.ajax({
-        url: "/Employee/MoveEmployeeToB",
+        url: "/Employee/MoveEmployee",
         data: {
             employee: employee
         }
