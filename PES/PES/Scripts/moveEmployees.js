@@ -59,17 +59,30 @@ $("#selectedProfile").change(function () {
             }
         });
     }
+
+    // Events
+    $('#selectedEmployeeA').change(function (e) {
+        // Execute function 
+
+        var employee = parseInt($("#selectedEmployeeA").val());
+        var option = "selectedEmployeeA";
+        showSelectedEmployees(employeeId);
 });
 
-function showSelectedEmployees(employeeA, employeeB) {
-    var employeeA = $("#DropdownA").val();
-    var employeeB = $("#DropdownB").val();
+    $('#selectedEmployeeB').change(function (e) {
+        // Execute function 
 
+        var employeeId = parseInt($("#selectedEmployeeB").val());
+        var option = "selectedEmployeeB";
+        showSelectedEmployees(employeeId);
+    });
+});
+
+function showSelectedEmployees(employeeId) {
     $.ajax({
-        url: "/Employee/GetEmployeesBySelection",
+        url: "/Employee/GetEmployeesByManager",
         data: {
-            employeeA: employeeA,
-            employeeB: employeeB
+            employeeId: employeeId
         }
     })
     .done(function (data) {
@@ -77,11 +90,26 @@ function showSelectedEmployees(employeeA, employeeB) {
             //success ajax
             // Populate table with data from ajax call
             $("#divtable-content").html("");
-            $("#divtable-content").html(data).fadeIn("slow");
+            $("#divtable-content").html(data).fadeOut("fast").fadeIn("slow");
 
             // Re init datatable
-            $("#firstTable").DataTable();
-            $("#secondTable").DataTable();
+            $("#ManagerA-table").DataTable();
+            $("#ManagerB-table").DataTable();
+            
+            //if (option = "selectedEmployeeA") {
+            //    $("#divtable-content").html("");
+            //    $("#divtable-content").html(data).fadeOut("fast").fadeIn("slow");
+
+            //    // Re init datatable
+            //    $("#ManagerA-table").DataTable();
+            //}
+            //else {
+            //    $("#divtable2-content").html("");
+            //    $("#divtable2-content").html(data).fadeOut("fast").fadeIn("slow");
+                
+            //    // Re init datatable
+            //    $("#ManagerB-table").DataTable();
+            //}
         }
         else {
             // Error
@@ -96,8 +124,8 @@ function showSelectedEmployees(employeeA, employeeB) {
     });
 }
 
-function moveEmployeeToB(employeeA) {
-    var employeeA = $("#idEmployee").val();
+function moveEmployeeToB(employee) {
+    var employee = $("#idEmployee").val();
 
     $.ajax({
         url: "/Employee/MoveEmployeeToB",

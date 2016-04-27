@@ -531,37 +531,64 @@ namespace PES.Controllers
 
         }
 
-        public async Task<ActionResult> MoveEmployeeToB(int idEmployee)
-        {
-            var employee = _employeeService.GetByID(idEmployee);
+        //public async Task<ActionResult> MoveEmployeeToB(int idEmployee)
+        //{
+        //    var employee = _employeeService.GetByID(idEmployee);
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public async Task<ActionResult> GetEmployeesBySelection(int option, string employeeA, string employeeB)
+        public async Task<ActionResult> GetEmployeesByManager(int employeeId)
         {
-            List<Employee> employees = new List<Employee>();
-            List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
-            //var user = _employeeService.GetByEmail((string)Session["UserEmail"]);
-            //var profile = _profileService.GetProfileByID(user.ProfileId);
+            List<Employee> selectedEmployees = new List<Employee>();
+            
+            // Get user
+            var user = _employeeService.GetByID(employeeId);
+            // Get profile of user
+            var profile = _profileService.GetProfileByID(user.ProfileId);          
             // Get employees of the user, depending on its profile
-            //var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
+            var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
 
-            // to move resources
-            if (option == (int)ProfileUser.Manager)
+            //Validate the profile here maybe
+
+            selectedEmployees = employees;
+
+            List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
+
+            // Populate model with employees data
+            foreach (var item in selectedEmployees)
             {
-                // 
-                // change labels text to directors
-                // set drowdowns A and B with Director names
-                // fill first and second table with managers names
+                EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+
+                //get porfiles
+                var porfile = _profileService.GetProfileByID(item.ProfileId);
+                var manager = _employeeService.GetByID(item.ManagerId);
+
+                model.EmployeeId = item.EmployeeId;
+                model.FirstName = item.FirstName;
+                model.LastName = item.LastName;
+                model.Email = item.Email;
+                model.Profile = porfile;
+                model.Manager = manager;
+                model.ProfileId = item.ProfileId;
+                model.ManagerId = item.ManagerId;
+                model.Director = _employeeService.GetByID(model.Manager.ManagerId);
+                model.EndDate = item.EndDate;
+
+                modelList.Add(model);
             }
+
+            return View("TransferEmployees", modelList);
+            
+            // to move resources
+            // change labels text to directors
+            // set drowdowns A and B with Director names
+            // fill first and second table with managers names
+
             // to move managers
-            else {
-                // change labels text to managers
-                // set drowdowns A and B with managers names
-                // fill first and second table with resources names
-            }
-            return View(modelList);
+            // change labels text to managers
+            // set drowdowns A and B with managers names
+            // fill first and second table with resources names            
         }
 
         [HttpGet]
