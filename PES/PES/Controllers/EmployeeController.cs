@@ -594,26 +594,10 @@ namespace PES.Controllers
             if (filter == "enabled")
             {
                 employeesFiltered = employees.Where(e => e.EndDate == null).ToList();
-                //foreach(var item in employees)
-                //{
-                //    if(item.EndDate != null)
-                //    {
-                //        employees.Remove(item);
-                //    }
-                //}
-                //employees = employees.Where(e => e.EndDate == null);
             }
             else if (filter == "disabled")
             {
-                employeesFiltered = employees.Where(e => e.EndDate != null).ToList();
-                //foreach (var item in employees)
-                //{
-                //    if(item.EndDate == null)
-                //    {
-                //        employees.Remove(item);
-                //    }
-                //}
-                //employees = employees.Where(e => e.EndDate != null);
+                employeesFiltered = employees.Where(e => e.EndDate != null).ToList();                
             }
             else
             {
