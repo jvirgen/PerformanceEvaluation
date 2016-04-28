@@ -35,16 +35,16 @@
         // Execute function 
 
         var employeeId = parseInt($("#selectedEmployeeA").val());
-        var option = "selectedEmployeeA";
-        showSelectedEmployees(employeeId);
+        var option = 1;
+        showSelectedEmployees(employeeId, option);
     });
 
     $('#selectedEmployeeB').change(function (e) {
         // Execute function 
 
         var employeeId = parseInt($("#selectedEmployeeB").val());
-        var option = "selectedEmployeeB";
-        showSelectedEmployees(employeeId);
+        var option = 2;
+        showSelectedEmployees(employeeId, option);
     });
 });
 
@@ -78,11 +78,12 @@ $("#selectedProfile").change(function () {
     }   
 });
 
-function showSelectedEmployees(employeeId) {
+function showSelectedEmployees(employeeId, option) {
     $.ajax({
         url: "/Employee/GetEmployeesByManager",
         data: {
-            employeeId: employeeId
+            employeeId: employeeId,
+            option: option
         }
     })
     .done(function (data) {
