@@ -835,14 +835,13 @@ namespace PES.Controllers
             if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
             {
                 TransferModel.ManagerEmployeeList = _employeeService.GetAll();
-                //TransferModel.ManagerBEmployeeList = _employeeService.GetAll();
                 SetUpDropdowns(TransferModel);
                 
                 return View(TransferModel);
             }
             else
             {
-                TempData["Error"] = "You are not alowed to tranfer amployes";
+                TempData["Error"] = "You are not allowed to tranfer employees.";
                 return RedirectToAction("ViewEmployees");
             }
         }

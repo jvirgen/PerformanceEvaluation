@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
+    $("#selectedEmployeeA").children().remove();
+    $("#selectedEmployeeB").children().remove();
+
     $("#ManagerA-table").DataTable();
     $("#ManagerB-table").DataTable();
 
     var transferProfiles = parseInt($("#selectedProfile").val());
-
-    $("#selectedEmployeeA").children().remove();
-    $("#selectedEmployeeB").children().remove();
 
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
@@ -29,6 +29,12 @@
             }
         });
     }
+
+    var employeeId1 = parseInt($("#selectedEmployeeA").val());
+    var employeeId2 = parseInt($("#selectedEmployeeB").val());
+
+    //showSelectedEmployees(employeeId1, 1);
+    //showSelectedEmployees(employeeId2, 2);
 
     // Events
     $('#selectedEmployeeA').change(function (e) {
