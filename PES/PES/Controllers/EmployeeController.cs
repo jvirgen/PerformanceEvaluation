@@ -534,14 +534,11 @@ namespace PES.Controllers
 
         }
 
-        public async Task<ActionResult> MoveEmployee(int managerFrom, int ManagerTo, List<Employee> employees)
-        {
-            foreach(var item in employees)
-            {
-                _employeeService.UpdateManagerAssigment(item.EmployeeId, managerFrom, ManagerTo);
-            }
-            return View();
-        }
+        //public async Task<ActionResult> MoveEmployees(TransferEmployeeViewModel model)
+        //{
+        //    //We ned to add code here!
+        //   return View()
+        //}
 
         public async Task<ActionResult> GetEmployeesByManager(int employeeId)
         {        
@@ -887,6 +884,12 @@ namespace PES.Controllers
                 TempData["Error"] = "You are not alowed to tranfer amployes";
                 return RedirectToAction("ViewEmployees");
             }
+        }
+
+        [HttpPost]
+        public ActionResult TransferEmployees(TransferEmployeeViewModel model)
+        {
+            return View();
         }
     }
 }

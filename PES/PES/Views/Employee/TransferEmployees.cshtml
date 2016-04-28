@@ -48,7 +48,8 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            @Html.Partial("_TranferEmployeePartial")
+                            @*<tbody>
                                 @foreach (var item in Model.ManagerAEmployeeList)
                                 {
                                     <tr>
@@ -61,7 +62,7 @@
                                         </th>
                                     </tr>
                                 }
-                            </tbody>
+                            </tbody>*@
                         </table>
                     </div>
                     <div class="col-md-2">                  
@@ -81,7 +82,8 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            @Html.Partial("_TranferEmployeePartial")
+                            @*<tbody>
                                 @foreach (var item in Model.ManagerBEmployeeList)
                                 {
                                     <tr>
@@ -94,7 +96,7 @@
                                         </th>
                                     </tr>
                                 }
-                            </tbody>
+                            </tbody>*@
                         </table>
                     </div>
                 </div>

@@ -1,0 +1,19 @@
+﻿@model PES.ViewModels.TransferEmployeeViewModel
+
+<tbody>
+    @foreach (var item in Model.ManagerAEmployeeList)
+    {
+        <tr>
+            @Html.Hidden("idEmployee", item.EmployeeId)
+            <th>
+                @Html.CheckBox("CheckToTransfer", false)
+            </th>
+            <th>
+                @(item.FirstName + " " + item.LastName)
+            </th>
+        </tr>
+    }
+</tbody>
+
+
+
