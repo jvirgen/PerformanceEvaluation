@@ -1,7 +1,7 @@
 ﻿@model PES.ViewModels.TransferEmployeeViewModel
 
 <tbody>
-    @foreach (var item in Model.ManagerAEmployeeList)
+    @foreach (var item in Model.ManagerEmployeeList)
     {
         <tr>
             @Html.Hidden("idEmployee", item.EmployeeId)

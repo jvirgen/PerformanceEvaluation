@@ -89,28 +89,17 @@ function showSelectedEmployees(employeeId, option) {
     .done(function (data) {
         if (data) {
             //success ajax
-            // Populate table with data from ajax call
-            $("#divtable-content").html("");
-            $("#divtable-content").html(data).fadeOut("fast").fadeIn("slow");
-
-            // Re init datatable
-            $("#ManagerA-table").DataTable();
-            $("#ManagerB-table").DataTable();
             
-            //if (option = "selectedEmployeeA") {
-            //    $("#divtable-content").html("");
-            //    $("#divtable-content").html(data).fadeOut("fast").fadeIn("slow");
-
-            //    // Re init datatable
-            //    $("#ManagerA-table").DataTable();
-            //}
-            //else {
-            //    $("#divtable2-content").html("");
-            //    $("#divtable2-content").html(data).fadeOut("fast").fadeIn("slow");
-                
-            //    // Re init datatable
-            //    $("#ManagerB-table").DataTable();
-            //}
+            if (option == 1) {
+                // Populate table with data from ajax call
+                $("#ManagerA-table").html(data).fadeOut("fast").fadeIn("slow");
+                // Re init datatable
+                $("#ManagerA-table").DataTable();              
+            }
+            else {
+                $("#ManagerB-table").html(data).fadeOut("fast").fadeIn("slow");
+                $("#ManagerB-table").DataTable();
+            }
         }
         else {
             // Error

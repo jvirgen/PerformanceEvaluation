@@ -550,13 +550,13 @@ namespace PES.Controllers
             var profile = _profileService.GetProfileByID(user.ProfileId);
             // Get employees of the user, depending on its profile
             if (option == 1)
-                model.ManagerAEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
+                model.ManagerEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
             else
-                model.ManagerBEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
+                model.ManagerEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
             
             SetUpDropdowns(model); 
 
-            return View("TransferEmployees", model);
+            return PartialView("_TransferEmployeePartial", model);
             
             // to move resources
             // change labels text to directors
@@ -834,8 +834,8 @@ namespace PES.Controllers
 
             if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
             {
-                TransferModel.ManagerAEmployeeList = _employeeService.GetAll();
-                TransferModel.ManagerBEmployeeList = _employeeService.GetAll();
+                TransferModel.ManagerEmployeeList = _employeeService.GetAll();
+                //TransferModel.ManagerBEmployeeList = _employeeService.GetAll();
                 SetUpDropdowns(TransferModel);
                 
                 return View(TransferModel);

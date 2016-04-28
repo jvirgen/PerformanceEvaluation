@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="row text-center">
-                    <div class="col-lg-5">
+                    <div class="col-lg-5" id="tableA-content">
                         <table class="table-striped" id="ManagerA-table" width="450">
                             <thead>
                                 <tr>
@@ -48,7 +48,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            @Html.Partial("_TranferEmployeePartial")
+                            @Html.Partial("_TransferEmployeePartial")
                             @*<tbody>
                                 @foreach (var item in Model.ManagerAEmployeeList)
                                 {
@@ -70,7 +70,7 @@
                         <hr />
                         <button class="btn-default" id="btnToA" title="Move to Manager A"> < </button>
                     </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-5" id="tableB-content">
                         <table class="table-striped" id="ManagerB-table" width="450">
                             <thead>
                                 <tr>
@@ -82,7 +82,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            @Html.Partial("_TranferEmployeePartial")
+                            @Html.Partial("_TransferEmployeePartial")
                             @*<tbody>
                                 @foreach (var item in Model.ManagerBEmployeeList)
                                 {

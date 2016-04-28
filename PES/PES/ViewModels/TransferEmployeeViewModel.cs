@@ -15,7 +15,6 @@ namespace PES.ViewModels
         public Employee SelectedManagerA { get; set; }
         public List<SelectListItem> ManagerBList { get; set; }
         public Employee SelectedManagerB { get; set; }
-        public List<Employee> ManagerAEmployeeList { get; set; }
-        public List<Employee> ManagerBEmployeeList { get; set; }
+        public List<Employee> ManagerEmployeeList { get; set; }
     }
 }

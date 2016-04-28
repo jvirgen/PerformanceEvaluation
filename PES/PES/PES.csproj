@@ -354,7 +354,7 @@
     <Content Include="Views\Employee\ChangeProfile2.cshtml" />
     <Content Include="Views\Shared\_ViewEmployeesPartial.cshtml" />
     <Content Include="Views\Employee\TransferEmployees.cshtml" />
-    <Content Include="Views\Shared\_TranferEmployeePartial.cshtml" />
+    <Content Include="Views\Shared\_TransferEmployeePartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
