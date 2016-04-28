@@ -6,7 +6,7 @@
         <tr>
             @Html.Hidden("idEmployee", item.EmployeeId)
             <th>
-                @Html.CheckBox("CheckToTransfer", false)
+                <input type="checkbox" class="checkbox" value= @item.EmployeeId />
             </th>
             <th>
                 @(item.FirstName + " " + item.LastName)
