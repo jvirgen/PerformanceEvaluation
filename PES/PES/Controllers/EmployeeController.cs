@@ -556,44 +556,48 @@ namespace PES.Controllers
 
             List<Employee> selectedEmployees = new List<Employee>();
             selectedEmployees = employees;
-            List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
 
-            // Populate model with employees data
+            List<TransferEmployeeViewModel> modelList = new List<TransferEmployeeViewModel>();
+            //List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
+            List<Employee> newEmployees = new List<Employee>();
+
             foreach (var item in selectedEmployees)
             {
-                EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
-                TransferEmployeeViewModel model2 = new TransferEmployeeViewModel();
+                //EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
+                //TransferEmployeeViewModel model = new TransferEmployeeViewModel();
                 Employee employee = new Employee();
                 
                 //get porfiles
-                var porfile = _profileService.GetProfileByID(item.ProfileId);
-                var manager = _employeeService.GetByID(item.ManagerId);
+                //var porfile = _profileService.GetProfileByID(item.ProfileId);
+                //var manager = _employeeService.GetByID(item.ManagerId);
 
-                //employee.EmployeeId = selectedEmployees.m
-                employee.EmployeeId = model.EmployeeId;
-                employee.FirstName = model.FirstName;
-                employee.LastName = model.LastName;
-                employee.Email = model.Email;
-                employee.Customer = model.Customer;
-                employee.Position = employee.Position;
-                employee.ProfileId = employee.ProfileId;
-                employee.ManagerId = employee.ManagerId;
-                employee.EndDate = employee.EndDate;
-                employee.Project = employee.Project;
-                //employee.ProfileId = porfile;
-                //employee.ProfileId = manager;
+                employee.EmployeeId = item.EmployeeId;
+                employee.FirstName = item.FirstName;
+                employee.LastName = item.LastName;
+                employee.Email = item.Email;
+                employee.Customer = item.Customer;
+                employee.Position = item.Position;
+                employee.ProfileId = item.ProfileId;
+                employee.ManagerId = item.ManagerId;
+                employee.EndDate = item.EndDate;
+                employee.Project = item.Project;
 
+                newEmployees.Add(employee);
                 //model.Director = _employeeService.GetByID(model.Manager.ManagerId);
-
-
+                //model.ManagerAEmployeeList.Add(employee);
+                //model.ManagerBEmployeeList.Add(employee);
                 //modelList.Add(model);
-                model2.ManagerAEmployeeList.Add(employee);
             }
-
-            //foreach (var employee in model)
-            //{
                 
-            //}
+            foreach (var employee in newEmployees)
+            {
+                TransferEmployeeViewModel model = new TransferEmployeeViewModel();
+   
+                //model = employee;
+                model.ManagerAEmployeeList.Add(employee);
+                modelList.Add(model);                
+            }
+            
             return View("TransferEmployees", modelList);
             
             // to move resources
