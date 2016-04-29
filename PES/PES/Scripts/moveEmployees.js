@@ -121,21 +121,22 @@ function showSelectedEmployees(employeeId, option) {
 }
 
 $(".checkbox").on("click", function () {
-    $(this).addClass("selectedToMove");
+    if ($(this).hasClass("selectedToMove")) {
+        $(this).removeClass("selectedToMove");
+    }
+    else {
+        $(this).addClass("selectedToMove");
+    }
 });
 
-function moveToB(){
+function moveToB() {
     var rowElements = $("#ManagerA-table").find(".selectedToMove").parents("tr");
-    rowElements.remove();
-    $("#ManagerB-table").find("tr:last").insertAfter(rowElements);
-    rowElements.removeClass("selectedToMove");
+    $("#ManagerB-table").find("tr:last").after(rowElements);
 }
 
 function moveToA() {
     var rowElements = $("#ManagerB-table").find(".selectedToMove").parents("tr");
-    rowElements.remove();
-    $("#ManagerA-table").find("tr:first").insertAfter(rowElements);
-    rowElements.removeClass("selectedToMove");
+    $("#ManagerA-table").find("tr:last").after(rowElements);
 }
 
 function moveEmployeeToB(employee) {
