@@ -846,9 +846,10 @@ namespace PES.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult TransferEmployees(TransferEmployeeViewModel model)
+        
+        public ActionResult TransferEmployees(int employe, int Newmanager)
         {
+            _employeeService.TransferEmployees(employe, Newmanager);
             return View();
         }
     }

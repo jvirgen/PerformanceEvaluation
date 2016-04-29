@@ -847,37 +847,28 @@ namespace PES.Services
             return employees;
         }
 
-        //public bool UpdateManagerAssigment(Employee employee, string toAB) 
-        //{
-        //    List<Employee> Employees = new List<Employee>();
-        //    try
-        //    {
-        //        using (OracleConnection db = dbContext.GetDBConnection())
-        //        {
-        //            db.Open();
-        //            //We need to think how to send and manage the information
-        //            //if(toAB == "ToB")
-        //            //{
-        //              string UpdateQuery = "UPDATE EMPLOYEE SET ID_MANAGER=" +  +
-        //                        " WHERE ID_EMPLOYEE= " + EmployeeId + " AND ID_MANAGER= " + managerFrom;
-        //            //}
-        //            //else
-        //            //{
+        public bool TransferEmployees(int employeeId, int managerId)
+        {
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                   db.Open();
+                   string UpdateQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + managerId + "' " +
+                                     "WHERE ID_EMPLOYEE='" + employeeId + "'";
+                    OracleCommand Command = new OracleCommand(UpdateQuery, db);
+                    Command.ExecuteNonQuery();
+                    OracleDataReader Reader = Command.ExecuteReader();
 
-        //            //}
-        //            OracleCommand Command = new OracleCommand(UpdateQuery, db);
-        //            Command.ExecuteNonQuery();
-        //            OracleDataReader Reader = Command.ExecuteReader();
-                    
-        //            db.Close();
-        //        }
+                    db.Close();
+                }
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //    return true;
-        //}
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
     }
 }

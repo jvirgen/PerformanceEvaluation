@@ -132,14 +132,21 @@ $(".checkbox").on("click", function () {
 function moveToB() {
     var rowElements = $("#ManagerA-table").find(".selectedToMove").parents("tr");
     $("#ManagerB-table").find("tr:last").after(rowElements);
+    var employeesId = $("#ManagerB-table").find(".checkbox").val();
+    $.ajax({
+        url: "/Employee/TransferEmployee",
+        data: {
+            employee: employee
+        }
+    })
 }
 
 function moveToA() {
     var rowElements = $("#ManagerB-table").find(".selectedToMove").parents("tr");
     $("#ManagerA-table").find("tr:last").after(rowElements);
+    $("#ManagerA-table").find(".checkbox");
 }
-
-function moveEmployeeToB(employee) {
+    function moveEmployeeToB(employee) {
     var employee = $("#idEmployee").val();
 
     $.ajax({
