@@ -834,7 +834,9 @@ namespace PES.Controllers
 
             if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
             {
-                TransferModel.ManagerEmployeeList = _employeeService.GetAll();
+                List<Employee> employeeList = new List<Employee>();
+                //TransferModel.ManagerEmployeeList = _employeeService.GetAll();
+                TransferModel.ManagerEmployeeList = employeeList;
                 SetUpDropdowns(TransferModel);
                 
                 return View(TransferModel);

@@ -10,6 +10,8 @@
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
         $("#EmployeeBLabel").text("Director B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a director" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a director" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -21,6 +23,8 @@
     else {
         $("#EmployeeALabel").text("Manager A");
         $("#EmployeeBLabel").text("Manager B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a manager" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -29,12 +33,9 @@
             }
         });
     }
-
-    var employeeId1 = parseInt($("#selectedEmployeeA").val());
-    var employeeId2 = parseInt($("#selectedEmployeeB").val());
-
-    //showSelectedEmployees(employeeId1, 1);
-    //showSelectedEmployees(employeeId2, 2);
+    
+    //$('#selectedEmployeeA').trigger(showSelectedEmployees(parseInt($("#selectedEmployeeA").val()), 1));
+    //showSelectedEmployees(parseInt($("#selectedEmployeeB").val()), 2);
 
     // Events
     $('#selectedEmployeeA').change(function (e) {
@@ -60,9 +61,14 @@ $("#selectedProfile").change(function () {
     $("#selectedEmployeeA").children().remove();
     $("#selectedEmployeeB").children().remove();
 
+    $('#ManagerA-table').DataTable().clear("tbody");
+    //$("#ManagerB-table").DataTable().clear().draw();
+
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
         $("#EmployeeBLabel").text("Director B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a director" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a director" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -74,6 +80,8 @@ $("#selectedProfile").change(function () {
     else {
         $("#EmployeeALabel").text("Manager A");
         $("#EmployeeBLabel").text("Manager B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a manager" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -173,38 +181,7 @@ function moveEmployeeToB(employee) {
     });
 }
 
-    function moveEmployeeToA(employee) {
-        $.ajax({
-            url: "/Employee/MoveEmployeeToA",
-            data: {
-                employee: employee
-            }
-        })
-        .done(function (data) {
-            if (data) {
-                //success ajax
-                // Populate table with data from ajax call
-                $("#table-content").html("");
-                $("#table-content").html(data).fadeOut("fast").fadeIn("slow");
-
-                // Re init datatable
-                $("#firstTable").DataTable();
-                $("#secondTable").DataTable();
-            }
-            else {
-                // Error
-                alert("Error while getting employees");
-            }
-        })
-        .fail(function (jqxhr, textStatus, error) {
-            alert("Error while getting employees. Please try again later.");
-        })
-        .always(function () {
-            //alert("finished");
-        });
-    }
-
-    function moveAllEmployeesToA(employees) {
+function moveAllEmployeesToA(employees) {
         $.ajax({
             url: "/Employee/MoveAllEmployeesToA",
             data: {
@@ -235,33 +212,4 @@ function moveEmployeeToB(employee) {
         });
     }
 
-    function moveAllEmployeesToB(employees) {
-        $.ajax({
-            url: "/Employee/MoveAllEmployeesToB",
-            data: {
-                employees: employees
-            }
-        })
-        .done(function (data) {
-            if (data) {
-                //success ajax
-                // Populate table with data from ajax call
-                $("#table-content").html("");
-                $("#table-content").html(data).fadeOut("fast").fadeIn("slow");
-
-                // Re init datatable
-                $("#firstTable").DataTable();
-                $("#secondTable").DataTable();
-            }
-            else {
-                // Error
-                alert("Error while getting employees");
-            }
-        })
-        .fail(function (jqxhr, textStatus, error) {
-            alert("Error while getting employees. Please try again later.");
-        })
-        .always(function () {
-            //alert("finished");
-        });
-    }
+    
