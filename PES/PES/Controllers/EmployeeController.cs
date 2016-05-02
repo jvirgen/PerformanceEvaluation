@@ -549,10 +549,16 @@ namespace PES.Controllers
             // Get profile of user
             var profile = _profileService.GetProfileByID(user.ProfileId);
             // Get employees of the user, depending on its profile
+            var employees = _employeeService.GetEmployeeByManager(employeeId);
+
+            List<Employee> filteredEmployees = new List<Employee>();
+
+            filteredEmployees = employees.Where(e => e.EmployeeId != user.EmployeeId).ToList();
+
             if (option == 1)
-                model.ManagerEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
+                model.ManagerEmployeeList = filteredEmployees;
             else
-                model.ManagerEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
+                model.ManagerEmployeeList = filteredEmployees;
             
             SetUpDropdowns(model); 
 

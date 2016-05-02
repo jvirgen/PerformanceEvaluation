@@ -53,6 +53,8 @@
         var option = 2;
         showSelectedEmployees(employeeId, option);
     });
+
+    //showSelectedEmployees(parseInt($("#selectedEmployeeA").val()), 1);
 });
 
 $("#selectedProfile").change(function () {
