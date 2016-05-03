@@ -136,31 +136,49 @@ function showSelectedEmployees(employeeId, option) {
     });
 }
 
-$(".checkbox").on("click", function () {
-    if ($(this).hasClass("selectedToMove")) {
-        $(this).removeClass("selectedToMove");
+function selectToMove (id) {
+    var element = $(".checkbox[value="+ id +"]");
+    if (element.hasClass("selectedToMove")) {
+        element.removeClass("selectedToMove");
     }
     else {
-        $(this).addClass("selectedToMove");
+        element.addClass("selectedToMove");
     }
-});
+}
 
 function moveToB() {
-    var rowElements = $("#ManagerA-table").find(".selectedToMove").parents("tr");
-    $("#ManagerB-table").find("tr:last").after(rowElements);
-    var employeesId = $("#ManagerB-table").find(".checkbox").val();
+    var manager = $("#selectedEmployeeB").val();
+    var rowElements = $("#tableA-content").find(".selectedToMove").parents("tr");
+    $("#tableB-content").find("tr:last").after(rowElements);
+    var employeesId = new Int32Array();
+    rowElements.find(".checkbox").each(function (index) {
+         employeesId[index] =  $(this).val();
+    });
+    console.log(employeesId);
     $.ajax({
-        url: "/Employee/TransferEmployee",
+        url: "/Employee/TransferEmploye",
         data: {
-            employee: employee
+            employees: employeesId,
+            manager : manager
         }
     })
+    .done(function (data) {
+        alert("Employees moved successfuly.")
+    })
+    .fail(function (jqxhr, textStatus, error) {
+        alert("Error while moving employees. Please try again later.");
+    })
+    .always(function () {
+        //alert("finished");
+    });
 }
 
 function moveToA() {
     var rowElements = $("#ManagerB-table").find(".selectedToMove").parents("tr");
     $("#ManagerA-table").find("tr:last").after(rowElements);
     $("#ManagerA-table").find(".checkbox");
+
+
 }
     function moveEmployeeToB(employee) {
     var employee = $("#idEmployee").val();
@@ -190,7 +208,7 @@ function moveToA() {
         }
     })
     .fail(function (jqxhr, textStatus, error) {
-        alert("Error while getting employees. Please try again later.");
+        alert("Error while Mooving employees. Please try again later.");
     })
     .always(function () {
         //alert("finished");

@@ -852,9 +852,13 @@ namespace PES.Controllers
         }
 
         
-        public ActionResult TransferEmployees(int employe, int Newmanager)
+        public ActionResult TransferEmploye(Int32[] employees, int manager)
         {
-            _employeeService.TransferEmployees(employe, Newmanager);
+            for(int i = 0; i<employees.Length; i++)
+            {
+                _employeeService.TransferEmployees(employees[i], manager);
+            }
+            
             return View();
         }
     }
