@@ -10,6 +10,8 @@
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
         $("#EmployeeBLabel").text("Director B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a director" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a director" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -21,6 +23,8 @@
     else {
         $("#EmployeeALabel").text("Manager A");
         $("#EmployeeBLabel").text("Manager B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a manager" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -29,12 +33,9 @@
             }
         });
     }
-
-    var employeeId1 = parseInt($("#selectedEmployeeA").val());
-    var employeeId2 = parseInt($("#selectedEmployeeB").val());
-
-    //showSelectedEmployees(employeeId1, 1);
-    //showSelectedEmployees(employeeId2, 2);
+    
+    //$('#selectedEmployeeA').trigger(showSelectedEmployees(parseInt($("#selectedEmployeeA").val()), 1));
+    //showSelectedEmployees(parseInt($("#selectedEmployeeB").val()), 2);
 
     // Events
     $('#selectedEmployeeA').change(function (e) {
@@ -52,6 +53,8 @@
         var option = 2;
         showSelectedEmployees(employeeId, option);
     });
+
+    //showSelectedEmployees(parseInt($("#selectedEmployeeA").val()), 1);
 });
 
 $("#selectedProfile").change(function () {
@@ -60,9 +63,14 @@ $("#selectedProfile").change(function () {
     $("#selectedEmployeeA").children().remove();
     $("#selectedEmployeeB").children().remove();
 
+    //$('#ManagerA-table').DataTable().clear("tbody");
+    //$("#ManagerB-table").DataTable().clear().draw();
+
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
         $("#EmployeeBLabel").text("Director B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a director" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a director" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -74,6 +82,8 @@ $("#selectedProfile").change(function () {
     else {
         $("#EmployeeALabel").text("Manager A");
         $("#EmployeeBLabel").text("Manager B");
+        $('#selectedEmployeeA').append("<option value=>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeB').append("<option value=>" + "Select a manager" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -98,12 +108,18 @@ function showSelectedEmployees(employeeId, option) {
             
             if (option == 1) {
                 // Populate table with data from ajax call
-                $("#ManagerA-table").html(data).fadeOut("fast").fadeIn("slow");
+                $("#tableA-content").html("");
+                $("#tableA-content").html(data).fadeOut("fast").fadeIn("slow");
+                //$("#ManagerA-table").html(data).fadeOut("fast").fadeIn("slow");
+
                 // Re init datatable
                 $("#ManagerA-table").DataTable();              
             }
-            else {
-                $("#ManagerB-table").html(data).fadeOut("fast").fadeIn("slow");
+            else if(option == 2){
+                $("#tableB-content").html("");
+                $("#tableB-content").html(data).fadeOut("fast").fadeIn("slow");
+                //$("#ManagerB-table").html(data).fadeOut("fast").fadeIn("slow");
+
                 $("#ManagerB-table").DataTable();
             }
         }
@@ -181,38 +197,7 @@ function moveToA() {
     });
 }
 
-    function moveEmployeeToA(employee) {
-        $.ajax({
-            url: "/Employee/MoveEmployeeToA",
-            data: {
-                employee: employee
-            }
-        })
-        .done(function (data) {
-            if (data) {
-                //success ajax
-                // Populate table with data from ajax call
-                $("#table-content").html("");
-                $("#table-content").html(data).fadeOut("fast").fadeIn("slow");
-
-                // Re init datatable
-                $("#firstTable").DataTable();
-                $("#secondTable").DataTable();
-            }
-            else {
-                // Error
-                alert("Error while getting employees");
-            }
-        })
-        .fail(function (jqxhr, textStatus, error) {
-            alert("Error while getting employees. Please try again later.");
-        })
-        .always(function () {
-            //alert("finished");
-        });
-    }
-
-    function moveAllEmployeesToA(employees) {
+function moveAllEmployeesToA(employees) {
         $.ajax({
             url: "/Employee/MoveAllEmployeesToA",
             data: {
@@ -243,33 +228,4 @@ function moveToA() {
         });
     }
 
-    function moveAllEmployeesToB(employees) {
-        $.ajax({
-            url: "/Employee/MoveAllEmployeesToB",
-            data: {
-                employees: employees
-            }
-        })
-        .done(function (data) {
-            if (data) {
-                //success ajax
-                // Populate table with data from ajax call
-                $("#table-content").html("");
-                $("#table-content").html(data).fadeOut("fast").fadeIn("slow");
-
-                // Re init datatable
-                $("#firstTable").DataTable();
-                $("#secondTable").DataTable();
-            }
-            else {
-                // Error
-                alert("Error while getting employees");
-            }
-        })
-        .fail(function (jqxhr, textStatus, error) {
-            alert("Error while getting employees. Please try again later.");
-        })
-        .always(function () {
-            //alert("finished");
-        });
-    }
+    

@@ -479,7 +479,6 @@ namespace PES.Controllers
                     model.Position = employee.Position;
                     model.ProfileId = employee.ProfileId;
                     model.ManagerId = employee.ManagerId;
-                    //model.HireDate = employee.HireDate;
                     model.EndDate = employee.EndDate;
                     model.Project = employee.Project;
                     model.Profile = porfile;
@@ -549,15 +548,20 @@ namespace PES.Controllers
             // Get profile of user
             var profile = _profileService.GetProfileByID(user.ProfileId);
             // Get employees of the user, depending on its profile
-            if (option == 1)
-                model.ManagerEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
-            else
-                model.ManagerEmployeeList = _employeeService.GetEmployeeByManager(employeeId);
-            
-            SetUpDropdowns(model); 
+            var employees = _employeeService.GetEmployeeByManager(employeeId);
 
-            return PartialView("_TransferEmployeePartial", model);
-            
+            List<Employee> filteredEmployees = new List<Employee>();
+
+            filteredEmployees = employees.Where(e => e.EmployeeId != user.EmployeeId).ToList();
+            model.ManagerEmployeeList = filteredEmployees;
+
+            SetUpDropdowns(model);
+
+            if (option == 1)               
+                return PartialView("_TransferEmployeePartial", model);
+            else
+                return PartialView("_TransferEmployeePartial2", model);
+                  
             // to move resources
             // change labels text to directors
             // set drowdowns A and B with Director names
@@ -665,7 +669,6 @@ namespace PES.Controllers
             model.Email = employee.Email;
             model.ProfileId = employee.ProfileId;
             model.ManagerId = employee.ManagerId;
-            //model.HireDate = employee.HireDate;
             model.EndDate = employee.EndDate;
             model.Profile = porfile;
             model.Manager = manager;
@@ -834,7 +837,9 @@ namespace PES.Controllers
 
             if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
             {
-                TransferModel.ManagerEmployeeList = _employeeService.GetAll();
+                List<Employee> employeeList = new List<Employee>();
+                //TransferModel.ManagerEmployeeList = _employeeService.GetAll();
+                TransferModel.ManagerEmployeeList = employeeList;
                 SetUpDropdowns(TransferModel);
                 
                 return View(TransferModel);
