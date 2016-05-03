@@ -36,34 +36,8 @@
                     </div>
                 </div>
                 <div class="row text-center">
-                    <div class="col-lg-5" id="tableA-content">
-                        <table class="table-striped" id="ManagerA-table" width="450">
-                            <thead>
-                                <tr>
-                                    <th>
-
-                                    </th>
-                                    <th>
-                                        Name
-                                    </th>
-                                </tr>
-                            </thead>
-                            @Html.Partial("_TransferEmployeePartial")
-                            @*<tbody>
-                                @foreach (var item in Model.ManagerAEmployeeList)
-                                {
-                                    <tr>
-                                        @Html.Hidden("idEmployee", item.EmployeeId)
-                                        <th>
-                                            @Html.CheckBox("CheckToTransfer", false)
-                                        </th>
-                                        <th>
-                                            @(item.FirstName + " " + item.LastName)
-                                        </th>
-                                    </tr>
-                                }
-                            </tbody>*@
-                        </table>
+                    <div class="col-lg-5 well responsive" id="tableA-content">                                        
+                            @Html.Partial("_TransferEmployeePartial")                            
                     </div>
                     <div class="col-md-2">                  
                         @*<button class="btn-default" id="btnToB" title="Move to Manager B" onclick="moveToB()"> > </button>*@
@@ -72,34 +46,8 @@
                         @*<button class="btn-default" id="btnToA" title="Move to Manager A" onclick="moveToA()"> < </button>*@
                         <input type="button" class="btn-default" id="btnToA" title="Move to Manager A" onclick="moveToA()" value='<' />
                     </div>
-                    <div class="col-lg-5" id="tableB-content">
-                        <table class="table-striped" id="ManagerB-table" width="450">
-                            <thead>
-                                <tr>
-                                    <th>
-                                                
-                                    </th>
-                                    <th>
-                                        Name
-                                    </th>
-                                </tr>
-                            </thead>
-                            @Html.Partial("_TransferEmployeePartial")
-                            @*<tbody>
-                                @foreach (var item in Model.ManagerBEmployeeList)
-                                {
-                                    <tr>
-                                        @Html.Hidden("idEmployee", item.EmployeeId)
-                                        <th>
-                                            @Html.CheckBox("ChekToTransfer", false)
-                                        </th>
-                                        <th>
-                                            @(item.FirstName + " " + item.LastName)
-                                        </th>
-                                    </tr>
-                                }
-                            </tbody>*@
-                        </table>
+                    <div class="col-lg-5 well responsive" id="tableB-content">
+                            @Html.Partial("_TransferEmployeePartial2")
                     </div>
                 </div>
                 <div class="form-group">
@@ -118,13 +66,12 @@
 </div>
 
 
-
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
     @Scripts.Render("~/Scripts/moveEmployees.js")
-
 }
+
 @section Styles{
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
     @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")>

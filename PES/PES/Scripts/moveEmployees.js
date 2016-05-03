@@ -63,7 +63,7 @@ $("#selectedProfile").change(function () {
     $("#selectedEmployeeA").children().remove();
     $("#selectedEmployeeB").children().remove();
 
-    $('#ManagerA-table').DataTable().clear("tbody");
+    //$('#ManagerA-table').DataTable().clear("tbody");
     //$("#ManagerB-table").DataTable().clear().draw();
 
     if (transferProfiles == 3) {
@@ -108,12 +108,18 @@ function showSelectedEmployees(employeeId, option) {
             
             if (option == 1) {
                 // Populate table with data from ajax call
-                $("#ManagerA-table").html(data).fadeOut("fast").fadeIn("slow");
+                $("#tableA-content").html("");
+                $("#tableA-content").html(data).fadeOut("fast").fadeIn("slow");
+                //$("#ManagerA-table").html(data).fadeOut("fast").fadeIn("slow");
+
                 // Re init datatable
                 $("#ManagerA-table").DataTable();              
             }
-            else {
-                $("#ManagerB-table").html(data).fadeOut("fast").fadeIn("slow");
+            else if(option == 2){
+                $("#tableB-content").html("");
+                $("#tableB-content").html(data).fadeOut("fast").fadeIn("slow");
+                //$("#ManagerB-table").html(data).fadeOut("fast").fadeIn("slow");
+
                 $("#ManagerB-table").DataTable();
             }
         }
