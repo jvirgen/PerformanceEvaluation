@@ -409,7 +409,6 @@ namespace PES.Controllers
                 model.SelectedProfile = employee.ProfileId;
                 model.SelectedManager = employee.ManagerId;
 
-                //ViewBag.currentUserProfileId = currentUser.ProfileId;
                 return View(model);
             }
         }
@@ -532,12 +531,6 @@ namespace PES.Controllers
             }
 
         }
-
-        //public async Task<ActionResult> MoveEmployees(TransferEmployeeViewModel model)
-        //{
-        //    //We ned to add code here!
-        //   return View()
-        //}
 
         public async Task<ActionResult> GetEmployeesByManager(int employeeId, int option)
         {
