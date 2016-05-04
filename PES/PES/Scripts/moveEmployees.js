@@ -53,8 +53,6 @@
         var option = 2;
         showSelectedEmployees(employeeId, option);
     });
-
-    //showSelectedEmployees(parseInt($("#selectedEmployeeA").val()), 1);
 });
 
 $("#selectedProfile").change(function () {
@@ -62,9 +60,6 @@ $("#selectedProfile").change(function () {
 
     $("#selectedEmployeeA").children().remove();
     $("#selectedEmployeeB").children().remove();
-
-    //$('#ManagerA-table').DataTable().clear("tbody");
-    //$("#ManagerB-table").DataTable().clear().draw();
 
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
@@ -110,7 +105,6 @@ function showSelectedEmployees(employeeId, option) {
                 // Populate table with data from ajax call
                 $("#tableA-content").html("");
                 $("#tableA-content").html(data).fadeOut("fast").fadeIn("slow");
-                //$("#ManagerA-table").html(data).fadeOut("fast").fadeIn("slow");
 
                 // Re init datatable
                 $("#ManagerA-table").DataTable();              
@@ -118,8 +112,8 @@ function showSelectedEmployees(employeeId, option) {
             else if(option == 2){
                 $("#tableB-content").html("");
                 $("#tableB-content").html(data).fadeOut("fast").fadeIn("slow");
-                //$("#ManagerB-table").html(data).fadeOut("fast").fadeIn("slow");
 
+                // Re init datatable
                 $("#ManagerB-table").DataTable();
             }
         }
@@ -136,7 +130,7 @@ function showSelectedEmployees(employeeId, option) {
     });
 }
 
-function selectToMove (id) {
+function selectToMove(id) {
     var element = $(".checkbox[value="+ id +"]");
     if (element.hasClass("selectedToMove")) {
         element.removeClass("selectedToMove");
@@ -151,8 +145,7 @@ function moveToB() {
     var manager = $("#selectedEmployeeB").val();
     //Get all elements to move form a to B
     var rowElements = $("#tableA-content").find(".selectedToMove").parents("tr");
-    //Insert elements at table B
-    $("#tableB-content").find("tr:last").after(rowElements);
+    
     var employeesId = [];
     //Get each employee's id to change his managerId
     rowElements.find(".checkbox").each(function (index) {
@@ -169,7 +162,9 @@ function moveToB() {
         type: 'post'
     })
     .done(function (data) {
-        alert("Employees moved successfuly.")
+        //Insert elements into table B
+        $("#tableB-content").find("tr:last").after(rowElements);
+        alert("Employees moved successfully.")        
     })
     .fail(function (jqxhr, textStatus, error) {
         if (window.console) {
@@ -187,8 +182,7 @@ function moveToA() {
     var manager = $("#selectedEmployeeA").val();
     //Get all elements to move form a to A
     var rowElements = $("#tableB-content").find(".selectedToMove").parents("tr");
-    //Insert elements at table B
-    $("#tableA-content").find("tr:last").after(rowElements);
+    
     var employeesId = [];
     //Get each employee's id to change his managerId
     rowElements.find(".checkbox").each(function (index) {
@@ -204,8 +198,10 @@ function moveToA() {
         },
         type: 'post'
     })
-    .done(function (data) {
-        alert("Employees moved successfuly.")
+    .done(function (data) {      
+        //Insert elements into table B
+        $("#tableA-content").find("tr:last").after(rowElements);
+        alert("Employees moved successfully.")
     })
     .fail(function (jqxhr, textStatus, error) {
         if (window.console) {
@@ -217,73 +213,4 @@ function moveToA() {
         //alert("finished");
     });
 }
-    function moveEmployeeToB(employee) {
-    var employee = $("#idEmployee").val();
-
-    $.ajax({
-        url: "/Employee/MoveEmployee",
-        data: {
-            employee: employee
-        }
-    })
-    .done(function (data) {
-        if (data) {
-            //success ajax
-            // Populate table with data from ajax call
-            $("#table-content").html("");
-            $("#table-content").html(data);
-            
-            // si toca
-
-            // Re init datatable
-            $("#firstTable").DataTable();
-            $("#secondTable").DataTable();
-        }
-        else {
-            // Error
-            alert("Error while getting employees");
-        }
-    })
-    .fail(function (jqxhr, textStatus, error) {
-        if (window.console) {
-            console.log("Error: " + jqxhr.responseText);
-        }
-        alert("Error while Mooving employees. Please try again later.");
-    })
-    .always(function () {
-        //alert("finished");
-    });
-}
-
-function moveAllEmployeesToA(employees) {
-        $.ajax({
-            url: "/Employee/MoveAllEmployeesToA",
-            data: {
-                employees: employees
-            }
-        })
-        .done(function (data) {
-            if (data) {
-                //success ajax
-                // Populate table with data from ajax call
-                $("#table-content").html("");
-                $("#table-content").html(data).fadeOut("fast").fadeIn("slow");
-
-                // Re init datatable
-                $("#firstTable").DataTable();
-                $("#secondTable").DataTable();
-            }
-            else {
-                // Error
-                alert("Error while getting employees");
-            }
-        })
-        .fail(function (jqxhr, textStatus, error) {
-            alert("Error while getting employees. Please try again later.");
-        })
-        .always(function () {
-            //alert("finished");
-        });
-    }
-
     
