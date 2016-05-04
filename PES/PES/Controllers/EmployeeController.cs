@@ -553,17 +553,7 @@ namespace PES.Controllers
             if (option == 1)               
                 return PartialView("_TransferEmployeePartial", model);
             else
-                return PartialView("_TransferEmployeePartial2", model);
-                  
-            // to move resources
-            // change labels text to directors
-            // set drowdowns A and B with Director names
-            // fill first and second table with managers names
-
-            // to move managers
-            // change labels text to managers
-            // set drowdowns A and B with managers names
-            // fill first and second table with resources names            
+                return PartialView("_TransferEmployeePartial2", model);         
         }
 
         [HttpGet]
@@ -578,6 +568,7 @@ namespace PES.Controllers
 
             // Get employees of the user, depending on its profile
             var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
+            
             // Validate filter
             if (filter == "enabled")
             {
