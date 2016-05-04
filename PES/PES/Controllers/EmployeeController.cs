@@ -835,7 +835,7 @@ namespace PES.Controllers
             //Get current user
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
 
-            if (currentUser.ProfileId == (int)ProfileUser.Director || currentUser.ProfileId == (int)ProfileUser.Manager)
+            if (currentUser.ProfileId == (int)ProfileUser.Director)
             {
                 List<Employee> employeeList = new List<Employee>();
                 //TransferModel.ManagerEmployeeList = _employeeService.GetAll();
@@ -851,15 +851,15 @@ namespace PES.Controllers
             }
         }
 
-        
-        public ActionResult TransferEmploye(Int32[] employees, int manager)
+        [HttpPost]
+        public JsonResult TransferEmployee(int[] employeesId, int manager)
         {
-            for(int i = 0; i<employees.Length; i++)
+            for (int i = 0; i < employeesId.Length; i++)
             {
-                _employeeService.TransferEmployees(employees[i], manager);
+                _employeeService.TransferEmployees(employeesId[i], manager);
             }
-            
-            return View();
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

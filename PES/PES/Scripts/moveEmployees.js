@@ -147,25 +147,34 @@ function selectToMove (id) {
 }
 
 function moveToB() {
+    //Get selected manager from table B
     var manager = $("#selectedEmployeeB").val();
+    //Get all elements to move form a to B
     var rowElements = $("#tableA-content").find(".selectedToMove").parents("tr");
+    //Insert elements at table B
     $("#tableB-content").find("tr:last").after(rowElements);
-    var employeesId = new Int32Array();
+    var employeesId = [];
+    //Get each employee's id to change his managerId
     rowElements.find(".checkbox").each(function (index) {
-         employeesId[index] =  $(this).val();
+        console.log(parseInt($(this).val()));
+        employeesId[index] = parseInt($(this).val());
     });
-    console.log(employeesId);
+    //Call Ajax function
     $.ajax({
-        url: "/Employee/TransferEmploye",
+        url: "/Employee/TransferEmployee",
         data: {
-            employees: employeesId,
+            employeesId: employeesId,
             manager : manager
-        }
+        },
+        type: 'post'
     })
     .done(function (data) {
         alert("Employees moved successfuly.")
     })
     .fail(function (jqxhr, textStatus, error) {
+        if (window.console) {
+            console.log("Error: " + jqxhr.responseText);
+        }
         alert("Error while moving employees. Please try again later.");
     })
     .always(function () {
@@ -174,11 +183,39 @@ function moveToB() {
 }
 
 function moveToA() {
-    var rowElements = $("#ManagerB-table").find(".selectedToMove").parents("tr");
-    $("#ManagerA-table").find("tr:last").after(rowElements);
-    $("#ManagerA-table").find(".checkbox");
-
-
+    //Get selected manager from table A
+    var manager = $("#selectedEmployeeA").val();
+    //Get all elements to move form a to A
+    var rowElements = $("#tableB-content").find(".selectedToMove").parents("tr");
+    //Insert elements at table B
+    $("#tableA-content").find("tr:last").after(rowElements);
+    var employeesId = [];
+    //Get each employee's id to change his managerId
+    rowElements.find(".checkbox").each(function (index) {
+        console.log(parseInt($(this).val()));
+        employeesId[index] = parseInt($(this).val());
+    });
+    //Call Ajax function
+    $.ajax({
+        url: "/Employee/TransferEmployee",
+        data: {
+            employeesId: employeesId,
+            manager: manager
+        },
+        type: 'post'
+    })
+    .done(function (data) {
+        alert("Employees moved successfuly.")
+    })
+    .fail(function (jqxhr, textStatus, error) {
+        if (window.console) {
+            console.log("Error: " + jqxhr.responseText);
+        }
+        alert("Error while moving employees. Please try again later.");
+    })
+    .always(function () {
+        //alert("finished");
+    });
 }
     function moveEmployeeToB(employee) {
     var employee = $("#idEmployee").val();
@@ -208,6 +245,9 @@ function moveToA() {
         }
     })
     .fail(function (jqxhr, textStatus, error) {
+        if (window.console) {
+            console.log("Error: " + jqxhr.responseText);
+        }
         alert("Error while Mooving employees. Please try again later.");
     })
     .always(function () {
