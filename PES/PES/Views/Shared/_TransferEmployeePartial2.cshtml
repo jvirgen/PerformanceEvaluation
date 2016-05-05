@@ -1,6 +1,6 @@
 ﻿@model PES.ViewModels.TransferEmployeeViewModel
 
-<table class="table-striped" id="ManagerA-table" width="450">
+<table class="table-striped" id="ManagerB-table" width="450">
     <thead>
         <tr>
             <th>
@@ -17,7 +17,7 @@
             <tr>
                 @Html.Hidden("idEmployee", item.EmployeeId)
                 <th>
-                    <input type="checkbox" class="checkbox" value=@item.EmployeeId onclick="selectToMove(@item.EmployeeId)"/>
+                    <input type="checkbox" class="checkbox" value=@item.EmployeeId onclick="selectToMove(@item.EmployeeId)" />
                 </th>
                 <th>
                     @(item.FirstName + " " + item.LastName)
@@ -26,4 +26,3 @@
         }
     </tbody>
 </table>
-
