@@ -149,7 +149,6 @@ function moveToB() {
     var employeesId = [];
     //Get each employee's id to change his managerId
     rowElements.find(".checkbox").each(function (index) {
-        console.log(parseInt($(this).val()));
         employeesId[index] = parseInt($(this).val());
     });
     //Call Ajax function
@@ -163,8 +162,11 @@ function moveToB() {
     })
     .done(function (data) {
         //Insert elements into table B
-        $("#tableB-content").find("tr:last").after(rowElements);
-        alert("Employees moved successfully.")        
+        //$("#tableB-content").find("tr:last").after(rowElements);
+        //Hide row when moves to tbale B
+        rowElements.fadeOut("fast");
+        //Update table B to show news employees
+        showSelectedEmployees(manager, 2);    
     })
     .fail(function (jqxhr, textStatus, error) {
         if (window.console) {
@@ -200,8 +202,9 @@ function moveToA() {
     })
     .done(function (data) {      
         //Insert elements into table B
-        $("#tableA-content").find("tr:last").after(rowElements);
-        alert("Employees moved successfully.")
+        //$("#tableA-content").find("tr:last").after(rowElements);
+        rowElements.fadeOut("fast");
+        showSelectedEmployees(manager, 1);
     })
     .fail(function (jqxhr, textStatus, error) {
         if (window.console) {
