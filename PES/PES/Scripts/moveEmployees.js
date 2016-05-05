@@ -131,8 +131,9 @@ function showSelectedEmployees(employeeId, option) {
 }
 
 function selectToMove(id) {
-    var element = $(".checkbox[value="+ id +"]");
-    if (element.hasClass("selectedToMove")) {
+    var element = $(".checkbox[value=" + id + "]");
+    var check = element.prop("checked");
+    if (check != true) {
         element.removeClass("selectedToMove");
     }
     else {
@@ -166,7 +167,8 @@ function moveToB() {
         //Hide row when moves to tbale B
         rowElements.fadeOut("fast");
         //Update table B to show news employees
-        showSelectedEmployees(manager, 2);    
+        showSelectedEmployees(manager, 2);
+        showSelectedEmployees($("#selectedEmployeeA").val(), 1);
     })
     .fail(function (jqxhr, textStatus, error) {
         if (window.console) {
@@ -205,6 +207,7 @@ function moveToA() {
         //$("#tableA-content").find("tr:last").after(rowElements);
         rowElements.fadeOut("fast");
         showSelectedEmployees(manager, 1);
+        showSelectedEmployees($("#selectedEmployeeB").val(), 2);
     })
     .fail(function (jqxhr, textStatus, error) {
         if (window.console) {
