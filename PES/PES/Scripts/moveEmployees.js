@@ -5,26 +5,28 @@
     $("#ManagerA-table").DataTable();
     $("#ManagerB-table").DataTable();
 
+    var buttons = $("#btnToA, #btnToB").attr("disabled", true);
+
     var transferProfiles = parseInt($("#selectedProfile").val());
 
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
         $("#EmployeeBLabel").text("Director B");
-        $('#selectedEmployeeA').append("<option value=>" + "Select a director" + "</option>");
-        $('#selectedEmployeeB').append("<option value=>" + "Select a director" + "</option>");
+        $('#selectedEmployeeA').append("<option value='0'>" + "Select a director" + "</option>");
+        $('#selectedEmployeeB').append("<option value='0'>" + "Select a director" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
-                $('#selectedEmployeeA').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                $('#selectedEmployeeB').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedEmployeeA').append("<option value=0'" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                $('#selectedEmployeeB').append("<option value=0'" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
             }
         });
     }
     else {
         $("#EmployeeALabel").text("Manager A");
         $("#EmployeeBLabel").text("Manager B");
-        $('#selectedEmployeeA').append("<option value=>" + "Select a manager" + "</option>");
-        $('#selectedEmployeeB').append("<option value=>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeA').append("<option value='0'>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeB').append("<option value='0'>" + "Select a manager" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -42,6 +44,13 @@
         // Execute function 
 
         var employeeId = parseInt($("#selectedEmployeeA").val());
+        var employeeBId = parseInt($("#selectedEmployeeB").val());
+        if (employeeId != 0 && employeeBId != 0) {
+            buttons.attr("disabled", false);
+        }
+        else {
+            buttons.attr("disabled", true);
+        }
         var option = 1;
         showSelectedEmployees(employeeId, option);
     });
@@ -50,6 +59,13 @@
         // Execute function 
 
         var employeeId = parseInt($("#selectedEmployeeB").val());
+        var employeeAId = parseInt($("#selectedEmployeeA").val());
+        if (employeeId != 0 && employeeAId != 0) {
+            buttons.attr("disabled", false);
+        }
+        else {
+            buttons.attr("disabled", true);
+        }
         var option = 2;
         showSelectedEmployees(employeeId, option);
     });
@@ -64,8 +80,8 @@ $("#selectedProfile").change(function () {
     if (transferProfiles == 3) {
         $("#EmployeeALabel").text("Director A");
         $("#EmployeeBLabel").text("Director B");
-        $('#selectedEmployeeA').append("<option value=>" + "Select a director" + "</option>");
-        $('#selectedEmployeeB').append("<option value=>" + "Select a director" + "</option>");
+        $('#selectedEmployeeA').append("<option value='0'>" + "Select a director" + "</option>");
+        $('#selectedEmployeeB').append("<option value='0'>" + "Select a director" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
@@ -77,8 +93,8 @@ $("#selectedProfile").change(function () {
     else {
         $("#EmployeeALabel").text("Manager A");
         $("#EmployeeBLabel").text("Manager B");
-        $('#selectedEmployeeA').append("<option value=>" + "Select a manager" + "</option>");
-        $('#selectedEmployeeB').append("<option value=>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeA').append("<option value='0'>" + "Select a manager" + "</option>");
+        $('#selectedEmployeeB').append("<option value='0'>" + "Select a manager" + "</option>");
         $.getJSON('/Employee/GetEmployeesByProifile?profile=' + transferProfiles, function (data) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
