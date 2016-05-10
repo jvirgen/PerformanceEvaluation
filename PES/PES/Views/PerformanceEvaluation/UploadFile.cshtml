@@ -26,8 +26,57 @@
             @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
-
+                    
                 <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.Label("selectedYear", "Evaluation Year", new { @class = "control-label col-md-4" })
+                        <<div class="col-md-6">
+                            @{
+                                List<SelectListItem> selectedYear = new List<SelectListItem>();
+                                var minYear = 2014;
+                                var maxYear = int.Parse(DateTime.Now.Year.ToString()) + 2;
+                                for (var i = minYear; i <= maxYear; i++)
+                                {
+                                    var year = new SelectListItem()
+                                    {
+                                        Text = i.ToString(),
+                                        Value = i.ToString(),
+                                        Selected = false
+                                    };
+
+                                    selectedYear.Add(year);
+                                }
+                                @Html.DropDownListFor(m => m.SelectedYear, selectedYear, new { @class = "inlined form-control", @style = "width:100%" })
+                                @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("selectedPeriod", "Period", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @{
+                                List<SelectListItem> selectPeriodList = new List<SelectListItem>();
+
+                                var period1 = new SelectListItem()
+                                {
+                                    Text = "Period 1 (JANUARY - JUNE)",
+                                    Value = "1",
+                                    Selected = false
+                                };
+                                var period2 = new SelectListItem()
+                                {
+                                    Text = "Period 2 (JULY - DECEMBER)",
+                                    Value = "2",
+                                    Selected = false
+                                };
+
+                                selectPeriodList.Add(period1);
+                                selectPeriodList.Add(period2);
+                            }
+                            @Html.DropDownListFor(m => m.SelectedPeriod, selectPeriodList, new { @class = "inlined form-control", @style = "width:100%" })
+                            @Html.ValidationMessageFor(m => m.SelectedPeriod, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     <div class="form-group">
                         @Html.Label("fileUploaded", "Performance File", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">

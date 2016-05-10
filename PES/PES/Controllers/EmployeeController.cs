@@ -747,12 +747,19 @@ namespace PES.Controllers
         [HttpPost]
         public JsonResult TransferEmployee(int[] employeesId, int manager)
         {
-            for (int i = 0; i < employeesId.Length; i++)
+            try
             {
-                _employeeService.TransferEmployees(employeesId[i], manager);
-            }
+                for (int i = 0; i < employeesId.Length; i++)
+                {
+                    _employeeService.TransferEmployees(employeesId[i], manager);
+                }
 
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

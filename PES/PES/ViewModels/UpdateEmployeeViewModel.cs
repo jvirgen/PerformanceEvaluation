@@ -12,6 +12,15 @@ namespace PES.ViewModels
     {
         public int EmployeeId { get; set; }
 
+        [Required(ErrorMessage = "Year evaluation is required")]
+        [Display(Name = "Evaluation Year")]
+        public int EvaluationYear { get; set; }
+
+        public List<SelectListItem> ListPeriods { get; set; }
+        [Required(ErrorMessage = "Period is required")]
+        [Display(Name = "Period")]
+        public int SelectedPeriod { get; set; }
+
         [Required(ErrorMessage = "First name is required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

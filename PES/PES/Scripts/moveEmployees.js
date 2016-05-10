@@ -190,7 +190,7 @@ function moveToB() {
         if (window.console) {
             console.log("Error: " + jqxhr.responseText);
         }
-        alert("Error while moving employees. Please try again later.");
+        alert("Error while moving employees. Please verify your information and try again later.");
     })
     .always(function () {
         //alert("finished");
@@ -229,7 +229,7 @@ function moveToA() {
         if (window.console) {
             console.log("Error: " + jqxhr.responseText);
         }
-        alert("Error while moving employees. Please try again later.");
+        alert("Error while moving employees. Please verify your information and try again later.");
     })
     .always(function () {
         //alert("finished");
