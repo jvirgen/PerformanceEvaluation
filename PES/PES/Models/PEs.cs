@@ -62,12 +62,15 @@ namespace PES.Models
         
     }
 
-    public class UploadFileViewModel 
+    public class UploadFileViewModel
     {
         public Employee CurrentUser { get; set; }
         public List<Employee> ListEmployees { get; set; }
         public int SelectedEmployee { get; set; }
-        public List<Employee> ListAllEmployees { get; set; } 
+        public List<Employee> ListAllEmployees { get; set; }
         public int SelectedEvaluator { get; set; }
+        //public List<Period> {get; set;}
+        public int SelectedPeriod { get; set; }
+        public int SelectedYear { get; set; }
     }
 }
