@@ -56,22 +56,31 @@
                         <div class="col-md-6">
                             @{
                                 List<SelectListItem> selectPeriodList = new List<SelectListItem>();
-
-                                var period1 = new SelectListItem()
+                                foreach(var period in Model.PeriodList)
                                 {
-                                    Text = "Period 1 (JANUARY - JUNE)",
-                                    Value = "1",
-                                    Selected = false
-                                };
-                                var period2 = new SelectListItem()
-                                {
-                                    Text = "Period 2 (JULY - DECEMBER)",
-                                    Value = "2",
-                                    Selected = false
-                                };
+                                    var newItem = new SelectListItem()
+                                    {
+                                        Text ="Period "  + period.PeriodId.ToString() + "(" + period.Name + ")",
+                                        Value = period.PeriodId.ToString(),
+                                        Selected = false
+                                    };
+                                    selectPeriodList.Add(newItem);
+                                }
+                                //var period1 = new SelectListItem()
+                                //{
+                                //    Text = "Period 1 (JANUARY - JUNE)",
+                                //    Value = "1",
+                                //    Selected = false
+                                //};
+                                //var period2 = new SelectListItem()
+                                //{
+                                //    Text = "Period 2 (JULY - DECEMBER)",
+                                //    Value = "2",
+                                //    Selected = false
+                                //};
 
-                                selectPeriodList.Add(period1);
-                                selectPeriodList.Add(period2);
+                                //selectPeriodList.Add(period1);
+                                //selectPeriodList.Add(period2);
                             }
                             @Html.DropDownListFor(m => m.SelectedPeriod, selectPeriodList, new { @class = "inlined form-control", @style = "width:100%" })
                             @Html.ValidationMessageFor(m => m.SelectedPeriod, "", new { @class = "text-danger" })

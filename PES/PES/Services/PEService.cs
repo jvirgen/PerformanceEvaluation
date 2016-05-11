@@ -35,6 +35,8 @@ namespace PES.Services
                                                        ENGLISH_SCORE,
                                                        PERFORMANCE_SCORE,
                                                        COMPETENCE_SCORE,
+                                                       EVALUATION_YEAR,
+                                                       ID_PERIOD,
                                                        ""RANK""
                                                       ) 
                                                VALUES (:evaluationPeriod,
@@ -45,6 +47,8 @@ namespace PES.Services
                                                        :englishScore,
                                                        :performanceScore,
                                                        :competenceScore,
+                                                       :evaluationYear,
+                                                       :periodId,
                                                        :rank)";
 
                 // Adding parameters
@@ -58,6 +62,8 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("englishScore", pe.EnglishScore));
                     command.Parameters.Add(new OracleParameter("performanceScore", pe.PerformanceScore));
                     command.Parameters.Add(new OracleParameter("competenceScore", pe.CompeteneceScore));
+                    command.Parameters.Add(new OracleParameter("evaluationYear", pe.EvaluationYear));
+                    command.Parameters.Add(new OracleParameter("periodId", pe.PeriodId));
                     command.Parameters.Add(new OracleParameter("rank", pe.Rank));
 
                     try

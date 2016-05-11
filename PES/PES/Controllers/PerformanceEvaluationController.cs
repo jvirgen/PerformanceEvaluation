@@ -28,6 +28,7 @@ namespace PES.Controllers
         private SkillService _skillService;
         private LM_SkillService _lm_skillService;
         private StatusService _statusService;
+        private PeriodService _periodService;
 
         public PerformanceEvaluationController() 
         {
@@ -41,6 +42,7 @@ namespace PES.Controllers
             _skillService = new SkillService();
             _lm_skillService = new LM_SkillService();
             _statusService = new StatusService();
+            _periodService = new PeriodService();
         }
 
         // GET: PerformanceEvaluation
@@ -953,8 +955,12 @@ namespace PES.Controllers
             List<Employee> listAllEmployees = new List<Employee>();
             listAllEmployees = _employeeService.GetAll();
 
+            List<Period> ListPeriods = new List<Period>();
+            ListPeriods = _periodService.GetAll();
+
             uploadVM.ListAllEmployees = listAllEmployees;
             uploadVM.ListEmployees = listEmployees;
+            uploadVM.PeriodList = ListPeriods;
 
             return View(uploadVM);
         }

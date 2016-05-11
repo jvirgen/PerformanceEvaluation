@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PES.Models;
 
 namespace PES.Services
 {
@@ -36,7 +37,7 @@ namespace PES.Services
                     {
 
                         // Store data in period object 
-                        period = new Period();
+                        Period period = new Period();
                         period.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
                         period.Name = Convert.ToString(Read["NAME"]);
 
