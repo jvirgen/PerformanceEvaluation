@@ -51,7 +51,7 @@ namespace PES.Controllers
             return View();
         }
 
-        public bool ReadPerformanceFile(string path, Employee user, Employee evaluator) 
+        public bool ReadPerformanceFile(string path, Employee user, Employee evaluator, int year, int period) 
         {
             // CREATE DE EXCEL FILE AND ACCES AT THE WORK SHEET
 
@@ -80,7 +80,8 @@ namespace PES.Controllers
                 PESc.pes.PerformanceScore = excelSheet.GetValue<double>(37, 9);
                 //PESc.pes.CompeteneceScore = excelSheet.Cells[73, 9].Value;
                 PESc.pes.CompeteneceScore = excelSheet.GetValue<double>(73, 9);
-
+                PESc.pes.EvaluationYear = year;
+                PESc.pes.PeriodId = period;
                 // Insert 
                 bool peInserted = _peService.InsertPE(PESc.pes);
 
@@ -812,12 +813,14 @@ namespace PES.Controllers
                         // Load file into database
                         // Get selected user
                         var user = _employeeService.GetByID(uploadVM.SelectedEmployee);
+                        var year = uploadVM.SelectedYear;
+                        var period = uploadVM.SelectedPeriod;
 
                         if (user != null)
                         {
                             var evaluator = _employeeService.GetByID(uploadVM.SelectedEvaluator);
 
-                            bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator);
+                            bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator, year, period);
 
                             if (!fileSaved)
                             {
