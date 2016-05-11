@@ -36,7 +36,8 @@
                         <tr>
                             <td>
                                 <a href="@Url.Action("PEVisualization", "PerformanceEvaluation", new { peID = scoreM.pesid })">
-                                    @scoreM.period.ToShortDateString()
+                                    @*@scoreM.period.ToShortDateString()*@
+                                    Period + @scoreM.periodName.PeriodId.ToString() (@scoreM.periodName.Name.ToString()) in @scoreM.evaluationYear.ToString()
                                 </a>
                             </td>
                             <td>@Math.Round(scoreM.totalPerforformance, 2)</td>
