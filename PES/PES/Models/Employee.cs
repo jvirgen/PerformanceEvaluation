@@ -113,6 +113,8 @@ namespace PES.Models
         public double totalPerforformance { get; set; }
         public double totalCompetences { get; set; }
         public double totalEnglish { get; set; }
+        public int evaluationYear { get; set; }
+        public Period periodName { get; set; }
     }
 
     public enum ProfileUser

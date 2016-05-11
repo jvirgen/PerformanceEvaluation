@@ -1024,7 +1024,10 @@ namespace PES.Controllers
                         totalEvaluation = userPE.Total,
                         totalEnglish = userPE.EnglishScore,
                         totalPerforformance = userPE.PerformanceScore,
-                        totalCompetences = userPE.CompeteneceScore
+                        totalCompetences = userPE.CompeteneceScore,
+                        evaluationYear = userPE.EvaluationYear,
+                        //periodName = _periodService
+                        
                     };
 
                     choosePeriodVM.Add(chooseVM);
