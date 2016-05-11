@@ -59,7 +59,16 @@ namespace PES.Models
         /// Rank
         /// </summary>
         public double? Rank { get; set; }
-        
+
+        ///<sumary>
+        /// Evaluation year
+        /// </sumary>
+        public int EvaluationYear { get; set; }
+
+        ///<summary>
+        ///Id Period
+        ///</summary>
+        public int PeriodId { get; set; }
     }
 
     public class UploadFileViewModel
@@ -69,7 +78,7 @@ namespace PES.Models
         public int SelectedEmployee { get; set; }
         public List<Employee> ListAllEmployees { get; set; }
         public int SelectedEvaluator { get; set; }
-        //public List<Period> {get; set;}
+        public List<Period> PeriodList { get; set; }
         public int SelectedPeriod { get; set; }
         public int SelectedYear { get; set; }
     }

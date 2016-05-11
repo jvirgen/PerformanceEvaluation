@@ -161,6 +161,7 @@
     <Compile Include="Models\LM_Skill.cs" />
     <Compile Include="Models\PerformanceSectionHelper.cs" />
     <Compile Include="Models\PerformancSection.cs" />
+    <Compile Include="Models\Period.cs" />
     <Compile Include="Models\PEs.cs" />
     <Compile Include="Models\PESComplete.cs" />
     <Compile Include="Models\Profile.cs" />
