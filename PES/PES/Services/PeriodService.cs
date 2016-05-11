@@ -17,7 +17,7 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
-        //Get all periods
+        // Get all periods
         public List<Period> GetAll()
         {
             List<Period> periods = new List<Period>();
@@ -35,7 +35,7 @@ namespace PES.Services
                     OracleDataReader Read = Comand.ExecuteReader();
                     while (Read.Read())
                     {
-                        // Store data in period object 
+                        // Store data in a period object 
                         period = new Period();
                         period.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
                         period.Name = Convert.ToString(Read["NAME"]);
@@ -44,7 +44,6 @@ namespace PES.Services
                     }
                     db.Close();
                 }
-
             }
             catch (Exception ex)
             {
@@ -52,7 +51,39 @@ namespace PES.Services
             }
             return periods;
         }
-    }
 
-   
+        // Get a period by id
+        public Period GetPeriodById(int id)
+        {
+            Period period = new Period();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT ID_PERIOD," +
+                                           "NAME " +
+                                           "FROM PERIOD WHERE ID_PERIOD = '" + id + "'";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    while (Read.Read())
+                    {
+                        // Store data in a period object 
+                        period = new Period();
+                        period.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
+                        period.Name = Convert.ToString(Read["NAME"]);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return period;
+        }
+    }
 }
