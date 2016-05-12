@@ -99,9 +99,12 @@ namespace PES.Controllers
                 PESc.empleado.EndDate = user.EndDate;
                 // data from excel
                 //PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
-                PESc.empleado.FirstName = excelSheet.GetValue<string>(3, 3);
+                var Name = excelSheet.GetValue<string>(3, 3).Split(' ');
+                PESc.empleado.FirstName = Name[0];
+                //PESc.empleado.FirstName = excelSheet.GetValue<string>(3, 3);
                 //PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
-                PESc.empleado.LastName = excelSheet.GetValue<string>(3, 3);
+                PESc.empleado.LastName = Name[2];
+                //PESc.empleado.LastName = excelSheet.GetValue<string>(3, 3);
                 //PESc.empleado.Position = excelSheet.Cells[4, 3].Value;
                 PESc.empleado.Position = excelSheet.GetValue<string>(4, 3);
                 //PESc.empleado.Customer = excelSheet.Cells[5, 3].Value;
