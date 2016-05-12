@@ -183,6 +183,8 @@ namespace PES.Services
                                            "ENGLISH_SCORE," +
                                            "PERFORMANCE_SCORE," +
                                            "COMPETENCE_SCORE," +
+                                           "EVALUATION_YEAR," +
+                                           "ID_PERIOD," +
                                            "\"RANK\"" +
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "' AND ROWNUM <=1 ORDER BY ID_PE DESC";
                    
@@ -204,6 +206,8 @@ namespace PES.Services
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
+                        pes.EvaluationYear = Convert.ToInt32(Read["EVALUATION_YEAR"]);
+                        pes.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
 
                         string rank = Convert.ToString(Read["RANK"]);
                         if (!string.IsNullOrEmpty(rank))
