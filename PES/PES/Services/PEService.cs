@@ -186,7 +186,8 @@ namespace PES.Services
                                            "EVALUATION_YEAR," +
                                            "ID_PERIOD," +
                                            "\"RANK\"" +
-                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "' AND ROWNUM <=1 ORDER BY ID_PE DESC";
+                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "' ORDER BY ID_PE DESC";
+                                           //check why this query had rownum <=1
                    
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -410,6 +411,46 @@ namespace PES.Services
                 }
             }
             return status;
+        }
+
+        public int VerifyPE(int employee, int evaluator, int period, int year)
+        {
+            var PE = 0;
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string insertQuery = @" SELECT ID_PE 
+                                     FROM PE 
+                                     WHERE ID_EMPLOYEE = :employeeId AND 
+                                     ID_EVALUATOR = :evaluatorId AND
+                                     ID_PERIOD = :periodId AND 
+                                     EVALUATION_YEAR = :evalYear";
+
+                // Adding parameters
+                using (OracleCommand command = new OracleCommand(insertQuery, db))
+                {
+                    command.Parameters.Add(new OracleParameter("employeeId", employee));
+                    command.Parameters.Add(new OracleParameter("evaluatorId", evaluator));
+                    command.Parameters.Add(new OracleParameter("periodId", period));
+                    command.Parameters.Add(new OracleParameter("evalYear", year));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            PE = Convert.ToInt32(reader["ID_PE"]);
+                        }
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                }
+            }
+            return PE;
         }
     }
 }

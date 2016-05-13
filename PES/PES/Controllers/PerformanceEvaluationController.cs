@@ -53,7 +53,7 @@ namespace PES.Controllers
 
         public bool ReadPerformanceFile(string path, Employee user, Employee evaluator, int year, int period) 
         {
-            // CREATE DE EXCEL FILE AND ACCESS AT THE WORK SHEET
+            // CREATE DE EXCEL FILE AND ACCES AT THE WORK SHEET
 
             FileInfo excel = new FileInfo(path);
             ExcelPackage excelFile = new ExcelPackage(excel);
@@ -90,28 +90,29 @@ namespace PES.Controllers
                 #endregion
 
                 #region Employee - update
-                // data from user
-                PESc.empleado.EmployeeId = user.EmployeeId;
-                PESc.empleado.Email = user.Email;
-                PESc.empleado.ProfileId = user.ProfileId;
-                PESc.empleado.ManagerId = user.ManagerId;
-                PESc.empleado.EndDate = user.EndDate;
-                // data from excel
-                //PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
-                var Name = excelSheet.GetValue<string>(3, 3).Split(' ');
-                PESc.empleado.FirstName = Name[0];
-                //PESc.empleado.FirstName = excelSheet.GetValue<string>(3, 3);
-                //PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
-                PESc.empleado.LastName = Name[2];
-                //PESc.empleado.LastName = excelSheet.GetValue<string>(3, 3);
-                //PESc.empleado.Position = excelSheet.Cells[4, 3].Value;
-                PESc.empleado.Position = excelSheet.GetValue<string>(4, 3);
-                //PESc.empleado.Customer = excelSheet.Cells[5, 3].Value;
-                PESc.empleado.Customer = excelSheet.GetValue<string>(5, 3);
-                //PESc.empleado.Project = excelSheet.Cells[6, 3].Value;
-                PESc.empleado.Project = excelSheet.GetValue<string>(6, 3);
+                //// data from user
+                //PESc.empleado.EmployeeId = user.EmployeeId;
+                //PESc.empleado.Email = user.Email;
+                //PESc.empleado.ProfileId = user.ProfileId;
+                //PESc.empleado.ManagerId = user.ManagerId;
+                ////PESc.empleado.HireDate = user.HireDate;
+                //PESc.empleado.EndDate = user.EndDate;
+                //// data from excel
+                ////PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
+                //var Name = excelSheet.GetValue<string>(3, 3).Split(' ');
+                //PESc.empleado.FirstName = Name[0];
+                ////PESc.empleado.FirstName = excelSheet.GetValue<string>(3, 3);
+                ////PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
+                //PESc.empleado.LastName = Name[2];
+                ////PESc.empleado.LastName = excelSheet.GetValue<string>(3, 3);
+                ////PESc.empleado.Position = excelSheet.Cells[4, 3].Value;
+                //PESc.empleado.Position = excelSheet.GetValue<string>(4, 3);
+                ////PESc.empleado.Customer = excelSheet.Cells[5, 3].Value;
+                //PESc.empleado.Customer = excelSheet.GetValue<string>(5, 3);
+                ////PESc.empleado.Project = excelSheet.Cells[6, 3].Value;
+                //PESc.empleado.Project = excelSheet.GetValue<string>(6, 3);
 
-                bool employeeInserted = _employeeService.UpdateEmployee(PESc.empleado);
+                //bool employeeInserted = _employeeService.UpdateEmployee(PESc.empleado);
                 #endregion
 
                 #region Title - insert
@@ -791,7 +792,7 @@ namespace PES.Controllers
         public ActionResult UploadFile(UploadFileViewModel uploadVM, HttpPostedFileBase fileUploaded)
         {
             string message = "";
-         
+
             //Excel.Application excel = new Excel.Application();
 
             #region New Upload File
@@ -1198,6 +1199,18 @@ namespace PES.Controllers
             PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
 
             return partial;
+        }
+
+        public JsonResult VerifyPE(int employee, int evaluator, int period, int year)
+        {
+            var success = false;
+            var idPe = _peService.VerifyPE(employee, evaluator, period, year);
+            if(idPe != 0)
+            {
+                success = true;
+            }
+
+            return Json(new { success = success, idPe = idPe},JsonRequestBehavior.AllowGet);
         }
     }
 }
