@@ -53,7 +53,7 @@ namespace PES.Controllers
 
         public bool ReadPerformanceFile(string path, Employee user, Employee evaluator, int year, int period) 
         {
-            // CREATE DE EXCEL FILE AND ACCES AT THE WORK SHEET
+            // CREATE DE EXCEL FILE AND ACCESS AT THE WORK SHEET
 
             FileInfo excel = new FileInfo(path);
             ExcelPackage excelFile = new ExcelPackage(excel);
@@ -95,7 +95,6 @@ namespace PES.Controllers
                 PESc.empleado.Email = user.Email;
                 PESc.empleado.ProfileId = user.ProfileId;
                 PESc.empleado.ManagerId = user.ManagerId;
-                //PESc.empleado.HireDate = user.HireDate;
                 PESc.empleado.EndDate = user.EndDate;
                 // data from excel
                 //PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
