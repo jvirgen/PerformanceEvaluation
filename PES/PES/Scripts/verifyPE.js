@@ -1,8 +1,5 @@
 ﻿$(document).ready(function () {
 
-    var year = parseInt($('#selectedYear').val());
-    var period = parseInt($('#selectedPeriod').val());
-
     // Events 
     $("#selectedYear").on("change", function (e) {
         // Execute function 
@@ -19,12 +16,12 @@
 }
 );
 
-function verifyPEfile(valorbooleana) {
+function verifyPEfile() {
 
-    $.getJSON('/Employee/GetPE?option=' + option ,function (data) {
+    $.getJSON('/PerformanceEvaluation/VerifyPE?year=' + year + "&period=" + period + "&employee=" + employee + "&evaluator=" + evaluator, function (data) {
 
         if (booleana) {
-      
+            // si es igual, preguntar        
         }
         else {
             //si no es igual, sobreescribir
