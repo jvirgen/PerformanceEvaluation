@@ -30,7 +30,7 @@
                 <div class="form-horizontal">
                     <div class="form-group">
                         @Html.Label("selectedYear", "Evaluation Year", new { @class = "control-label col-md-4" })
-                        <<div class="col-md-6">
+                        <div class="col-md-6">
                             @{
                                 List<SelectListItem> selectedYear = new List<SelectListItem>();
                                 var minYear = 2014;
@@ -66,21 +66,6 @@
                                     };
                                     selectPeriodList.Add(newItem);
                                 }
-                                //var period1 = new SelectListItem()
-                                //{
-                                //    Text = "Period 1 (JANUARY - JUNE)",
-                                //    Value = "1",
-                                //    Selected = false
-                                //};
-                                //var period2 = new SelectListItem()
-                                //{
-                                //    Text = "Period 2 (JULY - DECEMBER)",
-                                //    Value = "2",
-                                //    Selected = false
-                                //};
-
-                                //selectPeriodList.Add(period1);
-                                //selectPeriodList.Add(period2);
                             }
                             @Html.DropDownListFor(m => m.SelectedPeriod, selectPeriodList, new { @class = "inlined form-control", @style = "width:100%" })
                             @Html.ValidationMessageFor(m => m.SelectedPeriod, "", new { @class = "text-danger" })
@@ -160,6 +145,7 @@
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/select2.min.js")
+    @Scripts.Render("~/Scripts/verifyPE.js")
 
     <script type="text/javascript">
         $(document).ready(function () {

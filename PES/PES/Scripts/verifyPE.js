@@ -1,33 +1,52 @@
-﻿$(document).ready(function () {
+﻿// Events 
+$("#SelectedYear").on("change", function (e) {
+    var year = parseInt($('#SelectedYear').val());
+    var period = parseInt($('#SelectedPeriod').val());
+    var employee = parseInt($("#SelectedEmployee").val());
+    var evaluator = parseInt($("#SelectedEvaluator").val());
+    // Execute function 
+    verifyPEfile(employee, evaluator, period, year);
+});
 
-    var year = parseInt($('#selectedYear').val());
-    var period = parseInt($('#selectedPeriod').val());
+$("#SelectedPeriod").on("change", function (e) {
+    var year = parseInt($('#SelectedYear').val());
+    var period = parseInt($('#SelectedPeriod').val());
+    var employee = parseInt($("#SelectedEmployee").val());
+    var evaluator = parseInt($("#SelectedEvaluator").val());
+    // Execute function 
+    verifyPEfile(employee, evaluator, period, year);
+});
 
-    // Events 
-    $("#selectedYear").on("change", function (e) {
-        // Execute function 
+$("#SelectedEmployee").on("change", function (e) {
+    var year = parseInt($('#SelectedYear').val());
+    var period = parseInt($('#SelectedPeriod').val());
+    var employee = parseInt($("#SelectedEmployee").val());
+    var evaluator = parseInt($("#SelectedEvaluator").val());
+    // Execute function 
+    verifyPEfile(employee, evaluator, period, year);
+});
 
-        // obtener true o false
-        verifyPEfile();
-    });
+$("#SelectedEvaluator").on("change", function (e) {
+    var year = parseInt($('#SelectedYear').val());
+    var period = parseInt($('#SelectedPeriod').val());
+    var employee = parseInt($("#SelectedEmployee").val());
+    var evaluator = parseInt($("#SelectedEvaluator").val());
+    // Execute function 
+    verifyPEfile(employee, evaluator, period, year);
+});
 
-    $("#selectedPeriod").on("change", function (e) {
-        // Execute function 
+function verifyPEfile(employee, evaluator, period, year) {
 
-        verifyPEfile();
-    });
-}
-);
+    $.getJSON('/PerformanceEvaluation/VerifyPE?employee='+ employee +'&&evaluator='+ evaluator +'&&period='+ period +'&&year=' + year, function (data) {
 
-function verifyPEfile(valorbooleana) {
-
-    $.getJSON('/Employee/GetPE?option=' + option ,function (data) {
-
-        if (booleana) {
-      
-        }
-        else {
-            //si no es igual, sobreescribir
+        if (data.exist = true && data.idPe != 0) {
+            override = confirm("This Perfornace Evalauaton already has been uploaded. Do you want to replace it?");
+            if (override) {
+                //code here to replace
+            }
+            else {
+                //Code here to do nothing
+            }
         }
     });
 }

@@ -1204,13 +1204,14 @@ namespace PES.Controllers
         public JsonResult VerifyPE(int employee, int evaluator, int period, int year)
         {
             var success = false;
+            //Get evaluation conscidence Id
             var idPe = _peService.VerifyPE(employee, evaluator, period, year);
             if(idPe != 0)
             {
                 success = true;
             }
-
-            return Json(new { success = success, idPe = idPe},JsonRequestBehavior.AllowGet);
+            //Return startus of searcha and Id PE
+            return Json(new { exist = success, idPe = idPe},JsonRequestBehavior.AllowGet);
         }
     }
 }
