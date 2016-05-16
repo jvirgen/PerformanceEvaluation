@@ -34,11 +34,12 @@
                         <div class="col-md-6">
                             @{
                                 List<SelectListItem> selectedYear = new List<SelectListItem>();
+                                int currentYear = int.Parse(DateTime.Now.Year.ToString());
                                 var minYear = 2014;
-                                var maxYear = int.Parse(DateTime.Now.Year.ToString()) + 2;
+                                var maxYear = currentYear + 2;
                                 for (var i = minYear; i <= maxYear; i++)
                                 {
-                                    if(DateTime.Now.Year.ToString() == i.ToString())
+                                    if(currentYear == i)
                                     {
                                         var year = new SelectListItem()
                                         {
@@ -69,19 +70,36 @@
                         <div class="col-md-6">
                             @{
                                 List<SelectListItem> selectPeriodList = new List<SelectListItem>();
+                                int currentPeriod = int.Parse(DateTime.Now.Month.ToString());
+
+                                if(currentPeriod <= 6)
+                                { currentPeriod = 1;}
+                                else
+                                {currentPeriod = 2;}
+
                                 foreach(var period in Model.PeriodList)
                                 {
-                                    if(DateTime.Now.Month.ToString < "07")
+                                    if(currentPeriod == period.PeriodId )
                                     {
-
+                                        var newItem = new SelectListItem()
+                                        {
+                                            Text = "Period " + period.PeriodId.ToString() + "(" + period.Name + ")",
+                                            Value = period.PeriodId.ToString(),
+                                            Selected = true
+                                        };
+                                        selectPeriodList.Add(newItem);
                                     }
-                                    var newItem = new SelectListItem()
+                                    else
                                     {
-                                        Text ="Period "  + period.PeriodId.ToString() + "(" + period.Name + ")",
-                                        Value = period.PeriodId.ToString(),
-                                        Selected = false
-                                    };
-                                    selectPeriodList.Add(newItem);
+                                        var newItem = new SelectListItem()
+                                        {
+                                            Text = "Period " + period.PeriodId.ToString() + "(" + period.Name + ")",
+                                            Value = period.PeriodId.ToString(),
+                                            Selected = false
+                                        };
+                                        selectPeriodList.Add(newItem);
+                                    }
+
                                 }
                             }
                             @Html.DropDownListFor(m => m.SelectedPeriod, selectPeriodList, new { @class = "inlined form-control", @style = "width:100%" })
