@@ -81,5 +81,6 @@ namespace PES.Models
         public List<Period> PeriodList { get; set; }
         public int SelectedPeriod { get; set; }
         public int SelectedYear { get; set; }
+        public bool Replace { get; set; }
     }
 }

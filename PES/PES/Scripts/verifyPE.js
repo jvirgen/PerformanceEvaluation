@@ -1,32 +1,42 @@
 ﻿// Events 
-$("#SelectedYear").on("change", function (e) {
-    var year = parseInt($('#SelectedYear').val());
-    var period = parseInt($('#SelectedPeriod').val());
-    var employee = parseInt($("#SelectedEmployee").val());
-    var evaluator = parseInt($("#SelectedEvaluator").val());
-    // Execute function 
-    verifyPEfile(employee, evaluator, period, year);
-});
 
-$("#SelectedPeriod").on("change", function (e) {
-    var year = parseInt($('#SelectedYear').val());
-    var period = parseInt($('#SelectedPeriod').val());
-    var employee = parseInt($("#SelectedEmployee").val());
-    var evaluator = parseInt($("#SelectedEvaluator").val());
-    // Execute function 
-    verifyPEfile(employee, evaluator, period, year);
-});
+//$("#SelectedYear").on("change", function (e) {
+//    var year = parseInt($('#SelectedYear').val());
+//    var period = parseInt($('#SelectedPeriod').val());
+//    var employee = parseInt($("#SelectedEmployee").val());
+//    var evaluator = parseInt($("#SelectedEvaluator").val());
+//    // Execute function 
+//    verifyPEfile(employee, evaluator, period, year);
+//});
 
-$("#SelectedEmployee").on("change", function (e) {
-    var year = parseInt($('#SelectedYear').val());
-    var period = parseInt($('#SelectedPeriod').val());
-    var employee = parseInt($("#SelectedEmployee").val());
-    var evaluator = parseInt($("#SelectedEvaluator").val());
-    // Execute function 
-    verifyPEfile(employee, evaluator, period, year);
-});
+//$("#SelectedPeriod").on("change", function (e) {
+//    var year = parseInt($('#SelectedYear').val());
+//    var period = parseInt($('#SelectedPeriod').val());
+//    var employee = parseInt($("#SelectedEmployee").val());
+//    var evaluator = parseInt($("#SelectedEvaluator").val());
+//    // Execute function 
+//    verifyPEfile(employee, evaluator, period, year);
+//});
 
-$("#SelectedEvaluator").on("change", function (e) {
+//$("#SelectedEmployee").on("change", function (e) {
+//    var year = parseInt($('#SelectedYear').val());
+//    var period = parseInt($('#SelectedPeriod').val());
+//    var employee = parseInt($("#SelectedEmployee").val());
+//    var evaluator = parseInt($("#SelectedEvaluator").val());
+//    // Execute function 
+//    verifyPEfile(employee, evaluator, period, year);
+//});
+
+//$("#SelectedEvaluator").on("change", function (e) {
+//    var year = parseInt($('#SelectedYear').val());
+//    var period = parseInt($('#SelectedPeriod').val());
+//    var employee = parseInt($("#SelectedEmployee").val());
+//    var evaluator = parseInt($("#SelectedEvaluator").val());
+//    // Execute function 
+//    verifyPEfile(employee, evaluator, period, year);
+//});
+
+$(".btn[type=submit]").on("click", function (e) {
     var year = parseInt($('#SelectedYear').val());
     var period = parseInt($('#SelectedPeriod').val());
     var employee = parseInt($("#SelectedEmployee").val());
@@ -42,10 +52,12 @@ function verifyPEfile(employee, evaluator, period, year) {
         if (data.exist = true && data.idPe != 0) {
             override = confirm("This Perfornace Evalauaton already has been uploaded. Do you want to replace it?");
             if (override) {
-                //code here to replace
+                $("#Replace").val("true");
+                $(".btn[type=submit]").attr("value","Overwrite File")
             }
             else {
-                //Code here to do nothing
+                $("#Replace").val("false");
+                $(".btn[type=submit]").attr("value", "Load File")
             }
         }
     });

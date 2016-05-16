@@ -28,6 +28,7 @@
                 @Html.AntiForgeryToken()
                     
                 <div class="form-horizontal">
+                    @Html.HiddenFor(model => model.Replace)
                     <div class="form-group">
                         @Html.Label("selectedYear", "Evaluation Year", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
@@ -37,14 +38,26 @@
                                 var maxYear = int.Parse(DateTime.Now.Year.ToString()) + 2;
                                 for (var i = minYear; i <= maxYear; i++)
                                 {
-                                    var year = new SelectListItem()
+                                    if(DateTime.Now.Year.ToString() == i.ToString())
                                     {
-                                        Text = i.ToString(),
-                                        Value = i.ToString(),
-                                        Selected = false
-                                    };
-
-                                    selectedYear.Add(year);
+                                        var year = new SelectListItem()
+                                        {
+                                            Text = i.ToString(),
+                                            Value = i.ToString(),
+                                            Selected = true
+                                        };
+                                        selectedYear.Add(year);
+                                    }
+                                    else
+                                    {
+                                        var year = new SelectListItem()
+                                        {
+                                            Text = i.ToString(),
+                                            Value = i.ToString(),
+                                            Selected = false
+                                        };
+                                        selectedYear.Add(year);
+                                    }
                                 }
                                 @Html.DropDownListFor(m => m.SelectedYear, selectedYear, new { @class = "inlined form-control", @style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
@@ -58,6 +71,10 @@
                                 List<SelectListItem> selectPeriodList = new List<SelectListItem>();
                                 foreach(var period in Model.PeriodList)
                                 {
+                                    if(DateTime.Now.Month.ToString < "07")
+                                    {
+
+                                    }
                                     var newItem = new SelectListItem()
                                     {
                                         Text ="Period "  + period.PeriodId.ToString() + "(" + period.Name + ")",
