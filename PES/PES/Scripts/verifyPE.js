@@ -16,7 +16,7 @@ function verifyPEfile(employee, evaluator, period, year) {
         if (data.exist = true && data.idPe != 0) {
             override = confirm("This Performance Evaluation File has already been uploaded. Do you want to replace it?");
             if (override) {
-                $("#Replace").val("true");
+                $("#Replace").val(data.idPe);
                 $("#loadFile").attr("value","Overwrite File")
             }
             else {
