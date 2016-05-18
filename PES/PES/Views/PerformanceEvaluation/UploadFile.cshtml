@@ -22,51 +22,14 @@
                         @Html.HiddenFor(m => m.Replace, new { @id = "Replace", @name = "Replace"})
                         @Html.Label("selectedYear", "Evaluation Year", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
-                            @{
-                                
                                 @Html.DropDownListFor(m => m.SelectedYear, Model.ListYears, new { @class = "inlined form-control", @style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
-                            }
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("selectedPeriod", "Period", new { @class = "control-label col-md-4" })
-                        <div class="col-md-6">
-                            @{
-                                List<SelectListItem> selectPeriodList = new List<SelectListItem>();
-                                int currentPeriod = int.Parse(DateTime.Now.Month.ToString());
-
-                                if(currentPeriod <= 6)
-                                { currentPeriod = 1;}
-                                else
-                                {currentPeriod = 2;}
-
-                                foreach(var period in Model.PeriodList)
-                                {
-                                    if(currentPeriod == period.PeriodId )
-                                    {
-                                        var newItem = new SelectListItem()
-                                        {
-                                            Text = "Period " + period.PeriodId.ToString() + "(" + period.Name + ")",
-                                            Value = period.PeriodId.ToString(),
-                                            Selected = true
-                                        };
-                                        selectPeriodList.Add(newItem);
-                                    }
-                                    else
-                                    {
-                                        var newItem = new SelectListItem()
-                                        {
-                                            Text = "Period " + period.PeriodId.ToString() + "(" + period.Name + ")",
-                                            Value = period.PeriodId.ToString(),
-                                            Selected = false
-                                        };
-                                        selectPeriodList.Add(newItem);
-                                    }
-
-                                }
-                            }
-                            @Html.DropDownListFor(m => m.SelectedPeriod, selectPeriodList, new { @class = "inlined form-control", @style = "width:100%" })
+                        <div class="col-md-6"> 
+                            @Html.DropDownListFor(m => m.SelectedPeriod, Model.PeriodList, new { @class = "inlined form-control", @style = "width:100%" })
                             @Html.ValidationMessageFor(m => m.SelectedPeriod, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -80,20 +43,7 @@
                     <div class="form-group">
                         @Html.Label("SelectedEmployee", "Employee", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
-                            @{
-                                List<SelectListItem> employeesList = new List<SelectListItem>();
-                                foreach (var employee in Model.ListEmployees)
-                                {
-                                    var newItem = new SelectListItem()
-                                    {
-                                        Text = employee.FirstName + " " + employee.LastName + " (" + employee.Email + ")",
-                                        Value = (employee.EmployeeId).ToString(),
-                                        Selected = false
-                                    };
-                                    employeesList.Add(newItem);
-                                }
-                            }
-                            @Html.DropDownListFor(m => m.SelectedEmployee, employeesList, new { @class = "inlined form-control", @style = "width:100%" })
+                            @Html.DropDownListFor(m => m.SelectedEmployee, Model.ListEmployees, new { @class = "inlined form-control", @style = "width:100%" })
                             @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -101,20 +51,7 @@
                     <div class="form-group">
                         @Html.Label("SelectedEvaluator", "Evaluator", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
-                            @{
-                                List<SelectListItem> employeesAllList = new List<SelectListItem>();
-                                foreach (var evaluator in Model.ListAllEmployees)
-                                {
-                                    var newItem = new SelectListItem()
-                                    {
-                                        Text = evaluator.FirstName + " " + evaluator.LastName + " (" + evaluator.Email + ")",
-                                        Value = (evaluator.EmployeeId).ToString(),
-                                        Selected = false
-                                    };
-                                    employeesAllList.Add(newItem);
-                                }
-                            }
-                            @Html.DropDownListFor(m => m.SelectedEvaluator, employeesAllList, new { @class = "inlined form-control ", @style = "width:100%" })
+                            @Html.DropDownListFor(m => m.SelectedEvaluator, Model.ListAllEmployees, new { @class = "inlined form-control ", @style = "width:100%" })
                             @Html.ValidationMessageFor(m => m.SelectedEvaluator, "", new { @class = "text-danger" })
                         </div>
                         @*<input class="btn btn-info" id="btnVerify" value="Verify" />*@
