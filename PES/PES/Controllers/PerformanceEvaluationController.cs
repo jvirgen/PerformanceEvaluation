@@ -953,6 +953,7 @@ namespace PES.Controllers
             currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
             uploadVM.CurrentUser = currentUser;
 
+
             // Build list of employees (to evaluate)
             #region List of Employees
             List<Employee> listEmployees = new List<Employee>();

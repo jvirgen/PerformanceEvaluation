@@ -189,7 +189,7 @@ namespace PES.Services
                                            "EVALUATION_YEAR," +
                                            "ID_PERIOD," +
                                            "\"RANK\"" +
-                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "' ORDER BY ID_PE DESC";
+                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'AND STATUS = 'Enable' ORDER BY ID_PE DESC";
                                            //check why this query had rownum <=1
                    
 
