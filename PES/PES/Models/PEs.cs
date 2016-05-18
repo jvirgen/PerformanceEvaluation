@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PES.Models
 {
@@ -79,6 +80,7 @@ namespace PES.Models
         public List<Employee> ListAllEmployees { get; set; }
         public int SelectedEvaluator { get; set; }
         public List<Period> PeriodList { get; set; }
+        public List<SelectListItem> ListYears { get; set; }
         public int SelectedPeriod { get; set; }
         public int SelectedYear { get; set; }
         public int Replace { get; set; }

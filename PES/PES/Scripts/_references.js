@@ -9,6 +9,7 @@
 /// <reference path="exportdatatables/vfs_fonts.js" />
 /// <reference path="filevalidation.js" />
 /// <reference path="jquery.datatables.min.js" />
+/// <reference path="jquery.unobtrusive-ajax.min.js" />
 /// <reference path="jquery.validate.js" />
 /// <reference path="jquery.validate.unobtrusive.js" />
 /// <reference path="jquery-1.10.2.js" />

@@ -3,16 +3,6 @@
     ViewBag.Title = "Upload Performance File";
 }
 
-@*<br />
-@if (TempData["Error"] != null)
-{
-    <p class="alert alert-danger">@TempData["Error"]</p>
-}
-@if (TempData["Success"] != null)
-{
-    <p class="alert alert-success">@TempData["Success"]</p>
-}*@
-
 <hr />
 <div class="well">
     <div class="row text-center">
@@ -23,44 +13,18 @@
     <hr />
     <div class="row">
         <div class="col-md-12">
-            @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data", @id = "UploadForm" }))
             {
                 @Html.AntiForgeryToken()
-                    
+
                 <div class="form-horizontal">
-                    @Html.HiddenFor(model => model.Replace)
                     <div class="form-group">
+                        @Html.HiddenFor(m => m.Replace, new { @id = "Replace", @name = "Replace"})
                         @Html.Label("selectedYear", "Evaluation Year", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
                             @{
-                                List<SelectListItem> selectedYear = new List<SelectListItem>();
-                                int currentYear = int.Parse(DateTime.Now.Year.ToString());
-                                var minYear = 2014;
-                                var maxYear = currentYear + 2;
-                                for (var i = minYear; i <= maxYear; i++)
-                                {
-                                    if(currentYear == i)
-                                    {
-                                        var year = new SelectListItem()
-                                        {
-                                            Text = i.ToString(),
-                                            Value = i.ToString(),
-                                            Selected = true
-                                        };
-                                        selectedYear.Add(year);
-                                    }
-                                    else
-                                    {
-                                        var year = new SelectListItem()
-                                        {
-                                            Text = i.ToString(),
-                                            Value = i.ToString(),
-                                            Selected = false
-                                        };
-                                        selectedYear.Add(year);
-                                    }
-                                }
-                                @Html.DropDownListFor(m => m.SelectedYear, selectedYear, new { @class = "inlined form-control", @style = "width:100%" })
+                                
+                                @Html.DropDownListFor(m => m.SelectedYear, Model.ListYears, new { @class = "inlined form-control", @style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
                             }
                         </div>
@@ -153,11 +117,12 @@
                             @Html.DropDownListFor(m => m.SelectedEvaluator, employeesAllList, new { @class = "inlined form-control ", @style = "width:100%" })
                             @Html.ValidationMessageFor(m => m.SelectedEvaluator, "", new { @class = "text-danger" })
                         </div>
+                        @*<input class="btn btn-info" id="btnVerify" value="Verify" />*@
                     </div>
-
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
-                            <input type="submit" id="loadFile" value="Load File" class="btn btn-primary" />
+                            <input class="btn btn-primary" id="btnVerify" value="Verify" />
+                            @*<input type="submit" id="loadFile" value="Load File" class="btn btn-primary" />*@
                         </div>
                     </div>
                 </div>
@@ -179,6 +144,8 @@
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
     @Scripts.Render("~/Scripts/select2.min.js")
     @Scripts.Render("~/Scripts/verifyPE.js")
 

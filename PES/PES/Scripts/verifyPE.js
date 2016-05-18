@@ -1,5 +1,5 @@
 ﻿// Events 
-$("#loadFile").on("click", function (e) {
+$("#btnVerify").on("click", function (e) {
     var year = parseInt($('#SelectedYear').val());
     var period = parseInt($('#SelectedPeriod').val());
     var employee = parseInt($("#SelectedEmployee").val());
@@ -14,15 +14,28 @@ function verifyPEfile(employee, evaluator, period, year) {
     $.getJSON('/PerformanceEvaluation/VerifyPE?employee='+ employee +'&&evaluator='+ evaluator +'&&period='+ period +'&&year=' + year, function (data) {
 
         if (data.exist = true && data.idPe != 0) {
-            override = confirm("This Performance Evaluation File has already been uploaded. Do you want to replace it?");
+            var override = confirm("This Performance Evaluation File has already been uploaded. Do you want to replace it?");
+
             if (override) {
                 $("#Replace").val(data.idPe);
-                $("#loadFile").attr("value","Overwrite File")
+                $("#Replace").attr("value", data.idPe);
             }
             else {
-                $("#Replace").val("false");
-                $("#loadFile").attr("value", "Load File")
+                $("#Replace").val(0);
+                $("#Replace").attr("value", 0);
             }
+
+            // Submit
+            $("#UploadForm").submit();
         }
     });
 }
+
+$("#UploadForm").on("submit", function (e) {
+    
+    //e.preventDefault();
+
+    alert("Submit");
+
+    return true;
+});

@@ -51,7 +51,7 @@ namespace PES.Controllers
             return View();
         }
 
-        public bool ReadPerformanceFile(string path, Employee user, Employee evaluator, int year, int period) 
+        public bool ReadPerformanceFile(string path, Employee user, Employee evaluator, int year, int period, int replace) 
         {
             // CREATE DE EXCEL FILE AND ACCES AT THE WORK SHEET
 
@@ -82,8 +82,15 @@ namespace PES.Controllers
                 PESc.pes.CompeteneceScore = excelSheet.GetValue<double>(73, 9);
                 PESc.pes.EvaluationYear = year;
                 PESc.pes.PeriodId = period;
+
+                //Replace PE
+                if(replace != 0)
+                {
+                    bool peDisabled = _peService.UpdateStatus(replace);
+                }
                 // Insert 
                 bool peInserted = _peService.InsertPE(PESc.pes);
+
 
                 // Look for and get id 
                 PESc.pes = _peService.GetPerformanceEvaluationByDateEmail(user.Email, DateTime.Now.Date);
@@ -818,12 +825,13 @@ namespace PES.Controllers
                         var user = _employeeService.GetByID(uploadVM.SelectedEmployee);
                         var year = uploadVM.SelectedYear;
                         var period = uploadVM.SelectedPeriod;
+                        var replace = uploadVM.Replace;
 
                         if (user != null)
                         {
                             var evaluator = _employeeService.GetByID(uploadVM.SelectedEvaluator);
 
-                            bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator, year, period);
+                            bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator, year, period, replace);
 
                             if (!fileSaved)
                             {
@@ -964,9 +972,45 @@ namespace PES.Controllers
             List<Period> ListPeriods = new List<Period>();
             ListPeriods = _periodService.GetAll();
 
+
+            // Build list of years
+            #region List of years
+            List<SelectListItem> listYears = new List<SelectListItem>();
+            int currentYear = int.Parse(DateTime.Now.Year.ToString());
+            var minYear = 2014;
+            var maxYear = currentYear + 2;
+            for (var i = minYear; i <= maxYear; i++)
+            {
+                if (currentYear == i)
+                {
+                    var year = new SelectListItem()
+                    {
+                        Text = i.ToString(),
+                        Value = i.ToString(),
+                        Selected = true
+                    };
+                    listYears.Add(year);
+                }
+                else
+                {
+                    var year = new SelectListItem()
+                    {
+                        Text = i.ToString(),
+                        Value = i.ToString(),
+                        Selected = false
+                    };
+                    listYears.Add(year);
+                }
+            }
+            #endregion
+
             uploadVM.ListAllEmployees = listAllEmployees;
             uploadVM.ListEmployees = listEmployees;
             uploadVM.PeriodList = ListPeriods;
+            uploadVM.ListYears = listYears;
+            uploadVM.SelectedPeriod = ListPeriods.LastOrDefault().PeriodId; // last 
+            uploadVM.SelectedYear = int.Parse(listYears.LastOrDefault().Value);
+
 
             return View(uploadVM);
         }

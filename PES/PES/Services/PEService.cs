@@ -37,6 +37,7 @@ namespace PES.Services
                                                        COMPETENCE_SCORE,
                                                        EVALUATION_YEAR,
                                                        ID_PERIOD,
+                                                       STATUS,
                                                        ""RANK""
                                                       ) 
                                                VALUES (:evaluationPeriod,
@@ -49,6 +50,7 @@ namespace PES.Services
                                                        :competenceScore,
                                                        :evaluationYear,
                                                        :periodId,
+                                                       :status,
                                                        :rank)";
 
                 // Adding parameters
@@ -64,6 +66,7 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("competenceScore", pe.CompeteneceScore));
                     command.Parameters.Add(new OracleParameter("evaluationYear", pe.EvaluationYear));
                     command.Parameters.Add(new OracleParameter("periodId", pe.PeriodId));
+                    command.Parameters.Add(new OracleParameter("periodId", "Enable"));
                     command.Parameters.Add(new OracleParameter("rank", pe.Rank));
 
                     try
@@ -423,7 +426,8 @@ namespace PES.Services
                                      WHERE ID_EMPLOYEE = :employeeId AND 
                                      ID_EVALUATOR = :evaluatorId AND
                                      ID_PERIOD = :periodId AND 
-                                     EVALUATION_YEAR = :evalYear";
+                                     EVALUATION_YEAR = :evalYear AND
+                                     STATUS != :status";
 
                 // Adding parameters
                 using (OracleCommand command = new OracleCommand(insertQuery, db))
@@ -432,6 +436,7 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("evaluatorId", evaluator));
                     command.Parameters.Add(new OracleParameter("periodId", period));
                     command.Parameters.Add(new OracleParameter("evalYear", year));
+                    command.Parameters.Add(new OracleParameter("status", "Disable"));
 
                     try
                     {
@@ -451,6 +456,37 @@ namespace PES.Services
                 }
             }
             return PE;
+        }
+
+        public bool UpdateStatus(int peId)
+        {
+            bool status = false;
+
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string updateRank = @"UPDATE PE
+                                        SET STATUS = 'Disable'
+                                       WHERE ID_PE = :peId";
+
+                using (OracleCommand command = new OracleCommand(updateRank, db))
+                {
+                    command.Parameters.Add(new OracleParameter("peId", peId));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                        status = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                }
+            }
+            return status;
         }
     }
 }
