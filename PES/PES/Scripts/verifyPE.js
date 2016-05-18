@@ -13,18 +13,23 @@ function verifyPEfile(employee, evaluator, period, year) {
 
     $.getJSON('/PerformanceEvaluation/VerifyPE?employee='+ employee +'&&evaluator='+ evaluator +'&&period='+ period +'&&year=' + year, function (data) {
 
-        if (data.exist = true && data.idPe != 0) {
+        if (data.exist == true && data.idPe != 0) {
             var override = confirm("This Performance Evaluation File has already been uploaded. Do you want to replace it?");
 
             if (override) {
                 $("#Replace").val(data.idPe);
                 $("#Replace").attr("value", data.idPe);
+
+                // Submit
+                $("#UploadForm").submit();
             }
             else {
-                $("#Replace").val(0);
-                $("#Replace").attr("value", 0);
+                $("#Replace").val(00);
+                $("#Replace").attr("value", 00);
             }
 
+        }
+        else {
             // Submit
             $("#UploadForm").submit();
         }
@@ -34,8 +39,6 @@ function verifyPEfile(employee, evaluator, period, year) {
 $("#UploadForm").on("submit", function (e) {
     
     //e.preventDefault();
-
-    alert("Submit");
-
+    //alert("Submit");
     return true;
 });
