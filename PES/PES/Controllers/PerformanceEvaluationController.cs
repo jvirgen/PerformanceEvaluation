@@ -1025,7 +1025,7 @@ namespace PES.Controllers
             int currentYear = int.Parse(DateTime.Now.Year.ToString());
             int currentPeriod =int.Parse(DateTime.Now.Month.ToString());
             var minYear = 2014;
-            var maxYear = currentYear + 2;
+            var maxYear = currentYear;
             //Get currentPeriod id
             if(currentPeriod < 7)
             {

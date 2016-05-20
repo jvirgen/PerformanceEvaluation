@@ -66,7 +66,7 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("competenceScore", pe.CompeteneceScore));
                     command.Parameters.Add(new OracleParameter("evaluationYear", pe.EvaluationYear));
                     command.Parameters.Add(new OracleParameter("periodId", pe.PeriodId));
-                    command.Parameters.Add(new OracleParameter("periodId", "Enable"));
+                    command.Parameters.Add(new OracleParameter("periodId", 'Y'));
                     command.Parameters.Add(new OracleParameter("rank", pe.Rank));
 
                     try
@@ -465,7 +465,7 @@ namespace PES.Services
             using (OracleConnection db = dbContext.GetDBConnection())
             {
                 string updateRank = @"UPDATE PE
-                                        SET STATUS = 'Disable'
+                                        SET STATUS = 'N'
                                        WHERE ID_PE = :peId";
 
                 using (OracleCommand command = new OracleCommand(updateRank, db))
