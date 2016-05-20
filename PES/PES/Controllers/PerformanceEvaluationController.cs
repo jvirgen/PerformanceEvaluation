@@ -943,133 +943,147 @@ namespace PES.Controllers
         
         // GET: PerformanceEvaluation/UploadFile
         public ActionResult UploadFile()
-
         {
-            UploadFileViewModel uploadVM = new UploadFileViewModel();
-
-            // Get current user by using the session
-            Employee currentUser = new Employee();
-            EmployeeService EmployeeService = new EmployeeService();
-            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
-            uploadVM.CurrentUser = currentUser;
-
-
-            // Build list of employees (to evaluate)
-            #region List of Employees
-            List<Employee> listEmployees = new List<Employee>();
-            if(currentUser.ProfileId == (int)ProfileUser.Director)
+            //Get Current user
+            var currentProfile = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+            if (currentProfile.ProfileId == (int)ProfileUser.Director || currentProfile.ProfileId == (int)ProfileUser.Manager)
             {
-                // Get all employees 
-                listEmployees = _employeeService.GetAll();
-            }
-            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
-            {
-                // Get employees by manager
-                listEmployees = null;
-                listEmployees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-            }
-            List<SelectListItem> employeesList = new List<SelectListItem>();
-            foreach (var employee in listEmployees)
-            {
-                var newItem = new SelectListItem()
+                UploadFileViewModel uploadVM = new UploadFileViewModel();
+
+                // Get current user by using the session
+                Employee currentUser = new Employee();
+                EmployeeService EmployeeService = new EmployeeService();
+                currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
+                uploadVM.CurrentUser = currentUser;
+
+
+                // Build list of employees (to evaluate)
+                #region List of Employees
+                List<Employee> listEmployees = new List<Employee>();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
                 {
-                    Text = employee.FirstName + " " + employee.LastName + " (" + employee.Email + ")",
-                    Value = (employee.EmployeeId).ToString(),
-                    Selected = false
-                };
-                employeesList.Add(newItem);
-            }
-            #endregion
-
-            //Build list of all employees (evaluators)
-            #region List of Evaluators
-            List<Employee> listAllEmployees = new List<Employee>();
-            listAllEmployees = _employeeService.GetAll();
-
-            List<SelectListItem> employeesAllList = new List<SelectListItem>();
-            foreach (var evaluator in listAllEmployees)
-            {
-                var newItem = new SelectListItem()
+                    // Get all employees 
+                    listEmployees = _employeeService.GetAll();
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
                 {
-                    Text = evaluator.FirstName + " " + evaluator.LastName + " (" + evaluator.Email + ")",
-                    Value = (evaluator.EmployeeId).ToString(),
-                    Selected = false
-                };
-                employeesAllList.Add(newItem);
-            }
-            #endregion
-
-            // Build list of periods
-            #region List of Periods
-            List<SelectListItem> ListPeriods = new List<SelectListItem>();
-            var periods = _periodService.GetAll();
-
-            foreach(var item in periods)
-            {
-                var period = new SelectListItem
+                    // Get employees by manager
+                    listEmployees = null;
+                    listEmployees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                }
+                List<SelectListItem> employeesList = new List<SelectListItem>();
+                foreach (var employee in listEmployees)
                 {
-                    Text = "Period " + item.PeriodId + "(" + item.Name + ")",
-                    Value = item.PeriodId.ToString(),
-                    Selected = false
-                };
-
-                ListPeriods.Add(period);
-            }
-
-
-            #endregion
-
-            // Build list of years
-            #region List of years
-            List<SelectListItem> listYears = new List<SelectListItem>();
-            int currentYear = int.Parse(DateTime.Now.Year.ToString());
-            int currentPeriod =int.Parse(DateTime.Now.Month.ToString());
-            var minYear = 2014;
-            var maxYear = currentYear;
-            //Get currentPeriod id
-            if(currentPeriod < 7)
-            {
-                currentPeriod = 1;
-            }
-            else
-            {
-                currentPeriod = 2;
-            }
-
-            for (var i = minYear; i <= maxYear; i++)
-            {
-                if (currentYear == i)
-                {
-                    var year = new SelectListItem()
+                    var newItem = new SelectListItem()
                     {
-                        Text = i.ToString(),
-                        Value = i.ToString(),
-                        Selected = true
+                        Text = employee.FirstName + " " + employee.LastName + " (" + employee.Email + ")",
+                        Value = (employee.EmployeeId).ToString(),
+                        Selected = false
                     };
-                    listYears.Add(year);
+                    employeesList.Add(newItem);
+                }
+                #endregion
+
+                //Build list of all employees (evaluators)
+                #region List of Evaluators
+                List<Employee> listAllEmployees = new List<Employee>();
+                listAllEmployees = _employeeService.GetAll();
+
+                List<SelectListItem> employeesAllList = new List<SelectListItem>();
+                foreach (var evaluator in listAllEmployees)
+                {
+                    var newItem = new SelectListItem()
+                    {
+                        Text = evaluator.FirstName + " " + evaluator.LastName + " (" + evaluator.Email + ")",
+                        Value = (evaluator.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    employeesAllList.Add(newItem);
+                }
+                #endregion
+
+                // Build list of periods
+                #region List of Periods
+                List<SelectListItem> ListPeriods = new List<SelectListItem>();
+                var periods = _periodService.GetAll();
+
+                foreach (var item in periods)
+                {
+                    var period = new SelectListItem
+                    {
+                        Text = "Period " + item.PeriodId + "(" + item.Name + ")",
+                        Value = item.PeriodId.ToString(),
+                        Selected = false
+                    };
+
+                    ListPeriods.Add(period);
+                }
+
+
+                #endregion
+
+                // Build list of years
+                #region List of years
+                List<SelectListItem> listYears = new List<SelectListItem>();
+                int currentYear = int.Parse(DateTime.Now.Year.ToString());
+                int currentPeriod = int.Parse(DateTime.Now.Month.ToString());
+                var minYear = 2014;
+                var maxYear = currentYear;
+                //Get currentPeriod id
+                if (currentPeriod < 7)
+                {
+                    currentPeriod = 1;
                 }
                 else
                 {
-                    var year = new SelectListItem()
-                    {
-                        Text = i.ToString(),
-                        Value = i.ToString(),
-                        Selected = false
-                    };
-                    listYears.Add(year);
+                    currentPeriod = 2;
                 }
+
+                for (var i = minYear; i <= maxYear; i++)
+                {
+                    if (currentYear == i)
+                    {
+                        var year = new SelectListItem()
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString(),
+                            Selected = true
+                        };
+                        listYears.Add(year);
+                    }
+                    else
+                    {
+                        var year = new SelectListItem()
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString(),
+                            Selected = false
+                        };
+                        listYears.Add(year);
+                    }
+                }
+                #endregion
+
+                uploadVM.ListAllEmployees = employeesAllList;
+                uploadVM.ListEmployees = employeesList;
+                uploadVM.PeriodList = ListPeriods;
+                uploadVM.ListYears = listYears;
+                uploadVM.SelectedPeriod = int.Parse(ListPeriods.LastOrDefault(p => p.Value == currentPeriod.ToString()).Value); // last 
+                uploadVM.SelectedYear = int.Parse(listYears.LastOrDefault(y => y.Value == currentYear.ToString()).Value);
+
+
+                return View(uploadVM);
             }
-            #endregion
-
-            uploadVM.ListAllEmployees = employeesAllList;
-            uploadVM.ListEmployees = employeesList;
-            uploadVM.PeriodList = ListPeriods;
-            uploadVM.ListYears = listYears;
-            uploadVM.SelectedPeriod = int.Parse(ListPeriods.LastOrDefault(p => p.Value == currentPeriod.ToString()).Value); // last 
-            uploadVM.SelectedYear = int.Parse(listYears.LastOrDefault(y => y.Value == currentYear.ToString()).Value);
-
-
-            return View(uploadVM);
+            else if(currentProfile.ProfileId == (int)ProfileUser.Resource)
+            {
+                TempData["Error"] = "You are not allowed to view this page";
+               return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["Error"] = "You are not loged in. Please try later.";
+                return RedirectToAction("Login", "LoginUser");
+            }
         }
 
         // GET: PeformanceEvaluation/SearchIformation
