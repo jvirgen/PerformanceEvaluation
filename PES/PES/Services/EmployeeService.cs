@@ -317,7 +317,8 @@ namespace PES.Services
                                                                 POSITION,
                                                                 ID_PROFILE,
                                                                 ID_MANAGER,
-                                                                END_DATE) 
+                                                                END_DATE,
+                                                                LOCATION) 
 
                                                         VALUES (:firstName,
                                                                 :lastName,
@@ -326,7 +327,8 @@ namespace PES.Services
                                                                 :position,
                                                                 :idProfile,
                                                                 :idManager,
-                                                                :endDate
+                                                                :endDate,
+                                                                :locationId   
                                                                 )";
 
                 // Adding parameters
@@ -340,6 +342,7 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("idProfile", employee.ProfileId));
                     command.Parameters.Add(new OracleParameter("idManager", employee.ManagerId));
                     command.Parameters.Add(new OracleParameter("endDate", OracleDbType.Date, employee.EndDate, ParameterDirection.Input));
+                    command.Parameters.Add(new OracleParameter("locationId", employee.LocationId));
 
                     try
                     {
@@ -387,7 +390,8 @@ namespace PES.Services
                                                                "EMAIL='" + employee.Email + "', " +
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
                                                                "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToString("MM-dd-yyyy") : "") + "', 'MM-DD-YYYY'), " +
-                                                               "ID_MANAGER='" + employee.ManagerId + "' " +                                                                                                                                                                                      
+                                                               "ID_MANAGER='" + employee.ManagerId + "', " +
+                                                               "LOCATION='" + employee.LocationId + "' " +
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
