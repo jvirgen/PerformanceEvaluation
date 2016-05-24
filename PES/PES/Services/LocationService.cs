@@ -18,10 +18,9 @@ namespace PES.Services
         }
 
         //Get all locations
-        public List<Period> GetAll()
+        public List<Location> GetAll()
         {
-            List<Period> periods = new List<Period>();
-            Period employee = new Period();
+            List<Location> locations = new List<Location>();
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -37,11 +36,11 @@ namespace PES.Services
                     {
 
                         // Store data in period object 
-                        Period period = new Period();
-                        period.PeriodId = Convert.ToInt32(Read["ID_LOCATION"]);
-                        period.Name = Convert.ToString(Read["NAME"]);
+                        Location location = new Location();
+                        location.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
+                        location.Name = Convert.ToString(Read["NAME"]);
 
-                        periods.Add(period);
+                        locations.Add(location);
                     }
                     db.Close();
                 }
@@ -51,13 +50,13 @@ namespace PES.Services
             {
                 throw;
             }
-            return periods;
+            return locations;
         }
 
         // Get a location by id
-        public Period GetPeriodById(int id)
+        public Location GetPeriodById(int id)
         {
-            Period period = new Period();
+            Location location = new Location();
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -73,9 +72,9 @@ namespace PES.Services
                     while (Read.Read())
                     {
                         // Store data in a period object 
-                        period = new Period();
-                        period.PeriodId = Convert.ToInt32(Read["ID_LOCATION"]);
-                        period.Name = Convert.ToString(Read["NAME"]);
+                        location = new Location();
+                        location.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
+                        location.Name = Convert.ToString(Read["NAME"]);
                     }
                     db.Close();
                 }
@@ -84,7 +83,7 @@ namespace PES.Services
             {
                 throw;
             }
-            return period;
+            return location;
         }
     }
 }

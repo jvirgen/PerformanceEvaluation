@@ -190,13 +190,30 @@ namespace PES.Controllers
                     };
                     managersList.Add(newItem);
                 }
+            }
 
+            //Get locations
+            var locations = _locationService.GetAll();
+            //Get current location
+
+            //populate locations
+            List<SelectListItem> locationsList = new List<SelectListItem>();
+            foreach(var item in locations)
+            {
+                var location = new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.LocationId.ToString(),
+                    Selected = false
+                };
+                locationsList.Add(location);
             }
 
             #region Set data
             // Set profiles
             model.ListProfiles = profilesList;
             model.ListManagers = managersList;
+            model.ListLocations = locationsList;
 
             #endregion
 
@@ -258,11 +275,28 @@ namespace PES.Controllers
                     managersList.Add(newItem);
                 }
             }
+            //Get locations
+            var locations = _locationService.GetAll();
+            //Get current location
+
+            //populate locations
+            List<SelectListItem> locationsList = new List<SelectListItem>();
+            foreach (var item in locations)
+            {
+                var location = new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.LocationId.ToString(),
+                    Selected = false
+                };
+                locationsList.Add(location);
+            }
 
             #region Set data
             // Set profiles
             model.ListProfiles = profilesList;
             model.ListManagers = managersList;
+            model.ListLocation = locationsList;
 
             #endregion
 
@@ -630,6 +664,8 @@ namespace PES.Controllers
             // Get profile
             var porfile = _profileService.GetProfileByID(employee.ProfileId);
 
+            var location = _locationService.GetPeriodById(employee.LocationId);
+
             EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
             model.EmployeeId = employee.EmployeeId;
             model.FirstName = employee.FirstName;
@@ -641,6 +677,7 @@ namespace PES.Controllers
             model.Profile = porfile;
             model.Manager = manager;
             model.Director = director;
+            model.Location = location;
 
             return View(model);
         }

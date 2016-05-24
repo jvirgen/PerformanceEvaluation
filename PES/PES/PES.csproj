@@ -159,6 +159,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\LM_Skill.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\PerformanceSectionHelper.cs" />
     <Compile Include="Models\PerformancSection.cs" />
     <Compile Include="Models\Period.cs" />

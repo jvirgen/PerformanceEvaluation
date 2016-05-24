@@ -93,7 +93,7 @@ namespace PES.Models
         ///<summary>
         ///Employee Location
         /// </summary>
-        public int Location { get; set; }
+        public int LocationId { get; set; }
         
 
     }

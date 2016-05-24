@@ -54,6 +54,9 @@ namespace PES.ViewModels
                 _textEmail = value;
             }
         }
+        public List<SelectListItem> ListLocation { get; set; }
+        [Display(Name = "Location")]
+        public int SelectedLocation { get; set; }
 
         //public string Customer { get; set; }
         //public string Position { get; set; }

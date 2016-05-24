@@ -11,5 +11,6 @@ namespace PES.ViewModels
         public Employee Manager { get; set; }
         public Employee Director { get; set; }
         public Profile Profile { get; set; }
+        public Location Location { get; set; }
     }
 }
