@@ -179,6 +179,7 @@
     <Compile Include="Services\DescriptionService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\LM_SkillService.cs" />
+    <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\PeriodService.cs" />
     <Compile Include="Services\PEService.cs" />
     <Compile Include="Services\ProfileService.cs" />

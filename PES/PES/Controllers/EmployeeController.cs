@@ -18,11 +18,13 @@ namespace PES.Controllers
         // Declare services here
         private ProfileService _profileService;
         private EmployeeService _employeeService;
+        private LocationService _locationService;
 
         public EmployeeController()
         {
             _profileService = new ProfileService();
             _employeeService = new EmployeeService();
+            _locationService = new LocationService();
         }
 
         // GET: Employee
