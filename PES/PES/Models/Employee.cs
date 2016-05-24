@@ -90,6 +90,10 @@ namespace PES.Models
         /// </summary>
         public string Project { get; set; }
 
+        ///<summary>
+        ///Employee Location
+        /// </summary>
+        public int Location { get; set; }
         
 
     }
