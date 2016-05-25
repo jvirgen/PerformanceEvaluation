@@ -14,11 +14,12 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqueryui")
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     @RenderSection("Styles", required: false)
     
 
 </head>
-<body>
+<body onload="initialize()">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
