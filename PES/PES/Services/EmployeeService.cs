@@ -320,7 +320,7 @@ namespace PES.Services
                                                                 ID_PROFILE,
                                                                 ID_MANAGER,
                                                                 END_DATE,
-                                                                LOCATION) 
+                                                                ID_LOCATION) 
 
                                                         VALUES (:firstName,
                                                                 :lastName,
@@ -393,7 +393,7 @@ namespace PES.Services
                                                                "ID_PROFILE='" + employee.ProfileId + "', " +
                                                                "END_DATE= TO_DATE('" + (employee.EndDate.HasValue ? employee.EndDate.Value.ToString("MM-dd-yyyy") : "") + "', 'MM-DD-YYYY'), " +
                                                                "ID_MANAGER='" + employee.ManagerId + "', " +
-                                                               "LOCATION='" + employee.LocationId + "' " +
+                                                               "ID_LOCATION='" + employee.LocationId + "' " +
                                      "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
@@ -450,7 +450,7 @@ namespace PES.Services
                 {
                     db.Open();
                     string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
-                    string QueryName = "SELECT FIST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
+                    string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
                     OracleCommand Comand = new OracleCommand(QueryProfile, db);
                     OracleDataReader Read = Comand.ExecuteReader();
 
