@@ -450,7 +450,7 @@ namespace PES.Services
                 {
                     db.Open();
                     string QueryProfile = "SELECT ID_PROFILE FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
-                    string QueryName = "SELECT FIST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
+                    string QueryName = "SELECT FIRST_NAME FROM EMPLOYEE WHERE EMAIL=" + "'" + userEmail + "'";
                     OracleCommand Comand = new OracleCommand(QueryProfile, db);
                     OracleDataReader Read = Comand.ExecuteReader();
 
