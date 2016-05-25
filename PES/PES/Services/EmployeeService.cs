@@ -108,7 +108,8 @@ namespace PES.Services
                                            "ID_PROFILE," +
                                            "ID_MANAGER," +
                                            "END_DATE, " +
-                                           "PROJECT " +
+                                           "PROJECT, " +
+                                           "ID_LOCATION " +
                                            "FROM EMPLOYEE WHERE ID_EMPLOYEE = '" + ID + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -128,6 +129,7 @@ namespace PES.Services
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
+                        employee.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
