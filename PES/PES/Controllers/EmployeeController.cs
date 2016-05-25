@@ -85,6 +85,7 @@ namespace PES.Controllers
                 newEmployee.ManagerId = employeeModel.SelectedManager;
                 newEmployee.Customer = "No customer";
                 newEmployee.Position = "Not specified";
+                newEmployee.LocationId = employeeModel.SelectedLocation;
 
                 if (uniqueEmail(newEmployee))
                 {
@@ -441,7 +442,8 @@ namespace PES.Controllers
                 model.Email = emailUsername[0];
                 model.SelectedProfile = employee.ProfileId;
                 model.SelectedManager = employee.ManagerId;
-                
+                model.SelectedLocation = employee.LocationId;
+
                 return View(model);
             }
         }
@@ -464,6 +466,7 @@ namespace PES.Controllers
                 newEmployee.Email = employeeModel.Email + "@4thsource.com";
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
                 newEmployee.ManagerId = employeeModel.SelectedManager;
+                newEmployee.LocationId = employeeModel.SelectedLocation;
 
                 _employeeService.UpdateEmployee(newEmployee);
 
