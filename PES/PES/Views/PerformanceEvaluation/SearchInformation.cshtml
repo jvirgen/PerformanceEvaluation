@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "Performance Files";
     var currentUser = ViewBag.currentEmployee;
+    LocationService _locationService = new LocationService();
 }
 
 <div class="row text-center">
@@ -15,6 +16,36 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
+        @if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label>General Report</label>
+                        <input type="radio" class="radio" value="1" name="report" id="geneal"/>
+                    </div>
+                    <div class="col-md-10">
+                        <label>Report by location</label>
+                        <input type="radio" class="radio" value="2" name="report" id="location" />
+                        @{ 
+                            var locations = _locationService.GetAll();
+                            List<SelectListItem> ListLocation = new List<SelectListItem>();
+                            foreach (var item in locations)
+                            {
+                                var newLocation = new SelectListItem
+                                {
+                                    Text = item.Name,
+                                    Value = item.LocationId.ToString(),
+                                    Selected = false
+                                };
+                                ListLocation.Add(newLocation);
+                            }
+                        }
+                        @Html.DropDownList("dropdownLocation", ListLocation, new { @class = "inlined form-control", @style = "width:100%", @id = "dropdownLocation" });
+                    </div>
+                </div>
+            </div>
+        }
         <div id="performancePartial">
             @Html.Partial("_PerformanceFilesPartial", Model)
         </div>
@@ -49,6 +80,7 @@
     @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
     @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
     @Scripts.Render("~/Scripts/utilities.js")
+    @Scripts.Render("~/Scripts/location.js")
 
     <script type="text/javascript">
         var listPerformances = [];
