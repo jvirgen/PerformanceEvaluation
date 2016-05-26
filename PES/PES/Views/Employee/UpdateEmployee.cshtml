@@ -57,8 +57,10 @@
                 }
                 else
                 {
-                    <div class="form-group" hidden>
-                        @Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="form-group">
+                        @Html.HiddenFor(m => m.SelectedProfile)
+                        @Html.HiddenFor(m => m.SelectedManager)
+                        @*@Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-3">
                             @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
                             @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
@@ -69,7 +71,7 @@
                                 @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
                                 @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 }
                 <div class="form-group">
