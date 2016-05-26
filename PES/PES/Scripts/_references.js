@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="bootstrap.js" />
 /// <reference path="datatables.bootstrap.min.js" />
+/// <reference path="define-report.js" />
 /// <reference path="enable-disable.js" />
 /// <reference path="exportdatatables/buttons.html5.min.js" />
 /// <reference path="exportdatatables/datatables.buttons.min.js" />
