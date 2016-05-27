@@ -14,7 +14,7 @@
     });
 
     // Events 
-    $("#showDisables").on("click", function (e) {
+    $("#showLocation").on("click", function (e) {
         // Execute function 
 
         // Email user
@@ -26,7 +26,7 @@
     });
 
     // Events 
-    $("#showBoth").on("click", function (e) {
+    $("#showDirector").on("click", function (e) {
         // Execute function 
 
         // Email user
