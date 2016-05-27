@@ -10,6 +10,7 @@ using PES.Services;
 using PES.ViewModels;
 using System.Web.Script.Serialization;
 using OfficeOpenXml;
+using System.Threading.Tasks;
 
 namespace PES.Controllers
 {
@@ -1327,6 +1328,55 @@ namespace PES.Controllers
             }
             //Return startus of searcha and Id PE
             return Json(new { exist = success, idPe = idPe},JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetEmployeesByLocation(int LocationId)
+        {
+            var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+
+            List<Employee> employees = new List<Employee>();
+            if (currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all
+                employees = _employeeService.GetAll();
+                filterByLocation(employees, LocationId);
+            }
+            else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                filterByLocation(employees, loca);
+            }
+
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            foreach (var employee in employees)
+            {
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                if (listPE != null && listPE.Count > 0)
+                {
+                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+
+                    employeeVM.lastPe = lastPE;
+                }
+
+                listEmployeeVM.Add(employeeVM);
+            }
+
+            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+            return PartialView("_PerformanceFilesPartial", partial);
+        }
+
+        private List<Employee> filterByLocation(List<Employee> employees, int idLocation)
+        {
+            employees = employees.Where(x => x.LocationId == idLocation).ToList();
+            return employees;
         }
     }
 }

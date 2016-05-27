@@ -39,6 +39,7 @@ function showCombo() {
 }
 
 function genralReport() {
+    
 }
 
 function locationReport(idLocation) {
