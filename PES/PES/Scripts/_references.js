@@ -21,7 +21,6 @@
 /// <reference path="moment.min.js" />
 /// <reference path="moment-with-locales.min.js" />
 /// <reference path="moveemployees.js" />
-/// <reference path="reportfilters.js" />
 /// <reference path="respond.js" />
 /// <reference path="select2.js" />
 /// <reference path="showemployees.js" />
