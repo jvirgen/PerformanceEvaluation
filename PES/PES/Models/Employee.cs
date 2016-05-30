@@ -103,6 +103,7 @@ namespace PES.Models
         public Employee employee { get; set; }
         public Employee manager { get; set; }
         public PEs lastPe { get; set; }
+        public Location location { get; set; }
         //public double totalScore { get; set; }
         //public double? rank { get; set; }
         //public double englishScore { get; set; }

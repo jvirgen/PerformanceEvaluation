@@ -30,6 +30,7 @@ namespace PES.Controllers
         private LM_SkillService _lm_skillService;
         private StatusService _statusService;
         private PeriodService _periodService;
+        private LocationService _locationService;
 
         public PerformanceEvaluationController() 
         {
@@ -44,6 +45,7 @@ namespace PES.Controllers
             _lm_skillService = new LM_SkillService();
             _statusService = new StatusService();
             _periodService = new PeriodService();
+            _locationService = new LocationService();
         }
 
         // GET: PerformanceEvaluation
@@ -1294,11 +1296,14 @@ namespace PES.Controllers
             }
 
             List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            var location = new Location();
             foreach (var employee in employees)
             {
+                location = _locationService.GetPeriodById(employee.LocationId);
                 var employeeVM = new EmployeeManagerViewModel();
                 employeeVM.employee = employee;
                 employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                employeeVM.location = location;
 
                 var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
@@ -1310,6 +1315,7 @@ namespace PES.Controllers
                 }
 
                 listEmployeeVM.Add(employeeVM);
+
             }
 
             PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
@@ -1352,11 +1358,14 @@ namespace PES.Controllers
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
                 foreach (var employee in employees)
                 {
+                    location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
                     employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
@@ -1394,11 +1403,14 @@ namespace PES.Controllers
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
                 foreach (var employee in employees)
                 {
+                    location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
                     employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
@@ -1435,11 +1447,14 @@ namespace PES.Controllers
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
                 foreach (var employee in employees)
                 {
+                    location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
                     employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
@@ -1473,11 +1488,14 @@ namespace PES.Controllers
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
                 foreach (var employee in employees)
                 {
+                    location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
                     employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
