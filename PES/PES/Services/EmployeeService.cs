@@ -170,7 +170,8 @@ namespace PES.Services
                                            "ID_PROFILE," +
                                            "ID_MANAGER, " +
                                            "END_DATE, " +
-                                           "PROJECT " +
+                                           "PROJECT, " +
+                                           "ID_LOCATION " +
                                            "FROM EMPLOYEE";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -190,6 +191,7 @@ namespace PES.Services
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
+                        employee.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
@@ -555,6 +557,7 @@ namespace PES.Services
                                        "FIRST_NAME, " +
                                        "LAST_NAME, " +
                                        "EMAIL, " +
+                                       "POSITION, " +
                                        "ID_PROFILE, " +
                                        "ID_MANAGER, " +
                                        "END_DATE " +
@@ -572,6 +575,7 @@ namespace PES.Services
                         employee.FirstName = Convert.ToString(Reader["FIRST_NAME"]);
                         employee.LastName = Convert.ToString(Reader["LAST_NAME"]);
                         employee.Email = Convert.ToString(Reader["EMAIL"]);
+                        employee.Position = Convert.ToString(Reader["POSITION"]);
                         employee.ProfileId = Convert.ToInt32(Reader["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Reader["ID_MANAGER"]);
                         string endDate = Convert.ToString(Reader["END_DATE"]);

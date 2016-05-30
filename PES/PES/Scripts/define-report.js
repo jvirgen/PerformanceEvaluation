@@ -1,51 +1,51 @@
-﻿$(document).ready(function () {
-    $("#Tableview").DataTable();
+﻿//$(document).ready(function () {
+//    $("#Tableview").DataTable();
 
-    // Events
-    $("#general").on("click", function (e) {
-        // Execute function 
+//    // Events
+//    $("#general").on("click", function (e) {
+//        // Execute function 
 
-        // Filter 
-        var filter = ;
-        // Option
-        var option = ;
+//        // Filter 
+//        var filter = ;
+//        // Option
+//        var option = ;
 
-        validateFilters(filter, option);
-    });
+//        validateFilters(filter, option);
+//    });
 
-    $("#dropdownLocation").on("click", function (e) {
-        // Execute function 
+//    $("#dropdownLocation").on("click", function (e) {
+//        // Execute function 
 
-        // Filter 
-        var filter = ;
-        // Option
-        var option = ;
+//        // Filter 
+//        var filter = ;
+//        // Option
+//        var option = ;
 
-        validateFilters(filter, option);
-    });
+//        validateFilters(filter, option);
+//    });
 
-    $("#dropdownManager").on("click", function (e) {
-        // Execute function 
+//    $("#dropdownManager").on("click", function (e) {
+//        // Execute function 
 
-        // Filter 
-        var filter = ;
-        // Option
-        var option = ;
+//        // Filter 
+//        var filter = ;
+//        // Option
+//        var option = ;
 
-        validateFilters(filter, option);
-    });
+//        validateFilters(filter, option);
+//    });
 
-    $("#dropdownDirector").on("click", function (e) {
-        // Execute function 
+//    $("#dropdownDirector").on("click", function (e) {
+//        // Execute function 
 
-        // Filter 
-        var filter = ;
-        // Option
-        var option = ;
+//        // Filter 
+//        var filter = ;
+//        // Option
+//        var option = ;
 
-        validateFilters(filter, option);
-    });
-});
+//        validateFilters(filter, option);
+//    });
+//});
 var radioGeneral = $("#general");
 var radioFilter = $("#filter");
 var comboFilter = $("#dropdownFilter");
@@ -81,6 +81,7 @@ function checkGeneral() {
     $(radioGeneral).addClass("ckd");
     $(radioFilter).removeClass("ckd");
     showCombo();
+    generalReport();
 }
 
 function checkLocation() {
@@ -132,7 +133,7 @@ function showoFilterOptions(idFilter) {
 
 function validateFilters(FilterId, OptionId) {
     $.ajax({
-        url: "/Employee/GetEmployeesByFilter",
+        url: "/PerformanceEvaluation/GetEmployeesByFilter",
         data: {
             FilterId: FilterId,
             OptionId: OptionId
@@ -162,7 +163,9 @@ function validateFilters(FilterId, OptionId) {
 }
 
 function generalReport() {
+    validateFilters(0,0);
 }
 
 function filteredReport(idFilter, idOption) {
+    validateFilters(idFilter, idOption);
 }

@@ -1342,13 +1342,13 @@ namespace PES.Controllers
                 {
                     // Get all
                     employees = _employeeService.GetAll();
-                    filterByLocation(employees, OptionId);
+                    employees = filterByLocation(employees, OptionId);
                 }
                 else if (currentUser.ProfileId == (int)ProfileUser.Manager)
                 {
                     // Get by manager 
                     employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-                    filterByLocation(employees, OptionId);
+                    employees = filterByLocation(employees, OptionId);
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
@@ -1415,7 +1415,7 @@ namespace PES.Controllers
                 PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
                 return PartialView("_PerformanceFilesPartial", partial);
             }
-            else
+            else if(FilterId == 3)
             {
                 List<Employee> employees = new List<Employee>();
                 if (currentUser.ProfileId == (int)ProfileUser.Director)
@@ -1454,6 +1454,46 @@ namespace PES.Controllers
                 }
 
                 PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+                return PartialView("_PerformanceFilesPartial", partial);
+            }
+            else
+            {
+                currentUser = _employeeService.GetByEmail(currentUser.Email);
+
+                List<Employee> employees = new List<Employee>();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    // Get all
+                    employees = _employeeService.GetAll();
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+                {
+                    // Get by manager 
+                    employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                }
+
+                List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                foreach (var employee in employees)
+                {
+                    var employeeVM = new EmployeeManagerViewModel();
+                    employeeVM.employee = employee;
+                    employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+
+                    var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                    if (listPE != null && listPE.Count > 0)
+                    {
+                        var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+
+                        employeeVM.lastPe = lastPE;
+                    }
+
+                    listEmployeeVM.Add(employeeVM);
+                }
+
+                PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+
                 return PartialView("_PerformanceFilesPartial", partial);
             }
         }
