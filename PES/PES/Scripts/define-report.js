@@ -1,4 +1,50 @@
 ﻿$(document).ready(function () {
+    $("#Tableview").DataTable();
+
+    // Events
+    $("#general").on("click", function (e) {
+        // Execute function 
+
+        // Filter 
+        var filter = ;
+        // Option
+        var option = ;
+
+        validateFilters(filter, option);
+    });
+
+    $("#dropdownLocation").on("click", function (e) {
+        // Execute function 
+
+        // Filter 
+        var filter = ;
+        // Option
+        var option = ;
+
+        validateFilters(filter, option);
+    });
+
+    $("#dropdownManager").on("click", function (e) {
+        // Execute function 
+
+        // Filter 
+        var filter = ;
+        // Option
+        var option = ;
+
+        validateFilters(filter, option);
+    });
+
+    $("#dropdownDirector").on("click", function (e) {
+        // Execute function 
+
+        // Filter 
+        var filter = ;
+        // Option
+        var option = ;
+
+        validateFilters(filter, option);
+    });
 });
 var radioGeneral = $("#general");
 var radioFilter = $("#filter");
@@ -84,7 +130,38 @@ function showoFilterOptions(idFilter) {
     }
 }
 
-function genralReport() {
+function validateFilters(FilterId, OptionId) {
+    $.ajax({
+        url: "/Employee/GetEmployeesByFilter",
+        data: {
+            FilterId: FilterId,
+            OptionId: OptionId
+        }
+    })
+    .done(function (data) {
+        if (data) {
+            //success ajax
+            // Populate table with data from ajax call
+            $("#performancePartial").html("");
+            $("#performancePartial").html(data).fadeOut("fast").fadeIn("slow");
+
+            // Re init datatable
+            $("#Tableview").DataTable();
+        }
+        else {
+            // Error
+            alert("Error while getting employees");
+        }
+    })
+    .fail(function (jqxhr, textStatus, error) {
+        alert("Error while getting employees. Please try again later.");
+    })
+    .always(function () {
+        //alert("finished");
+    });
+}
+
+function generalReport() {
 }
 
 function filteredReport(idFilter, idOption) {
