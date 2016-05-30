@@ -1331,46 +1331,56 @@ namespace PES.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetEmployeesByLocation(int LocationId)
+        public async Task<ActionResult> GetPEByFilter(int filter, int optionFilter)
         {
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
-
             List<Employee> employees = new List<Employee>();
-            if (currentUser.ProfileId == (int)ProfileUser.Director)
+            if (filter == 1)
             {
-                // Get all
-                employees = _employeeService.GetAll();
-                filterByLocation(employees, LocationId);
-            }
-            else if (currentUser.ProfileId == (int)ProfileUser.Manager)
-            {
-                // Get by manager 
-                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-                filterByLocation(employees, loca);
-            }
-
-            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
-            foreach (var employee in employees)
-            {
-                var employeeVM = new EmployeeManagerViewModel();
-                employeeVM.employee = employee;
-                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
-
-                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-
-                if (listPE != null && listPE.Count > 0)
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
                 {
-                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
-
-                    employeeVM.lastPe = lastPE;
+                    // Get all
+                    employees = _employeeService.GetAll();
+                    filterByLocation(employees, optionFilter);
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+                {
+                    // Get by manager 
+                    employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                    filterByLocation(employees, optionFilter);
                 }
 
-                listEmployeeVM.Add(employeeVM);
+                List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                foreach (var employee in employees)
+                {
+                    var employeeVM = new EmployeeManagerViewModel();
+                    employeeVM.employee = employee;
+                    employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+
+                    var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                    if (listPE != null && listPE.Count > 0)
+                    {
+                        var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+
+                        employeeVM.lastPe = lastPE;
+                    }
+
+                    listEmployeeVM.Add(employeeVM);
+                }
+
+                PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+                return PartialView("_PerformanceFilesPartial", partial);
             }
-
-            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
-
-            return PartialView("_PerformanceFilesPartial", partial);
+            else if(optionFilter == 2)
+            {
+                return PartialView("_PerformanceFilesPartial");
+            }
+            else
+            {
+                return PartialView("_PerformanceFilesPartial");
+            }
         }
 
         private List<Employee> filterByLocation(List<Employee> employees, int idLocation)

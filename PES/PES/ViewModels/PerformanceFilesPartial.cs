@@ -11,7 +11,6 @@ namespace PES.ViewModels
         public IEnumerable<EmployeeManagerViewModel> listFiles { get; set; }
         public Employee currentUser { get; set; }
         public int? countRankUpdated { get; set; }
-
         public PerformanceFilesPartial(IEnumerable<EmployeeManagerViewModel> listFiles, Employee currentUser)
         {
             this.listFiles = listFiles;

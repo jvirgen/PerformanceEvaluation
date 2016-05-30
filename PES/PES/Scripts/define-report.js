@@ -1,40 +1,64 @@
 ﻿$(document).ready(function () {
 });
 var radioGeneral = $("#general");
-var radioLocation = $("#location");
-var combo = $("#dropdownLocation");
+var radioFilter = $("#filtered");
+var comboFilter = $("#dropdownFilter");
+var comboLocation = $("#dropdownLocation");
+var comboManager = $("#dropdownManager");
+var comboDirector = $("#dropdownDirector");
 
 $(radioGeneral).click(function () {
     checkGeneral();
 });
 
-$(radioLocation).click(function () {
-    checkLocation();
-});
-
-$(combo).change(function () {
-    locationReport($(this).val());
+$(radioFilter).click(function () {
+    checkFilter();
 });
 
 function checkGeneral() {
     $(radioGeneral).addClass("ckd");
-    $(radioLocation).removeClass("ckd");
-    showCombo();
-    genralReport();
+    $(radioFilter).removeClass("ckd");
+    showFilters();
 }
 
-function checkLocation() {
-    $(radioLocation).addClass("ckd");
+function checkFilter() {
+    $(radioFilter).addClass("ckd");
     $(radioGeneral).removeClass("ckd");
-    showCombo();
-    locationReport($(combo).val());
+    showFilters();
 }
-function showCombo() {
-    if ($(radioLocation).hasClass("ckd")) {
-        combo.fadeIn();
+
+function showFilters() {
+    if ($(radioFilter).hasClass("ckd")) {
+        filter = comboFilter.val();
+        comboFilter.fadeIn();
+        showFilterOptions(filter);
     }
     else {
-        combo.fadeOut();
+        comboFilter.fadeOut();
+        showFilterOptions(0);
+    }
+}
+
+function showFilterOptions(filter) {
+    if (filter == 1) {
+        comboLocation.show();
+        comboManager.hide();
+        comboDirector.hide();
+    }
+    else if (filter == 2) {
+        comboManager.show();
+        comboLocation.hide();
+        comboDirector.hide();
+    }
+    else if (filter == 3) {
+        comboDirector.show();
+        comboLocation.hide();
+        comboManager.hide();
+    }
+    else {
+        comboLocation.hide();
+        comboManager.hide();
+        comboDirector.hide();
     }
 }
 
