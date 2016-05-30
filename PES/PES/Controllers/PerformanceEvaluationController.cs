@@ -1346,7 +1346,7 @@ namespace PES.Controllers
             {
                 // Get by manager 
                 employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-                filterByLocation(employees, loca);
+                filterByLocation(employees, LocationId);
             }
 
             List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();

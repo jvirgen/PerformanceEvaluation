@@ -6,6 +6,7 @@
     ViewBag.Title = "Performance Files";
     var currentUser = ViewBag.currentEmployee;
     LocationService _locationService = new LocationService();
+    EmployeeService _employeeService = new EmployeeService();
 }
 
 <div class="row text-center">
@@ -20,11 +21,40 @@
         {
             <div class="form-horizontal">
                 <div class="form-group">
-                    <div class="col-md-3 container">
+                    <div class="col-md-2 container">
                         @Html.RadioButton("report","1", true, new { @id = "general" })
                         <label>General Report</label>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-3">
+                        @{ 
+                            var ListFilters = new List<SelectListItem>();
+                            var locationFilter = new SelectListItem {
+                                Text = "Location",
+                                Value = "1",
+                                Selected = false
+                            };
+                            var managerFilter = new SelectListItem
+                            {
+                                Text = "Manager",
+                                Value = "2",
+                                Selected = false
+                            };
+                            var directorFilter = new SelectListItem
+                            {
+                                Text = "Director",
+                                Value = "3",
+                                Selected = false
+                            };
+                            ListFilters.Add(locationFilter);
+                            ListFilters.Add(managerFilter);
+                            ListFilters.Add(directorFilter);
+
+                        }
+                        @Html.RadioButton("report", "2", false, new { @id = "filter" })
+                        <label>Report by</label>
+                        @Html.DropDownList("dropdownFilter", ListFilters, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownFilter" })
+                    </div>
+                    <div class="col-md-5">
                         @{
                             var locations = _locationService.GetAll();
                             List<SelectListItem> ListLocation = new List<SelectListItem>();
@@ -38,10 +68,36 @@
                                 };
                                 ListLocation.Add(newLocation);
                             }
+                            var managers = _employeeService.getByPorfileId(2);
+                            List<SelectListItem> ListManager = new List<SelectListItem>();
+                            foreach (var item in managers)
+                            {
+                                var newManager = new SelectListItem
+                                {
+                                    Text = item.FirstName + " " + item.LastName,
+                                    Value = item.EmployeeId.ToString(),
+                                    Selected = false
+                                };
+                                ListManager.Add(newManager);
+                            }
+                            var directors = _employeeService.getByPorfileId(3);
+                            List<SelectListItem> ListDirector = new List<SelectListItem>();
+                            foreach (var item in directors)
+                            {
+                                var newDirector = new SelectListItem
+                                {
+                                    Text = item.FirstName + " " + item.LastName,
+                                    Value = item.EmployeeId.ToString(),
+                                    Selected = false
+                                };
+                                ListDirector.Add(newDirector);
+                            }
                         }
-                        @Html.RadioButton("report","2", false, new { @id = "location"})
-                        <label>Report by location</label>
-                        @Html.DropDownList("dropdownLocation", ListLocation, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownLocation" });
+
+                        <label id="labelOptions"></label>
+                        @Html.DropDownList("dropdownLocation", ListLocation, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownLocation", onChange= "generateReport(1)" })
+                        @Html.DropDownList("dropdownManager", ListManager, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownManager", onChange = "generateReport(2)" })
+                        @Html.DropDownList("dropdownDirector", ListDirector, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownDirector", onChange = "generateReport(3)" })
                     </div>
                 </div>
             </div>
