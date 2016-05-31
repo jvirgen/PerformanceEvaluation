@@ -23,8 +23,11 @@
                 }
 
                 // Set option as disable
-                element.text("Disable");
+                element.text(" ");
                 element.attr("data-option", "disable");
+                element.addClass("glyphicon");
+                element.switchClass("glyphicon-eye-open", "glyphicon-eye-close");
+                element.attr("title", "Disable");
 
                     
                 // Enable edit button
@@ -40,8 +43,11 @@
                 }
 
                 // Set option as enable
-                element.text("Enable");
+                element.text(" ");
                 element.attr("data-option", "enable");
+                element.addClass("glyphicon");
+                element.switchClass("glyphicon-eye-close", "glyphicon-eye-open");
+                element.attr("title", "Enable");
 
                 // Disable edit button
                 var editElement = actionsElement.find(".edit-button").first();

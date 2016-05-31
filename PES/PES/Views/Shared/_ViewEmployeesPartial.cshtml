@@ -57,10 +57,10 @@
                 }
                 <td>
                     @*@Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, new { @class = "edit-button"}) |*@                    
-                    <a href=@(item.EndDate != null ? "#" : "UpdateEmployee/" + item.EmployeeId.ToString() ) class="edit-button">Edit </a> |
-                    @Html.ActionLink("Details", "EmployeeDetails", "Employee", new { email = item.Email }, null) |
-                    <a href="#" onclick="enableDisable(@item.EmployeeId);" class="enableDisable" data-employee-id="@item.EmployeeId" data-option="@(item.EndDate != null ? "enable" : "disable")">@(item.EndDate != null ? "Enable" : "Disable")</a> |
-                    @Html.ActionLink("Evaluations", "ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = item.Email, employeeID = item.EmployeeId }, null)
+                    <a href=@(item.EndDate != null ? "#" : "UpdateEmployee/" + item.EmployeeId.ToString() ) class="edit-button glyphicon glyphicon-edit" title="Edit"></a> |
+                    @Html.ActionLink(" ", "EmployeeDetails", "Employee", new { email = item.Email }, new { @class = "glyphicon glyphicon-list-alt", @title = "Details" }) |
+                    <a href="#" onclick="enableDisable(@item.EmployeeId);" class="enableDisable glyphicon @(item.EndDate != null ? "glyphicon-eye-open" : "glyphicon-eye-close")" data-employee-id="@item.EmployeeId" data-option="@(item.EndDate != null ? "enable" : "disable")" title="@(item.EndDate != null ? "Enable" : "Disable")">@(item.EndDate != null ? " " : " ")</a> |
+                    @Html.ActionLink(" ", "ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = item.Email, employeeID = item.EmployeeId }, new { @class = "glyphicon glyphicon-file", @title = "Performance Evaluations"})
                 </td>
             </tr>
         }

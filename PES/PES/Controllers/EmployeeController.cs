@@ -210,6 +210,7 @@ namespace PES.Controllers
                 };
                 locationsList.Add(location);
             }
+            
 
             #region Set data
             // Set profiles
