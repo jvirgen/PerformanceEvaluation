@@ -138,8 +138,9 @@ namespace PES.Controllers
 
         private InsertEmployeeViewModel SetUpDropdowns(InsertEmployeeViewModel model)
         {
-            // Get profile current user 
-            var profileUser = Session["UserProfile"];
+            // Get current user 
+            //var profileUser = Session["UserProfile"];
+            var currenUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
             // Get profiles
             var profiles = _profileService.GetAllProfiles();
 
@@ -153,11 +154,11 @@ namespace PES.Controllers
                     Value = (profile.ProfileId).ToString(),
                     Selected = false
                 };
-                if ((int)profileUser == (int)ProfileUser.Director)
+                if (currenUser.ProfileId == (int)ProfileUser.Director)
                 {
                     profilesList.Add(newItem);
                 }
-                else if ((int)profileUser == (int)ProfileUser.Manager && newItem.Text == "Resource")
+                else if (currenUser.ProfileId == (int)ProfileUser.Manager && newItem.Text == "Resource")
                 {
                     profilesList.Add(newItem);
                 }
@@ -171,7 +172,7 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if ((int)profileUser == (int)ProfileUser.Director && manager.ProfileId == (int)ProfileUser.Director || manager.ProfileId == (int)ProfileUser.Manager)
+                if (currenUser.ProfileId == (int)ProfileUser.Director && manager.ProfileId == (int)ProfileUser.Director || manager.ProfileId == (int)ProfileUser.Manager)
                 {
                     var newItem = new SelectListItem()
                     {
@@ -181,7 +182,7 @@ namespace PES.Controllers
                     };
                     managersList.Add(newItem);
                 }
-                else if ((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == (int)ProfileUser.Manager)
+                else if (currenUser.ProfileId == (int)ProfileUser.Manager && manager.ProfileId == (int)ProfileUser.Manager)
                 {
                     var newItem = new SelectListItem()
                     {
