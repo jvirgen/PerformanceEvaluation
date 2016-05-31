@@ -23,6 +23,9 @@
             <th class="disableTextDecoration">
                 Manager
             </th>
+            <th class="disableTextDecoration">
+                Location
+            </th>
             <th class="disableTextDecoration">Actions</th>
         </tr>
     </thead>
@@ -55,6 +58,9 @@
                         @(item.Manager.FirstName + " " + item.Manager.LastName)
                     </td>
                 }
+                <td class="@(item.EndDate != null ? "line-through" : "")">
+                    @(item.Location.Name)
+                </td>
                 <td>
                     @*@Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, new { @class = "edit-button"}) |*@                    
                     <a href=@(item.EndDate != null ? "#" : "UpdateEmployee/" + item.EmployeeId.ToString() ) class="edit-button glyphicon glyphicon-edit" title="Edit"></a> |

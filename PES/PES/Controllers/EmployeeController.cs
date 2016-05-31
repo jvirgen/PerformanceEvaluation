@@ -486,6 +486,7 @@ namespace PES.Controllers
             // Get current user 
             Employee currentUser = new Employee();
             var userEmail = (string)Session["UserEmail"];
+            var location = new Location();
 
             currentUser = _employeeService.GetByEmail(userEmail);
 
@@ -507,6 +508,7 @@ namespace PES.Controllers
                     //get porfiles
                     var porfile = _profileService.GetProfileByID(employee.ProfileId);
                     var manager = _employeeService.GetByID(employee.ManagerId);
+                    location = _locationService.GetPeriodById(employee.LocationId);
 
                     model.EmployeeId = employee.EmployeeId;
                     model.FirstName = employee.FirstName;
@@ -520,6 +522,7 @@ namespace PES.Controllers
                     model.Project = employee.Project;
                     model.Profile = porfile;
                     model.Manager = manager;
+                    model.Location = location;
                     if (model.EmployeeId != currentUser.EmployeeId)
                     {
                         ModelList.Add(model);
@@ -541,6 +544,7 @@ namespace PES.Controllers
                     //get porfiles
                     var porfile = _profileService.GetProfileByID(employee.ProfileId);
                     var manager = _employeeService.GetByID(employee.ManagerId);
+                    location = _locationService.GetPeriodById(employee.LocationId);
 
                     model.EmployeeId = employee.EmployeeId;
                     model.FirstName = employee.FirstName;
@@ -554,6 +558,7 @@ namespace PES.Controllers
                     model.Project = employee.Project;
                     model.Profile = porfile;
                     model.Manager = manager;
+                    model.Location = location;
 
                     ModelList.Add(model);
                 }
@@ -623,6 +628,7 @@ namespace PES.Controllers
 
             // Create model (partial view)            
             List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
+            var location = new Location();
 
             // Populate model with employees data
             foreach (var item in employeesFiltered)
@@ -632,6 +638,7 @@ namespace PES.Controllers
                 //get porfiles
                 var porfile = _profileService.GetProfileByID(item.ProfileId);
                 var manager = _employeeService.GetByID(item.ManagerId);
+                location = _locationService.GetPeriodById(item.LocationId);
 
                 model.EmployeeId = item.EmployeeId;
                 model.FirstName = item.FirstName;
@@ -643,6 +650,7 @@ namespace PES.Controllers
                 model.ManagerId = item.ManagerId;
                 model.Director = _employeeService.GetByID(model.Manager.ManagerId);
                 model.EndDate = item.EndDate;
+                model.Location = location;
                 
                 modelList.Add(model);
             }

@@ -5,6 +5,9 @@ using System.Web;
 
 namespace PES.Models
 {
+    /// <summary>
+    /// This class will store a location
+    /// </summary>
     public class Location
     {
         /// <summary>
