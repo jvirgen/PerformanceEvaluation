@@ -210,7 +210,9 @@ namespace PES.Controllers
                 };
                 locationsList.Add(location);
             }
-            
+            //Setting default managers and profiles
+            profilesList = setDefaultProfile(profilesList, currenUser);
+            managersList = setDefaultManager(managersList, currenUser);
 
             #region Set data
             // Set profiles
@@ -221,6 +223,25 @@ namespace PES.Controllers
             #endregion
 
             return model;
+        }
+
+        private List<SelectListItem> setDefaultProfile(List<SelectListItem> listProfiles, Employee employee)
+        {
+            var defaultProfile = listProfiles.Find(x => x.Value == (employee.ProfileId - 1).ToString());
+            if(defaultProfile != null)
+            {
+                defaultProfile.Selected = true;
+            }
+            return listProfiles;
+        }
+        private List<SelectListItem> setDefaultManager(List<SelectListItem> listManagers, Employee employee)
+        {
+            var defaultManager = listManagers.Find(x => x.Value == employee.EmployeeId.ToString());
+            if(defaultManager != null)
+            {
+                defaultManager.Selected = true;
+            }
+            return listManagers;
         }
 
         private UpdateEmployeeViewModel SetUpDropdowns(UpdateEmployeeViewModel model)
