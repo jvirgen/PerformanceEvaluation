@@ -233,7 +233,8 @@ namespace PES.Services
                                            "ID_PROFILE," +
                                            "ID_MANAGER, " +
                                            "END_DATE, " +
-                                           "PROJECT " +
+                                           "PROJECT, " +
+                                           "ID_LOCATION " +
                                            "FROM EMPLOYEE " +
                                            "WHERE ID_PROFILE = '" +
                                            porfileId + "'";
@@ -255,6 +256,7 @@ namespace PES.Services
                         employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
+                        employee.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
@@ -496,7 +498,8 @@ namespace PES.Services
                                                "EMAIL, " +
                                                "ID_PROFILE," +
                                                "ID_MANAGER, " +
-                                               "END_DATE " +
+                                               "END_DATE, " +
+                                               "ID_LOCATION " +
                                                "FROM EMPLOYEE " +
                                                "WHERE ID_MANAGER = '" +
                                                userId + "'";
@@ -514,6 +517,8 @@ namespace PES.Services
                             employee.ProfileId = Convert.ToInt32(Read["ID_PROFILE"]);
                             employee.ManagerId = Convert.ToInt32(Read["ID_MANAGER"]);
                             string endDate = Convert.ToString(Read["END_DATE"]);
+                            employee.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
+
                             if (!string.IsNullOrEmpty(endDate))
                             {
                                 employee.EndDate = Convert.ToDateTime(endDate);
@@ -560,7 +565,8 @@ namespace PES.Services
                                        "POSITION, " +
                                        "ID_PROFILE, " +
                                        "ID_MANAGER, " +
-                                       "END_DATE " +
+                                       "END_DATE, " +
+                                       "ID_LOCATION " +
                                        "FROM EMPLOYEE WHERE ID_MANAGER IN " +
                                        "(SELECT ID_EMPLOYEE " +
                                        "FROM EMPLOYEE WHERE ID_MANAGER = " + DirectorId + " OR ID_EMPLOYEE = " + DirectorId + ")";
@@ -579,6 +585,7 @@ namespace PES.Services
                         employee.ProfileId = Convert.ToInt32(Reader["ID_PROFILE"]);
                         employee.ManagerId = Convert.ToInt32(Reader["ID_MANAGER"]);
                         string endDate = Convert.ToString(Reader["END_DATE"]);
+                        employee.LocationId = Convert.ToInt32(Reader["ID_LOCATION"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
@@ -626,8 +633,9 @@ namespace PES.Services
                                        "ID_PROFILE, "+
                                        "ID_MANAGER, " +
                                        "END_DATE, " +
-                                       "PROJECT " +
-                                       "FROM EMPLOYEE WHERE ID_MANAGER = "+ ManageerId + " OR ID_EMPLOYEE = " + ManageerId;
+                                       "PROJECT, " +
+                                       "ID_LOCATION " +
+                                       "FROM EMPLOYEE WHERE ID_MANAGER = " + ManageerId + " OR ID_EMPLOYEE = " + ManageerId;
                     OracleCommand Command = new OracleCommand(GetEmployees, db);
                     Command.ExecuteNonQuery();
                     OracleDataReader Reader = Command.ExecuteReader();
@@ -645,6 +653,7 @@ namespace PES.Services
                         employee.ManagerId = Convert.ToInt32(Reader["ID_MANAGER"]);
                         string endDate = Convert.ToString(Reader["END_DATE"]);
                         employee.Project = Convert.ToString(Reader["PROJECT"]);
+                        employee.LocationId = Convert.ToInt32(Reader["ID_LOCATION"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
