@@ -523,6 +523,7 @@ namespace PES.Controllers
                     model.Profile = porfile;
                     model.Manager = manager;
                     model.Location = location;
+
                     if (model.EmployeeId != currentUser.EmployeeId)
                     {
                         ModelList.Add(model);
@@ -560,7 +561,10 @@ namespace PES.Controllers
                     model.Manager = manager;
                     model.Location = location;
 
-                    ModelList.Add(model);
+                    if (model.EmployeeId != currentUser.EmployeeId)
+                    {
+                        ModelList.Add(model);
+                    }
                 }
 
                 return View(ModelList);
