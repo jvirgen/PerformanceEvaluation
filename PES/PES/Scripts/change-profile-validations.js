@@ -1,17 +1,37 @@
 ﻿$(document).ready(function () {
-    getProfile();
+    defaultProfile();
 });
 
-var currentProfile = parseInt($('#CurrentProfile_ProfileId').val());
-var profile = parseInt($('#selectedProfile').val());
-var manager = parseInt($('#selectedManager').val());
 var comboProfile = $('#selectedProfile');
 var comboManager = $('#selectedManager');
-var email = $('#Email').val();
-var newProfile = 0;
+var currentProfile;
+var profile;
+var manager;
+var email;
+var newProfile;
+var curentManager;
+var currentManagerProfile;
+
+function defaultProfile() {
+
+    currentManagerProfile = parseInt($("#currentProfile").val());
+    comboProfile.children("option[value =" + (currentManagerProfile) + "]").attr("selected", true);
+    getValues();
+}
+
+function getValues() {
+    currentProfile = parseInt($('#CurrentProfile_ProfileId').val());
+    profile = parseInt(comboProfile.val());
+    manager = parseInt(comboManager.val());
+    curentManager = parseInt($("#currentManager").val());
+    email = $('#Email').val();
+    newProfile = 0;
+
+    getProfile();
+}
 
 comboProfile.change(function () {
-    getManagersByProfile(profile, email);
+    getValues();
 });
 
 function getProfile() {
@@ -23,7 +43,7 @@ function getProfile() {
         newProfile = 3; // Director
     } else if (profile == 3) {
         // Director was selected
-        newProfile = 2; // Director
+        newProfile = 3; // Director
     }
     getManagersByProfile(newProfile, email);
 }
@@ -53,8 +73,12 @@ function getManagersByProfile(newProfile, email) {
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
-                $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                //$('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                if (employee.EmployeeId == curentManager) {
+                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "' selected='selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
+                else {
+                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
             }
             $('#dropdownManager').show();
         }

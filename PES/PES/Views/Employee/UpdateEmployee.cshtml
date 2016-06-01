@@ -16,6 +16,8 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.EmployeeId)
+                @Html.HiddenFor(model => model.SelectedManager, new { @id = "currentManager"})
+                @Html.HiddenFor(model => model.SelectedProfile, new { @id = "currentProfile"})
                 <div class="form-group">
                     @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
@@ -63,10 +65,10 @@
                     </div>
                 }
                 <div class="form-group">
-                    <div id="dropdownLocation">
+                    <div>
                         @Html.LabelFor(model => model.SelectedLocation, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
                         <div class="col-md-6">
-                            @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocation, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
+                            @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocation, new { @class = "inlined form-control", @style = "width:100%", @id = "dropdownLocation" })
                             @Html.ValidationMessageFor(model => model.SelectedLocation, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -103,7 +105,7 @@
     </style>*@
 }
 @section Scripts{
-    @Scripts.Render("~/Scripts/validations.js")
+    @Scripts.Render("~/Scripts/update-validations.js")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/select2.min.js")
     @*<script type="text/javascript">

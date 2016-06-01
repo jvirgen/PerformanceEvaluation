@@ -90,11 +90,21 @@ namespace PES.Controllers
                 if (uniqueEmail(newEmployee))
                 {
                     _employeeService.InsertEmployee(newEmployee);
-
+                    
                     // Success message
                     TempData["Success"] = "Successfully registered";
+                    var newDirectorInserted = _employeeService.GetByEmail(newEmployee.Email);
+                    if (newDirectorInserted.ProfileId == (int)ProfileUser.Director)
+                    {
+                        _employeeService.insertDirector(newDirectorInserted);
+                        return RedirectToAction("ViewEmployees");
+                    }
+                    else
+                    {
+                        return RedirectToAction("ViewEmployees");
+                    }
 
-                    return RedirectToAction("ViewEmployees");
+                    
                 }
                 else
                 {
@@ -488,7 +498,14 @@ namespace PES.Controllers
                 newEmployee.LastName = employeeModel.LastName;
                 newEmployee.Email = employeeModel.Email + "@4thsource.com";
                 newEmployee.ProfileId = employeeModel.SelectedProfile;
-                newEmployee.ManagerId = employeeModel.SelectedManager;
+                if(employeeModel.SelectedProfile == (int)ProfileUser.Director)
+                {
+                    newEmployee.ManagerId = employeeModel.EmployeeId;
+                }
+                else
+                {
+                    newEmployee.ManagerId = employeeModel.SelectedManager;
+                }
                 newEmployee.LocationId = employeeModel.SelectedLocation;
 
                 _employeeService.UpdateEmployee(newEmployee);
@@ -776,7 +793,14 @@ namespace PES.Controllers
         public ActionResult ChangeProfile(ChangeProfileViewModel model)
         {
             var changedEmployee = _employeeService.GetByEmail(model.Email + "@4thsource.com");
-            changedEmployee.ManagerId = model.SelectedManager;
+            if(model.SelectedProfile == (int)ProfileUser.Director)
+            {
+                changedEmployee.ManagerId = changedEmployee.EmployeeId;
+            }
+            else
+            {
+                changedEmployee.ManagerId = model.SelectedManager;
+            }
             changedEmployee.ProfileId = model.SelectedProfile;
 
             //Send info to service

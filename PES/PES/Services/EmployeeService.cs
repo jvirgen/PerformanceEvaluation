@@ -549,6 +549,36 @@ namespace PES.Services
             return employees;
         }
 
+        public bool insertDirector(Employee employee)
+        {
+            try
+            {
+                var user = this.GetByID(employee.EmployeeId);
+
+                if (user != null)
+                {
+                    using (OracleConnection db = dbContext.GetDBConnection())
+                    {
+                        db.Open();
+
+                        string InsertQuery = "UPDATE EMPLOYEE SET ID_MANAGER='" + employee.EmployeeId + "' " +
+                                     "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
+
+                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                        Comand.ExecuteNonQuery();
+
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return true;
+        }
+
         public List<Employee> getEmployeesByDirector(int DirectorId)
         {
             List<Employee> Employees = new List<Employee>();

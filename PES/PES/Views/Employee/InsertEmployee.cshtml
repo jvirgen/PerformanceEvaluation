@@ -1,12 +1,15 @@
 ﻿@model PES.ViewModels.InsertEmployeeViewModel
 @using PES.Models
+@using PES.Services
 @*@if (TempData["Error"] != null)
     {
         <p class="alert alert-danger">@TempData["Error"]</p>
     }*@
 @{
     ViewBag.Title = "Insert employee";
+    EmployeeService _employeeService = new EmployeeService();
     //var currentUserProfile = (ProfileUser)Session["UserProfile"];
+    var currentEmoloyee = _employeeService.GetByEmail(Session["UserEmail"].ToString());
 }
 <hr />
 <div class="row">
@@ -21,6 +24,8 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <fieldset>
                         <div class="form-group">
+                            @Html.Hidden("CurrentUser", currentEmoloyee.EmployeeId, new { @id = "currentId"} )
+                            @Html.Hidden("CurrentUser", currentEmoloyee.ProfileId, new { @id = "currentProfile" })
                             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
                                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
@@ -57,10 +62,10 @@
                             </div>                           
                         </div>
                         <div class="form-group">
-                            <div id="dropdownLocation">
+                            <div>
                                 @Html.LabelFor(model => model.SelectedLocation, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
                                 <div class="col-md-6">
-                                    @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocations, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
+                                    @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocations, new { @class = "inlined form-control", @style = "width:100%", @id = "dropdownLocation" })
                                     @Html.ValidationMessageFor(model => model.SelectedLocation, "", new { @class = "text-danger" })
                                 </div>
                             </div>    
@@ -94,10 +99,11 @@
     </style>*@
 }
 @section Scripts{
-    @Scripts.Render("~/Scripts/validations.js")
+    @Scripts.Render("~/Scripts/location.js")
+    @Scripts.Render("~/Scripts/insert-validations.js")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/select2.min.js")
-    @Scripts.Render("~/Scripts/location.js")
+
     @*<script type="text/javascript">
             $(document).ready(function () {
                 $("#selectedManager").select2({
