@@ -7,7 +7,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12 well">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("UpdateEmployee", "Employee", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
@@ -45,13 +45,13 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-3">
-                            @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                            @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%"})
                             @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
                         </div>
                         <div id="dropdownManager">
                             @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
                             <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
+                                @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%"})
                                 @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -60,8 +60,8 @@
                 else
                 {
                     <div class="form-group">
-                        @Html.HiddenFor(model => model.SelectedProfile, new { @id = "selectedProfile"});
-                        @Html.HiddenFor(model => model.SelectedManager, new { @id = "selectedManager"});
+                        @Html.HiddenFor(model => model.SelectedProfile);
+                        @Html.HiddenFor(model => model.SelectedManager);
                     </div>
                 }
                 <div class="form-group">
@@ -108,6 +108,7 @@
     @Scripts.Render("~/Scripts/update-change-validations.js")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/select2.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
     @*<script type="text/javascript">
         $(document).ready(function () {
             $("#selectedManager").select2({
