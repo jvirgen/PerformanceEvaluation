@@ -9,7 +9,6 @@ else {
 function GeoSuccess(position) {
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
-    //alert("lat: " + lat + " lng: " + lng);
     codeLatLng(lat, lng);
 }
 
