@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     defaultProfile();
+    getValues();
 });
 
 var comboProfile = $('#selectedProfile');
@@ -12,13 +13,6 @@ var newProfile;
 var curentManager;
 var currentManagerProfile;
 
-function defaultProfile() {
-
-    currentManagerProfile = parseInt($("#currentProfile").val());
-    comboProfile.children("option[value =" + (currentManagerProfile) + "]").attr("selected", true);
-    getValues();
-}
-
 function getValues() {
     currentProfile = parseInt($('#CurrentProfile_ProfileId').val());
     profile = parseInt(comboProfile.val());
@@ -28,6 +22,11 @@ function getValues() {
     newProfile = 0;
 
     getProfile();
+}
+
+function defaultProfile() {
+    currentManagerProfile = parseInt($("#currentProfile").val());
+    comboProfile.children("option[value = " + currentManagerProfile + "]").attr("selected", true);
 }
 
 comboProfile.change(function () {
@@ -61,7 +60,7 @@ function getManagersByProfile(newProfile, email) {
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
                 if (employee.EmployeeId == curentManager) {
-                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "' selected='selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "' selected = 'selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
                 }
                 else {
                     $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
@@ -94,3 +93,4 @@ function getManagersByProfile(newProfile, email) {
         }
     });
 }
+

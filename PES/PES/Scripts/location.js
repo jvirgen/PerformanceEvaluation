@@ -1,4 +1,6 @@
-﻿var currentLocation;
+﻿window.onload = initialize();
+
+var currentLocation;
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(GeoSuccess, geoFail);
 }
