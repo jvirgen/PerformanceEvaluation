@@ -380,6 +380,7 @@
     <Content Include="Scripts\i18n\vi.js" />
     <Content Include="Scripts\i18n\zh-CN.js" />
     <Content Include="Scripts\i18n\zh-TW.js" />
+    <Content Include="Scripts\insert-validations.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -406,7 +407,6 @@
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\showEmployees.js" />
-    <Content Include="Scripts\insert-validations.js" />
     <Content Include="Scripts\update-validations.js" />
     <Content Include="Scripts\verifyPE.js" />
     <Content Include="Scripts\_references.js" />
