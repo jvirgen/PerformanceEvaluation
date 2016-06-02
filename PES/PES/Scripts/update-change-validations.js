@@ -78,7 +78,12 @@ function getManagersByProfile(newProfile, email) {
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
-                $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                if (employee.EmployeeId == curentManager) {
+                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "' selected='selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
+                else {
+                    $('#selectedManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
             }
             $('#dropdownManager').show();
         }
