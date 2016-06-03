@@ -3,7 +3,7 @@
 });
 
 var currentProfile = parseInt($('#CurrentProfile_ProfileId').val());
-var profile = parseInt($('#selectedProfile').val());
+var profile = parseInt($('#SelectedProfile').val());
 var comboNewManager = $('#selectedNewManager');
 var email = $('#Email').val();
 
@@ -17,7 +17,7 @@ function getNewManagersByProfile() {
             $.getJSON('/Employee/GetEmployeesProifile?profile=' + currentProfile + "&email=" + email, function (data) {
                 for (var i = 0; i < data.employees.length; i++) {
                     var employee = data.employees[i];
-                    $('#selectedNewManager').append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                    comboNewManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
                 }
             });
             $('#dropdownNewManager').show();
