@@ -132,6 +132,14 @@ function showoFilterOptions(idFilter) {
 }
 
 function validateFilters(FilterId, OptionId) {
+    var tableOptions = {
+                dom: '<"row"<"col-md-12"B>><"row"<"col-md-6"l><"col-md-6"f>>rtip',
+                buttons: [
+                    'excel', 'pdf'],
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                pageLength: 10,
+            };
+
     $.ajax({
         url: "/PerformanceEvaluation/GetEmployeesByFilter",
         data: {
@@ -147,7 +155,7 @@ function validateFilters(FilterId, OptionId) {
             $("#performancePartial").html(data).fadeOut("fast").fadeIn("slow");
 
             // Re init datatable
-            $("#Tableview").DataTable();
+            $("#Tableview").DataTable(tableOptions);
         }
         else {
             // Error
