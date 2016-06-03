@@ -138,6 +138,7 @@ function validateFilters(FilterId, OptionId) {
                     'excel', 'pdf'],
                 lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 pageLength: 10,
+                order : [[7, "desc"]],
             };
 
     $.ajax({
