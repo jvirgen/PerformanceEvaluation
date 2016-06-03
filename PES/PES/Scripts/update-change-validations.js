@@ -24,11 +24,6 @@ function getValues() {
     getProfile();
 }
 
-//function defaultProfile() {
-//    currentManagerProfile = parseInt($("#currentProfile").val());
-//    comboProfile.children("option[value = " + currentManagerProfile + "]").attr("selected", true);
-//}
-
 comboProfile.change(function () {
     getValues();
 });
