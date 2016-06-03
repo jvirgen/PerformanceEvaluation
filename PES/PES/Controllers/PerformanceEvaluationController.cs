@@ -1306,10 +1306,11 @@ namespace PES.Controllers
                 employeeVM.location = location;
 
                 var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-
+                var currentEvaluation = getCurrentPeriod();
+                currentEvaluation.Split(',');
                 if (listPE != null && listPE.Count > 0)
                 {
-                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+                    var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                     employeeVM.lastPe = lastPE;
                 }
@@ -1323,6 +1324,23 @@ namespace PES.Controllers
             return partial;
         }
 
+        private string getCurrentPeriod()
+        {
+            var CurrentPeriod = (int)DateTime.Now.Month;
+            var currentYear = (int)DateTime.Now.Year;
+
+            if(CurrentPeriod < 7)
+            {
+                CurrentPeriod = 1;
+            }
+            else
+            {
+                CurrentPeriod = 2;
+            }
+
+            return CurrentPeriod.ToString() + "," + currentYear.ToString();
+            
+        }
         public JsonResult VerifyPE(int employee, int evaluator, int period, int year)
         {
             var success = false;
@@ -1368,10 +1386,12 @@ namespace PES.Controllers
                     employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
 
                     if (listPE != null && listPE.Count > 0)
                     {
-                        var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
                     }
@@ -1417,10 +1437,12 @@ namespace PES.Controllers
                     employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
 
                     if (listPE != null && listPE.Count > 0)
                     {
-                        var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
                     }
@@ -1462,10 +1484,12 @@ namespace PES.Controllers
                     employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
 
                     if (listPE != null && listPE.Count > 0)
                     {
-                        var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
                     }
@@ -1503,10 +1527,12 @@ namespace PES.Controllers
                     employeeVM.location = location;
 
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
 
                     if (listPE != null && listPE.Count > 0)
                     {
-                        var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
                     }
