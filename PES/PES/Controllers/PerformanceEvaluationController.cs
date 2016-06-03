@@ -1394,12 +1394,16 @@ namespace PES.Controllers
 
                     //Get emplyees by manager
                     employees = _employeeService.GetEmployeeByManager(OptionId);
+
+                    //filter Manager from list
+                    employees = employees.Where(x => x.ManagerId == OptionId).ToList();
                 }
                 else if (currentUser.ProfileId == (int)ProfileUser.Manager)
                 {
                     // Get by manager 
-                    employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-                    //filterByManager(employees, OptionId);
+                    employees = _employeeService.GetEmployeeByManager(OptionId);
+                    //filter Manager from list
+                    employees = employees.Where(x => x.ManagerId == OptionId).ToList();
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
@@ -1438,12 +1442,13 @@ namespace PES.Controllers
 
                     //Get by director
                     employees = _employeeService.getEmployeesByDirector(OptionId);
+                    employees = employees.Where(x => x.EmployeeId != OptionId).ToList();
                 }
                 else if (currentUser.ProfileId == (int)ProfileUser.Manager)
                 {
                     // Get by manager 
                     employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
-                    //filterByDirector(employees, OptionId);
+                    employees = employees.Where(x => x.EmployeeId != OptionId).ToList();
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
@@ -1521,17 +1526,5 @@ namespace PES.Controllers
             employees = employees.Where(x => x.LocationId == idLocation).ToList();
             return employees;
         }
-
-        //private List<Employee> filterByManager(List<Employee> employees, int idManager)
-        //{
-        //    employees = employees.Where(x => x.ManagerId == idManager).ToList();
-        //    return employees;
-        //}
-
-        //private List<Employee> filterByDirector(List<Employee> employees, int idDirector)
-        //{
-        //    employees = employees.Where(x => x.ManagerId == idDirector).ToList();
-        //    return employees;
-        //}
     }
 }
