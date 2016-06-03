@@ -16,8 +16,8 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.HiddenFor(model => model.SelectedProfile, new { @id = "currentProfile"})
-                    @Html.HiddenFor(model => model.SelectedManager, new { @id = "currentManager"})
+                    @Html.Hidden("currentProfile", Model.SelectedProfile)
+                    @Html.Hidden("currentManager", Model.SelectedManager)
                     @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
                         @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @readonly= "readonly" }  })
@@ -48,14 +48,14 @@
                 <div class="form-group">
                     @Html.Label("New Profile", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3">
-                        @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id= "selectedProfile"})
+                        @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%"})
                         <a href="#" data-toggle="popover" title="Choose a new profile" data-content="Use this list to select a new profile and change your current one."><span class="glyphicon glyphicon-question-sign"></span></a>
                         @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
                     </div>
                     <div id="dropdownManager">
                         @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
                         <div class="col-md-3">
-                            @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
+                            @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%" })
                             <a href="#" data-toggle="popover" title="Choose a new manager/director" data-content="Use this list to choose a manager or a director depending on your new chosen profile."><span class="glyphicon glyphicon-question-sign"></span></a>
                             @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
                         </div>
@@ -69,7 +69,7 @@
                             <div id="dropdownNewManager">
                                 @Html.LabelFor(model => model.NewManager, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-3">
-                                    @Html.DropDownListFor(model => model.NewManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedNewManager" })
+                                    @Html.DropDownListFor(model => model.NewManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedNewManager", @name = "selectedNewManager" })
                                     <a href="#" data-toggle="popover" title="Choose the new assigned employees manager" data-content="If you have assigned employees, use this list to choose a manager or a director to transfer them first so you can be able to change your profile."><span class="glyphicon glyphicon-question-sign"></span></a>
                                     @Html.ValidationMessageFor(model => model.NewManager, "", new { @class = "text-danger" })
                                 </div>
@@ -81,11 +81,7 @@
                     {
                         <div class="form-group" hidden>
                             <div id="dropdownNewManager">
-                                @Html.LabelFor(model => model.NewManager, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-3">
-                                    @Html.DropDownListFor(model => model.NewManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedNewManager" })
-                                    @Html.ValidationMessageFor(model => model.NewManager, "", new { @class = "text-danger" })
-                                </div>
+                                @Html.HiddenFor(m => m.NewManager, new { @value = "0"})
                             </div>
                         </div>
                     }

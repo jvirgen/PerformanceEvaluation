@@ -51,16 +51,16 @@ function setUpDropDown(location){
     var country = loc[1];
 
     if (city == "Colima") {
-        $("#dropdownLocation option[value='1']").attr("selected", true);
+        $("#SelectedLocation option[value='1']").attr("selected", true);
     }
-    else if (city == "Ciudad de México") {
-        $("#dropdownLocation option[value='2']").attr("selected", true);
+    else if (city == "Ciudad de México" || city == "Mexico City") {
+        $("#SelectedLocation option[value='2']").attr("selected", true);
     }
-    else if (city == "Mérida") {
-        $("#dropdownLocation option[value='3']").attr("selected", true);
+    else if (city == "Mérida" || city == "Merida") {
+        $("#SelectedLocation option[value='3']").attr("selected", true);
     }
-    else if(country == "Estados Unidos"){
-        $("#dropdownLocation option[value='4']").attr("selected", true);
+    else if(country == "Estados Unidos" || country == "Unated States"){
+        $("#SelectedLocation option[value='4']").attr("selected", true);
     }
     else {
 

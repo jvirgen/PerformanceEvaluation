@@ -65,7 +65,7 @@
                             <div>
                                 @Html.LabelFor(model => model.SelectedLocation, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
                                 <div class="col-md-6">
-                                    @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocations, new { @class = "inlined form-control", @style = "width:100%", @id = "dropdownLocation" })
+                                    @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocations, new { @class = "inlined form-control", @style = "width:100%" })
                                     @Html.ValidationMessageFor(model => model.SelectedLocation, "", new { @class = "text-danger" })
                                 </div>
                             </div>    

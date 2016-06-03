@@ -59,13 +59,13 @@ function getManagersByProfile(newProfile, email) {
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
-                comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                //if (employee.EmployeeId == curentManager) {
-                //    comboManager.append("<option value='" + employee.EmployeeId + "' selected = 'selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                //}
-                //else {
-                //    comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                //}
+                //comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                if (employee.EmployeeId == curentManager) {
+                    comboManager.append("<option value='" + employee.EmployeeId + "' selected = 'selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
+                else {
+                    comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
             }
             $('#dropdownManager').show();
         }
@@ -78,13 +78,13 @@ function getManagersByProfile(newProfile, email) {
             // Loop data from ajax call
             for (var i = 0; i < data.employees.length; i++) {
                 var employee = data.employees[i];
-                comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                //if (employee.EmployeeId == curentManager) {
-                //    comboManager.append("<option value='" + employee.EmployeeId + "' selected='selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                //}
-                //else {
-                //    comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
-                //}
+                //comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                if (employee.EmployeeId == curentManager) {
+                    comboManager.append("<option value='" + employee.EmployeeId + "' selected='selected'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
+                else {
+                    comboManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
+                }
             }
             $('#dropdownManager').show();
         }
