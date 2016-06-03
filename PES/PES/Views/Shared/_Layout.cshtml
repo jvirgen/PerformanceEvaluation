@@ -16,8 +16,6 @@
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     @RenderSection("Styles", required: false)
-    
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -36,7 +34,6 @@
                     {
                         <span class="navbar-brand">Performance Evaluation System</span>
                     }
-
                 }
                 else
                 {
@@ -73,14 +70,12 @@
                         {
                         <div class="text-center">
                             <span class="glyphicon glyphicon-check"></span>
-                            <a class="btn-link" href="@Url.Action("EmployeeDetails", "Employee", new { email = Session["UserEmail"]})">View my information</a>
-                            
+                            <a class="btn-link" href="@Url.Action("EmployeeDetails", "Employee", new { email = Session["UserEmail"]})">View my information</a>                            
                         </div>
                         }
                     </div>
                 }
-            </div>
-            
+            </div>            
         </div>
     </div>
     <div class="container body-content">
@@ -101,7 +96,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Performance Evaluation System | 4thSource</p>
+            <p>&copy; @DateTime.Now.Year - Performance Evaluation System | 4th Source</p>
         </footer>
     </div>
 
