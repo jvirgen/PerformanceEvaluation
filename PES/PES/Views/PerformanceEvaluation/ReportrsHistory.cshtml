@@ -29,13 +29,13 @@
                 </th>
                 @if (item.Period == 1)
                 {
-                    <th>
+                    <th onmouseover="select(this)" onmouseout="unselect(this)">
                         Period @Html.DisplayFor(modelItem => item.Period) (January - June)
                     </th>
                 }
                 else
                 {
-                    <th>
+                    <th onmouseover="select(this)" onmouseout="unselect(this)">
                         Period @Html.DisplayFor(modelItem => item.Period) (July - December)
                     </th>
                 }
@@ -53,8 +53,22 @@
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+<script>
+    function select(x) {
+        x.style.color = "#428bca";
+    }
+    function unselect(x) {
+        x.style.color = "#333333";
+    }
+    </script>
 }
+
 @section Styles{
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
     @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+<style>
+    .table{
+        text-decoration-color : deepskyblue
+    }
+    </style>
 }
