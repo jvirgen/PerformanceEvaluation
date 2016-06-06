@@ -1576,5 +1576,50 @@ namespace PES.Controllers
 
             return View(model);
         }
+
+        public async Task<ActionResult> GetHistoricalReport(int period, int year)
+        {
+            var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+            
+            currentUser = _employeeService.GetByEmail(currentUser.Email);
+
+            List<Employee> employees = new List<Employee>();
+            if (currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all
+                employees = _employeeService.GetAll();
+            }
+            else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+            }
+
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            foreach (var employee in employees)
+            {
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                var currentEvaluation = getCurrentPeriod();
+                currentEvaluation.Split(',');
+
+                if (listPE != null && listPE.Count > 0)
+                {
+                    var selectedPe = listPE.OrderByDescending(pe => pe.PeriodId == period && pe.EvaluationYear == year).LastOrDefault();
+
+                    employeeVM.lastPe = selectedPe;
+                }
+
+                listEmployeeVM.Add(employeeVM);
+            }
+
+            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+
+            return PartialView("_PerformanceFilesPeriodPartial", partial);
+        }
     }
 }

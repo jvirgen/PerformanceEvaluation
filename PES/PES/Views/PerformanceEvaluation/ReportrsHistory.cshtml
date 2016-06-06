@@ -44,11 +44,17 @@
     }
 
     </table>
+    <br />
     <hr />
     <h3>Selected Report</h3>
 
     @Html.Partial("_PerformanceFilesPeriodsPartial")
 </div>
+
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+}
 
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
@@ -61,11 +67,6 @@
         x.style.color = "#333333";
 }
     </script>
-}
-
-@section Styles{
-    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
-    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
 
     <script type="text/javascript">
             var listPerformances = [];
