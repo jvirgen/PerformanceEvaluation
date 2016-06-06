@@ -1,12 +1,13 @@
 ﻿@model PES.ViewModels.PerformanceFilesPartial
 
-<div class="container well">
     <div class="row text-center">
         <div class="col-md-12">
             <h2>Historical Reports</h2>
         </div>
     </div>
     <hr />
+<div class="row">
+    <div class="col-md-12">
     <table class="table" id="mainTable">
         <thead>
             <tr>
@@ -19,7 +20,7 @@
                 </th>
             </tr>
         </thead>
-    @foreach(var item in Model.ListReports)
+            @foreach (var item in Model.ListReports)
     {
         <tbody>
             <tr>
@@ -42,14 +43,12 @@
             </tr>
         </tbody>
     }
-
     </table>
-    <br />
-    <hr />
-    <h3>Selected Report</h3>
-
+        <div id="performancePartialPeriods">
     @Html.Partial("_PerformanceFilesPeriodsPartial")
 </div>
+        </div>
+    </div>
 
 @section Styles{
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
@@ -82,7 +81,7 @@
                         'excel', 'pdf'],
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                     pageLength: 10,
-                    order : [[7, "desc"]],
+                        order: [[7, "desc"]],
                 };
                 $('#TableviewPeriods').DataTable(tableOptions);
 
