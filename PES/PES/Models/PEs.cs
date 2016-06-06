@@ -85,4 +85,10 @@ namespace PES.Models
         public int SelectedYear { get; set; }
         public int Replace { get; set; }
     }
+
+    public class HistoryViewModel
+    {
+        public int Period { get; set; }
+        public int Year { get; set; }
+    }
 }

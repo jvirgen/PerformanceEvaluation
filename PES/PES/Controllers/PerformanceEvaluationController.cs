@@ -1319,8 +1319,10 @@ namespace PES.Controllers
 
             }
 
-            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+            var pesList = _peService.GetAll();
 
+            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+            partial.ListReports = pesList;
             return partial;
         }
 
@@ -1551,6 +1553,28 @@ namespace PES.Controllers
         {
             employees = employees.Where(x => x.LocationId == idLocation).ToList();
             return employees;
+        }
+
+        [HttpGet]
+        public ActionResult ReportrsHistory()
+        {
+            // Get current users by using email in Session
+            // Get current user 
+            Employee currentUser = new Employee();
+            var userEmail = (string)Session["UserEmail"];
+
+            currentUser = _employeeService.GetByEmail(userEmail);
+
+            if (currentUser.ProfileId == (int)ProfileUser.Resource)
+            {
+                // user is resource not allowed, return to home 
+                // send error
+                return RedirectToAction("ChoosePeriod");
+            }
+
+            PerformanceFilesPartial model = FillPerformancePartial(currentUser);
+
+            return View(model);
         }
     }
 }

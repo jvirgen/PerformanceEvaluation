@@ -488,5 +488,43 @@ namespace PES.Services
             }
             return status;
         }
+
+        public List<HistoryViewModel> GetAll()
+        {
+            List<HistoryViewModel> listPES = null;
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT UNIQUE EVALUATION_YEAR," +
+                                           "ID_PERIOD " +
+                                           "FROM PE WHERE STATUS = 'Y' ORDER BY EVALUATION_YEAR DESC, ID_PERIOD ASC";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    listPES = new List<HistoryViewModel>();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        HistoryViewModel pes = new HistoryViewModel();
+                        pes.Period = Convert.ToInt32(Read["ID_PERIOD"]);
+                        pes.Year = Convert.ToInt32(Read["EVALUATION_YEAR"]);
+
+                        listPES.Add(pes);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+            return listPES;
+        }
     }
 }

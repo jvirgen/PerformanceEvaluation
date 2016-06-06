@@ -1,0 +1,60 @@
+﻿@model PES.ViewModels.PerformanceFilesPartial
+
+<div class="container well">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>Historical Reports</h2>
+        </div>
+    </div>
+    <hr />
+    <table class="table" id="mainTable">
+        <thead>
+            <tr>
+                <th></th>
+                <th>
+                    Year
+                </th>
+                <th>
+                   Period
+                </th>
+            </tr>
+        </thead>
+    @foreach(var item in Model.ListReports)
+    {
+        <tbody>
+            <tr>
+                <th></th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </th>
+                @if (item.Period == 1)
+                {
+                    <th>
+                        Period @Html.DisplayFor(modelItem => item.Period) (January - June)
+                    </th>
+                }
+                else
+                {
+                    <th>
+                        Period @Html.DisplayFor(modelItem => item.Period) (July - December)
+                    </th>
+                }
+            </tr>
+        </tbody>
+    }
+
+    </table>
+    <hr />
+    <h3>Selected Report</h3>
+
+    @Html.Partial("_PerformanceFilesPeriodsPartial")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+}
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+}

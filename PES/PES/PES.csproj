@@ -446,6 +446,7 @@
     <Content Include="Views\Shared\_TransferEmployeePartial.cshtml" />
     <Content Include="Views\Shared\_TransferEmployeePartial2.cshtml" />
     <Content Include="Views\Shared\_PerformanceFilesPeriodsPartial.cshtml" />
+    <Content Include="Views\PerformanceEvaluation\ReportrsHistory.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
