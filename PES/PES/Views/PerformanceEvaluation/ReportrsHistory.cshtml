@@ -26,17 +26,20 @@
             <tr>
                 <th></th>
                 <th>
+                    @Html.HiddenFor(modelItem => item.Year, new { @id = "year"})
                     @Html.DisplayFor(modelItem => item.Year)
                 </th>
                 @if (item.Period == 1)
                 {
-                    <th onmouseover="select(this)" onmouseout="unselect(this)">
+                    <th onmouseover="select(this)" onmouseout="unselect(this)" onclick="getValues(this)">
+                        @Html.HiddenFor(modelitem => item.Period, new { @id = "period"})
                         Period @Html.DisplayFor(modelItem => item.Period) (January - June)
                     </th>
                 }
                 else
                 {
-                    <th onmouseover="select(this)" onmouseout="unselect(this)">
+                    <th onmouseover="select(this)" onmouseout="unselect(this)" onclick="getValues(this)">
+                        @Html.HiddenFor(modelItem => item.Period, new { @id = "period"})
                         Period @Html.DisplayFor(modelItem => item.Period) (July - December)
                     </th>
                 }
@@ -58,14 +61,7 @@
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
-<script>
-    function select(x) {
-        x.style.color = "#428bca";
-    }
-    function unselect(x) {
-        x.style.color = "#333333";
-}
-    </script>
+    @Scripts.Render("~/Scripts/history-report.js")
 
     <script type="text/javascript">
             var listPerformances = [];
@@ -81,7 +77,7 @@
                         'excel', 'pdf'],
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                     pageLength: 10,
-                        order: [[7, "desc"]],
+                        order: [[6, "desc"]],
                 };
                 $('#TableviewPeriods').DataTable(tableOptions);
 

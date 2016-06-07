@@ -1582,7 +1582,6 @@ namespace PES.Controllers
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
             
             currentUser = _employeeService.GetByEmail(currentUser.Email);
-
             List<Employee> employees = new List<Employee>();
             if (currentUser.ProfileId == (int)ProfileUser.Director)
             {
@@ -1596,20 +1595,24 @@ namespace PES.Controllers
             }
 
             List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            var location = new Location();
             foreach (var employee in employees)
             {
+                location = _locationService.GetPeriodById(employee.LocationId);
                 var employeeVM = new EmployeeManagerViewModel();
                 employeeVM.employee = employee;
                 employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                employeeVM.location = location;
 
                 var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-                var currentEvaluation = getCurrentPeriod();
-                currentEvaluation.Split(',');
 
                 if (listPE != null && listPE.Count > 0)
                 {
-                    var selectedPe = listPE.OrderByDescending(pe => pe.PeriodId == period && pe.EvaluationYear == year).LastOrDefault();
-
+                    var selectedPe = listPE.OrderByDescending(pe => pe.PeriodId == period && pe.EvaluationYear == year).FirstOrDefault();
+                    if(selectedPe.EvaluationYear != year || selectedPe.PeriodId != period)
+                    {
+                        selectedPe = null;
+                    }
                     employeeVM.lastPe = selectedPe;
                 }
 
@@ -1619,7 +1622,7 @@ namespace PES.Controllers
             PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
 
 
-            return PartialView("_PerformanceFilesPeriodPartial", partial);
+            return PartialView("_PerformanceFilesPeriodsPartial", partial);
         }
     }
 }

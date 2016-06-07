@@ -48,7 +48,7 @@
                     <td id="total1@(employeeM.lastPe.PEId)">@total1</td>
                     if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
                     {
-                        <td id="rank@(employeeM.lastPe.PEId)"><input type="number" style="width: 100%" value="@employeeM.lastPe.Rank" onchange="calculate(@employeeM.lastPe.PEId, this);" /><span style="display:none">@employeeM.lastPe.Rank</span></td>
+                        <td>@(employeeM.lastPe.Rank)</td>
                         <td id="t1Rank@(employeeM.lastPe.PEId)">@Math.Round(calculation, 2)</td>
                     }
                 }
@@ -59,7 +59,7 @@
                     <td></td>
                     if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
                     {
-                        <td><input type="text" style="width: 100%" value="" disabled /></td>
+                        <td></td>
                         <td></td>
                     }
                 }
