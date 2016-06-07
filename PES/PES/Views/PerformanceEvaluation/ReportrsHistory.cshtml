@@ -8,50 +8,25 @@
     <hr />
 <div class="row">
     <div class="col-md-12">
-    <table class="table" id="mainTable">
-        <thead>
-            <tr>
-                <th></th>
-                <th>
-                    Year
-                </th>
-                <th>
-                   Period
-                </th>
-            </tr>
-        </thead>
-            @foreach (var item in Model.ListReports)
-    {
-        <tbody>
-            <tr>
-                <th></th>
-                <th>
-                    @Html.HiddenFor(modelItem => item.Year, new { @id = "year"})
-                    @Html.DisplayFor(modelItem => item.Year)
-                </th>
-                @if (item.Period == 1)
-                {
-                    <th onmouseover="select(this)" onmouseout="unselect(this)" onclick="getValues(this)">
-                        @Html.HiddenFor(modelitem => item.Period, new { @id = "period"})
-                        Period @Html.DisplayFor(modelItem => item.Period) (January - June)
-                    </th>
-                }
-                else
-                {
-                    <th onmouseover="select(this)" onmouseout="unselect(this)" onclick="getValues(this)">
-                        @Html.HiddenFor(modelItem => item.Period, new { @id = "period"})
-                        Period @Html.DisplayFor(modelItem => item.Period) (July - December)
-                    </th>
-                }
-            </tr>
-        </tbody>
-    }
-    </table>
-        <div id="performancePartialPeriods">
-    @Html.Partial("_PerformanceFilesPeriodsPartial")
-</div>
+        <div class="form-horizontal">
+            <div class="form-group col-md-4">
+                @Html.Label("Year")
+                @Html.DropDownListFor(model => model.SelectedYear, Model.ListYear, new { @class = "inlined form-control", @style = "width:100%" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.Label("Period")
+                @Html.DropDownListFor(model => model.SelectedPeriod, Model.ListPeriods, new { @class = "inlined form-control", @style = "width:100%" })
+            </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="performancePartialPeriods">
+            @Html.Partial("_PerformanceFilesPeriodsPartial")
+        </div>
+    </div>
+</div>
 
 @section Styles{
     @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")

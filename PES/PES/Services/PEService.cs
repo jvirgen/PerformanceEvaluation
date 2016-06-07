@@ -489,32 +489,38 @@ namespace PES.Services
             return status;
         }
 
-        public List<HistoryViewModel> GetAll()
+        public List<Period> GetAllPeriods()
         {
-            List<HistoryViewModel> listPES = null;
+            List<Period> listPeriods = null;
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
 
-                    string Query = "SELECT UNIQUE EVALUATION_YEAR," +
-                                           "ID_PERIOD " +
-                                           "FROM PE WHERE STATUS = 'Y' ORDER BY EVALUATION_YEAR DESC, ID_PERIOD ASC";
+                    string Query = "SELECT UNIQUE ID_PERIOD " +
+                                           "FROM PE WHERE STATUS = 'Y' ORDER BY ID_PERIOD ASC";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
 
                     OracleDataReader Read = Comand.ExecuteReader();
-                    listPES = new List<HistoryViewModel>();
+                    listPeriods = new List<Period>();
                     while (Read.Read())
                     {
 
                         // Store data in employee object 
-                        HistoryViewModel pes = new HistoryViewModel();
-                        pes.Period = Convert.ToInt32(Read["ID_PERIOD"]);
-                        pes.Year = Convert.ToInt32(Read["EVALUATION_YEAR"]);
+                        Period period = new Period();
+                        period.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
+                        if(period.PeriodId == 1)
+                        {
+                            period.Name = "JANUARY - JUNE";
+                        }
+                        else
+                        {
+                            period.Name = "JULY - DECEMBER";
+                        }
 
-                        listPES.Add(pes);
+                        listPeriods.Add(period);
                     }
 
                     db.Close();
@@ -524,7 +530,43 @@ namespace PES.Services
             {
                 throw;
             }
-            return listPES;
+            return listPeriods;
+        }
+
+        public List<int> GetAllYears()
+        {
+            List<int> listYears = null;
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT UNIQUE EVALUATION_YEAR " +
+                                           "FROM PE WHERE STATUS = 'Y' ORDER BY EVALUATION_YEAR DESC";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    listYears = new List<int>();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        int year;
+                        year = Convert.ToInt32(Read["EVALUATION_YEAR"]);
+
+                        listYears.Add(year);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+            return listYears;
         }
     }
 }

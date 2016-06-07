@@ -1319,10 +1319,36 @@ namespace PES.Controllers
 
             }
 
-            var pesList = _peService.GetAll();
+            var periods = _peService.GetAllPeriods();
+            var years = _peService.GetAllYears();
+            var ListPeriods = new List<SelectListItem>();
+            var ListYears = new List<SelectListItem>();
+            foreach (var item in periods)
+            {
+                var newPeriod = new SelectListItem
+                {
+                    Text = "Period " + item.PeriodId + "(" + item.Name + ")",
+                    Value = item.PeriodId.ToString(),
+                    Selected = false
+                };
+                ListPeriods.Add(newPeriod);
+            }
+            foreach(var item in years)
+            {
+                var newYear = new SelectListItem
+                {
+                    Text = item.ToString(),
+                    Value = item.ToString(),
+                    Selected = false
+                };
+                ListYears.Add(newYear);
+            }
 
             PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
-            partial.ListReports = pesList;
+
+            partial.ListPeriods = ListPeriods;
+            partial.ListYear = ListYears;
+
             return partial;
         }
 
@@ -1618,10 +1644,36 @@ namespace PES.Controllers
 
                 listEmployeeVM.Add(employeeVM);
             }
+            var periods = _peService.GetAllPeriods();
+            var years = _peService.GetAllYears();
+            var ListPeriods = new List<SelectListItem>();
+            var ListYears = new List<SelectListItem>();
+            foreach (var item in periods)
+            {
+                var newPeriod = new SelectListItem
+                {
+                    Text = "Period " + item.PeriodId + "(" + item.Name + ")",
+                    Value = item.PeriodId.ToString(),
+                    Selected = false
+                };
+                ListPeriods.Add(newPeriod);
+            }
+            foreach (var item in years)
+            {
+                var newYear = new SelectListItem
+                {
+                    Text = item.ToString(),
+                    Value = item.ToString(),
+                    Selected = false
+                };
+                ListYears.Add(newYear);
+            }
 
             PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
 
-
+            partial.ListPeriods = ListPeriods;
+            partial.ListYear = ListYears;
+            
             return PartialView("_PerformanceFilesPeriodsPartial", partial);
         }
     }

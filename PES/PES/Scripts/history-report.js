@@ -1,13 +1,20 @@
-﻿function select(x) {
-    x.style.color = "#428bca";
-}
-function unselect(x) {
-    x.style.color = "#333333";
-}
+﻿var comboPeriods = $("#SelectedPeriod");
+var comboYears = $("#SelectedYear");
+$(document).ready(function () {
+    getValues();
+})
 
-function getValues(x) {
-    var period = $(x).find("#period").val();
-    var year = $(x).siblings().find("#year").val();
+$(comboYears).change(function(){
+    getValues();
+})
+
+$(comboPeriods).change(function () {
+    getValues();
+})
+
+function getValues() {
+    var period = parseInt(comboPeriods.val());
+    var year = parseInt(comboYears.val());
     getReport(period, year);
 }
 

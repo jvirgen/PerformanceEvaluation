@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PES.Models;
+using System.Web.Mvc;
 
 namespace PES.ViewModels
 {
@@ -11,7 +12,10 @@ namespace PES.ViewModels
         public IEnumerable<EmployeeManagerViewModel> listFiles { get; set; }
         public Employee currentUser { get; set; }
         public int? countRankUpdated { get; set; }
-        public List<HistoryViewModel> ListReports { get; set; } = new List<HistoryViewModel>();
+        public int SelectedYear { get; set; }
+        public int SelectedPeriod { get; set; }
+        public List<SelectListItem> ListYear { get; set; }
+        public List<SelectListItem> ListPeriods { get; set; }
 
         public PerformanceFilesPartial(IEnumerable<EmployeeManagerViewModel> listFiles, Employee currentUser)
         {
