@@ -6,10 +6,11 @@ var currentProfile = parseInt($('#CurrentProfile_ProfileId').val());
 var profile = parseInt($('#SelectedProfile').val());
 var comboNewManager = $('#selectedNewManager');
 var email = $('#Email').val();
+var hasAssigned = $("#Assigned").val();
 
 function getNewManagersByProfile() {
     // Execute validate profile function
-        if (profile == 1 || profile == 2) {
+        if (profile == 1 || profile == 2 || profile == 3) {
             // Remove current options dropdown
             comboNewManager.children().remove();
 
@@ -20,11 +21,18 @@ function getNewManagersByProfile() {
                     comboNewManager.append("<option value='" + employee.EmployeeId + "'>" + employee.FirstName + " " + employee.LastName + "</option>");
                 }
             });
-            $('#dropdownNewManager').show();
+            if (hasAssigned > 1) {
+
+                $('#dropdownNewManager').show();
+            }
+            else {
+
+                $('#dropdownNewManager').hide();
+            }
         }
-        else if (profile == 3) {
-            // Remove current options dropdown
-            comboNewManager.children().remove();
-            $('#dropdownNewManager').hide();
-        }
+        //else if (profile == 3) {
+        //    // Remove current options dropdown
+        //    comboNewManager.children().remove();
+        //    $('#dropdownNewManager').hide();
+        //}
 }
