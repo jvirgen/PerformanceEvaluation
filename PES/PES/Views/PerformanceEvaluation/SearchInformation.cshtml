@@ -22,6 +22,7 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-2 container">
+                        @Html.Hidden("CurrenProfile", Session["ProfileUser"])
                         @Html.RadioButton("report","1", true, new { @id = "general" })
                         <label>General Report</label>
                     </div>
@@ -141,6 +142,15 @@
 
     <script type="text/javascript">
         var listPerformances = [];
+        var currentProfile = $("#CurrentProfile").val();
+        var orderValue;
+        if (currentProfile == 3) {
+            orderValue == 6;
+        }
+        else {
+            orderValue = 5;
+        }
+        
 
         $(document).ready(function () {
             setupTable();
@@ -153,7 +163,7 @@
                     'excel', 'pdf'],
                 lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 pageLength: 10,
-                order : [[6, "desc"]],
+                order : [[orderValue, "desc"]],
             };
             $('#Tableview').DataTable(tableOptions);
 

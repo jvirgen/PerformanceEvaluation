@@ -1,5 +1,13 @@
 ﻿var comboPeriods = $("#SelectedPeriod");
 var comboYears = $("#SelectedYear");
+var currentProfile = $("#CurrentProfile").val();
+var orderValue;
+if (currentProfile == 3) {
+    orderValue = 6;
+}
+else {
+    orderValue = 5;
+}
 $(document).ready(function () {
     getValues();
 })
@@ -25,7 +33,7 @@ function getReport(period, year) {
             'excel', 'pdf'],
         lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         pageLength: 10,
-        order: [[6, "desc"]],
+        order: [[orderValue, "desc"]],
     };
 
     $.ajax({

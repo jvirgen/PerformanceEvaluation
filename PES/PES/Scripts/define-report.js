@@ -4,6 +4,14 @@ var comboFilter = $("#dropdownFilter");
 var comboLocation = $("#dropdownLocation");
 var comboManager = $("#dropdownManager");
 var comboDirector = $("#dropdownDirector");
+var currentProfile = $("#CurrentProfile").val();
+var orderValue;
+if (currentProfile == 3) {
+    orderValue = 6;
+}
+else {
+    orderValue = 5;
+}
 
 $(radioGeneral).click(function () {
     checkGeneral();
@@ -90,7 +98,7 @@ function validateFilters(FilterId, OptionId) {
                     'excel', 'pdf'],
                 lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 pageLength: 10,
-                order : [[6, "desc"]],
+                order : [[orderValue, "desc"]],
             };
 
     $.ajax({

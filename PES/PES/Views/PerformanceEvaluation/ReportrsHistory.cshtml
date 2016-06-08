@@ -10,6 +10,7 @@
     <div class="col-md-12">
         <div class="form-horizontal">
             <div class="form-group col-md-4">
+                @Html.Hidden("CurrentProfile", Model.currentUser.ProfileId)
                 @Html.Label("Year")
                 @Html.DropDownListFor(model => model.SelectedYear, Model.ListYear, new { @class = "inlined form-control", @style = "width:100%" })
             </div>
@@ -45,8 +46,15 @@
     @Scripts.Render("~/Scripts/history-report.js")
 
     <script type="text/javascript">
-            var listPerformances = [];
-
+        var listPerformances = [];
+        var currentProfile = $("#CurrentProfile");
+        var optionValue;
+        if (currentProfile == 3) {
+            orderValue = 6;
+        }
+        else {
+            orderValue = 5;
+        }
             $(document).ready(function () {
                 setupTable();
             });
@@ -58,7 +66,7 @@
                         'excel', 'pdf'],
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                     pageLength: 10,
-                        order: [[6, "desc"]],
+                        order: [[orderValue, "desc"]],
                 };
                 $('#TableviewPeriods').DataTable(tableOptions);
 
