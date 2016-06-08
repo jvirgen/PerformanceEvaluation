@@ -1385,6 +1385,7 @@ namespace PES.Controllers
         [HttpGet]
         public async Task<ActionResult> GetEmployeesByFilter(int FilterId, int OptionId)
         {
+            //Get current user by email
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
 
             if (FilterId == 1)
@@ -1392,13 +1393,13 @@ namespace PES.Controllers
                 List<Employee> employees = new List<Employee>();
                 if (currentUser.ProfileId == (int)ProfileUser.Director)
                 {
-                    // Get all
+                    // Get all employees
                     employees = _employeeService.GetAll();
                     employees = filterByLocation(employees, OptionId);
                 }
                 else if (currentUser.ProfileId == (int)ProfileUser.Manager)
                 {
-                    // Get by manager 
+                    // Get employees by manager 
                     employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
                     employees = filterByLocation(employees, OptionId);
                 }
@@ -1407,6 +1408,7 @@ namespace PES.Controllers
                 var location = new Location();
                 foreach (var employee in employees)
                 {
+                    //Get employee location
                     location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
@@ -1419,6 +1421,7 @@ namespace PES.Controllers
 
                     if (listPE != null && listPE.Count > 0)
                     {
+                        //Filter PEs to get the last one
                         var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
@@ -1458,18 +1461,20 @@ namespace PES.Controllers
                 var location = new Location();
                 foreach (var employee in employees)
                 {
+                    //Get employee ocation
                     location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
                     employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
                     employeeVM.location = location;
-
+                    //Get all employees PEs
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
                     var currentEvaluation = getCurrentPeriod();
                     currentEvaluation.Split(',');
 
                     if (listPE != null && listPE.Count > 0)
                     {
+                        //Filter PEs to get the last one
                         var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
@@ -1481,7 +1486,7 @@ namespace PES.Controllers
                 PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
                 return PartialView("_PerformanceFilesPartial", partial);
             }
-            else if(FilterId == 3)
+            else if(FilterId == 3)//get report by directors
             {
                 List<Employee> employees = new List<Employee>();
                 if (currentUser.ProfileId == (int)ProfileUser.Director)
@@ -1505,6 +1510,7 @@ namespace PES.Controllers
                 var location = new Location();
                 foreach (var employee in employees)
                 {
+                    //Get employee Lcation
                     location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
@@ -1517,6 +1523,7 @@ namespace PES.Controllers
 
                     if (listPE != null && listPE.Count > 0)
                     {
+                        //Filter PEs to get the last one
                         var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
@@ -1528,7 +1535,7 @@ namespace PES.Controllers
                 PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
                 return PartialView("_PerformanceFilesPartial", partial);
             }
-            else
+            else //Get general report of all company employees
             {
                 currentUser = _employeeService.GetByEmail(currentUser.Email);
 
@@ -1548,18 +1555,20 @@ namespace PES.Controllers
                 var location = new Location();
                 foreach (var employee in employees)
                 {
+                    //Get employees location
                     location = _locationService.GetPeriodById(employee.LocationId);
                     var employeeVM = new EmployeeManagerViewModel();
                     employeeVM.employee = employee;
                     employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
                     employeeVM.location = location;
-
+                    //Get all employee PEs
                     var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
                     var currentEvaluation = getCurrentPeriod();
                     currentEvaluation.Split(',');
 
                     if (listPE != null && listPE.Count > 0)
                     {
+                        //Filter PEs to get the last one
                         var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                         employeeVM.lastPe = lastPE;
@@ -1577,6 +1586,7 @@ namespace PES.Controllers
 
         private List<Employee> filterByLocation(List<Employee> employees, int idLocation)
         {
+            //Get user by selected location
             employees = employees.Where(x => x.LocationId == idLocation).ToList();
             return employees;
         }
@@ -1605,18 +1615,19 @@ namespace PES.Controllers
 
         public async Task<ActionResult> GetHistoricalReport(int period, int year)
         {
+            //Get curent user by email
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
             
             currentUser = _employeeService.GetByEmail(currentUser.Email);
             List<Employee> employees = new List<Employee>();
             if (currentUser.ProfileId == (int)ProfileUser.Director)
             {
-                // Get all
+                // Get all employees
                 employees = _employeeService.GetAll();
             }
             else if (currentUser.ProfileId == (int)ProfileUser.Manager)
             {
-                // Get by manager 
+                // Get employees by manager 
                 employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
             }
 
@@ -1624,16 +1635,19 @@ namespace PES.Controllers
             var location = new Location();
             foreach (var employee in employees)
             {
+                //Get employees location
                 location = _locationService.GetPeriodById(employee.LocationId);
                 var employeeVM = new EmployeeManagerViewModel();
                 employeeVM.employee = employee;
                 employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
                 employeeVM.location = location;
 
+                //Get employee evaluations
                 var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
 
                 if (listPE != null && listPE.Count > 0)
                 {
+                    //Filter evalautions to get the correct one by year and period
                     var selectedPe = listPE.OrderByDescending(pe => pe.PeriodId == period && pe.EvaluationYear == year).FirstOrDefault();
                     if(selectedPe.EvaluationYear != year || selectedPe.PeriodId != period)
                     {
@@ -1650,6 +1664,7 @@ namespace PES.Controllers
             var ListYears = new List<SelectListItem>();
             foreach (var item in periods)
             {
+                //Set onto list registered periods on data base
                 var newPeriod = new SelectListItem
                 {
                     Text = "Period " + item.PeriodId + "(" + item.Name + ")",
@@ -1660,6 +1675,7 @@ namespace PES.Controllers
             }
             foreach (var item in years)
             {
+                //Set into list years with at leat with a register
                 var newYear = new SelectListItem
                 {
                     Text = item.ToString(),
