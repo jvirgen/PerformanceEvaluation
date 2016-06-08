@@ -1629,6 +1629,7 @@ namespace PES.Controllers
             {
                 // Get employees by manager 
                 employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                employees = employees.Where(x => x.EmployeeId != currentUser.EmployeeId).ToList();
             }
 
             List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
