@@ -67,7 +67,7 @@
                 <div class="form-group">
                     <div>
                         @Html.LabelFor(model => model.SelectedLocation, htmlAttributes: new { @class = "control-label col-md-2", @id = "locationLabel" })
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocation, new { @class = "inlined form-control", @style = "width:100%", @id = "dropdownLocation" })
                             @Html.ValidationMessageFor(model => model.SelectedLocation, "", new { @class = "text-danger" })
                         </div>
@@ -87,7 +87,7 @@
             @Html.ActionLink("Back to List", "ViewEmployees") |
             @if (Model.SelectedProfile != (int)ProfileUser.Resource)
             {
-               @Html.ActionLink("ChangeProfile", "ChangeProfile", new { @email = Model.Email })
+               @Html.ActionLink("Change Profile", "ChangeProfile", new { @email = Model.Email })
             }
         </div>
 
