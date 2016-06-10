@@ -693,8 +693,11 @@ namespace PES.Controllers
                 model.Director = _employeeService.GetByID(model.Manager.ManagerId);
                 model.EndDate = item.EndDate;
                 model.Location = location;
-                
-                modelList.Add(model);
+
+                if(model.EmployeeId != model.Manager.EmployeeId)
+                {
+                    modelList.Add(model);
+                }
             }
 
             return PartialView("_ViewEmployeesPartial", modelList);
