@@ -1545,6 +1545,7 @@ namespace PES.Controllers
                 {
                     // Get all
                     employees = _employeeService.GetAll();
+                    employees = filterByLocation(employees, OptionId);
                 }
                 else if (currentUser.ProfileId == (int)ProfileUser.Manager)
                 {

@@ -6,6 +6,9 @@ var comboManager = $("#dropdownManager");
 var comboDirector = $("#dropdownDirector");
 var currentProfile = $("#CurrentProfile").val();
 var orderValue;
+$(document).ready(function () {
+    checkGeneral();
+});
 if (currentProfile == 3) {
     orderValue = 6;
 }
@@ -132,7 +135,7 @@ function validateFilters(FilterId, OptionId) {
 }
 
 function generalReport() {
-    validateFilters(0,0);
+    validateFilters(0, comboLocation.val());
 }
 
 function filteredReport(idFilter, idOption) {
