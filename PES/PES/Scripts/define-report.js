@@ -135,7 +135,12 @@ function validateFilters(FilterId, OptionId) {
 }
 
 function generalReport() {
-    validateFilters(0, comboLocation.val());
+    if ($("#CurrenProfile").val == 3) {
+        validateFilters(0, comboLocation.val());
+    }
+    else {
+        validateFilters(0, 0);
+    }
 }
 
 function filteredReport(idFilter, idOption) {

@@ -1388,7 +1388,6 @@ namespace PES.Controllers
         {
             //Get current user by email
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
-
             if (FilterId == 1)
             {
                 List<Employee> employees = new List<Employee>();
@@ -1551,6 +1550,7 @@ namespace PES.Controllers
                 {
                     // Get by manager 
                     employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                    employees = employees.Where(x => x.EmployeeId != currentUser.EmployeeId).ToList();
                 }
 
                 List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
