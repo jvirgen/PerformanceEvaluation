@@ -135,7 +135,7 @@ function validateFilters(FilterId, OptionId) {
 }
 
 function generalReport() {
-    if ($("#CurrenProfile").val == 3) {
+    if ( currentProfile == 3) {
         validateFilters(0, comboLocation.val());
     }
     else {

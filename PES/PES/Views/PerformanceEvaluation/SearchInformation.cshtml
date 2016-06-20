@@ -17,13 +17,12 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        @Html.Hidden("CurrentProfile", Session["ProfileUser"])
         @if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
         {
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-2 container">
-                        @Html.Hidden("CurrenProfile", Session["ProfileUser"])
+                        @Html.Hidden("CurrentProfile", Session["UserProfile"])
                         @Html.RadioButton("report","1", true, new { @id = "general" })
                         <label>General Report</label>
                     </div>
