@@ -186,8 +186,8 @@ namespace PES.Services
                                            "ENGLISH_SCORE," +
                                            "PERFORMANCE_SCORE," +
                                            "COMPETENCE_SCORE," +
-                                          // "EVALUATION_YEAR," +
-                                           //"ID_PERIOD," +
+                                           "EVALUATION_YEAR," +
+                                           "ID_PERIOD," +
                                            "\"RANK\"" +
                                            "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'AND ID_STATUS = 1 ORDER BY ID_PE DESC"; // correct status by joining with status table
                                            //check why this query had rownum <=1
@@ -210,8 +210,8 @@ namespace PES.Services
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
-                        //pes.EvaluationYear = Convert.ToInt32(Read["EVALUATION_YEAR"]);
-                        //pes.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
+                        pes.EvaluationYear = Convert.ToInt32(Read["EVALUATION_YEAR"]);
+                        pes.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
 
                         string rank = Convert.ToString(Read["RANK"]);
                         if (!string.IsNullOrEmpty(rank))
@@ -296,10 +296,10 @@ namespace PES.Services
                             pe.EvaluatorId = Convert.ToInt32(reader["ID_EVALUATOR"]);
                             pe.StatusId = Convert.ToInt32(reader["ID_STATUS"]);
                             pe.Total = Convert.ToDouble(reader["TOTAL"]);
-                            //pe.EnglishScore = Convert.ToDouble(reader["ENGLISH_SCORE"]);
+                            pe.EnglishScore = Convert.ToDouble(reader["ENGLISH_SCORE"]);//DISCOMMENTED
                             pe.PerformanceScore = Convert.ToDouble(reader["PERFORMANCE_SCORE"]);
                             pe.CompeteneceScore = Convert.ToDouble(reader["COMPETENCE_SCORE"]);
-                            //pe.Rank = Convert.ToDouble(reader["RANK"]);
+                            pe.Rank = Convert.ToDouble(reader["RANK"]);//DISCOMMENTED
                             string rank = Convert.ToString(reader["RANK"]);
                             if (!string.IsNullOrEmpty(rank))
                             {
