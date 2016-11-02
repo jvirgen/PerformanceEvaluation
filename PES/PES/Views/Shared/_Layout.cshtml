@@ -14,9 +14,8 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqueryui")
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     @RenderSection("Styles", required: false)
-    
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,7 +34,6 @@
                     {
                         <span class="navbar-brand">Performance Evaluation System</span>
                     }
-
                 }
                 else
                 {
@@ -52,11 +50,16 @@
                                 <li><a href="@Url.Action("SearchInformation", "PerformanceEvaluation")">Performance Files</a></li>
                                 <li><a href="@Url.Action("UploadFile", "PerformanceEvaluation")">Upload Performance File</a></li>
                                 <li><a href="@Url.Action("ViewEmployees","Employee")">User Administration</a></li>
+                                @if (userProfile == ProfileUser.Director)
+                                {
+                                    <li><a href="@Url.Action("TransferEmployees","Employee")">Transfer Employees</a></li>
+                                }
+                                <li><a href="@Url.Action("ReportrsHistory","PerformanceEvaluation")">Periods Historical Information</a></li>
                             </ul>
                         </li>
                     </ul>
                 }
-               
+
                 @if (userLogged)
                 {
                     <div class="navbar-text navbar-right">
@@ -64,38 +67,44 @@
                         <a type="button" class="btn btn-xs btn-sm" href="@Url.Action("Logout","LoginUser")">
                             <span class="glyphicon glyphicon-log-out"></span> Log out
                         </a>
+                        @if (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager)
+                        {
+                        <div class="text-center">
+                            <span class="glyphicon glyphicon-check"></span>
+                            <a class="btn-link" href="@Url.Action("EmployeeDetails", "Employee", new { email = Session["UserEmail"]})">View my information</a>                            
+                        </div>
+                        }
                     </div>
                 }
-            </div>
-            
+            </div>            
         </div>
     </div>
     <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                @if (TempData["Error"] != null)
+                {
+                    <br />
+                    <p class="alert alert-danger">@TempData["Error"]</p>
+                }
+                @if (TempData["Success"] != null)
+                {
+                    <br />
+                    <p class="alert alert-success">@TempData["Success"]</p>
+                }
+            </div>
+        </div>
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Performance Evaluation System</p>
+            <p>&copy; @DateTime.Now.Year - Performance Evaluation System | 4th Source</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")
-    <script>
-        $(function () {
-            $(".jqueryui-marker-datepicker").datepicker({
-                dateFormat: "dd/mm/yy",
-                changeMonth: true,
-                changeYear: true,
-                showOn: "button"
-            }).css("display", "inline-block")
-            .next("button").button({
-                icons: { primary: "ui-icon-calendar" },
-                label: "Select a date",
-                text: false
-            });
-        });
-    </script> 
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -5,6 +5,8 @@
 @{
     ViewBag.Title = "Performance Files";
     var currentUser = ViewBag.currentEmployee;
+    LocationService _locationService = new LocationService();
+    EmployeeService _employeeService = new EmployeeService();
 }
 
 <div class="row text-center">
@@ -15,6 +17,92 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
+        @if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2 container">
+                        @Html.Hidden("CurrentProfile", Session["UserProfile"])
+                        @Html.RadioButton("report","1", true, new { @id = "general" })
+                        <label>General Report</label>
+                    </div>
+                    <div class="col-md-3">
+                        @{ 
+                            var ListFilters = new List<SelectListItem>();
+                            var locationFilter = new SelectListItem {
+                                Text = "Location",
+                                Value = "1",
+                                Selected = false
+                            };
+                            var managerFilter = new SelectListItem
+                            {
+                                Text = "Manager",
+                                Value = "2",
+                                Selected = false
+                            };
+                            var directorFilter = new SelectListItem
+                            {
+                                Text = "Director",
+                                Value = "3",
+                                Selected = false
+                            };
+                            ListFilters.Add(locationFilter);
+                            ListFilters.Add(managerFilter);
+                            ListFilters.Add(directorFilter);
+
+                        }
+                        @Html.RadioButton("report", "2", false, new { @id = "filter" })
+                        <label>Report by</label>
+                        @Html.DropDownList("dropdownFilter", ListFilters, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownFilter" })
+                    </div>
+                    <div class="col-md-5">
+                        @{
+                            var locations = _locationService.GetAll();
+                            List<SelectListItem> ListLocation = new List<SelectListItem>();
+                            foreach (var item in locations)
+                            {
+                                var newLocation = new SelectListItem
+                                {
+                                    Text = item.Name,
+                                    Value = item.LocationId.ToString(),
+                                    Selected = false
+                                };
+                                ListLocation.Add(newLocation);
+                            }
+                            var managers = _employeeService.getByPorfileId(2);
+                            List<SelectListItem> ListManager = new List<SelectListItem>();
+                            foreach (var item in managers)
+                            {
+                                var newManager = new SelectListItem
+                                {
+                                    Text = item.FirstName + " " + item.LastName,
+                                    Value = item.EmployeeId.ToString(),
+                                    Selected = false
+                                };
+                                ListManager.Add(newManager);
+                            }
+                            var directors = _employeeService.getByPorfileId(3);
+                            List<SelectListItem> ListDirector = new List<SelectListItem>();
+                            foreach (var item in directors)
+                            {
+                                var newDirector = new SelectListItem
+                                {
+                                    Text = item.FirstName + " " + item.LastName,
+                                    Value = item.EmployeeId.ToString(),
+                                    Selected = false
+                                };
+                                ListDirector.Add(newDirector);
+                            }
+                        }
+
+                        <label id="labelOptions"></label>
+                        @Html.DropDownList("dropdownLocation", ListLocation, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownLocation", onChange= "generateReport(1)" })
+                        @Html.DropDownList("dropdownManager", ListManager, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownManager", onChange = "generateReport(2)" })
+                        @Html.DropDownList("dropdownDirector", ListDirector, new { @class = "inlined form-control", @style = "display: none", @id = "dropdownDirector", onChange = "generateReport(3)" })
+                    </div>
+                </div>
+            </div>
+        }
         <div id="performancePartial">
             @Html.Partial("_PerformanceFilesPartial", Model)
         </div>
@@ -49,17 +137,33 @@
     @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
     @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
     @Scripts.Render("~/Scripts/utilities.js")
+    @Scripts.Render("~/Scripts/location.js")
+    @Scripts.Render("~/Scripts/define-report.js")
 
     <script type="text/javascript">
         var listPerformances = [];
+        var currentProfile = $("#CurrentProfile").val();
+        var orderValue;
+        if (currentProfile == 3) {
+            orderValue == 6;
+        }
+        else {
+            orderValue = 5;
+        }
+        
 
         $(document).ready(function () {
+            setupTable();
+        });
+        
+        function setupTable() {
             var tableOptions = {
                 dom: '<"row"<"col-md-12"B>><"row"<"col-md-6"l><"col-md-6"f>>rtip',
                 buttons: [
                     'excel', 'pdf'],
                 lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 pageLength: 10,
+                order : [[orderValue, "desc"]],
             };
             $('#Tableview').DataTable(tableOptions);
 
@@ -72,27 +176,27 @@
                     $.ajax({
                         url: "@Url.Action("UpdateRank", "PerformanceEvaluation")",
                         data: { listPerformances: listPerformances },
-                        dataType: 'html',
-                        type: 'POST'
-                    })
-                    .done(function (data) {
-                        if (data) {
+                    dataType: 'html',
+                    type: 'POST'
+                })
+                .done(function (data) {
+                    if (data) {
 
-                            // Reload data
-                            $("#performancePartial").hide().html(data).fadeIn("slow");
+                        // Reload data
+                        $("#performancePartial").hide().html(data).fadeIn("slow");
 
-                            $('#Tableview').DataTable(tableOptions);
-                        }
-                    })
-                    .fail(function (jqxhr, textStatus, error) {
-                        alert("Error while saving changes. Please try again later.");
-                    })
-                    .always(function () {
-                        //alert("finished");
-                    });
-                }
+                        $('#Tableview').DataTable(tableOptions);
+                    }
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    alert("Error while saving changes. Please try again later.");
+                })
+                .always(function () {
+                    //alert("finished");
+                });
+            }
             });
-        });
+        }
 
         function calculate(performanceId, element) {
             // total1

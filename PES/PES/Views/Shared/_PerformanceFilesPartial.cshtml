@@ -18,6 +18,7 @@
             {
                 <th>Manager</th>
             }
+            <th>Location</th>
             <th>Final Score</th>
             <th>English Score</th>
             <th>Total 1</th>
@@ -32,12 +33,13 @@
         @foreach (var employeeM in Model.listFiles)
         {
             <tr>
-                <td><a href="@Url.Action("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = employeeM.employee.Email, employeeID = employeeM.employee.EmployeeId})">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
+                <td><a href="@Url.Action("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = employeeM.employee.Email, employeeID = employeeM.employee.EmployeeId })">@(employeeM.employee.FirstName + " " + employeeM.employee.LastName)</a></td>
                 <td>@(employeeM.employee.Position)</td>
                 @if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
                 {
                     <td>@(employeeM.manager.FirstName + " " + employeeM.manager.LastName)</td>
                 }
+                <td>@employeeM.location.Name</td>
                 @if (employeeM.lastPe != null)
                 {
                     double total1 = Math.Round(employeeM.lastPe.Total + employeeM.lastPe.EnglishScore, 2);
@@ -48,7 +50,7 @@
                     <td id="total1@(employeeM.lastPe.PEId)">@total1</td>
                     if (Model.currentUser.ProfileId == (int)ProfileUser.Director)
                     {
-                        <td id="rank@(employeeM.lastPe.PEId)"><input type="number" style="width: 100%" value="@employeeM.lastPe.Rank"  onchange="calculate(@employeeM.lastPe.PEId, this);" /><span style="display:none">@employeeM.lastPe.Rank</span></td>
+                        <td id="rank@(employeeM.lastPe.PEId)"><input type="number" style="width: 100%" value="@employeeM.lastPe.Rank"  onchange="calculate(@employeeM.lastPe.PEId, this);" min="0" max="1" step="0.01" /><span style="display:none">@employeeM.lastPe.Rank</span></td>
                         <td id="t1Rank@(employeeM.lastPe.PEId)">@Math.Round(calculation, 2)</td>
                     }
                 }

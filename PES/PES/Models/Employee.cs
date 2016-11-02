@@ -35,8 +35,8 @@ namespace PES.Models
         /// Email
         /// </summary>
         /// 
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "The Email has not the correct format")]
+        [Required]
+        
         public string Email { get; set; }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace PES.Models
         /// <summary>
         /// Hire Date
         /// </summary>
-        [DataType(DataType.Date)]
-        [Display(Name = "Hire Date")]
-        public DateTime HireDate { get; set; }
+        //[DataType(DataType.Date)]
+        //[Display(Name = "Hire Date")]
+        //public DateTime HireDate { get; set; }
 
         ///// <summary>
         ///// Employee Ranking
@@ -90,6 +90,10 @@ namespace PES.Models
         /// </summary>
         public string Project { get; set; }
 
+        ///<summary>
+        ///Employee Location
+        /// </summary>
+        public int LocationId { get; set; }
         
 
     }
@@ -99,6 +103,7 @@ namespace PES.Models
         public Employee employee { get; set; }
         public Employee manager { get; set; }
         public PEs lastPe { get; set; }
+        public Location location { get; set; }
         //public double totalScore { get; set; }
         //public double? rank { get; set; }
         //public double englishScore { get; set; }
@@ -113,6 +118,8 @@ namespace PES.Models
         public double totalPerforformance { get; set; }
         public double totalCompetences { get; set; }
         public double totalEnglish { get; set; }
+        public int evaluationYear { get; set; }
+        public Period periodName { get; set; }
     }
 
     public enum ProfileUser

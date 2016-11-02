@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace PES.Models
 {
@@ -59,15 +61,35 @@ namespace PES.Models
         /// Rank
         /// </summary>
         public double? Rank { get; set; }
-        
+
+        ///<sumary>
+        /// Evaluation year
+        /// </sumary>
+        public int EvaluationYear { get; set; }
+
+        ///<summary>
+        ///Id Period
+        ///</summary>
+        public int PeriodId { get; set; }
     }
 
-    public class UploadFileViewModel 
+    public class UploadFileViewModel
     {
         public Employee CurrentUser { get; set; }
-        public List<Employee> ListEmployees { get; set; }
+        public List<SelectListItem> ListEmployees { get; set; }
         public int SelectedEmployee { get; set; }
-        public List<Employee> ListAllEmployees { get; set; } 
+        public List<SelectListItem> ListAllEmployees { get; set; }
         public int SelectedEvaluator { get; set; }
+        public List<SelectListItem> PeriodList { get; set; }
+        public List<SelectListItem> ListYears { get; set; }
+        public int SelectedPeriod { get; set; }
+        public int SelectedYear { get; set; }
+        public int Replace { get; set; }
+    }
+
+    public class HistoryViewModel
+    {
+        public int Period { get; set; }
+        public int Year { get; set; }
     }
 }

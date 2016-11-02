@@ -22,6 +22,8 @@
             <thead>
                 <tr>
                     <th id="Header_Period">Period</th>
+                    <th id="Header_Year">Year</th>
+                    <th id="Header_Upload">Upload Date</th>
                     <th id="Header_Performance">Performance Score</th>
                     <th id="Header_Competences">Competences Score</th>
                     <th id="Header_English">English Score</th>
@@ -36,9 +38,14 @@
                         <tr>
                             <td>
                                 <a href="@Url.Action("PEVisualization", "PerformanceEvaluation", new { peID = scoreM.pesid })">
-                                    @scoreM.period.ToShortDateString()
+                                    
+                                    @{ 
+                                        @("Period " + scoreM.periodName.PeriodId + " (" + scoreM.periodName.Name + ")" )
+                                    }
                                 </a>
                             </td>
+                            <td>@scoreM.evaluationYear</td>
+                            <td>@scoreM.period.ToShortDateString()</td>
                             <td>@Math.Round(scoreM.totalPerforformance, 2)</td>
                             <td>@Math.Round(scoreM.totalCompetences, 2)</td>
                             <td>@Math.Round(scoreM.totalEnglish, 2)</td>
@@ -56,6 +63,13 @@
     <hr />
     <div> 
         @Html.ActionLink("Back to Performance Files", "SearchInformation", "PerformanceEvaluation")
+    </div>
+}
+else if (currentUserProfile == (int)ProfileUser.Resource)
+{
+    <hr />
+    <div>
+        @Html.ActionLink("View Employee Details", "EmployeeDetails", "Employee", new { @email = userEmail }, null)       
     </div>
 }
 

@@ -10,6 +10,7 @@ using PES.Services;
 using PES.ViewModels;
 using System.Web.Script.Serialization;
 using OfficeOpenXml;
+using System.Threading.Tasks;
 
 namespace PES.Controllers
 {
@@ -28,6 +29,8 @@ namespace PES.Controllers
         private SkillService _skillService;
         private LM_SkillService _lm_skillService;
         private StatusService _statusService;
+        private PeriodService _periodService;
+        private LocationService _locationService;
 
         public PerformanceEvaluationController() 
         {
@@ -41,6 +44,8 @@ namespace PES.Controllers
             _skillService = new SkillService();
             _lm_skillService = new LM_SkillService();
             _statusService = new StatusService();
+            _periodService = new PeriodService();
+            _locationService = new LocationService();
         }
 
         // GET: PerformanceEvaluation
@@ -49,7 +54,7 @@ namespace PES.Controllers
             return View();
         }
 
-        public bool ReadPerformanceFile(string path, Employee user, Employee evaluator) 
+        public bool ReadPerformanceFile(string path, Employee user, Employee evaluator, int year, int period, int replace) 
         {
             // CREATE DE EXCEL FILE AND ACCES AT THE WORK SHEET
 
@@ -78,35 +83,46 @@ namespace PES.Controllers
                 PESc.pes.PerformanceScore = excelSheet.GetValue<double>(37, 9);
                 //PESc.pes.CompeteneceScore = excelSheet.Cells[73, 9].Value;
                 PESc.pes.CompeteneceScore = excelSheet.GetValue<double>(73, 9);
+                PESc.pes.EvaluationYear = year;
+                PESc.pes.PeriodId = period;
 
+                //Replace PE
+                if(replace != 0)
+                {
+                    bool peDisabled = _peService.UpdateStatus(replace);
+                }
                 // Insert 
                 bool peInserted = _peService.InsertPE(PESc.pes);
+
 
                 // Look for and get id 
                 PESc.pes = _peService.GetPerformanceEvaluationByDateEmail(user.Email, DateTime.Now.Date);
                 #endregion
 
                 #region Employee - update
-                // data from user
-                PESc.empleado.EmployeeId = user.EmployeeId;
-                PESc.empleado.Email = user.Email;
-                PESc.empleado.ProfileId = user.ProfileId;
-                PESc.empleado.ManagerId = user.ManagerId;
-                PESc.empleado.HireDate = user.HireDate;
-                PESc.empleado.EndDate = user.EndDate;
-                // data from excel
-                //PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
-                PESc.empleado.FirstName = excelSheet.GetValue<string>(3, 3);
-                //PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
-                PESc.empleado.LastName = excelSheet.GetValue<string>(3, 3);
-                //PESc.empleado.Position = excelSheet.Cells[4, 3].Value;
-                PESc.empleado.Position = excelSheet.GetValue<string>(4, 3);
-                //PESc.empleado.Customer = excelSheet.Cells[5, 3].Value;
-                PESc.empleado.Customer = excelSheet.GetValue<string>(5, 3);
-                //PESc.empleado.Project = excelSheet.Cells[6, 3].Value;
-                PESc.empleado.Project = excelSheet.GetValue<string>(6, 3);
+                //// data from user
+                //PESc.empleado.EmployeeId = user.EmployeeId;
+                //PESc.empleado.Email = user.Email;
+                //PESc.empleado.ProfileId = user.ProfileId;
+                //PESc.empleado.ManagerId = user.ManagerId;
+                ////PESc.empleado.HireDate = user.HireDate;
+                //PESc.empleado.EndDate = user.EndDate;
+                //// data from excel
+                ////PESc.empleado.FirstName = excelSheet.Cells[3, 3].Value;
+                //var Name = excelSheet.GetValue<string>(3, 3).Split(' ');
+                //PESc.empleado.FirstName = Name[0];
+                ////PESc.empleado.FirstName = excelSheet.GetValue<string>(3, 3);
+                ////PESc.empleado.LastName = excelSheet.Cells[3, 3].Value;
+                //PESc.empleado.LastName = Name[2];
+                ////PESc.empleado.LastName = excelSheet.GetValue<string>(3, 3);
+                ////PESc.empleado.Position = excelSheet.Cells[4, 3].Value;
+                //PESc.empleado.Position = excelSheet.GetValue<string>(4, 3);
+                ////PESc.empleado.Customer = excelSheet.Cells[5, 3].Value;
+                //PESc.empleado.Customer = excelSheet.GetValue<string>(5, 3);
+                ////PESc.empleado.Project = excelSheet.Cells[6, 3].Value;
+                //PESc.empleado.Project = excelSheet.GetValue<string>(6, 3);
 
-                bool employeeInserted = _employeeService.UpdateEmployee(PESc.empleado);
+                //bool employeeInserted = _employeeService.UpdateEmployee(PESc.empleado);
                 #endregion
 
                 #region Title - insert
@@ -786,7 +802,7 @@ namespace PES.Controllers
         public ActionResult UploadFile(UploadFileViewModel uploadVM, HttpPostedFileBase fileUploaded)
         {
             string message = "";
-         
+
             //Excel.Application excel = new Excel.Application();
 
             #region New Upload File
@@ -810,12 +826,15 @@ namespace PES.Controllers
                         // Load file into database
                         // Get selected user
                         var user = _employeeService.GetByID(uploadVM.SelectedEmployee);
+                        var year = uploadVM.SelectedYear;
+                        var period = uploadVM.SelectedPeriod;
+                        var replace = uploadVM.Replace;
 
                         if (user != null)
                         {
                             var evaluator = _employeeService.GetByID(uploadVM.SelectedEvaluator);
 
-                            bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator);
+                            bool fileSaved = ReadPerformanceFile(fullPath, user, evaluator, year, period, replace);
 
                             if (!fileSaved)
                             {
@@ -928,34 +947,146 @@ namespace PES.Controllers
         // GET: PerformanceEvaluation/UploadFile
         public ActionResult UploadFile()
         {
-            UploadFileViewModel uploadVM = new UploadFileViewModel();
-
-            // Get current user by using the session
-            Employee currentUser = new Employee();
-            EmployeeService EmployeeService = new EmployeeService();
-            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
-            uploadVM.CurrentUser = currentUser;
-
-            List<Employee> listEmployees = new List<Employee>();
-            if(currentUser.ProfileId == (int)ProfileUser.Director)
+            //Get Current user
+            var currentProfile = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+            if (currentProfile.ProfileId == (int)ProfileUser.Director || currentProfile.ProfileId == (int)ProfileUser.Manager)
             {
-                // Get all employees 
-                listEmployees = _employeeService.GetAll();
+                UploadFileViewModel uploadVM = new UploadFileViewModel();
+
+                // Get current user by using the session
+                Employee currentUser = new Employee();
+                EmployeeService EmployeeService = new EmployeeService();
+                currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
+                uploadVM.CurrentUser = currentUser;
+
+
+                // Build list of employees (to evaluate)
+                #region List of Employees
+                List<Employee> listEmployees = new List<Employee>();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    // Get all employees 
+                    listEmployees = _employeeService.GetAll();
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+                {
+                    // Get employees by manager
+                    listEmployees = null;
+                    listEmployees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                }
+                List<SelectListItem> employeesList = new List<SelectListItem>();
+                foreach (var employee in listEmployees)
+                {
+                    var newItem = new SelectListItem()
+                    {
+                        Text = employee.FirstName + " " + employee.LastName + " (" + employee.Email + ")",
+                        Value = (employee.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    employeesList.Add(newItem);
+                }
+                #endregion
+
+                //Build list of all employees (evaluators)
+                #region List of Evaluators
+                List<Employee> listAllEmployees = new List<Employee>();
+                listAllEmployees = _employeeService.GetAll();
+
+                List<SelectListItem> employeesAllList = new List<SelectListItem>();
+                foreach (var evaluator in listAllEmployees)
+                {
+                    var newItem = new SelectListItem()
+                    {
+                        Text = evaluator.FirstName + " " + evaluator.LastName + " (" + evaluator.Email + ")",
+                        Value = (evaluator.EmployeeId).ToString(),
+                        Selected = false
+                    };
+                    employeesAllList.Add(newItem);
+                }
+                #endregion
+
+                // Build list of periods
+                #region List of Periods
+                List<SelectListItem> ListPeriods = new List<SelectListItem>();
+                var periods = _periodService.GetAll();
+
+                foreach (var item in periods)
+                {
+                    var period = new SelectListItem
+                    {
+                        Text = "Period " + item.PeriodId + "(" + item.Name + ")",
+                        Value = item.PeriodId.ToString(),
+                        Selected = false
+                    };
+
+                    ListPeriods.Add(period);
+                }
+
+
+                #endregion
+
+                // Build list of years
+                #region List of years
+                List<SelectListItem> listYears = new List<SelectListItem>();
+                int currentYear = int.Parse(DateTime.Now.Year.ToString());
+                int currentPeriod = int.Parse(DateTime.Now.Month.ToString());
+                var minYear = 2014;
+                var maxYear = currentYear;
+                //Get currentPeriod id
+                if (currentPeriod < 7)
+                {
+                    currentPeriod = 1;
+                }
+                else
+                {
+                    currentPeriod = 2;
+                }
+
+                for (var i = minYear; i <= maxYear; i++)
+                {
+                    if (currentYear == i)
+                    {
+                        var year = new SelectListItem()
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString(),
+                            Selected = true
+                        };
+                        listYears.Add(year);
+                    }
+                    else
+                    {
+                        var year = new SelectListItem()
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString(),
+                            Selected = false
+                        };
+                        listYears.Add(year);
+                    }
+                }
+                #endregion
+
+                uploadVM.ListAllEmployees = employeesAllList;
+                uploadVM.ListEmployees = employeesList;
+                uploadVM.PeriodList = ListPeriods;
+                uploadVM.ListYears = listYears;
+                uploadVM.SelectedPeriod = int.Parse(ListPeriods.LastOrDefault(p => p.Value == currentPeriod.ToString()).Value); // last 
+                uploadVM.SelectedYear = int.Parse(listYears.LastOrDefault(y => y.Value == currentYear.ToString()).Value);
+
+
+                return View(uploadVM);
             }
-            else if(currentUser.ProfileId == (int)ProfileUser.Manager)
+            else if(currentProfile.ProfileId == (int)ProfileUser.Resource)
             {
-                // Get employees by manager
-                listEmployees = null;
-                listEmployees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                TempData["Error"] = "You are not allowed to view this page";
+               return RedirectToAction("Index");
             }
-
-            List<Employee> listAllEmployees = new List<Employee>();
-            listAllEmployees = _employeeService.GetAll();
-
-            uploadVM.ListAllEmployees = listAllEmployees;
-            uploadVM.ListEmployees = listEmployees;
-
-            return View(uploadVM);
+            else
+            {
+                TempData["Error"] = "You are not loged in. Please try later.";
+                return RedirectToAction("Login", "LoginUser");
+            }
         }
 
         // GET: PeformanceEvaluation/SearchIformation
@@ -1014,7 +1145,9 @@ namespace PES.Controllers
                         totalEvaluation = userPE.Total,
                         totalEnglish = userPE.EnglishScore,
                         totalPerforformance = userPE.PerformanceScore,
-                        totalCompetences = userPE.CompeteneceScore
+                        totalCompetences = userPE.CompeteneceScore,
+                        evaluationYear = userPE.EvaluationYear,
+                        periodName = _periodService.GetPeriodById(userPE.PeriodId)
                     };
 
                     choosePeriodVM.Add(chooseVM);
@@ -1160,30 +1293,407 @@ namespace PES.Controllers
             {
                 // Get by manager 
                 employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                employees = employees.Where(x => x.EmployeeId != currentUser.EmployeeId).ToList();
             }
 
             List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            var location = new Location();
             foreach (var employee in employees)
             {
+                location = _locationService.GetPeriodById(employee.LocationId);
                 var employeeVM = new EmployeeManagerViewModel();
                 employeeVM.employee = employee;
                 employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                employeeVM.location = location;
 
                 var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
-
+                var currentEvaluation = getCurrentPeriod();
+                currentEvaluation.Split(',');
                 if (listPE != null && listPE.Count > 0)
                 {
-                    var lastPE = listPE.OrderByDescending(pe => pe.EvaluationPeriod).FirstOrDefault();
+                    var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
 
                     employeeVM.lastPe = lastPE;
                 }
 
                 listEmployeeVM.Add(employeeVM);
+
+            }
+
+            var periods = _peService.GetAllPeriods();
+            var years = _peService.GetAllYears();
+            var ListPeriods = new List<SelectListItem>();
+            var ListYears = new List<SelectListItem>();
+            foreach (var item in periods)
+            {
+                var newPeriod = new SelectListItem
+                {
+                    Text = "Period " + item.PeriodId + "(" + item.Name + ")",
+                    Value = item.PeriodId.ToString(),
+                    Selected = false
+                };
+                ListPeriods.Add(newPeriod);
+            }
+            foreach(var item in years)
+            {
+                var newYear = new SelectListItem
+                {
+                    Text = item.ToString(),
+                    Value = item.ToString(),
+                    Selected = false
+                };
+                ListYears.Add(newYear);
             }
 
             PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
 
+            partial.ListPeriods = ListPeriods;
+            partial.ListYear = ListYears;
+
             return partial;
+        }
+
+        private string getCurrentPeriod()
+        {
+            var CurrentPeriod = (int)DateTime.Now.Month;
+            var currentYear = (int)DateTime.Now.Year;
+
+            if(CurrentPeriod < 7)
+            {
+                CurrentPeriod = 1;
+            }
+            else
+            {
+                CurrentPeriod = 2;
+            }
+
+            return CurrentPeriod.ToString() + "," + currentYear.ToString();
+            
+        }
+        public JsonResult VerifyPE(int employee, int evaluator, int period, int year)
+        {
+            var success = false;
+            //Get evaluation conscidence Id
+            var idPe = _peService.VerifyPE(employee, evaluator, period, year);
+            if(idPe != 0)
+            {
+                success = true;
+            }
+            //Return startus of searcha and Id PE
+            return Json(new { exist = success, idPe = idPe},JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetEmployeesByFilter(int FilterId, int OptionId)
+        {
+            //Get current user by email
+            var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+            if (FilterId == 1)
+            {
+                List<Employee> employees = new List<Employee>();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    // Get all employees
+                    employees = _employeeService.GetAll();
+                    employees = filterByLocation(employees, OptionId);
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+                {
+                    // Get employees by manager 
+                    employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                    employees = filterByLocation(employees, OptionId);
+                }
+
+                List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
+                foreach (var employee in employees)
+                {
+                    //Get employee location
+                    location = _locationService.GetPeriodById(employee.LocationId);
+                    var employeeVM = new EmployeeManagerViewModel();
+                    employeeVM.employee = employee;
+                    employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
+
+                    var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
+
+                    if (listPE != null && listPE.Count > 0)
+                    {
+                        //Filter PEs to get the last one
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
+
+                        employeeVM.lastPe = lastPE;
+                    }
+
+                    listEmployeeVM.Add(employeeVM);
+                }
+
+                PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+                return PartialView("_PerformanceFilesPartial", partial);
+            }
+            else if(FilterId == 2)
+            {
+                List<Employee> employees = new List<Employee>();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    // Get all and filter them
+                    //employees = _employeeService.GetAll();
+                    //filterByManager(employees, OptionId);
+
+                    //Get emplyees by manager
+                    employees = _employeeService.GetEmployeeByManager(OptionId);
+
+                    //filter Manager from list
+                    employees = employees.Where(x => x.ManagerId == OptionId).ToList();
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+                {
+                    // Get by manager 
+                    employees = _employeeService.GetEmployeeByManager(OptionId);
+                    //filter Manager from list
+                    employees = employees.Where(x => x.ManagerId == OptionId).ToList();
+                }
+
+                List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
+                foreach (var employee in employees)
+                {
+                    //Get employee ocation
+                    location = _locationService.GetPeriodById(employee.LocationId);
+                    var employeeVM = new EmployeeManagerViewModel();
+                    employeeVM.employee = employee;
+                    employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
+                    //Get all employees PEs
+                    var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
+
+                    if (listPE != null && listPE.Count > 0)
+                    {
+                        //Filter PEs to get the last one
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
+
+                        employeeVM.lastPe = lastPE;
+                    }
+
+                    listEmployeeVM.Add(employeeVM);
+                }
+
+                PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+                return PartialView("_PerformanceFilesPartial", partial);
+            }
+            else if(FilterId == 3)//get report by directors
+            {
+                List<Employee> employees = new List<Employee>();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    // Get all
+                    //employees = _employeeService.GetAll();
+                    //filterByDirector(employees, OptionId);
+
+                    //Get by director
+                    employees = _employeeService.getEmployeesByDirector(OptionId);
+                    employees = employees.Where(x => x.EmployeeId != OptionId).ToList();
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+                {
+                    // Get by manager 
+                    employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                    employees = employees.Where(x => x.EmployeeId != OptionId).ToList();
+                }
+
+                List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
+                foreach (var employee in employees)
+                {
+                    //Get employee Lcation
+                    location = _locationService.GetPeriodById(employee.LocationId);
+                    var employeeVM = new EmployeeManagerViewModel();
+                    employeeVM.employee = employee;
+                    employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
+
+                    var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
+
+                    if (listPE != null && listPE.Count > 0)
+                    {
+                        //Filter PEs to get the last one
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
+
+                        employeeVM.lastPe = lastPE;
+                    }
+
+                    listEmployeeVM.Add(employeeVM);
+                }
+
+                PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+                return PartialView("_PerformanceFilesPartial", partial);
+            }
+            else //Get general report of all company employees
+            {
+                currentUser = _employeeService.GetByEmail(currentUser.Email);
+
+                List<Employee> employees = new List<Employee>();
+                if (currentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    // Get all
+                    employees = _employeeService.GetAll();
+                    employees = filterByLocation(employees, OptionId);
+                }
+                else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+                {
+                    // Get by manager 
+                    employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                    employees = employees.Where(x => x.EmployeeId != currentUser.EmployeeId).ToList();
+                }
+
+                List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+                var location = new Location();
+                foreach (var employee in employees)
+                {
+                    //Get employees location
+                    location = _locationService.GetPeriodById(employee.LocationId);
+                    var employeeVM = new EmployeeManagerViewModel();
+                    employeeVM.employee = employee;
+                    employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                    employeeVM.location = location;
+                    //Get all employee PEs
+                    var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+                    var currentEvaluation = getCurrentPeriod();
+                    currentEvaluation.Split(',');
+
+                    if (listPE != null && listPE.Count > 0)
+                    {
+                        //Filter PEs to get the last one
+                        var lastPE = listPE.OrderByDescending(pe => pe.PeriodId == (int)currentEvaluation[0] && pe.EvaluationYear == (int)currentEvaluation[1]).LastOrDefault();
+
+                        employeeVM.lastPe = lastPE;
+                    }
+
+                    listEmployeeVM.Add(employeeVM);
+                }
+
+                PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+
+                return PartialView("_PerformanceFilesPartial", partial);
+            }
+        }
+
+        private List<Employee> filterByLocation(List<Employee> employees, int idLocation)
+        {
+            //Get user by selected location
+            employees = employees.Where(x => x.LocationId == idLocation).ToList();
+            return employees;
+        }
+
+        [HttpGet]
+        public ActionResult ReportrsHistory()
+        {
+            // Get current users by using email in Session
+            // Get current user 
+            Employee currentUser = new Employee();
+            var userEmail = (string)Session["UserEmail"];
+
+            currentUser = _employeeService.GetByEmail(userEmail);
+
+            if (currentUser.ProfileId == (int)ProfileUser.Resource)
+            {
+                // user is resource not allowed, return to home 
+                // send error
+                return RedirectToAction("ChoosePeriod");
+            }
+
+            PerformanceFilesPartial model = FillPerformancePartial(currentUser);
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> GetHistoricalReport(int period, int year)
+        {
+            //Get curent user by email
+            var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+            
+            currentUser = _employeeService.GetByEmail(currentUser.Email);
+            List<Employee> employees = new List<Employee>();
+            if (currentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                // Get all employees
+                employees = _employeeService.GetAll();
+            }
+            else if (currentUser.ProfileId == (int)ProfileUser.Manager)
+            {
+                // Get employees by manager 
+                employees = _employeeService.GetEmployeeByManager(currentUser.EmployeeId);
+                employees = employees.Where(x => x.EmployeeId != currentUser.EmployeeId).ToList();
+            }
+
+            List<EmployeeManagerViewModel> listEmployeeVM = new List<EmployeeManagerViewModel>();
+            var location = new Location();
+            foreach (var employee in employees)
+            {
+                //Get employees location
+                location = _locationService.GetPeriodById(employee.LocationId);
+                var employeeVM = new EmployeeManagerViewModel();
+                employeeVM.employee = employee;
+                employeeVM.manager = _employeeService.GetByID(employee.ManagerId);
+                employeeVM.location = location;
+
+                //Get employee evaluations
+                var listPE = _peService.GetPerformanceEvaluationByUserID(employee.EmployeeId);
+
+                if (listPE != null && listPE.Count > 0)
+                {
+                    //Filter evalautions to get the correct one by year and period
+                    var selectedPe = listPE.OrderByDescending(pe => pe.PeriodId == period && pe.EvaluationYear == year).FirstOrDefault();
+                    if(selectedPe.EvaluationYear != year || selectedPe.PeriodId != period)
+                    {
+                        selectedPe = null;
+                    }
+                    employeeVM.lastPe = selectedPe;
+                }
+
+                listEmployeeVM.Add(employeeVM);
+            }
+            var periods = _peService.GetAllPeriods();
+            var years = _peService.GetAllYears();
+            var ListPeriods = new List<SelectListItem>();
+            var ListYears = new List<SelectListItem>();
+            foreach (var item in periods)
+            {
+                //Set onto list registered periods on data base
+                var newPeriod = new SelectListItem
+                {
+                    Text = "Period " + item.PeriodId + "(" + item.Name + ")",
+                    Value = item.PeriodId.ToString(),
+                    Selected = false
+                };
+                ListPeriods.Add(newPeriod);
+            }
+            foreach (var item in years)
+            {
+                //Set into list years with at leat with a register
+                var newYear = new SelectListItem
+                {
+                    Text = item.ToString(),
+                    Value = item.ToString(),
+                    Selected = false
+                };
+                ListYears.Add(newYear);
+            }
+
+            PerformanceFilesPartial partial = new PerformanceFilesPartial(listEmployeeVM, currentUser);
+
+            partial.ListPeriods = ListPeriods;
+            partial.ListYear = ListYears;
+            
+            return PartialView("_PerformanceFilesPeriodsPartial", partial);
         }
     }
 }

@@ -35,6 +35,9 @@ namespace PES.Services
                                                        ENGLISH_SCORE,
                                                        PERFORMANCE_SCORE,
                                                        COMPETENCE_SCORE,
+                                                       EVALUATION_YEAR,
+                                                       ID_PERIOD,
+                                                       STATUS,
                                                        ""RANK""
                                                       ) 
                                                VALUES (:evaluationPeriod,
@@ -45,6 +48,9 @@ namespace PES.Services
                                                        :englishScore,
                                                        :performanceScore,
                                                        :competenceScore,
+                                                       :evaluationYear,
+                                                       :periodId,
+                                                       :status,
                                                        :rank)";
 
                 // Adding parameters
@@ -58,6 +64,9 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("englishScore", pe.EnglishScore));
                     command.Parameters.Add(new OracleParameter("performanceScore", pe.PerformanceScore));
                     command.Parameters.Add(new OracleParameter("competenceScore", pe.CompeteneceScore));
+                    command.Parameters.Add(new OracleParameter("evaluationYear", pe.EvaluationYear));
+                    command.Parameters.Add(new OracleParameter("periodId", pe.PeriodId));
+                    command.Parameters.Add(new OracleParameter("periodId", 'Y'));
                     command.Parameters.Add(new OracleParameter("rank", pe.Rank));
 
                     try
@@ -177,8 +186,11 @@ namespace PES.Services
                                            "ENGLISH_SCORE," +
                                            "PERFORMANCE_SCORE," +
                                            "COMPETENCE_SCORE," +
+                                          // "EVALUATION_YEAR," +
+                                           //"ID_PERIOD," +
                                            "\"RANK\"" +
-                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "' AND ROWNUM <=1 ORDER BY ID_PE DESC";
+                                           "FROM PE WHERE ID_EMPLOYEE = '" + userid + "'AND ID_STATUS = 1 ORDER BY ID_PE DESC"; // correct status by joining with status table
+                                           //check why this query had rownum <=1
                    
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -198,6 +210,8 @@ namespace PES.Services
                         pes.Total = Convert.ToDouble(Read["TOTAL"]);
                         pes.PerformanceScore = Convert.ToDouble(Read["PERFORMANCE_SCORE"]);
                         pes.CompeteneceScore = Convert.ToDouble(Read["COMPETENCE_SCORE"]);
+                        //pes.EvaluationYear = Convert.ToInt32(Read["EVALUATION_YEAR"]);
+                        //pes.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
 
                         string rank = Convert.ToString(Read["RANK"]);
                         if (!string.IsNullOrEmpty(rank))
@@ -400,6 +414,159 @@ namespace PES.Services
                 }
             }
             return status;
+        }
+
+        public int VerifyPE(int employee, int evaluator, int period, int year)
+        {
+            var PE = 0;
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string insertQuery = @" SELECT ID_PE 
+                                     FROM PE 
+                                     WHERE ID_EMPLOYEE = :employeeId AND 
+                                     ID_EVALUATOR = :evaluatorId AND
+                                     ID_PERIOD = :periodId AND 
+                                     EVALUATION_YEAR = :evalYear AND
+                                     STATUS != :status";
+
+                // Adding parameters
+                using (OracleCommand command = new OracleCommand(insertQuery, db))
+                {
+                    command.Parameters.Add(new OracleParameter("employeeId", employee));
+                    command.Parameters.Add(new OracleParameter("evaluatorId", evaluator));
+                    command.Parameters.Add(new OracleParameter("periodId", period));
+                    command.Parameters.Add(new OracleParameter("evalYear", year));
+                    command.Parameters.Add(new OracleParameter("status", "Disable"));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            PE = Convert.ToInt32(reader["ID_PE"]);
+                        }
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                }
+            }
+            return PE;
+        }
+
+        public bool UpdateStatus(int peId)
+        {
+            bool status = false;
+
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string updateRank = @"UPDATE PE
+                                        SET STATUS = 'N'
+                                       WHERE ID_PE = :peId";
+
+                using (OracleCommand command = new OracleCommand(updateRank, db))
+                {
+                    command.Parameters.Add(new OracleParameter("peId", peId));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                        status = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                }
+            }
+            return status;
+        }
+
+        public List<Period> GetAllPeriods()
+        {
+            List<Period> listPeriods = null;
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT UNIQUE ID_PERIOD " +
+                                           "FROM PE WHERE STATUS = 'Y' ORDER BY ID_PERIOD ASC";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    listPeriods = new List<Period>();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        Period period = new Period();
+                        period.PeriodId = Convert.ToInt32(Read["ID_PERIOD"]);
+                        if(period.PeriodId == 1)
+                        {
+                            period.Name = "JANUARY - JUNE";
+                        }
+                        else
+                        {
+                            period.Name = "JULY - DECEMBER";
+                        }
+
+                        listPeriods.Add(period);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+            return listPeriods;
+        }
+
+        public List<int> GetAllYears()
+        {
+            List<int> listYears = null;
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT UNIQUE EVALUATION_YEAR " +
+                                           "FROM PE WHERE STATUS = 'Y' ORDER BY EVALUATION_YEAR DESC";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    listYears = new List<int>();
+                    while (Read.Read())
+                    {
+
+                        // Store data in employee object 
+                        int year;
+                        year = Convert.ToInt32(Read["EVALUATION_YEAR"]);
+
+                        listYears.Add(year);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+            return listYears;
         }
     }
 }
