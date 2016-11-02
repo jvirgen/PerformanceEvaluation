@@ -104,6 +104,39 @@ DROP TYPE "PE"."REPCAT$_OBJECT_NULL_VECTOR";
 
    CREATE SEQUENCE  "PE"."SEQTITLE"  MINVALUE 1 MAXVALUE 3 INCREMENT BY 1 START WITH 3 CACHE 2 ORDER  CYCLE ;
 --------------------------------------------------------
+--  DDL for Sequence SEQLATENESS
+--------------------------------------------------------
+
+   CREATE SEQUENCE "PE"."SEQLATENESS" MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20; 
+--------------------------------------------------------
+--  DDL for Table COMMENT
+--------------------------------------------------------
+
+   CREATE TABLE "PE"."LATENESS"
+    ( "ID_LATENESS" NUMERIC NOT NULL,
+    "DATE" TIMESTAMP NOT NULL,
+    "ID_EMPLOYEE" NUMERIC NOT NULL,
+    CONSTRAINT "LATENESS_ID_LATENESS_PK" PRIMARY KEY("ID_LATENESS")
+    )SEGMENT CREATION IMMEDIATE 
+    PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+    STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+    PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+    TABLESPACE "SYSTEM" ;
+    
+--------------------------------------------------------
+--  DDL for Table LOCATION
+--------------------------------------------------------
+
+    CREATE TABLE "PE"."LOCATION" 
+    ( "ID_LOCATION" NUMERIC(3) NOT NULL,
+    "NAME" VARCHAR2(25) NOT NULL,
+    CONSTRAINT "LOCATION_ID_LOCATION_PK" PRIMARY KEY("ID_LOCATION")
+    )SEGMENT CREATION IMMEDIATE 
+    PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+    STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+    PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+    TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
 --  DDL for Table COMMENT
 --------------------------------------------------------
 
@@ -148,7 +181,8 @@ DROP TYPE "PE"."REPCAT$_OBJECT_NULL_VECTOR";
 	"ID_MANAGER" NUMBER, 
 	"HIRE_DATE" DATE, 
 	"END_DATE" DATE, 
-	"PROJECT" VARCHAR2(100 BYTE)
+	"PROJECT" VARCHAR2(100 BYTE),
+  "ID_LOCATION" NUMERIC(3) NOT NULL
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -309,63 +343,63 @@ Insert into PE.DESCRIPTION (ID_DESCRIPTION,DESCRIPTION,ID_SUBTITLE) values (35,'
 Insert into PE.DESCRIPTION (ID_DESCRIPTION,DESCRIPTION,ID_SUBTITLE) values (36,'Total  Competences',6);
 REM INSERTING into PE.EMPLOYEE
 SET DEFINE OFF;
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (1,'Jose','Adan','jose.adan@4thsource.com','No Customer','.NET Developer',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (2,'Jose Eduardo','Aguilar Anguiano','jose.aguilar@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (3,'Israel','Alcantar','israel.alcantar@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (4,'Alan','Altamirano','alan.altamirano@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (5,'Diego','Amaya','Diego.amaya@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (6,'Jhonathan','Amezcua','jhonathan.amezcua@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (7,'Monica','Benavides','monica.benavides@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (8,'Christian','Borja','christian.borja@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (9,'Saul','Casiano','saul.casiano@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (10,'Ricardo','Castaneda','ricardo.castaneda@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (11,'Javier Alexis','Cernas Avalos','javier.cernas@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (12,'Jose Eduardo','Cortes Cernas','jose.cortes@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (13,'Jonathan','Covarrubias','jonathan.covarrubias@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (14,'Patrick','De la Rosa','patrick.delarosa@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (15,'Carlos','Esparza','Carlos.esparza@4thsource.com','No Customer','Quality Assurance Analyst',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (16,'Idalia','Evangelista','idalia.evangelista@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (17,'Humberto','Francillard','h.francillard@4thsource.com','ESSC','Team Leader',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,'Development');
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (18,'Gustavo','Fuentes','gustavo.fuentes@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (20,'Laura','Garcia Paez','laura.garcia@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (19,'Oscar Mauricio','Garcia','Mauricio.garcia@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (21,'Yessica','Godinez','jesica.godinez@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (22,'Oscar','Gonzalez','oscar.gonzalez@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (23,'Jose','Gutierrez','jose.gutierrez@4thsource.com','No Customer','Developer',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (24,'Alan','Guzman','alan.guzman@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (25,'Carlos','Hernandez','Carlos.hernandez@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (26,'Miguel','Hernandez','miguel.hernandez@4thsource.com','No Customer','Developer',3,26,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (27,'Victor','Hernandez','victor.hernandez@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (28,'Victor Angel','León González','victor.leon@4thsource.com','No Customer','.NET Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (29,'Noe','Leos','noe.leos@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (30,'Francisco','Lomeli','francisco.lomeli@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (31,'Daniel','Lopez','daniel.lopez@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (32,'Jamie','Luna Garcia','jaime.luna@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (33,'Alejandra','Mayorga','alejandra.mayorga@4thsource.com','No Customer','Project Manager',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (34,'Eric','Mesina','eric.mesina@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (35,'Nestor','Morales','nestor.julian@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (36,'Eduardo','Morin','eduardo.morin@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (37,'Luis','Munguia Gonzalez','luis.munguia@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (38,'Anibal','Negrete','anibal.negrete@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (39,'Eder','Palacios','eder.palacios@4thsource.com','No Customer','Developer',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (40,'Orlando','Palacios','orlando.palacios@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (41,'Victor','Pena','victor.pena@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (42,'Daniel','Perez','daniel.perez@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (43,'Robertho','Perez','robertho.perez@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (44,'Juan','Ricardo','juan.ricardo@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (45,'Ghersain','Rivera','azael.rivera@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (46,'Martha','Rodriguez','martha.rodriguez@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (47,'Santiago','Rodriguez','santiago.rodriguez@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (48,'Christian','Ruiz','christian.ruiz@4thsource.com','No Customer','Quality Assurance Analyst',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (49,'Jose','Salazar','jose.salazar@4thsource.com','No Customer','Developer',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (50,'Carlos','Sandoval','carlos.sandoval@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (51,'Juan Ruben','Sepulveda','juan.sepulveda@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (52,'Felipe','Torres','felipe.torres@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (53,'Jose','Vaca','jose.vaca@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (54,'Bruno','Vargas Camarena','bruno.vargas@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (55,'Fernando','Vasquez','fernando.vasquez@4thsource.com','No Customer','Developer',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (56,'Josimar','Vazquez Plaza','josimar.vazquez@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT) values (57,'Julio','Virgen','julio.virgen@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (1,'Jose','Adan','jose.adan@4thsource.com','No Customer','.NET Developer',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (2,'Jose Eduardo','Aguilar Anguiano','jose.aguilar@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (3,'Israel','Alcantar','israel.alcantar@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (4,'Alan','Altamirano','alan.altamirano@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (5,'Diego','Amaya','Diego.amaya@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (6,'Jhonathan','Amezcua','jhonathan.amezcua@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (7,'Monica','Benavides','monica.benavides@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (8,'Christian','Borja','christian.borja@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (9,'Saul','Casiano','saul.casiano@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (10,'Ricardo','Castaneda','ricardo.castaneda@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (11,'Javier Alexis','Cernas Avalos','javier.cernas@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (12,'Jose Eduardo','Cortes Cernas','jose.cortes@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (13,'Jonathan','Covarrubias','jonathan.covarrubias@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (14,'Patrick','De la Rosa','patrick.delarosa@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (15,'Carlos','Esparza','Carlos.esparza@4thsource.com','No Customer','Quality Assurance Analyst',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (16,'Idalia','Evangelista','idalia.evangelista@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (17,'Humberto','Francillard','h.francillard@4thsource.com','ESSC','Team Leader',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,'Development');
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (18,'Gustavo','Fuentes','gustavo.fuentes@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (20,'Laura','Garcia Paez','laura.garcia@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (19,'Oscar Mauricio','Garcia','Mauricio.garcia@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (21,'Yessica','Godinez','jesica.godinez@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (22,'Oscar','Gonzalez','oscar.gonzalez@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (23,'Jose','Gutierrez','jose.gutierrez@4thsource.com','No Customer','Developer',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (24,'Alan','Guzman','alan.guzman@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (25,'Carlos','Hernandez','Carlos.hernandez@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (26,'Miguel','Hernandez','miguel.hernandez@4thsource.com','No Customer','Developer',3,26,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (27,'Victor','Hernandez','victor.hernandez@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (28,'Victor Angel','León González','victor.leon@4thsource.com','No Customer','.NET Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (29,'Noe','Leos','noe.leos@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (30,'Francisco','Lomeli','francisco.lomeli@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (31,'Daniel','Lopez','daniel.lopez@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (32,'Jamie','Luna Garcia','jaime.luna@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (33,'Alejandra','Mayorga','alejandra.mayorga@4thsource.com','No Customer','Project Manager',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (34,'Eric','Mesina','eric.mesina@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (35,'Nestor','Morales','nestor.julian@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (36,'Eduardo','Morin','eduardo.morin@4thsource.com','No Customer','Developer',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (37,'Luis','Munguia Gonzalez','luis.munguia@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (38,'Anibal','Negrete','anibal.negrete@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (39,'Eder','Palacios','eder.palacios@4thsource.com','No Customer','Developer',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (40,'Orlando','Palacios','orlando.palacios@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (41,'Victor','Pena','victor.pena@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (42,'Daniel','Perez','daniel.perez@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (43,'Robertho','Perez','robertho.perez@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (44,'Juan','Ricardo','juan.ricardo@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (45,'Ghersain','Rivera','azael.rivera@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (46,'Martha','Rodriguez','martha.rodriguez@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (47,'Santiago','Rodriguez','santiago.rodriguez@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (48,'Christian','Ruiz','christian.ruiz@4thsource.com','No Customer','Quality Assurance Analyst',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (49,'Jose','Salazar','jose.salazar@4thsource.com','No Customer','Developer',2,26,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (50,'Carlos','Sandoval','carlos.sandoval@4thsource.com','No Customer','Quality Assurance Analyst',1,39,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (51,'Juan Ruben','Sepulveda','juan.sepulveda@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (52,'Felipe','Torres','felipe.torres@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (53,'Jose','Vaca','jose.vaca@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (54,'Bruno','Vargas Camarena','bruno.vargas@4thsource.com','No Customer','Quality Assurance Analyst',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (55,'Fernando','Vasquez','fernando.vasquez@4thsource.com','No Customer','Developer',1,15,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (56,'Josimar','Vazquez Plaza','josimar.vazquez@4thsource.com','No Customer','Developer',1,49,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION) values (57,'Julio','Virgen','julio.virgen@4thsource.com','No Customer','Developer',1,23,to_date('12-22-2015','MM-DD-YYYY'),null,null,2);
 REM INSERTING into PE.LM_SKILL
 SET DEFINE OFF;
 REM INSERTING into PE.PE
@@ -413,6 +447,12 @@ REM INSERTING into PE.TITLE
 SET DEFINE OFF;
 Insert into PE.TITLE (ID_TITLE,TITLE) values (1,'Performance');
 Insert into PE.TITLE (ID_TITLE,TITLE) values (2,'Competences');
+REM INSERTING into PE.LOCATION
+SET DEFINE OFF;
+INSERT INTO PE.LOCATION (ID_LOCATION, NAME) VALUES (1,'USA');
+INSERT INTO PE.LOCATION (ID_LOCATION, NAME) VALUES (2,'COLIMA');
+INSERT INTO PE.LOCATION (ID_LOCATION, NAME) VALUES (3,'MERIDA');
+INSERT INTO PE.LOCATION (ID_LOCATION, NAME) VALUES (4,'DF');
 --------------------------------------------------------
 --  DDL for Index COMMENT_PK
 --------------------------------------------------------
@@ -654,6 +694,12 @@ Insert into PE.TITLE (ID_TITLE,TITLE) values (2,'Competences');
   ALTER TABLE "PE"."TITLE" MODIFY ("TITLE" NOT NULL ENABLE);
   ALTER TABLE "PE"."TITLE" MODIFY ("ID_TITLE" NOT NULL ENABLE);
 --------------------------------------------------------
+--  Ref Constraints for Table LATENESS
+--------------------------------------------------------
+
+  ALTER TABLE "PE"."LATENESS" ADD CONSTRAINT "LATENESS_ID_EMPLOYEE_FK" FOREIGN KEY("ID_EMPLOYEE") 
+    REFERENCES "PE"."EMPLOYEE"("ID_EMPLOYEE") ENABLE;
+--------------------------------------------------------
 --  Ref Constraints for Table COMMENT
 --------------------------------------------------------
 
@@ -671,6 +717,8 @@ Insert into PE.TITLE (ID_TITLE,TITLE) values (2,'Competences');
 
   ALTER TABLE "PE"."EMPLOYEE" ADD CONSTRAINT "EMPLOYEE_PROFILE_FK" FOREIGN KEY ("ID_PROFILE")
 	  REFERENCES "PE"."PROFILE" ("ID_PROFILE") ENABLE;
+  ALTER TABLE "PE"."EMPLOYEE" ADD CONSTRAINT "EMPLOYEE_ID_LOCATION_FK" FOREIGN KEY("ID_LOCATION") 
+    REFERENCES "PE"."LOCATION"("ID_LOCATION") ENABLE;
 --------------------------------------------------------
 --  Ref Constraints for Table LM_SKILL
 --------------------------------------------------------
@@ -703,6 +751,20 @@ Insert into PE.TITLE (ID_TITLE,TITLE) values (2,'Competences');
 
   ALTER TABLE "PE"."SUBTITLE" ADD CONSTRAINT "SUBTITLE_TITLE_FK" FOREIGN KEY ("ID_TITLE")
 	  REFERENCES "PE"."TITLE" ("ID_TITLE") ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger TRIGGLATENESS
+--------------------------------------------------------
+  CREATE OR REPLACE TRIGGER "PE"."TRIGGLATENESS" 
+  BEFORE INSERT ON "PE"."LATENESS" 
+  FOR EACH ROW
+  BEGIN
+    if inserting then 
+      if :NEW."ID_LATENESS" is null then
+        SELECT SEQLATENESS.NEXTVAL INTO :NEW."ID_LATENESS" FROM dual;
+      end if; 
+    end if; 
+  END;
+  /
 --------------------------------------------------------
 --  DDL for Trigger TRIGGCOMMENT
 --------------------------------------------------------
@@ -924,3 +986,4 @@ ALTER TRIGGER "PE"."TRIGGTITLE" ENABLE;
 --------------------------------------------------------
 
   CREATE OR REPLACE SYNONYM "PE"."TABQUOTAS" FOR "SYS"."TABQUOTAS";
+  
