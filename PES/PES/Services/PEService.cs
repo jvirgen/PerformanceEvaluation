@@ -499,7 +499,7 @@ namespace PES.Services
                     db.Open();
 
                     string Query = "SELECT UNIQUE ID_PERIOD " +
-                                           "FROM PE WHERE STATUS = 'Y' ORDER BY ID_PERIOD ASC";
+                                           "FROM PE WHERE ID_STATUS = 'Y' ORDER BY ID_PERIOD ASC";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
 
@@ -543,7 +543,7 @@ namespace PES.Services
                     db.Open();
 
                     string Query = "SELECT UNIQUE EVALUATION_YEAR " +
-                                           "FROM PE WHERE STATUS = 'Y' ORDER BY EVALUATION_YEAR DESC";
+                                           "FROM PE WHERE ID_STATUS = 'Y' ORDER BY EVALUATION_YEAR DESC";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
 

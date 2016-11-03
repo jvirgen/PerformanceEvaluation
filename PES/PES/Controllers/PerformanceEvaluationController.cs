@@ -1071,7 +1071,7 @@ namespace PES.Controllers
                 uploadVM.ListEmployees = employeesList;
                 uploadVM.PeriodList = ListPeriods;
                 uploadVM.ListYears = listYears;
-                uploadVM.SelectedPeriod = int.Parse(ListPeriods.LastOrDefault(p => p.Value == currentPeriod.ToString()).Value); // last 
+                //uploadVM.SelectedPeriod = int.Parse(ListPeriods.LastOrDefault(p => p.Value == currentPeriod.ToString()).Value); // last 
                 uploadVM.SelectedYear = int.Parse(listYears.LastOrDefault(y => y.Value == currentYear.ToString()).Value);
 
 
