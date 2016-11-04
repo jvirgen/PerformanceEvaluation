@@ -24,6 +24,7 @@
 /// <reference path="moment-with-locales.min.js" />
 /// <reference path="moveemployees.js" />
 /// <reference path="new-manager-validations.js" />
+/// <reference path="radios.js" />
 /// <reference path="respond.js" />
 /// <reference path="select2.js" />
 /// <reference path="showemployees.js" />
