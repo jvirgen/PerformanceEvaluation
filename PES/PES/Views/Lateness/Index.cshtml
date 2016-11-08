@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Lateness Reports";
+}
+<br /><br />
+
+<label class="radio-inline"><input type="radio" name="period" value="today" checked>Today</label>
+<label class="radio-inline"><input type="radio" name="period" value="week">This Week</label>
+<label class="radio-inline"><input type="radio" name="period" value="month">This Month</label>
+<label class="radio-inline"><input type="radio" name="period" value="year">This Year</label>
+
+<br /><br />
+
+<div class="well responsive" id="table-content">
+    @Html.Partial("_LatenessReportsPartial")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/radios.js")
+}

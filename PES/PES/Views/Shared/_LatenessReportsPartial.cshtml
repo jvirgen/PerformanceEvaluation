@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PES.Models.Lateness>
+@using PES.Models
+
+@{
+    int count = 1;
+}
+
+<table class="table">
+    <tr>
+        <th>
+            NO. LATENESS
+        </th>
+        <th>
+            DATE
+        </th>
+        <th>
+            TIME
+        </th>
+    </tr>
+    @{
+        foreach (var lateness in Model)
+        {
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
+                </td>
+                <td>
+                    @lateness.Date.ToString("hh:mm:ss tt")
+                </td>
+            </tr>
+            count++;
+        }
+    }
+</table>
+
+
+
+

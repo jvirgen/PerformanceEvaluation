@@ -18,6 +18,6 @@ namespace PES.Models
         /// <summary>
         /// Title name
         /// </summary>
-        public string Title { get; set; }
+        public string Name { get; set; }
     }
 }
