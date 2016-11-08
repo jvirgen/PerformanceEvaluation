@@ -33,6 +33,8 @@ namespace PES.Controllers
 
             var userEmail = (string)Session["UserEmail"];
             lateness = GetLateness.GetLatenessByEmail(userEmail, period);
+
+            ViewBag.period = period.ToUpper();
             return PartialView("_LatenessReportsPartial", lateness);
         }
     }
