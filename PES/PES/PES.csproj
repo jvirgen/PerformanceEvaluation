@@ -149,6 +149,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LatenessController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PerformanceEvaluationController.cs" />
     <Compile Include="DBContext\DBContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -454,6 +455,7 @@
     <Content Include="Views\PerformanceEvaluation\ReportrsHistory.cshtml" />
     <Content Include="Views\Lateness\Index.cshtml" />
     <Content Include="Views\Shared\_LatenessReportsPartial.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

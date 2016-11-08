@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+}
+<hr />
+<div class="well">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>Welcome!</h2>
+        </div>
+        <hr />
+        <div class="col-md-12">
+            <label> Choose the system that you need </label>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-6">
+            <a href="@Url.Action("Choose", "LoginUser")" class="btn btn-lg btn-primary" style="width: 250px">Performance Evaluation</a>
+        </div>
+        <div class="col-md-6">
+            <a href="@Url.Action("Index", "lateness")" class="btn btn-lg btn-primary" style="width: 250px">Lateness Report</a>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-pull-6">
+            <a href="@Url.Action("Index","Holidays")" class="btn btn-lg btn-primary" style="width: 250px;">Holidays</a>
+        </div>
+    </div>
+</div>

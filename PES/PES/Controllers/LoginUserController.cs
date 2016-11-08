@@ -52,24 +52,30 @@ namespace PES.Controllers
                         Session["UserEmail"] = resource.Email;
                         // Set flag that user is logged in
                         Session["UserName"] = string.Format("{0} {1}", resource.FirstName, resource.LastName);
+                        // Store the Resource user id in a variable session
+                        Session["UserId"] = resource.EmployeeId;
                         // Set user as authenticated
                         FormsAuthentication.SetAuthCookie(user.UserEmail, true);
                         //Decide if the user is a Resouce
                         if ((ProfileUser)resource.ProfileId == ProfileUser.Resource)
                         {
                             //Return the Resource's view 
-                            return RedirectToAction("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = resource.Email, employeeID = resource.EmployeeId });
+                            //return RedirectToAction("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = resource.Email, employeeID = resource.EmployeeId });
+
+                            return RedirectToAction("Index", "Menu");
                         }
                         //Check if the user is a Manager or Director 
                         else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
                         {
                             //Return the Manager's view                   
-                            return RedirectToAction("Index", "PerformanceEvaluation");
+                            //return RedirectToAction("Index", "PerformanceEvaluation");
+                            return RedirectToAction("Index", "Menu");
                         }
                         else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)
                         {
                             //Return the Manager's view
-                            return RedirectToAction("Index", "PerformanceEvaluation");
+                            //return RedirectToAction("Index", "PerformanceEvaluation");
+                            return RedirectToAction("Index", "Menu");
                         }
                         else
                         {
@@ -109,6 +115,12 @@ namespace PES.Controllers
             Session.Clear();
             Session.Abandon();
             return RedirectToAction("Login", "LoginUser");
+        }
+
+        
+        public ActionResult Choose()
+        {
+            return RedirectToAction("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = Session["UserEmail"], employeeID = Session["UserId"] });
         }
 
     }
