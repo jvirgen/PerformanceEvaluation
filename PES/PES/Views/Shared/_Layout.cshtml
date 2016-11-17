@@ -28,22 +28,23 @@
                 {
                     if (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager)
                     {
-                        <a class="navbar-brand" href="@Url.Action("Index", "PerformanceEvaluation", new { area = "" })">Performance Evaluation System</a>
+                        //<a class="navbar-brand" href="@Url.Action("Index", "PerformanceEvaluation", new { area = "" })">Performance Evaluation</a> //THIS LABEL IS NOT NECESARY
                     }
                     else if (userProfile == ProfileUser.Resource)
                     {
-                        //<span class="navbar-brand">Performance Evaluation System</span> //THIS LABEL IS NOT NECESARY ANYMORE
+                        //<span class="navbar-brand">Performance Evaluation System</span> //THIS LABEL IS NOT NECESARY
                     }
+
                 }
                 else
                 {
-                    <a class="navbar-brand" href="@Url.Action("Login", "LoginUser", new { area = "" })">Performance Evaluation System</a>
+                    //<a class="navbar-brand" href="@Url.Action("Login", "LoginUser", new { area = "" })">Performance Evaluation System</a>
                 }
             </div>
             <div class="navbar-collapse collapse">
                 @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager))
                 {
-                    <ul class="nav navbar-nav">
+                    /*<ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -57,7 +58,7 @@
                                 <li><a href="@Url.Action("ReportrsHistory","PerformanceEvaluation")">Periods Historical Information</a></li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul>*/
                 }
 
                 @if (userLogged)
