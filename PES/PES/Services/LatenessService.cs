@@ -55,6 +55,13 @@ namespace PES.Services
                                     "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
                                     "ORDER BY \"DATE\"";
                             break;
+                        case "last 5 years":
+                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
+                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
+                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '"+ email +"' " +
+                                    "ORDER BY \"DATE\"";
+                            break;
                         default:
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
