@@ -214,6 +214,7 @@
     <Content Include="Content\css\select2-bootstrap.css" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\css\StyleLateness.css" />
     <Content Include="Content\datatables\dataTables.bootstrap.min.css" />
     <Content Include="Content\ExportDataTables\buttons.dataTables.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
