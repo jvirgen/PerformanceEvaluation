@@ -39,28 +39,28 @@ namespace PES.Services
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
                                     "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
-                                    "ORDER BY \"DATE\"";
+                                    "ORDER BY \"DATE\" DESC";
                             break;
                         case "month":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
                                     "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
-                                    "ORDER BY \"DATE\"";
+                                    "ORDER BY \"DATE\" DESC";
                             break;
                         case "year":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
                                     "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
-                                    "ORDER BY \"DATE\"";
+                                    "ORDER BY \"DATE\" DESC";
                             break;
                         case "last 5 years":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
                                     "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '"+ email +"' " +
-                                    "ORDER BY \"DATE\"";
+                                    "ORDER BY \"DATE\" DESC";
                             break;
                         default:
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
