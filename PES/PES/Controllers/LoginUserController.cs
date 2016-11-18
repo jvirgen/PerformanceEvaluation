@@ -119,7 +119,7 @@ namespace PES.Controllers
 
 
         //Redirect Profiles TO PerformanceEvaluation according the UserProfile
-        public ActionResult Choose()
+        public ActionResult ChoosePe()
         {
             //Get the session to make validations
             int useProfile = (int)Session["UserProfile"];
