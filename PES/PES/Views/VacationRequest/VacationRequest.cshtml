@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<script>src = "../Scripts/jquery-1.10.2.js"</script>
+<script>
+    $(function() {
+        $("#calendar").datepicker({ minDate: -100, maxDate: "+0D" });
+        $("#calendar").datepicker("setDate", new Date());
+        $("#calendar").datepicker("option", "dateFormat", "dd/mm/yy");
+    });
+</script>
+<div>
+    <section>
+        <header>
+            <h1>Resource Name</h1>
+            <p>Vacation Request</p>
+        </header>
+    </section>
+    <section>
+        Request Title
+        <input type="text" name="title">
+        Lead Name
+        <input type="text" name="lead">
+            
+        <input type="text" name="calendar" id="calendar">
+    </section>
+    <section>
+        <textarea>
+            Comments
+        </textarea>
+        <a href="@Url.Action("HistoricalResource","VacatiosRequest")" class="btn btn-lg btn-primary">Send Request</a>
+    </section>
+</div>

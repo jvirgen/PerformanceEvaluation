@@ -457,6 +457,7 @@
     <Content Include="Views\Lateness\Index.cshtml" />
     <Content Include="Views\Shared\_LatenessReportsPartial.cshtml" />
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
+    <Content Include="Views\VacationRequest\VacationRequest.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
