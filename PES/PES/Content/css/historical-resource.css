@@ -1,0 +1,35 @@
+#pending-tab {
+    background-color: yellow;
+    margin-right: -2px;
+}
+
+.pending-tab {
+    color:black;
+}
+
+#rejected-tab {
+    background-color: red;
+    margin-right: -2px;
+}
+
+.rejected-tab {
+    color:black;
+}
+
+#approved-tab {
+    background-color: green;
+    margin-right: -2px;
+}
+
+.approved-tab {
+    color:black;
+}
+
+#canceled-tab {
+    background-color: gray;
+    margin-right: 0px;
+}
+
+.canceled-tab {
+    color:black;
+}

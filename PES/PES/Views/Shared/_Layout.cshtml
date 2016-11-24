@@ -67,7 +67,7 @@
                         <a type="button" class="btn btn-xs btn-sm" href="@Url.Action("Logout","LoginUser")">
                             <span class="glyphicon glyphicon-log-out"></span> Log out
                         </a>
-                        @if (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager)
+                        @if (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager || userProfile == ProfileUser.Resource)
                         {
                         <div class="text-center">
                             <span class="glyphicon glyphicon-check"></span>
