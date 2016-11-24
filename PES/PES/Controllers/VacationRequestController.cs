@@ -18,8 +18,7 @@ namespace PES.Controllers
         // GET: VacationRequest
         public ActionResult VacationRequest()
         {
-            ViewBag.title = "A Resource Name...";
-            return View();
+            return View("VacationRequest");
         }
     }
 }
