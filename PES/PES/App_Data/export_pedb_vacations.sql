@@ -226,7 +226,7 @@
    (	"ID_HEADER_REQ" NUMBER(4,0), 
 	"ID_EMPLOYEE" NUMBER(4,0), 
 	"TITLE" VARCHAR2(30 BYTE), 
-	"NO_DAYS" NUMBER(2,0), 
+	"NO_VAC_DAYS" NUMBER(2,0), 
 	"COMMENTS" VARCHAR2(300 BYTE), 
 	"ID_REQ_STATUS" NUMBER(2,0), 
 	"REPLAY_COMMENT" VARCHAR2(300 BYTE), 
@@ -281,6 +281,11 @@
 
    CREATE SEQUENCE  "PE"."SEQEMPLOYEE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 121 CACHE 20 ORDER  NOCYCLE ;
 --------------------------------------------------------
+--  DDL for Sequence SEQHOLIDAY_DAYS
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "PE"."SEQHOLIDAY_DAYS"  MINVALUE 1 MAXVALUE 99999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 ORDER  NOCYCLE ;
+--------------------------------------------------------
 --  DDL for Sequence SEQLATENESS
 --------------------------------------------------------
 
@@ -325,6 +330,21 @@
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PE"."SEQTITLE"  MINVALUE 1 MAXVALUE 3 INCREMENT BY 1 START WITH 3 CACHE 2 ORDER  CYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence SEQVAC_HEAD_REQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "PE"."SEQVAC_HEAD_REQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 ORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence SEQVAC_REQ_STATUS
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "PE"."SEQVAC_REQ_STATUS"  MINVALUE 1 MAXVALUE 999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 ORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence SEQVAC_SUBREQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "PE"."SEQVAC_SUBREQ"  MINVALUE 1 MAXVALUE 99999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 ORDER  NOCYCLE ;
 REM INSERTING into PE."COMMENT"
 SET DEFINE OFF;
 REM INSERTING into PE.DESCRIPTION
@@ -484,10 +504,16 @@ Insert into PE.TITLE (ID_TITLE,TITLE) values (1,'Performance');
 Insert into PE.TITLE (ID_TITLE,TITLE) values (2,'Competences');
 REM INSERTING into PE.VACATIONS_HEADER_REQ
 SET DEFINE OFF;
+Insert into PE.VACATIONS_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,LEAD_NAME,HAVE_PROJECT,NO_UNPAID_DAYS) values (1,2,'Christmas vacations',4,'My family are going to come and i would like to spend time with them.',1,null,'Eder Palacios','Y',null);
 REM INSERTING into PE.VACATIONS_REQ_STATUS
 SET DEFINE OFF;
+Insert into PE.VACATIONS_REQ_STATUS (ID_REQ_STATUS,REQ_STATUS) values (1,'PENDING');
+Insert into PE.VACATIONS_REQ_STATUS (ID_REQ_STATUS,REQ_STATUS) values (2,'REJECTED');
+Insert into PE.VACATIONS_REQ_STATUS (ID_REQ_STATUS,REQ_STATUS) values (3,'APPROVED');
+Insert into PE.VACATIONS_REQ_STATUS (ID_REQ_STATUS,REQ_STATUS) values (4,'CANCELED');
 REM INSERTING into PE.VACATIONS_SUBREQ
 SET DEFINE OFF;
+Insert into PE.VACATIONS_SUBREQ (ID_SUBREQ,ID_HEADER_REQ,START_DATE,END_DATE,RETURN_DATE) values (1,1,to_date('24/11/16','DD/MM/RR'),to_date('30/11/16','DD/MM/RR'),to_date('01/12/16','DD/MM/RR'));
 --------------------------------------------------------
 --  DDL for Index COMMENT_PK
 --------------------------------------------------------
@@ -690,6 +716,22 @@ end;
 /
 ALTER TRIGGER "PE"."TRIGGEMPLOYEE" ENABLE;
 --------------------------------------------------------
+--  DDL for Trigger TRIGGHOLIDAY_DAYS
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "PE"."TRIGGHOLIDAY_DAYS" 
+   before insert on "PE"."HOLIDAY_DAYS" 
+   for each row 
+begin  
+   if inserting then 
+      if :NEW."ID_HOLIDAY" is null then 
+         select SEQHOLIDAY_DAYS.nextval into :NEW."ID_HOLIDAY" from dual; 
+      end if; 
+   end if; 
+end;
+/
+ALTER TRIGGER "PE"."TRIGGHOLIDAY_DAYS" ENABLE;
+--------------------------------------------------------
 --  DDL for Trigger TRIGGLATENESS
 --------------------------------------------------------
 
@@ -833,6 +875,54 @@ begin
 end;
 /
 ALTER TRIGGER "PE"."TRIGGTITLE" ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger TRIGGVAC_HEADER_REQ
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "PE"."TRIGGVAC_HEADER_REQ" 
+   BEFORE INSERT ON "PE"."VACATIONS_HEADER_REQ"
+   for each row 
+BEGIN
+   if inserting then 
+      if :NEW."ID_HEADER_REQ" is null then 
+         select SEQVAC_HEAD_REQ.nextval into :NEW."ID_HEADER_REQ" from dual; 
+      end if; 
+   end if; 
+END;
+/
+ALTER TRIGGER "PE"."TRIGGVAC_HEADER_REQ" ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger TRIGGVAC_REQ_STATUS
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "PE"."TRIGGVAC_REQ_STATUS" 
+   before insert on "PE"."VACATIONS_REQ_STATUS" 
+   for each row 
+begin  
+   if inserting then 
+      if :NEW."ID_REQ_STATUS" is null then 
+         select SEQVAC_REQ_STATUS.nextval into :NEW."ID_REQ_STATUS" from dual; 
+      end if; 
+   end if; 
+end;
+/
+ALTER TRIGGER "PE"."TRIGGVAC_REQ_STATUS" ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger TRIGGVAC_SUBREQ
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "PE"."TRIGGVAC_SUBREQ" 
+   before insert on "PE"."VACATIONS_SUBREQ" 
+   for each row 
+begin  
+   if inserting then 
+      if :NEW."ID_SUBREQ" is null then 
+         select SEQVAC_SUBREQ.nextval into :NEW."ID_SUBREQ" from dual; 
+      end if; 
+   end if; 
+end;
+/
+ALTER TRIGGER "PE"."TRIGGVAC_SUBREQ" ENABLE;
 --------------------------------------------------------
 --  DDL for Synonymn CATALOG
 --------------------------------------------------------
