@@ -210,6 +210,7 @@
   <ItemGroup>
     <Content Include="App_Data\create_user_pe.sql" />
     <Content Include="App_Data\export_pedb.sql" />
+    <Content Include="App_Data\export_pedb_vacations.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\historical-resource.css" />
