@@ -1,0 +1,42 @@
+﻿@{
+    
+}
+<div class="row text-center">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title.</h2>
+    </div>
+    <hr />
+    <div class="col-md-12">
+        <p>Vacation List</p>
+    </div>
+</div>
+<div class="well">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#pending" >Pending</a></li>
+        <li><a data-toggle="tab" href="#rejected">Rejected</a></li>
+        <li><a data-toggle="tab" href="#approved">Approved</a></li>
+        <li><a data-toggle="tab" href="#canceled">Canceled</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="pending" class="tab-pane fade in active">
+            <h3>Pending</h3>
+            <p>pending tab</p>
+        </div>
+        <div id="rejected" class="tab-pane fade">
+            <h3>Rejected</h3>
+            <p>rejected tab</p>
+        </div>
+        <div id="approved" class="tab-pane fade">
+            <h3>Aproved</h3>
+            <p>aproved tab</p>
+        </div>
+        <div id="canceled" class="tab-pane fade">
+            <h3>Canceled</h3>
+            <p>Canceled tab</p>
+        </div>
+    </div>
+    
+</div>
+<a href="@Url.Action("About","Home")" class="btn btn-lg btn-primary">New Request</a>
+
