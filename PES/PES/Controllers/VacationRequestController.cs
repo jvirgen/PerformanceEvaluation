@@ -12,14 +12,14 @@ namespace PES.Controllers
         public ActionResult HistoricalResource()
         {
             ViewBag.title = "Resource Name";
-            return View("HistoricalResource");
+            return View();
         }
 
         // GET: VacationRequest
         public ActionResult VacationRequest()
         {
-            ViewBag.title = "Resource Name";
-            return View("VacationRequest");
+            ViewBag.title = "A Resource Name...";
+            return View();
         }
     }
 }
