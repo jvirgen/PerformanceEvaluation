@@ -1,35 +1,35 @@
-#pending-tab {
-    background-color: yellow;
-    margin-right: -2px;
+﻿.vcenter {
+  vertical-align: middle;
 }
 
-.pending-tab {
-    color:black;
+#reqStatus {
+    vertical-align: middle;
+    min-height: 100%;
 }
 
-#rejected-tab {
-    background-color: red;
-    margin-right: -2px;
+#vacationarea {
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
-.rejected-tab {
-    color:black;
+#requestarea {
+    padding-left: 0px;
 }
 
-#approved-tab {
-    background-color: green;
-    margin-right: -2px;
+#checkarea {
+    padding-top: 0px;
+    padding-left: 15px;
 }
 
-.approved-tab {
-    color:black;
+#checktext {
+    font-weight: bold;
 }
 
-#canceled-tab {
-    background-color: gray;
-    margin-right: 0px;
-}
-
-.canceled-tab {
-    color:black;
+.child-right {
+    background:green;
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
 }

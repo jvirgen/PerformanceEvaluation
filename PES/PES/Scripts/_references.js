@@ -29,4 +29,5 @@
 /// <reference path="select2.js" />
 /// <reference path="showemployees.js" />
 /// <reference path="update-change-validations.js" />
+/// <reference path="vacationsrequest.js" />
 /// <reference path="verifype.js" />
