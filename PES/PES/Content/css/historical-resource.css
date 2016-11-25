@@ -1,5 +1,5 @@
 #pending-tab {
-    background-color: yellow;
+    background-color: #FFFF66;
 }
 
 .pending-tab {
@@ -7,7 +7,7 @@
 }
 
 #rejected-tab {
-    background-color: red;
+    background-color: lightcoral;
 }
 
 .rejected-tab {
@@ -15,7 +15,7 @@
 }
 
 #approved-tab {
-    background-color: green;
+    background-color: lightgreen;
 }
 
 .approved-tab {
@@ -23,7 +23,7 @@
 }
 
 #canceled-tab {
-    background-color: gray;
+    background-color: lightgray;
 }
 
 .canceled-tab {
