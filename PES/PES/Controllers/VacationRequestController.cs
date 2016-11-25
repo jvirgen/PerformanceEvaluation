@@ -15,6 +15,11 @@ namespace PES.Controllers
             return View();
         }
 
-       
+        // GET: VacationRequest
+        public ActionResult VacationRequest()
+        {
+            ViewBag.title = "A Resource Name...";
+            return View();
+        }
     }
 }
