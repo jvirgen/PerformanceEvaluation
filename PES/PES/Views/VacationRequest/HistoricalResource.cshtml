@@ -1,15 +1,13 @@
 ﻿@{
 
 }
-
-@Styles.Render("~/Content/css/historical-resource.css")
 <div class="row text-center">
     <div class="col-md-12">
         <h2>@ViewBag.Title.</h2>
     </div>
     <hr />
     <div class="col-md-12">
-        <p>Vacation List</p>
+        <h3>Vacation List</h3>
     </div>
 </div>
 <div class="well">
@@ -40,5 +38,6 @@
     </div>
     
 </div>
-<a href="@Url.Action("About","Home")" class="btn btn-lg btn-primary">New Request</a>
+<a href="@Url.Action("VacationRequest", "VacationRequest")" class="btn btn-lg btn-primary">New Request</a>
 
+@Styles.Render("~/Content/css/historical-resource.css")
