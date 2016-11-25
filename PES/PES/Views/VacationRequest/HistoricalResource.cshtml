@@ -23,7 +23,23 @@
     <div class="tab-content">
         <div id="pending" class="tab-pane fade in active">
             <h3>Pending</h3>
-            <p>pending tab</p>
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="@Url.Action("VacationRequest","VacationRequest")></a></td>
+                    </tr>
+                </tbody>
+            </table>
+           <!-- <p>pending tab</p>-->
         </div>
         <div id="rejected" class="tab-pane fade">
             <h3>Rejected</h3>
