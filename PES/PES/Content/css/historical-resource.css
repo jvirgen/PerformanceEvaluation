@@ -1,6 +1,5 @@
 #pending-tab {
     background-color: yellow;
-    margin-right: -2px;
 }
 
 .pending-tab {
@@ -9,7 +8,6 @@
 
 #rejected-tab {
     background-color: red;
-    margin-right: -2px;
 }
 
 .rejected-tab {
@@ -18,7 +16,6 @@
 
 #approved-tab {
     background-color: green;
-    margin-right: -2px;
 }
 
 .approved-tab {
@@ -27,9 +24,12 @@
 
 #canceled-tab {
     background-color: gray;
-    margin-right: 0px;
 }
 
 .canceled-tab {
     color:black;
+}
+
+.nav-tabs > li > a {
+    margin-right:0;
 }

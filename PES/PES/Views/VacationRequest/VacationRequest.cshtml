@@ -1,37 +1,91 @@
-﻿
-@{
-    Layout = null;
-}
-
-
-
-<script>src = "../Scripts/jquery-1.10.2.js"</script>
-<script>
-    $(function() {
-        $("#calendar").datepicker({ minDate: -100, maxDate: "+0D" });
-        $("#calendar").datepicker("setDate", new Date());
-        $("#calendar").datepicker("option", "dateFormat", "dd/mm/yy");
-    });
-</script>
+﻿@Styles.Render("~/Content/css/vecation_request_resource.css")
 <div>
     <section>
-        <header>
-            <h1>Resource Name</h1>
+        <div class="page-header text-center">
+            <h1>@ViewBag.Title</h1>
             <p>Vacation Request</p>
-        </header>
-    </section>
-    <section>
-        Request Title
-        <input type="text" name="title">
-        Lead Name
-        <input type="text" name="lead">
-            
-        <input type="text" name="calendar" id="calendar">
-    </section>
-    <section>
-        <textarea>
-            Comments
-        </textarea>
-        <a href="@Url.Action("HistoricalResource","VacatiosRequest")" class="btn btn-lg btn-primary">Send Request</a>
+        </div>
+        <form class="form-horizontal">
+            <div class="form-group row">
+                <div class="container-fluid">
+                    <div class="col-md-3">
+                        <label for="title" class="control-label">Request Title</label>
+                        <div>
+                            <input type="text" class="form-control" data-val="true" data-val-required="Request title is required" id="title">
+                        </div>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="lead" class="control-label">Lead Name</label>
+                        <div>
+                            <input type="text" class="form-control" data-val="true" data-val-required="Lead name is required" id="lead">
+                        </div>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-md-6 text-right vcenter">
+                        <label class="control-label text-center">
+                            Request Status:
+                            <span class="label label-default" id="status">New</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="container-fluid">
+                    <div class="col-md-2 text-center">
+                        <label>
+                            Vacation Days:
+                            <span class="label label-info">15</span>
+                        </label>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <label>
+                            Days Requested:
+                            <span class="label label-info">15</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8 checkbox">
+                        <label>
+                            <input type="checkbox" id="unpaid">I do not have a project
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="container-fluid">
+                    <div class="col-md-2">
+                        <label for="start">Start Date</label>
+                        <input type="text" class="form-control" data-val="true" data-val-required="Start date is required" id="start">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="end">End Date</label>
+                        <input type="text" class="form-control" data-val="true" data-val-required="End date is required" id="end">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="end" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Return Date</label>
+                        <input type="text" class="form-control" id="return">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row container-fluid">
+                <div class="col-md-2">
+                    <span class="label label-warning">All vacations days must be in the same month</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="container-fluid">
+                    <div class="col-md-8">
+                        <label for="comments" class="control-label">Comments:</label>
+                        <textarea class="form-control" style="min-width:100%;" rows="5" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary">Send Request</a>
+                    </div>
+                </div>
+            </div>
+        </form>
     </section>
 </div>
