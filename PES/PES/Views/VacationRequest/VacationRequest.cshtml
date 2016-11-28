@@ -44,7 +44,7 @@
                             <span id="daysReq" class="label label-info">15</span>
                         </label>
                     </div>
-                    <div id="checkarea" class="col-md-8 checkbox">
+                    <div id="checkarea" class="col-md-8 checkbox check-pad">
                         <label id="checktext">
                             <input type="checkbox" id="unpaid">I do not have a project
                         </label>
@@ -54,18 +54,14 @@
             <div class="form-group">
                 <div class="container">
                     <div class="col-md-2">
-                        <input id="start" type="text" class="form-control" data-val="true" data-val-required="Start date is required" placeholder="Start Date">
+                        <label for="start">Start Date / End Date</label>
+                        <label for="start">Start Date / End Date</label>
+                        <input type="text" name="daterange"class="form-control" data-val="true" data-val-required="Start date is required" id="start">
                         <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
-                        <input id="end" type="text" class="form-control" data-val="true" data-val-required="End date is required" placeholder="End Date">
-                        <span class="field-validation-valid text-danger" data-valmsg-for="end" data-valmsg-replace="true"></span>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" id="return" placeholder="Return Date">
-                    </div>
-                    <div class="col-md-2">
-                        <button id="addDate" type="button" class="btn btn-default" data-dismiss="modal">Add Date</button>
+                        <label>Return Date</label>
+                        <input type="text" class="form-control" id="return">
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
@@ -114,13 +110,23 @@
     </section>
 </div>
 
-@section Scripts 
-{
-   
-    @Scripts.Render("~/Scripts/vacationsRequest.js")
-}
-
 @section Styles
 {
     @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/content/themes/base/daterangepicker.css")
+} 
+
+@section Scripts
+{
+
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+
+    <script type="text/javascript">
+
+        $(function() {
+            $('input[name="daterange"]').daterangepicker();
+        });
+    </script>
 }
