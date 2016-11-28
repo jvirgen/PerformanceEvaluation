@@ -5,13 +5,13 @@ table-layout: fixed;
 }
 
 table{
- height:260px;              
+ height:285px;              
  display: -moz-groupbox;   
 }
 
 tbody{
   overflow-y: scroll;      
-  height: 290px;           
+  height: 270px;           
   width: 91%;
   position: absolute;
 }
