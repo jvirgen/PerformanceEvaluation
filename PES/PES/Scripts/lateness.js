@@ -13,7 +13,8 @@
                 $('#Tableview').DataTable({
                     dom: '<"row"<"col-md-6"B><"col-md-6"f>>',
                     buttons: [
-                        'excel', 'pdf']
+                        'excel', 'pdf'],
+                    pageLength: -1 
                 });
             
             }
@@ -23,6 +24,7 @@
     $('#Tableview').DataTable({
         dom: '<"row"<"col-md-6"B><"col-md-6"f>>',
         buttons: [
-            'excel', 'pdf']
+            'excel', 'pdf'],
+        pageLength: -1
     });
 });
