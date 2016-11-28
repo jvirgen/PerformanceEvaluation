@@ -15,7 +15,6 @@ namespace PES.Controllers
             return View();
         }
 
-
         // GET: VacationRequest
         public ActionResult VacationRequest()
         {
