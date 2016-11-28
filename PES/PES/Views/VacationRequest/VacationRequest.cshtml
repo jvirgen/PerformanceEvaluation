@@ -5,20 +5,20 @@
             <h1>@ViewBag.Title</h1>
             <p>Vacation Request</p>
         </div>
-        <form class="form-horizontal">
+        <form id="form" class="form-horizontal">
             <div class="form-group">
-                <div id="rowCont" class="container">
+                <div class="container flexEnd">
                     <div id="reqName" class="col-md-3">
                         <label for="title" class="control-label col-form-label">Request Title</label>
                         <div>
-                            <input type="text" class="form-control" data-val="true" data-val-required="Request title is required" id="title">
+                            <input id="title" type="text" class="form-control" data-val="true" data-val-required="Request title is required">
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
                     </div>
                     <div id="leadName" class="col-md-3">
                         <label for="lead" class="control-label">Lead Name</label>
                         <div>
-                            <input type="text" class="form-control" data-val="true" data-val-required="Lead name is required" id="lead">
+                            <input id="lead" type="text" class="form-control" data-val="true" data-val-required="Lead name is required">
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
                     </div>
@@ -35,51 +35,55 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-info">15</span>
+                            <span id="daysVac" class="label label-default">15</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span id="daysReq" class="label label-info">15</span>
+                            <span id="daysReq" class="label label-default">15</span>
                         </label>
                     </div>
-                    <div id="checkarea" class="col-md-8 checkbox check-pad">
+                    <div id="checkarea" class="col-md-8 checkbox">
                         <label id="checktext">
                             <input type="checkbox" id="unpaid">I do not have a project
                         </label>
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
-            <div class="form-group">
-                <div class="container">
-                    <div class="col-md-2">
-                        <label for="start">Start Date / End Date</label>
-                        <label for="start">Start Date / End Date</label>
-                        <input type="text" name="daterange"class="form-control" data-val="true" data-val-required="Start date is required" id="start">
+            <div id="datesGroup" class="form-group">
+                <div id="datesCont" class="container flexEnd">
+                    <div class="col-md-3 text-center">
+                        <label for="start">Start Date - End Date</label>
+                        <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required">
                         <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
                         <label>Return Date</label>
                         <input type="text" class="form-control" id="return">
                     </div>
+                    <div class="col-md-7">
+                        <button id="addDate" type="button" class="btn btn-default" data-dismiss="modal">Add Date</button>
+                    </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
-            <div class="form-group container">
-                <div class="col-md-2">
-                    <span class="label label-warning">All vacations days must be in the same month</span>
-                </div>
-            </div><!-- form-group end -->
             <div class="form-group">
                 <div class="container">
+                    <div class="col-md-4">
+                        <span class="label label-warning">All vacations days must be in the same month</span>
+                    </div>
+                </div> <!-- container end -->
+            </div><!-- form-group end -->
+            <div class="form-group">
+                <div class="container flexEnd">
                     <div class="col-md-8">
                         <label for="comments" class="control-label">Comments:</label>
-                        <textarea class="form-control" style="min-width:100%;" rows="" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
+                        <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-4 text-center">
                         <!-- Alert Box -->
-                        <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Send Requesst</button>
+                        <button id="sendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Send Request</button>
 
                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
                             <div class="modal-dialog" role="document">
