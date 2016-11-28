@@ -62,10 +62,11 @@ namespace PES.Models
 
     }
 
-    public class VacHeadReqHelper : VacationHeaderReq
+    public class VacHeadReqViewModel : VacationHeaderReq
     {
-        public VacationSubreq start_date { get; set; }
-        public VacationSubreq end_date { get; set; }
-        public VacationSubreq return_date { get; set; }
+        public string status { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime end_date { get; set; }
+        public DateTime return_date { get; set; }
     }
 }

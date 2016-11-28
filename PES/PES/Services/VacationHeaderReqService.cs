@@ -16,19 +16,20 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
-        public List<VacationHeaderReq> GetAllGeneralVacationHeaderReqByEmployeeId(int employeeId)
+        public List<VacHeadReqViewModel> GetAllGeneralVacationHeaderReqByEmployeeId(int employeeId)
         {
-            List<VacationHeaderReq> Headers = new List<VacationHeaderReq>();
-            VacationHeaderReq Header = new VacationHeaderReq();
+            List<VacHeadReqViewModel> Headers = new List<VacHeadReqViewModel>();
+            VacHeadReqViewModel Header = new VacHeadReqViewModel();
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
                     string Query = @"SELECT " +
+                                        "HE.ID_EMPLOYEE, " +
                                         "HE.TITLE, " +
                                         "HE.NO_VAC_DAYS, " +
-                                        "HE.NO_UNPAID_DAYS, " +
+                                        "HE.ID_REQ_STATUS," +
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
                                         "SUB.RETURN_DATE " +
@@ -45,12 +46,18 @@ namespace PES.Services
                         OracleDataReader reader = command.ExecuteReader();
                         while (reader.Read())
                         {
-                            Header = new VacationHeaderReq();
-                            Header.
+                            Header = new VacHeadReqViewModel();
+                            Header.employeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
+                            Header.title = Convert.ToString(reader["TITLE"]);
+                            Header.noVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
+                            Header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
+                            Header.start_date = Convert.ToDateTime(reader["START_DATE"]);
+                            Header.end_date = Convert.ToDateTime(reader["END_DATE"]);
+                            Header.return_date = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            Headers.Add(Header);
                         }
                     }
-                    }
-
+                    db.Close();
                 }
             }
             catch (Exception ex)

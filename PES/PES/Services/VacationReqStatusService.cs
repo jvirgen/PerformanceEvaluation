@@ -50,5 +50,42 @@ namespace PES.Services
             }
             return status;
         }
+
+        public VacationReqStatus GetVacationReqStatusById(int id)
+        {
+            VacationReqStatus status = null;
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = "SELECT " +
+                                        "ID_REQ_STATUS, " +
+                                        "REQ_STATUS " +
+                                    "FROM " +
+                                        "VACATION_REQ_STATUS " +
+                                    "WHERE " +
+                                        "ID_REQ_STATUS = :id";
+                    using (OracleCommand command = new OracleCommand(Query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("id", id));
+                        command.ExecuteReader();
+                        OracleDataReader Read = command.ExecuteReader();
+                        while (Read.Read())
+                        {
+                            status = new VacationReqStatus();
+                            status.reqStatusId = Convert.ToInt32(Read["ID_REQ_STATUS"]);
+                            status.name = Convert.ToString(Read["REQ_STATUS"]);
+                        }
+                    }                        
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+            return status;
+        }
     }
 }

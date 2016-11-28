@@ -1,63 +1,166 @@
-﻿@{
-
-}
-<div class="row text-center">
-    <div class="col-md-12">
-        <h2>@ViewBag.Title.</h2>
-    </div>
-    <hr />
-    <div class="col-md-12">
-        <h3>Vacation List</h3>
-    </div>
-</div>
-<div class="well">
-    <ul class="nav nav-tabs">
-        <li class="active" id="pending-tab"><a data-toggle="tab" href="#pending" class="pending-tab">Pending</a></li>
-        <li id="rejected-tab"><a data-toggle="tab" href="#rejected" class="rejected-tab">Rejected</a></li>
-        <li id="approved-tab"><a data-toggle="tab" href="#approved" class="approved-tab">Approved</a></li>
-        <li id="canceled-tab"><a data-toggle="tab" href="#canceled" class="canceled-tab">Canceled</a></li>
-    </ul>
-
-    <div class="tab-content">
-        <div id="pending" class="tab-pane fade in active">
-            <h3>Pending</h3>
-            <table id="Tableview" border="1" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th id="header_title">Title</th>
-                        <th id="header_days">Days</th>
-                        <th id="header_start_date">Start Date</th>
-                        <th id="header_end_date">End Date</th>
-                        <th id="header_return_date">Return Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="@Url.Action("VacationRequest","VacationRequest")">Christmas </a></td>
-                        <td>7</td>
-                        <td>19/12/2016</td>
-                        <td>28/12/2016</td>
-                        <td>29/12/2016</td>
-                    </tr>
-                </tbody>
-            </table>
-           <!-- <p>pending tab</p>-->
+﻿    @model IEnumerable<PES.Models.VacHeadReqViewModel>
+    @using PES.Models
+    @{
+        string userName = ViewBag.Username != null ? (string)ViewBag.Username : "";
+        int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
+    }
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>@userName</h2>
         </div>
-        <div id="rejected" class="tab-pane fade">
-            <h3>Rejected</h3>
-            <p>rejected tab</p>
-        </div>
-        <div id="approved" class="tab-pane fade">
-            <h3>Aproved</h3>
-            <p>aproved tab</p>
-        </div>
-        <div id="canceled" class="tab-pane fade">
-            <h3>Canceled</h3>
-            <p>Canceled tab</p>
+        <hr />
+        <div class="col-md-12">
+            <h3>Vacation List</h3>
         </div>
     </div>
-    
-</div>
-<a href="@Url.Action("VacationRequest", "VacationRequest")" class="btn btn-lg btn-primary">New Request</a>
+    <div class="well">
+        <ul class="nav nav-tabs">
+            <li class="active" id="pending-tab"><a data-toggle="tab" href="#pending" class="pending-tab">Pending</a></li>
+            <li id="rejected-tab"><a data-toggle="tab" href="#rejected" class="rejected-tab">Rejected</a></li>
+            <li id="approved-tab"><a data-toggle="tab" href="#approved" class="approved-tab">Approved</a></li>
+            <li id="canceled-tab"><a data-toggle="tab" href="#canceled" class="canceled-tab">Canceled</a></li>
+        </ul>
 
-@Styles.Render("~/Content/css/historical-resource.css")
+        <div class="tab-content">
+            <div id="pending" class="tab-pane fade in active">
+                <table id="Tableview" border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th id="header_title">Title</th>
+                            <th id="header_days">Days</th>
+                            <th id="header_start_date">Start Date</th>
+                            <th id="header_end_date">End Date</th>
+                            <th id="header_return_date">Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var headerVM in Model)
+                        {
+                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "pending")
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("VacationRequest","VacationRequest")">
+                                            @{
+                                                @(headerVM.title)
+                                            }
+                                        </a>
+                                    </td>
+                                    <td>@headerVM.noVacDays</td>
+                                    <td>@headerVM.start_date.ToShortDateString()</td>
+                                    <td>@headerVM.end_date.ToShortDateString()</td>
+                                    <td>@headerVM.return_date.ToShortDateString()</td>
+                                </tr>
+                            }
+                        } 
+                    </tbody>
+                </table>
+            </div>
+            <div id="rejected" class="tab-pane fade">
+                <table id="Tableview" border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th id="header_title">Title</th>
+                            <th id="header_days">Days</th>
+                            <th id="header_start_date">Start Date</th>
+                            <th id="header_end_date">End Date</th>
+                            <th id="header_return_date">Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var headerVM in Model)
+                        {
+                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "rejected")
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("VacationRequest","VacationRequest")">
+                                            @{
+                                                @(headerVM.title)
+                                            }
+                                        </a>
+                                    </td>
+                                    <td>@headerVM.noVacDays</td>
+                                    <td>@headerVM.start_date.ToShortDateString()</td>
+                                    <td>@headerVM.end_date.ToShortDateString()</td>
+                                    <td>@headerVM.return_date.ToShortDateString()</td>
+                                </tr>
+                                                    }
+                                                }
+                    </tbody>
+                </table>
+            </div>
+            <div id="approved" class="tab-pane fade">
+                <table id="Tableview" border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th id="header_title">Title</th>
+                            <th id="header_days">Days</th>
+                            <th id="header_start_date">Start Date</th>
+                            <th id="header_end_date">End Date</th>
+                            <th id="header_return_date">Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var headerVM in Model)
+                        {
+                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "approved")
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("VacationRequest","VacationRequest")">
+                                            @{
+                                                @(headerVM.title)
+                                            }
+                                        </a>
+                                    </td>
+                                    <td>@headerVM.noVacDays</td>
+                                    <td>@headerVM.start_date.ToShortDateString()</td>
+                                    <td>@headerVM.end_date.ToShortDateString()</td>
+                                    <td>@headerVM.return_date.ToShortDateString()</td>
+                                </tr>
+                                                    }
+                                                }
+                    </tbody>
+                </table>
+            </div>
+            <div id="canceled" class="tab-pane fade">
+                <table id="Tableview" border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th id="header_title">Title</th>
+                            <th id="header_days">Days</th>
+                            <th id="header_start_date">Start Date</th>
+                            <th id="header_end_date">End Date</th>
+                            <th id="header_return_date">Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var headerVM in Model)
+                        {
+                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "canceled")
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("VacationRequest","VacationRequest")">
+                                            @{
+                                                @(headerVM.title)
+                                            }
+                                        </a>
+                                    </td>
+                                    <td>@headerVM.noVacDays</td>
+                                    <td>@headerVM.start_date.ToShortDateString()</td>
+                                    <td>@headerVM.end_date.ToShortDateString()</td>
+                                    <td>@headerVM.return_date.ToShortDateString()</td>
+                                </tr>
+                                                    }
+                                                }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <a href="@Url.Action("VacationRequest", "VacationRequest")" class="btn btn-lg btn-primary">New Request</a>
+
+    @Styles.Render("~/Content/css/historical-resource.css")
