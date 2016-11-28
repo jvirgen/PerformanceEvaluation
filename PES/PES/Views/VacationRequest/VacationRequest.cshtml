@@ -44,7 +44,7 @@
                             <span id="daysReq" class="label label-info">15</span>
                         </label>
                     </div>
-                    <div id="checkarea" class="col-md-8 checkbox check-pad">
+                    <div id="checkarea" class="col-md-8 checkbox">
                         <label id="checktext">
                             <input type="checkbox" id="unpaid">I do not have a project
                         </label>
@@ -54,18 +54,18 @@
             <div class="form-group">
                 <div class="container">
                     <div class="col-md-2">
-                        <label for="start">Start Date</label>
-                        <input type="text" class="form-control" data-val="true" data-val-required="Start date is required" id="start">
+                        <input id="start" type="text" class="form-control" data-val="true" data-val-required="Start date is required" placeholder="Start Date">
                         <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
-                        <label for="end">End Date</label>
-                        <input type="text" class="form-control" data-val="true" data-val-required="End date is required" id="end">
+                        <input id="end" type="text" class="form-control" data-val="true" data-val-required="End date is required" placeholder="End Date">
                         <span class="field-validation-valid text-danger" data-valmsg-for="end" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
-                        <label>Return Date</label>
-                        <input type="text" class="form-control" id="return">
+                        <input type="text" class="form-control" id="return" placeholder="Return Date">
+                    </div>
+                    <div class="col-md-2">
+                        <button id="addDate" type="button" class="btn btn-default" data-dismiss="modal">Add Date</button>
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->

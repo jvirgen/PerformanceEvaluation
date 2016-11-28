@@ -1,8 +1,4 @@
-﻿.vcenter {
-  vertical-align: middle;
-}
-
-#reqStatus {
+﻿#reqStatus {
     vertical-align: middle;
     min-height: 100%;
 }
@@ -16,20 +12,6 @@
     padding-left: 0px;
 }
 
-#checkarea {
-    padding-top: 0px;
-    padding-left: 15px;
-}
-
 #checktext {
     font-weight: bold;
-}
-
-.child-right {
-    background:green;
-    height: 100%;
-    width: 50%;
-    position: absolute;
-    right: 0;
-    top: 0;
 }
