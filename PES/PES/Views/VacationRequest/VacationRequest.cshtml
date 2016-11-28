@@ -1,4 +1,4 @@
-﻿@Styles.Render("~/Content/css/vecation_request_resource.css")
+﻿
 <div>
     <section>
         <div class="page-header text-center">
@@ -6,86 +6,127 @@
             <p>Vacation Request</p>
         </div>
         <form class="form-horizontal">
-            <div class="form-group row">
-                <div class="container-fluid">
-                    <div class="col-md-3">
-                        <label for="title" class="control-label">Request Title</label>
+            <div class="form-group">
+                <div id="rowCont" class="container">
+                    <div id="reqName" class="col-md-3">
+                        <label for="title" class="control-label col-form-label">Request Title</label>
                         <div>
                             <input type="text" class="form-control" data-val="true" data-val-required="Request title is required" id="title">
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
                     </div>
-                    <div class="col-md-3">
+                    <div id="leadName" class="col-md-3">
                         <label for="lead" class="control-label">Lead Name</label>
                         <div>
                             <input type="text" class="form-control" data-val="true" data-val-required="Lead name is required" id="lead">
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
                     </div>
-                    <div class="col-md-6 text-right vcenter">
+                    <div id="reqStatus" class="col-md-6 text-right">
                         <label class="control-label text-center">
                             Request Status:
                             <span class="label label-default" id="status">New</span>
                         </label>
                     </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="container-fluid">
-                    <div class="col-md-2 text-center">
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+            <div class="form-group">
+                <div class="container">
+                    <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span class="label label-info">15</span>
+                            <span id="daysVac" class="label label-info">15</span>
                         </label>
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span class="label label-info">15</span>
+                            <span id="daysReq" class="label label-info">15</span>
                         </label>
                     </div>
-                    <div class="col-md-8 checkbox">
-                        <label>
+                    <div id="checkarea" class="col-md-8 checkbox check-pad">
+                        <label id="checktext">
                             <input type="checkbox" id="unpaid">I do not have a project
                         </label>
                     </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="container-fluid">
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+            <div class="form-group">
+                <div class="container">
                     <div class="col-md-2">
-                        <label for="start">Start Date</label>
-                        <input type="text" class="form-control" data-val="true" data-val-required="Start date is required" id="start">
+                        <label for="start">Start Date / End Date</label>
+                        <label for="start">Start Date / End Date</label>
+                        <input type="text" name="daterange"class="form-control" data-val="true" data-val-required="Start date is required" id="start">
                         <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="end">End Date</label>
-                        <input type="text" class="form-control" data-val="true" data-val-required="End date is required" id="end">
-                        <span class="field-validation-valid text-danger" data-valmsg-for="end" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
                         <label>Return Date</label>
                         <input type="text" class="form-control" id="return">
                     </div>
-                </div>
-            </div>
-            <div class="form-group row container-fluid">
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+            <div class="form-group container">
                 <div class="col-md-2">
                     <span class="label label-warning">All vacations days must be in the same month</span>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="container-fluid">
+            </div><!-- form-group end -->
+            <div class="form-group">
+                <div class="container">
                     <div class="col-md-8">
                         <label for="comments" class="control-label">Comments:</label>
-                        <textarea class="form-control" style="min-width:100%;" rows="5" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
+                        <textarea class="form-control" style="min-width:100%;" rows="" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-4 text-center">
-                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary">Send Request</a>
+                        <!-- Alert Box -->
+                        <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Send Requesst</button>
+
+                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="gridSystemModalLabel">
+                                            Send Request?
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                            Make sure everything is in order before sending...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-primary">Send Request</a>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                        <!-- Small modal end -->
                     </div>
-                </div>
-            </div>
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
         </form>
     </section>
 </div>
+
+@section Styles
+{
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/content/themes/base/daterangepicker.css")
+} 
+
+@section Scripts
+{
+
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+
+    <script type="text/javascript">
+
+        $(function() {
+            $('input[name="daterange"]').daterangepicker();
+        });
+    </script>
+}

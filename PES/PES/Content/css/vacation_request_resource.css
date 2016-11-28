@@ -1,5 +1,17 @@
-.vcenter {
-    display: inline-block;
+﻿#reqStatus {
     vertical-align: middle;
-    float: none;
+    min-height: 100%;
+}
+
+#vacationarea {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#requestarea {
+    padding-left: 0px;
+}
+
+#checktext {
+    font-weight: bold;
 }

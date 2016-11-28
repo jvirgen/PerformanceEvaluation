@@ -224,6 +224,7 @@
     <Content Include="Content\css\select2-bootstrap.css" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\css\vacation_request_resource.css" />
     <Content Include="Content\datatables\dataTables.bootstrap.min.css" />
     <Content Include="Content\ExportDataTables\buttons.dataTables.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -235,6 +236,7 @@
     <Content Include="Content\themes\base\button.css" />
     <Content Include="Content\themes\base\core.css" />
     <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\daterangepicker.css" />
     <Content Include="Content\themes\base\dialog.css" />
     <Content Include="Content\themes\base\draggable.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -343,6 +345,7 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\define-report.js" />
     <Content Include="Scripts\enable-disable.js" />
     <Content Include="Scripts\ExportDataTables\buttons.html5.min.js" />
@@ -423,6 +426,7 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\showEmployees.js" />
     <Content Include="Scripts\update-change-validations.js" />
+    <Content Include="Scripts\vacationsRequest.js" />
     <Content Include="Scripts\verifyPE.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_PerformanceFilesPartial.cshtml" />
