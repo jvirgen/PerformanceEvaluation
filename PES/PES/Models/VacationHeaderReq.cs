@@ -64,6 +64,8 @@ namespace PES.Models
 
     public class VacHeadReqHelper : VacationHeaderReq
     {
-
+        public VacationSubreq start_date { get; set; }
+        public VacationSubreq end_date { get; set; }
+        public VacationSubreq return_date { get; set; }
     }
 }
