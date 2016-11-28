@@ -36,11 +36,11 @@ namespace PES.Controllers
         {
             //Get current user
             Employee currentUser = new Employee();
-            int currentUserId = 2;
+            var currentUserEmail = (string)Session["UserEmail"];
             _employeeService = new EmployeeService();
             _headerReqService = new VacationHeaderReqService();
             _ReqStatusService = new VacationReqStatusService();
-            currentUser = _employeeService.GetByID(currentUserId);
+            currentUser = _employeeService.GetByEmail(currentUserEmail);
 
             List<VacHeadReqViewModel> listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
             List<VacHeadReqViewModel> listHeaderReqVM = new List<VacHeadReqViewModel>();
