@@ -1,6 +1,48 @@
 --------------------------------------------------------
 -- Archivo creado  - lunes-noviembre-28-2016   
 --------------------------------------------------------
+DROP TABLE "PE"."COMMENT" cascade constraints;
+DROP TABLE "PE"."DESCRIPTION" cascade constraints;
+DROP TABLE "PE"."EMPLOYEE" cascade constraints;
+DROP TABLE "PE"."HOLIDAY_DAYS" cascade constraints;
+DROP TABLE "PE"."LATENESS" cascade constraints;
+DROP TABLE "PE"."LM_SKILL" cascade constraints;
+DROP TABLE "PE"."LOCATION" cascade constraints;
+DROP TABLE "PE"."PE" cascade constraints;
+DROP TABLE "PE"."PERIOD" cascade constraints;
+DROP TABLE "PE"."PROFILE" cascade constraints;
+DROP TABLE "PE"."SCORE" cascade constraints;
+DROP TABLE "PE"."SKILL" cascade constraints;
+DROP TABLE "PE"."STATUS" cascade constraints;
+DROP TABLE "PE"."SUBTITLE" cascade constraints;
+DROP TABLE "PE"."TITLE" cascade constraints;
+DROP TABLE "PE"."VACATION_HEADER_REQ" cascade constraints;
+DROP TABLE "PE"."VACATION_REQ_STATUS" cascade constraints;
+DROP TABLE "PE"."VACATION_SUBREQ" cascade constraints;
+DROP SEQUENCE "PE"."SEQCOMMENT";
+DROP SEQUENCE "PE"."SEQDESCRIPTION";
+DROP SEQUENCE "PE"."SEQEMPLOYEE";
+DROP SEQUENCE "PE"."SEQHOLIDAY_DAYS";
+DROP SEQUENCE "PE"."SEQLATENESS";
+DROP SEQUENCE "PE"."SEQLMSKILL";
+DROP SEQUENCE "PE"."SEQPE";
+DROP SEQUENCE "PE"."SEQPROFILE";
+DROP SEQUENCE "PE"."SEQSCORE";
+DROP SEQUENCE "PE"."SEQSKILL";
+DROP SEQUENCE "PE"."SEQSTATUS";
+DROP SEQUENCE "PE"."SEQSUBTITLE";
+DROP SEQUENCE "PE"."SEQTITLE";
+DROP SEQUENCE "PE"."SEQVAC_HEAD_REQ";
+DROP SEQUENCE "PE"."SEQVAC_REQ_STATUS";
+DROP SEQUENCE "PE"."SEQVAC_SUBREQ";
+DROP SYNONYM "PE"."CATALOG";
+DROP SYNONYM "PE"."COL";
+DROP SYNONYM "PE"."PUBLICSYN";
+DROP SYNONYM "PE"."SYSCATALOG";
+DROP SYNONYM "PE"."SYSFILES";
+DROP SYNONYM "PE"."TAB";
+DROP SYNONYM "PE"."TABQUOTAS";
+DROP SYNONYM "PUBLIC"."DUAL";
 --------------------------------------------------------
 --  DDL for Table COMMENT
 --------------------------------------------------------

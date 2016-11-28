@@ -1,14 +1,10 @@
 ﻿    @model IEnumerable<PES.Models.VacHeadReqViewModel>
     @using PES.Models
     @{
-        string userName = ViewBag.Username != null ? (string)ViewBag.Username : "";
         int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
     }
     <div class="row text-center">
-        <div class="col-md-12">
-            <h2>@userName</h2>
-        </div>
-        <hr />
+        <br />
         <div class="col-md-12">
             <h3>Vacation List</h3>
         </div>
