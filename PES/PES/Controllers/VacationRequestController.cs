@@ -9,12 +9,20 @@ using System.Threading.Tasks;
 
 namespace PES.Controllers
 {
+    [Authorize]
     public class VacationRequestController : Controller
     {
         //Declare Services
         private EmployeeService _employeeService;
         private VacationHeaderReqService _headerReqService;
         private VacationReqStatusService _ReqStatusService;
+
+        public VacationRequestController()
+        {
+            _employeeService = new EmployeeService();
+            _headerReqService = new VacationHeaderReqService();
+            _ReqStatusService = new VacationReqStatusService();
+        }
 
         /*// GET: VacationRequest
         public ActionResult HistoricalResource()
@@ -37,9 +45,6 @@ namespace PES.Controllers
             //Get current user
             Employee currentUser = new Employee();
             var currentUserEmail = (string)Session["UserEmail"];
-            _employeeService = new EmployeeService();
-            _headerReqService = new VacationHeaderReqService();
-            _ReqStatusService = new VacationReqStatusService();
             currentUser = _employeeService.GetByEmail(currentUserEmail);
 
             List<VacHeadReqViewModel> listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
@@ -51,6 +56,7 @@ namespace PES.Controllers
                 {
                     var headerReqVm = new VacHeadReqViewModel
                     {
+                        vacationHeaderReqId = headerReq.vacationHeaderReqId,
                         employeeId = headerReq.employeeId,
                         title = headerReq.title,
                         noVacDays = headerReq.noVacDays,
