@@ -3,7 +3,7 @@
     <section>
         <div class="page-header text-center">
             <h1>@ViewBag.userName</h1>
-            <p>Vacation Request</p>
+            <h3>Vacation Request</h3>
         </div>
         <form id="form" class="form-horizontal">
             <div class="form-group">
@@ -89,11 +89,25 @@
                         <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"
                                   @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>@Model.comments</textarea>
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                        {
+                                <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a cancel reason (REQUIRED)"></textarea>
+                        }
+                        else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
+                        {
+                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" disabled="disabled">@Model.replayComment</textarea>
+                        }
                     </div>
                     <div class="col-md-4 text-center">
                         <!-- Alert Box -->
-                        <button id="sendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Send Request</button>
-
+                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                        {
+                                <button id="cancelReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                        }
+                        else if (Model.status.ToLower() == "rejected")
+                        {
+                            <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
+                        }
                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -125,14 +139,14 @@
 
 @section Styles
 {
-    @Styles.Render("~/Content/css/vacation_request_resource.css")
+                            @Styles.Render("~/Content/css/vacation_request_resource.css")
     @Styles.Render("~/content/themes/base/daterangepicker.css")
-} 
+}
 
-@section Scripts
-{
+                        @section Scripts
+                        {
 
-    @Scripts.Render("~/Scripts/vacationsRequest.js")
+                            @Scripts.Render("~/Scripts/vacationsRequest.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
 
@@ -140,6 +154,6 @@
 
         $(function() {
             $('input[name="daterange"]').daterangepicker();
-        });
+                            });
     </script>
 }
