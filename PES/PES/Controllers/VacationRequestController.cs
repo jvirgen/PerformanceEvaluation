@@ -71,6 +71,7 @@ namespace PES.Controllers
 
             ViewBag.Username = currentUser.FirstName + " " + currentUser.LastName;
             ViewBag.UserID = currentUser.EmployeeId;
+            ViewBag.FreeDays = currentUser.Freedays;
             return View(listHeaderReqVM);
         }
     }

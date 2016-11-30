@@ -47,7 +47,8 @@ namespace PES.Services
                                            "ID_MANAGER," +
                                            "END_DATE, " +
                                            "PROJECT, " +
-                                           "ID_LOCATION " +
+                                           "ID_LOCATION, " +
+                                           "FREE_DAYS " +
                                            "FROM EMPLOYEE WHERE EMAIL = '" + email + "'";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -68,6 +69,7 @@ namespace PES.Services
                         string endDate = Convert.ToString(Read["END_DATE"]);
                         employee.Project = Convert.ToString(Read["PROJECT"]);
                         employee.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
+                        employee.Freedays = Convert.ToInt32(Read["FREE_DAYS"]);
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
