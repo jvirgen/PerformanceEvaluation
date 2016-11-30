@@ -94,6 +94,8 @@ namespace PES.Models
         ///Employee Location
         /// </summary>
         public int LocationId { get; set; }
+
+        public int Freedays { get; set; }
         
 
     }

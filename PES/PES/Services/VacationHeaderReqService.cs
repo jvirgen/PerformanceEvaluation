@@ -26,6 +26,7 @@ namespace PES.Services
                 {
                     db.Open();
                     string Query = @"SELECT " +
+                                        "HE.ID_HEADER_REQ, " +
                                         "HE.ID_EMPLOYEE, " +
                                         "HE.TITLE, " +
                                         "HE.NO_VAC_DAYS, " +
@@ -47,6 +48,7 @@ namespace PES.Services
                         while (reader.Read())
                         {
                             Header = new VacHeadReqViewModel();
+                            Header.vacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
                             Header.employeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
                             Header.title = Convert.ToString(reader["TITLE"]);
                             Header.noVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);

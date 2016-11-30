@@ -64,6 +64,7 @@ namespace PES.Models
 
     public class VacHeadReqViewModel : VacationHeaderReq
     {
+        public int freedays { get; set; }
         public string status { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
