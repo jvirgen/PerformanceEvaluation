@@ -67,5 +67,64 @@ namespace PES.Services
 
             return Headers;
         }
+
+        public VacHeadReqViewModel GetAllVacRequestInfoByVacReqId(int headerId)
+        {
+            VacHeadReqViewModel header = new VacHeadReqViewModel();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = @"SELECT HE.ID_HEADER_REQ" +
+                                           ",HE.ID_EMPLOYEE" +
+                                           ",HE.TITLE" + 
+                                           ",HE.NO_VAC_DAYS" +
+                                           ",HE.COMMENTS" +
+                                           ",HE.ID_REQ_STATUS" +
+                                           ",HE.REPLAY_COMMENT" +
+                                           ",HE.LEAD_NAME" +
+                                           ",HE.HAVE_PROJECT" +
+                                           ",HE.NO_UNPAID_DAYS" +
+                                           ",SUB.START_DATE" +
+                                           ",SUB.END_DATE" +
+                                           ",SUB.RETURN_DATE" +
+                                    "FROM  VACATION_HEADER_REQ HE" +
+                                          ",VACATION_SUBREQ SUB" + 
+                                    "WHERE HE.ID_HEADER_REQ = SUB.ID_HEADER_REQ" +
+                                      "AND HE.ID_HEADER_REQ = :headerId" +
+                                    "ORDER BY HE.ID_HEADER_REQ";
+                    using (OracleCommand command = new OracleCommand(Query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("headerId", headerId));
+                        command.ExecuteReader();
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            header.vacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
+                            header.employeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);                            
+                            header.title = Convert.ToString(reader["TITLE"]);
+                            header.noVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
+                            header.comments = Convert.ToString(reader["COMMENTS"]);
+                            header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
+                            header.replayComment = Convert.ToString(reader["REPLAY_COMMENT"]);
+                            header.lead_name = Convert.ToString(reader["LEAD_NAME"]);
+                            header.have_project = Convert.ToChar(reader["HAVE_PROJECT"]);
+                            header.noUnpaidDays = Convert.ToInt32(reader["NO_UNPAID_DAYS"]);
+                            header.start_date = Convert.ToDateTime(reader["START_DATE"]);
+                            header.end_date = Convert.ToDateTime(reader["END_DATE"]);
+                            header.return_date = Convert.ToDateTime(reader["RETURN_DATE"]);
+                        }
+                    }
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return header;
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace PES.Models
         /// <summary>
         /// Flag to know if have a project
         /// </summary>
-        public string have_project { get; set; }
+        public Char have_project { get; set; }
 
         /// <summary>
         /// Number of unpaid days

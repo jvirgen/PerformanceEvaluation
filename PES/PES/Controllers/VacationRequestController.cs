@@ -24,10 +24,20 @@ namespace PES.Controllers
         }*/
 
         // GET: VacationRequest
-        public ActionResult VacationRequest()
+        [HttpGet]
+        public ActionResult VacationRequest(int headerReqId)
         {
-            ViewBag.title = "A Resource Name...";
-            return View();
+            VacHeadReqViewModel currentRequest= new VacHeadReqViewModel();
+            _headerReqService = new VacationHeaderReqService();
+            currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
+            _employeeService = new EmployeeService();
+            Employee currentUser = new Employee();
+            currentUser = _employeeService.GetByID(currentRequest.employeeId);
+        
+            
+
+            ViewBag.userName = currentUser.FirstName;
+            return View(currentRequest);
         }
 
         // GET: VacationRequest/HistoricalResource

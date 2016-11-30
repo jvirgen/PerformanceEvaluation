@@ -1,4 +1,4 @@
-﻿
+﻿@model PES.Models.VacHeadReqViewModel
 <div>
     <section>
         <div class="page-header text-center">
@@ -11,21 +11,25 @@
                     <div id="reqName" class="col-md-3">
                         <label for="title" class="control-label col-form-label">Request Title</label>
                         <div>
-                            <input id="title" type="text" class="form-control" data-val="true" data-val-required="Request title is required">
+                            <input id="title" type="text" class="form-control" value="@Model.title" 
+                                   @{@(Model.status == "canceled" ? null : new { disabled = "disabled" })} 
+                                   data-val="true" data-val-required="Request title is required"/>
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
                     </div>
                     <div id="leadName" class="col-md-3">
                         <label for="lead" class="control-label">Lead Name</label>
                         <div>
-                            <input id="lead" type="text" class="form-control" data-val="true" data-val-required="Lead name is required">
+                            <input id="lead" type="text" value="@Model.lead_name" 
+                                   @{@(Model.status == "canceled" ? null : new { disabled = "disabled" })}
+                                   class="form-control" data-val="true" data-val-required="Lead name is required">
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
                     </div>
                     <div id="reqStatus" class="col-md-6 text-right">
                         <label class="control-label text-center">
                             Request Status:
-                            <span class="label label-default" id="status">New</span>
+                            <span class="label label-default" id="status">@Model.status</span>
                         </label>
                     </div>
                 </div> <!-- container end -->
@@ -35,18 +39,18 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">15</span>
+                            <span id="daysVac" class="label label-default">@Model.noVacDays</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span id="daysReq" class="label label-default">15</span>
+                            <span id="daysReq" class="label label-default">0</span>
                         </label>
                     </div>
                     <div id="checkarea" class="col-md-8 checkbox">
                         <label id="checktext">
-                            <input type="checkbox" id="unpaid">I do not have a project
+                            <input type="checkbox" id="unpaid" checked="checked"/>I do not have a project
                         </label>
                     </div>
                 </div> <!-- container end -->
