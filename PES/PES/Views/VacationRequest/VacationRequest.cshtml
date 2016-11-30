@@ -89,14 +89,6 @@
                         <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"
                                   @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>@Model.comments</textarea>
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
-                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
-                        {
-                                <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a cancel reason (REQUIRED)"></textarea>
-                        }
-                        else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
-                        {
-                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" disabled="disabled">@Model.replayComment</textarea>
-                        }
                     </div>
                     <div class="col-md-4 text-center">
                         <!-- Alert Box -->
@@ -133,6 +125,24 @@
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
+            <div class="form-group">
+                <div class="container flexEnd">
+                    @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                    {
+                        <div class="col-md-8">
+                            <label for="comments" class="control-label">Comments Reason:</label>
+                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a cancel reason (REQUIRED)"></textarea>
+                        </div>
+                    }
+                    else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
+                    {
+                        <div class="col-md-8">
+                            <label for="comments" class="control-label">Comments Reason:</label>
+                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" disabled="disabled">@Model.replayComment</textarea>
+                        </div>
+                    }
+                    </div>
+                </div>
         </form>
     </section>
 </div>
