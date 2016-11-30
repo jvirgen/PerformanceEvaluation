@@ -44,7 +44,7 @@ namespace PES.Controllers
         
             
 
-            ViewBag.userName = currentUser.FirstName;
+            ViewBag.userName = currentUser.FirstName + " " + currentUser.LastName;
             return View(currentRequest);
         }
 

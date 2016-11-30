@@ -2,7 +2,7 @@
 <div>
     <section>
         <div class="page-header text-center">
-            <h1>@ViewBag.Title</h1>
+            <h1>@ViewBag.userName</h1>
             <p>Vacation Request</p>
         </div>
         <form id="form" class="form-horizontal">
@@ -12,7 +12,7 @@
                         <label for="title" class="control-label col-form-label">Request Title</label>
                         <div>
                             <input id="title" type="text" class="form-control" value="@Model.title" 
-                                   @{@(Model.status == "canceled" ? null : new { disabled = "disabled" })} 
+                                   @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} 
                                    data-val="true" data-val-required="Request title is required"/>
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
@@ -21,8 +21,8 @@
                         <label for="lead" class="control-label">Lead Name</label>
                         <div>
                             <input id="lead" type="text" value="@Model.lead_name" 
-                                   @{@(Model.status == "canceled" ? null : new { disabled = "disabled" })}
-                                   class="form-control" data-val="true" data-val-required="Lead name is required">
+                                   @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })}
+                                   class="form-control" data-val="true" data-val-required="Lead name is required"/>
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
                     </div>
@@ -50,7 +50,8 @@
                     </div>
                     <div id="checkarea" class="col-md-8 checkbox">
                         <label id="checktext">
-                            <input type="checkbox" id="unpaid" checked="checked"/>I do not have a project
+                            <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.have_project) == 'N' ? "checked" : "")" 
+                                   @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>I do not have a project
                         </label>
                     </div>
                 </div> <!-- container end -->
@@ -59,15 +60,18 @@
                 <div id="datesCont" class="container flexEnd">
                     <div class="col-md-3 text-center">
                         <label for="start">Start Date - End Date</label>
-                        <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required">
+                        <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"
+                               value="@Model.start_date - @Model.end_date"
+                               @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
                         <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
                         <label>Return Date</label>
-                        <input type="text" class="form-control" id="return">
+                        <input type="text" class="form-control" id="return" value="@Model.return_date" disabled="disabled"/>
                     </div>
                     <div class="col-md-2">
-                        <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">Add Date</button>
+                        <button onclick="addDate(this)" type="button" class="btn btn-default addBtn" 
+                                @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>Add Date</button>
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
@@ -82,7 +86,8 @@
                 <div class="container flexEnd">
                     <div class="col-md-8">
                         <label for="comments" class="control-label">Comments:</label>
-                        <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
+                        <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"
+                                  @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>@Model.comments</textarea>
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-4 text-center">

@@ -88,14 +88,17 @@ namespace PES.Services
                                            ",HE.LEAD_NAME" +
                                            ",HE.HAVE_PROJECT" +
                                            ",HE.NO_UNPAID_DAYS" +
+                                           ",ST.REQ_STATUS" +
                                            ",SUB.START_DATE" +
                                            ",SUB.END_DATE" +
-                                           ",SUB.RETURN_DATE" +
-                                    "FROM  VACATION_HEADER_REQ HE" +
-                                          ",VACATION_SUBREQ SUB" + 
-                                    "WHERE HE.ID_HEADER_REQ = SUB.ID_HEADER_REQ" +
-                                      "AND HE.ID_HEADER_REQ = :headerId" +
-                                    "ORDER BY HE.ID_HEADER_REQ";
+                                           ",SUB.RETURN_DATE " +
+                                    " FROM  VACATION_HEADER_REQ HE" +
+                                          ",VACATION_SUBREQ SUB " + 
+                                          ", VACATION_REQ_STATUS ST" +
+                                    " WHERE HE.ID_HEADER_REQ = SUB.ID_HEADER_REQ " +
+                                      " AND HE.ID_HEADER_REQ = :headerId" +
+                                      " AND HE.ID_REQ_STATUS = ST.ID_REQ_STATUS" +
+                                    " ORDER BY HE.ID_HEADER_REQ";
                     using (OracleCommand command = new OracleCommand(Query, db))
                     {
                         command.Parameters.Add(new OracleParameter("headerId", headerId));
@@ -113,6 +116,7 @@ namespace PES.Services
                             header.lead_name = Convert.ToString(reader["LEAD_NAME"]);
                             header.have_project = Convert.ToChar(reader["HAVE_PROJECT"]);
                             header.noUnpaidDays = Convert.ToInt32(reader["NO_UNPAID_DAYS"]);
+                            header.status = Convert.ToString(reader["REQ_STATUS"]);
                             header.start_date = Convert.ToDateTime(reader["START_DATE"]);
                             header.end_date = Convert.ToDateTime(reader["END_DATE"]);
                             header.return_date = Convert.ToDateTime(reader["RETURN_DATE"]);
