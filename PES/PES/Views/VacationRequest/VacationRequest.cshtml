@@ -2,8 +2,7 @@
 <div>
     <section>
         <div class="page-header text-center">
-            <h1>@ViewBag.Title</h1>
-            <p>Vacation Request</p>
+            <h1>Vacation Request</h1>
         </div>
         <form id="form" class="form-horizontal">
             <div class="form-group">
@@ -13,14 +12,14 @@
                         <div>
                             <input id="title" type="text" class="form-control" data-val="true" data-val-required="Request title is required">
                         </div>
-                        <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
+                        <span class="field-validation-error text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
                     </div>
                     <div id="leadName" class="col-md-3">
                         <label for="lead" class="control-label">Lead Name</label>
                         <div>
                             <input id="lead" type="text" class="form-control" data-val="true" data-val-required="Lead name is required">
                         </div>
-                        <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
+                        <span class="field-validation-error text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
                     </div>
                     <div id="reqStatus" class="col-md-6 text-right">
                         <label class="control-label text-center">
@@ -54,13 +53,14 @@
             <div id="datesGroup" class="form-group">
                 <div id="datesCont" class="container flexEnd">
                     <div class="col-md-3 text-center">
-                        <label for="start">Start Date - End Date</label>
-                        <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required">
-                        <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+                        <label for="date">Start Date - End Date</label>
+                        <input id="date" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Date is required">
+                        <span class="field-validation-error text-danger" data-valmsg-for="date" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
-                        <label>Return Date</label>
-                        <input type="text" class="form-control" id="return">
+                        <label for="returnDate">Return Date</label>
+                        <input type="text" class="form-control" id="returnDate" data-val="true" data-val-required="Return date has not been entered">
+                        <span class="field-validation-error text-danger" data-valmsg-for="returnDate" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
                         <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">Add Date</button>
@@ -79,11 +79,14 @@
                     <div class="col-md-8">
                         <label for="comments" class="control-label">Comments:</label>
                         <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
-                        <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                        <span class="field-validation-error text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 text-center">
+                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default">Discard Request</a>
+                    </div>
+                    <div class="col-md-2 text-center">
                         <!-- Alert Box -->
-                        <button id="sendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Send Request</button>
+                        <button id="sendReq" type="submit" class="btn btn-lg btn-primary btn-block" onclick="validateFields()" data-toggle="modal" data-target=".bs-example-modal-sm">Send Request</button>
 
                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
                             <div class="modal-dialog" role="document">
@@ -126,6 +129,7 @@
     @Scripts.Render("~/Scripts/vacationsRequest.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
+    @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
 

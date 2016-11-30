@@ -13,7 +13,7 @@ function addDate(btnAdd) {
 }
 
 function removeDate(btnRemove) {
-    $(btnRemove).parent().parent().parent().remove();
+    $(btnRemove).parent().parent().parent().remove();//removeBtn->datesCont->datesGroup->remove()
     enableBtn();
 }
 
@@ -25,4 +25,13 @@ function disableBtn() {
     for (var i = 0, l = $('.addBtn').length - 1; i < l; i++) {
         $('.addBtn').eq(i).prop('disabled', true);
     }
+}
+
+function validateFields() {
+    var validator = $("#form").validate();
+    validator.element("#title");
+    validator.element("#lead");
+    validator.element("#date");
+    validator.element("#returnDate");
+    validator.element("#comments");
 }
