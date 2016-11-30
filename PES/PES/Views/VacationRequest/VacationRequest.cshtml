@@ -1,8 +1,9 @@
-﻿
+﻿@model PES.Models.VacHeadReqViewModel
 <div>
     <section>
         <div class="page-header text-center">
-            <h1>Vacation Request</h1>
+            <h1>@ViewBag.userName</h1>
+            <h3>Vacation Request</h3>
         </div>
         <form id="form" class="form-horizontal">
             <div class="form-group">
@@ -10,21 +11,25 @@
                     <div id="reqName" class="col-md-3">
                         <label for="title" class="control-label col-form-label">Request Title</label>
                         <div>
-                            <input id="title" type="text" class="form-control" data-val="true" data-val-required="Request title is required">
+                            <input id="title" type="text" class="form-control" value="@Model.title" 
+                                   @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} 
+                                   data-val="true" data-val-required="Request title is required"/>
                         </div>
-                        <span class="field-validation-error text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
                     </div>
                     <div id="leadName" class="col-md-3">
                         <label for="lead" class="control-label">Lead Name</label>
                         <div>
-                            <input id="lead" type="text" class="form-control" data-val="true" data-val-required="Lead name is required">
+                            <input id="lead" type="text" value="@Model.lead_name" 
+                                   @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })}
+                                   class="form-control" data-val="true" data-val-required="Lead name is required"/>
                         </div>
-                        <span class="field-validation-error text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
                     </div>
                     <div id="reqStatus" class="col-md-6 text-right">
                         <label class="control-label text-center">
                             Request Status:
-                            <span class="label label-default" id="status">New</span>
+                            <span class="label label-default" id="status">@Model.status</span>
                         </label>
                     </div>
                 </div> <!-- container end -->
@@ -34,18 +39,19 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">15</span>
+                            <span id="daysVac" class="label label-default">@Model.noVacDays</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span id="daysReq" class="label label-default">15</span>
+                            <span id="daysReq" class="label label-default">0</span>
                         </label>
                     </div>
                     <div id="checkarea" class="col-md-8 checkbox">
                         <label id="checktext">
-                            <input type="checkbox" id="unpaid">I do not have a project
+                            <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.have_project) == 'N' ? "checked" : "")" 
+                                   @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>I do not have a project
                         </label>
                     </div>
                 </div> <!-- container end -->
@@ -53,17 +59,19 @@
             <div id="datesGroup" class="form-group">
                 <div id="datesCont" class="container flexEnd">
                     <div class="col-md-3 text-center">
-                        <label for="date">Start Date - End Date</label>
-                        <input id="date" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Date is required">
-                        <span class="field-validation-error text-danger" data-valmsg-for="date" data-valmsg-replace="true"></span>
+                        <label for="start">Start Date - End Date</label>
+                        <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"
+                               value="@Model.start_date - @Model.end_date"
+                               @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
+                        <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-2">
-                        <label for="returnDate">Return Date</label>
-                        <input type="text" class="form-control" id="returnDate" data-val="true" data-val-required="Return date has not been entered">
-                        <span class="field-validation-error text-danger" data-valmsg-for="returnDate" data-valmsg-replace="true"></span>
+                        <label>Return Date</label>
+                        <input type="text" class="form-control" id="return" value="@Model.return_date" disabled="disabled"/>
                     </div>
                     <div class="col-md-2">
-                        <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">Add Date</button>
+                        <button onclick="addDate(this)" type="button" class="btn btn-default addBtn" 
+                                @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>Add Date</button>
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
@@ -78,16 +86,28 @@
                 <div class="container flexEnd">
                     <div class="col-md-8">
                         <label for="comments" class="control-label">Comments:</label>
-                        <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"></textarea>
-                        <span class="field-validation-error text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                        <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"
+                                  @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>@Model.comments</textarea>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                        {
+                                <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a cancel reason (REQUIRED)"></textarea>
+                        }
+                        else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
+                        {
+                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" disabled="disabled">@Model.replayComment</textarea>
+                        }
                     </div>
-                    <div class="col-md-2 text-center">
-                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default">Discard Request</a>
-                    </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-md-4 text-center">
                         <!-- Alert Box -->
-                        <button id="sendReq" type="submit" class="btn btn-lg btn-primary btn-block" onclick="validateFields()" data-toggle="modal" data-target=".bs-example-modal-sm">Send Request</button>
-
+                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                        {
+                                <button id="cancelReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                        }
+                        else if (Model.status.ToLower() == "rejected")
+                        {
+                            <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
+                        }
                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -119,22 +139,21 @@
 
 @section Styles
 {
-    @Styles.Render("~/Content/css/vacation_request_resource.css")
+                            @Styles.Render("~/Content/css/vacation_request_resource.css")
     @Styles.Render("~/content/themes/base/daterangepicker.css")
-} 
+}
 
-@section Scripts
-{
+                        @section Scripts
+                        {
 
-    @Scripts.Render("~/Scripts/vacationsRequest.js")
+                            @Scripts.Render("~/Scripts/vacationsRequest.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
-    @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
 
         $(function() {
             $('input[name="daterange"]').daterangepicker();
-        });
+                            });
     </script>
 }

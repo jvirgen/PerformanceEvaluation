@@ -53,17 +53,18 @@ namespace PES.Models
         /// <summary>
         /// Flag to know if have a project
         /// </summary>
-        public string have_project { get; set; }
+        public Char have_project { get; set; }
 
         /// <summary>
         /// Number of unpaid days
         /// </summary>
-        public int noUnpaidDays { get; set; }
+        public int? noUnpaidDays { get; set; }
 
     }
 
     public class VacHeadReqViewModel : VacationHeaderReq
     {
+        public int freedays { get; set; }
         public string status { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }

@@ -9,12 +9,20 @@ using System.Threading.Tasks;
 
 namespace PES.Controllers
 {
+    [Authorize]
     public class VacationRequestController : Controller
     {
         //Declare Services
         private EmployeeService _employeeService;
         private VacationHeaderReqService _headerReqService;
         private VacationReqStatusService _ReqStatusService;
+
+        public VacationRequestController()
+        {
+            _employeeService = new EmployeeService();
+            _headerReqService = new VacationHeaderReqService();
+            _ReqStatusService = new VacationReqStatusService();
+        }
 
         /*// GET: VacationRequest
         public ActionResult HistoricalResource()
@@ -24,9 +32,20 @@ namespace PES.Controllers
         }*/
 
         // GET: VacationRequest
-        public ActionResult VacationRequest()
+        [HttpGet]
+        public ActionResult VacationRequest(int headerReqId)
         {
-            return View();
+            VacHeadReqViewModel currentRequest= new VacHeadReqViewModel();
+            _headerReqService = new VacationHeaderReqService();
+            currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
+            _employeeService = new EmployeeService();
+            Employee currentUser = new Employee();
+            currentUser = _employeeService.GetByID(currentRequest.employeeId);
+        
+            
+
+            ViewBag.userName = currentUser.FirstName + " " + currentUser.LastName;
+            return View(currentRequest);
         }
 
         // GET: VacationRequest/HistoricalResource
@@ -36,9 +55,6 @@ namespace PES.Controllers
             //Get current user
             Employee currentUser = new Employee();
             var currentUserEmail = (string)Session["UserEmail"];
-            _employeeService = new EmployeeService();
-            _headerReqService = new VacationHeaderReqService();
-            _ReqStatusService = new VacationReqStatusService();
             currentUser = _employeeService.GetByEmail(currentUserEmail);
 
             List<VacHeadReqViewModel> listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
@@ -50,6 +66,7 @@ namespace PES.Controllers
                 {
                     var headerReqVm = new VacHeadReqViewModel
                     {
+                        vacationHeaderReqId = headerReq.vacationHeaderReqId,
                         employeeId = headerReq.employeeId,
                         title = headerReq.title,
                         noVacDays = headerReq.noVacDays,
@@ -64,6 +81,7 @@ namespace PES.Controllers
 
             ViewBag.Username = currentUser.FirstName + " " + currentUser.LastName;
             ViewBag.UserID = currentUser.EmployeeId;
+            ViewBag.FreeDays = currentUser.Freedays;
             return View(listHeaderReqVM);
         }
     }
