@@ -3,6 +3,7 @@
     @{
         int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
         int freeDays = ViewBag.FreeDays != null ? (int)ViewBag.FreeDays : 0;
+        int profileId = ViewBag.profileId != null ? (int)ViewBag.profileId : 0;
     }
     <div class="row text-center">
         <br />
@@ -29,6 +30,10 @@
                 <table id="Tableview" border="1" class="table table-striped">
                     <thead>
                         <tr>
+                            @if (profileId == 2)
+                            {
+                                <th>Name</th>
+                            }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
@@ -39,9 +44,14 @@
                     <tbody>
                         @foreach (var headerVM in Model)
                         {
-                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "pending")
+                            if (headerVM.status.ToLower() == "pending")
                             {
+
                                 <tr>
+                                    @if (profileId == 2)
+                                    {
+                                        <td>@headerVM.first_name @headerVM.last_name</td>
+                                    }
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
@@ -63,6 +73,10 @@
                 <table id="Tableview" border="1" class="table table-striped">
                     <thead>
                         <tr>
+                            @if (profileId == 2)
+                            {
+                                <th>Name</th>
+                            }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
@@ -76,6 +90,10 @@
                             if (userID == headerVM.employeeId && headerVM.status.ToLower() == "rejected")
                             {
                                 <tr>
+                                    @if (profileId == 2)
+                                    {
+                                        <td>@headerVM.first_name @headerVM.last_name</td>
+                                    }
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
@@ -97,6 +115,10 @@
                 <table id="Tableview" border="1" class="table table-striped">
                     <thead>
                         <tr>
+                            @if (profileId == 2)
+                            {
+                                <th>Name</th>
+                            }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
@@ -110,6 +132,10 @@
                             if (userID == headerVM.employeeId && headerVM.status.ToLower() == "approved")
                             {
                                 <tr>
+                                    @if (profileId == 2)
+                                    {
+                                        <td>@headerVM.first_name @headerVM.last_name</td>
+                                    }
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
@@ -131,6 +157,10 @@
                 <table id="Tableview" border="1" class="table table-striped">
                     <thead>
                         <tr>
+                            @if (profileId == 2)
+                            {
+                                <th>Name</th>
+                            }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
@@ -144,6 +174,10 @@
                             if (userID == headerVM.employeeId && headerVM.status.ToLower() == "canceled")
                             {
                                 <tr>
+                                    @if (profileId == 2)
+                                    {
+                                        <td>@headerVM.first_name @headerVM.last_name</td>
+                                    }
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
