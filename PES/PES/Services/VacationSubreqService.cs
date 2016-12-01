@@ -31,7 +31,9 @@ namespace PES.Services
                                         "ID_HEADER_REQ, " +
                                         "START_DATE, " +
                                         "END_DATE," +
-                                        "RETURN_DATE " +
+                                        "RETURN_DATE, " +
+                                        "HAVE_PROJECT, " +
+                                        "LEAD_NAME " +
                                     "FROM " +
                                         "VACATION_SUBREQ " +
                                     "WHERE " +
@@ -50,6 +52,8 @@ namespace PES.Services
                             vacationsubreq.startDate = Convert.ToDateTime(Reader["START_DATE"]);
                             vacationsubreq.endDate = Convert.ToDateTime(Reader["END_DATE"]);
                             vacationsubreq.returnDate = Convert.ToDateTime(Reader["RETURN_DATE"]);
+                            vacationsubreq.have_project = Convert.ToString(Reader["HAVE_PROJECT"]);
+                            vacationsubreq.lead_name = Convert.ToString(Reader["LEAD_NAME"]);
                             vacationsubreqs.Add(vacationsubreq); 
                         }
                     }

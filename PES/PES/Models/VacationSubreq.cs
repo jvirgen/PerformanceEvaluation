@@ -34,5 +34,15 @@ namespace PES.Models
         /// Return date
         /// </summary>
         public DateTime returnDate { get; set; }
+
+        /// <summary>
+        /// Name of lead
+        /// </summary>
+        public string lead_name { get; set; }
+
+        /// <summary>
+        /// Flag to know if have a project
+        /// </summary>
+        public string have_project { get; set; }
     }
 }

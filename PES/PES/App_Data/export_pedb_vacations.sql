@@ -1,5 +1,5 @@
 --------------------------------------------------------
--- Archivo creado  - lunes-noviembre-28-2016   
+-- Archivo creado  - jueves-diciembre-01-2016   
 --------------------------------------------------------
 DROP TABLE "PE"."COMMENT" cascade constraints;
 DROP TABLE "PE"."DESCRIPTION" cascade constraints;
@@ -272,8 +272,6 @@ DROP SYNONYM "PUBLIC"."DUAL";
 	"COMMENTS" VARCHAR2(300 BYTE), 
 	"ID_REQ_STATUS" NUMBER(2,0), 
 	"REPLAY_COMMENT" VARCHAR2(300 BYTE), 
-	"LEAD_NAME" VARCHAR2(30 BYTE), 
-	"HAVE_PROJECT" VARCHAR2(1 BYTE), 
 	"NO_UNPAID_DAYS" NUMBER(2,0)
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
@@ -301,7 +299,9 @@ DROP SYNONYM "PUBLIC"."DUAL";
 	"ID_HEADER_REQ" NUMBER(4,0), 
 	"START_DATE" DATE, 
 	"END_DATE" DATE, 
-	"RETURN_DATE" DATE
+	"RETURN_DATE" DATE, 
+	"HAVE_PROJECT" VARCHAR2(1 BYTE), 
+	"LEAD_NAME" VARCHAR2(30 BYTE)
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -430,7 +430,7 @@ Insert into PE.DESCRIPTION (ID_DESCRIPTION,DESCRIPTION,ID_SUBTITLE) values (36,'
 REM INSERTING into PE.EMPLOYEE
 SET DEFINE OFF;
 Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (1,'Jose','Adan','jose.adan@4thsource.com','No Customer','.NET Developer',1,2,to_date('22/12/15','DD/MM/RR'),null,null,2,0);
-Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (2,'Jose Eduardo','Aguilar Anguiano','eduardo.aguilar@4thsource.com','No Customer','Developer',2,2,to_date('22/12/15','DD/MM/RR'),null,null,2,0);
+Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (2,'Jose Eduardo','Aguilar Anguiano','eduardo.aguilar@4thsource.com','No Customer','Developer',2,2,to_date('22/12/15','DD/MM/RR'),null,null,2,4);
 Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (3,'Israel','Alcantar','israel.alcantar@4thsource.com','No Customer','Developer',1,2,to_date('22/12/15','DD/MM/RR'),null,null,2,0);
 Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (4,'Alan','Altamirano','alan.altamirano@4thsource.com','No Customer','Developer',1,2,to_date('22/12/15','DD/MM/RR'),null,null,2,0);
 Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (5,'Diego','Amaya','Diego.amaya@4thsource.com','No Customer','Quality Assurance Analyst',1,2,to_date('22/12/15','DD/MM/RR'),null,null,2,0);
@@ -546,8 +546,11 @@ Insert into PE.TITLE (ID_TITLE,TITLE) values (1,'Performance');
 Insert into PE.TITLE (ID_TITLE,TITLE) values (2,'Competences');
 REM INSERTING into PE.VACATION_HEADER_REQ
 SET DEFINE OFF;
-Insert into PE.VACATION_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,LEAD_NAME,HAVE_PROJECT,NO_UNPAID_DAYS) values (1,2,'Christmas vacations',4,'My family are going to come and i would like to spend time with them.',1,null,'Eder Palacios','Y',null);
-Insert into PE.VACATION_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,LEAD_NAME,HAVE_PROJECT,NO_UNPAID_DAYS) values (2,2,'I need this vacations please',3,'My family are going to come and i would like to spend time with them.',3,null,'Eder Palacios','Y',null);
+Insert into PE.VACATION_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,NO_UNPAID_DAYS) values (1,2,'Christmas vacations',4,'My family are going to come and i would like to spend time with them.',1,null,null);
+Insert into PE.VACATION_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,NO_UNPAID_DAYS) values (2,2,'I need this vacations please',3,'My family are going to come and i would like to spend time with them.',3,null,null);
+Insert into PE.VACATION_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,NO_UNPAID_DAYS) values (3,12,'GOOD FRIDAY',2,'DSFBHJSBF JHSB F',1,null,null);
+Insert into PE.VACATION_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,NO_UNPAID_DAYS) values (5,2,'Necessary days',2,'DSFBHJSBF JHSB F',2,'You have tasks for those days',null);
+Insert into PE.VACATION_HEADER_REQ (ID_HEADER_REQ,ID_EMPLOYEE,TITLE,NO_VAC_DAYS,COMMENTS,ID_REQ_STATUS,REPLAY_COMMENT,NO_UNPAID_DAYS) values (8,2,'adfsdf',3,'ddasfasdf',1,null,null);
 REM INSERTING into PE.VACATION_REQ_STATUS
 SET DEFINE OFF;
 Insert into PE.VACATION_REQ_STATUS (ID_REQ_STATUS,REQ_STATUS) values (1,'PENDING');
@@ -556,8 +559,10 @@ Insert into PE.VACATION_REQ_STATUS (ID_REQ_STATUS,REQ_STATUS) values (3,'APPROVE
 Insert into PE.VACATION_REQ_STATUS (ID_REQ_STATUS,REQ_STATUS) values (4,'CANCELED');
 REM INSERTING into PE.VACATION_SUBREQ
 SET DEFINE OFF;
-Insert into PE.VACATION_SUBREQ (ID_SUBREQ,ID_HEADER_REQ,START_DATE,END_DATE,RETURN_DATE) values (1,1,to_date('24/11/16','DD/MM/RR'),to_date('30/11/16','DD/MM/RR'),to_date('01/12/16','DD/MM/RR'));
-Insert into PE.VACATION_SUBREQ (ID_SUBREQ,ID_HEADER_REQ,START_DATE,END_DATE,RETURN_DATE) values (2,2,to_date('25/11/16','DD/MM/RR'),to_date('29/11/16','DD/MM/RR'),to_date('30/12/16','DD/MM/RR'));
+Insert into PE.VACATION_SUBREQ (ID_SUBREQ,ID_HEADER_REQ,START_DATE,END_DATE,RETURN_DATE,HAVE_PROJECT,LEAD_NAME) values (1,1,to_date('24/11/16','DD/MM/RR'),to_date('30/11/16','DD/MM/RR'),to_date('01/12/16','DD/MM/RR'),null,null);
+Insert into PE.VACATION_SUBREQ (ID_SUBREQ,ID_HEADER_REQ,START_DATE,END_DATE,RETURN_DATE,HAVE_PROJECT,LEAD_NAME) values (2,2,to_date('25/11/16','DD/MM/RR'),to_date('29/11/16','DD/MM/RR'),to_date('30/12/16','DD/MM/RR'),null,null);
+Insert into PE.VACATION_SUBREQ (ID_SUBREQ,ID_HEADER_REQ,START_DATE,END_DATE,RETURN_DATE,HAVE_PROJECT,LEAD_NAME) values (3,3,to_date('26/11/16','DD/MM/RR'),to_date('28/11/16','DD/MM/RR'),to_date('29/11/16','DD/MM/RR'),null,null);
+Insert into PE.VACATION_SUBREQ (ID_SUBREQ,ID_HEADER_REQ,START_DATE,END_DATE,RETURN_DATE,HAVE_PROJECT,LEAD_NAME) values (4,5,to_date('26/11/16','DD/MM/RR'),to_date('28/11/16','DD/MM/RR'),to_date('29/11/16','DD/MM/RR'),null,null);
 --------------------------------------------------------
 --  DDL for Index COMMENT_PK
 --------------------------------------------------------

@@ -46,16 +46,6 @@ namespace PES.Models
         public string replayComment { get; set; }
 
         /// <summary>
-        /// Name of lead
-        /// </summary>
-        public string lead_name { get; set; }
-
-        /// <summary>
-        /// Flag to know if have a project
-        /// </summary>
-        public Char have_project { get; set; }
-
-        /// <summary>
         /// Number of unpaid days
         /// </summary>
         public int? noUnpaidDays { get; set; }
@@ -64,21 +54,13 @@ namespace PES.Models
 
     public class VacHeadReqViewModel : VacationHeaderReq
     {
+        public string first_name { get; set; }
+        public string last_name { get; set; }
         public int freedays { get; set; }
         public string status { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public DateTime return_date { get; set; }
-        public List<VacationDay> VacationDays { get; set; }
-    }
-
-    public class VacationDay
-    {
-        public bool NoProject { get; set; }
-        public DateTime start_date { get; set; }
-        public DateTime end_date { get; set; }
-        public DateTime return_date { get; set; }
-
     }
 
 }
