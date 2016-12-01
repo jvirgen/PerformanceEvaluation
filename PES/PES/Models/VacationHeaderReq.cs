@@ -48,7 +48,7 @@ namespace PES.Models
         /// <summary>
         /// Number of unpaid days
         /// </summary>
-        public int noUnpaidDays { get; set; }
+        public int? noUnpaidDays { get; set; }
 
     }
 
