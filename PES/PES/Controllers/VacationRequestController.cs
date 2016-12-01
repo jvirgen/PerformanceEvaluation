@@ -31,7 +31,7 @@ namespace PES.Controllers
             return View();
         }*/
 
-        // GET: VacationRequest
+        // GET: VacationRequest Existing 
         [HttpGet]
         public ActionResult VacationRequest(int headerReqId)
         {
@@ -42,9 +42,6 @@ namespace PES.Controllers
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
         
-            
-
-            ViewBag.userName = currentUser.FirstName + " " + currentUser.LastName;
             return View(currentRequest);
         }
 
