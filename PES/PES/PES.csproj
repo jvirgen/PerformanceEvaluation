@@ -471,6 +471,8 @@
     <Content Include="Views\Shared\_LatenessReportsPartial.cshtml" />
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
     <Content Include="Views\VacationRequest\VacationRequest.cshtml" />
+    <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
+    <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

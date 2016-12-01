@@ -7,7 +7,7 @@
         <form id="form" class="form-horizontal">
             <div class="form-group">
                 <div class="container flexEnd">
-                    <div id="reqName" class="col-md-3">
+                    <div class="col-md-3">
                         <label for="title" class="control-label col-form-label">Request Title</label>
                         <div>
                             @if (ViewBag.status == "NEW")
@@ -65,7 +65,7 @@
                             }
                             else
                             {
-                                <span id="daysVac" class="label label-default">@Model.noVacDays</span>
+                            <span id="daysVac" class="label label-default">@Model.noVacDays</span>
                             }
                         </label>
                     </div>
@@ -82,24 +82,10 @@
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
-            <div id="datesGroup" class="form-group">
-                <div id="datesCont" class="container flexEnd">
-                    <div class="col-md-3 text-center">
-                        <label for="start">Start Date - End Date</label>
-                        <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"
-                               value="@Model.start_date - @Model.end_date" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
-                        <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
-                    </div>
-                    <div class="col-md-2">
-                        <label>Return Date</label>
-                        <input type="text" class="form-control" id="return" value="@Model.return_date" disabled="disabled"/>
-                    </div>
-                    <div class="col-md-2">
-                        <button onclick="addDate(this)" type="button" class="btn btn-default addBtn" 
-                                @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>Add Date</button>
-                    </div>
-                </div> <!-- container end -->
-            </div> <!-- form-group end -->
+
+            <!-- PARTIAL VIEW WITH REQUEST DATES -->
+            @Html.Partial("_VacationDatesPartial", Model)
+
             <div class="form-group">
                 <div class="container">
                     <div class="col-md-4">
@@ -111,63 +97,33 @@
                 <div class="container flexEnd">
                     <div class="col-md-8">
                         <label for="comments" class="control-label">Comments:</label>
-                        <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval"
-                                  @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>@Model.comments</textarea>
+                        <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a comment or attach lead's approval" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>@Model.comments</textarea>
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                        {
+                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a cancel reason (REQUIRED)"></textarea>
+                        }
+                        else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
+                        {
+                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" disabled="disabled">@Model.replayComment</textarea>
+                        }
                     </div>
                     <div class="col-md-4 text-center">
                         <!-- Alert Box -->
                         @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
                         {
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
                                 <button id="cancelReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                            @Html.Partial("_ModalCancelRequestPartial")
                         }
                         else if (Model.status.ToLower() == "rejected")
                         {
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
                             <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
                         }
-                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title" id="gridSystemModalLabel">
-                                            Send Request?
-                                        </h4>
-                                    </div>
-                                    <div class="modal-body">
-                                            Make sure everything is in order before sending...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-primary">Send Request</a>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-                        <!-- Small modal end -->
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
-            <div class="form-group">
-                <div class="container flexEnd">
-                    @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
-                    {
-                        <div class="col-md-8">
-                            <label for="comments" class="control-label">Comments Reason:</label>
-                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" placeholder="Add a cancel reason (REQUIRED)"></textarea>
-                        </div>
-                    }
-                    else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
-                    {
-                        <div class="col-md-8">
-                            <label for="comments" class="control-label">Comments Reason:</label>
-                            <textarea class="form-control" style="min-width:100%;" rows="1" id="comments" disabled="disabled">@Model.replayComment</textarea>
-                        </div>
-                    }
-                    </div>
-                </div>
         </form>
     </section>
 </div>
@@ -185,10 +141,4 @@
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
 
-    <script type="text/javascript">
-
-        $(function() {
-            $('input[name="daterange"]').daterangepicker();
-                            });
-    </script>
 }
