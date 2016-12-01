@@ -52,7 +52,7 @@ namespace PES.Services
                             vacationsubreq.startDate = Convert.ToDateTime(Reader["START_DATE"]);
                             vacationsubreq.endDate = Convert.ToDateTime(Reader["END_DATE"]);
                             vacationsubreq.returnDate = Convert.ToDateTime(Reader["RETURN_DATE"]);
-                            vacationsubreq.have_project = Convert.ToString(Reader["HAVE_PROJECT"]);
+                            vacationsubreq.have_project = Convert.ToChar(Reader["HAVE_PROJECT"]);
                             vacationsubreq.lead_name = Convert.ToString(Reader["LEAD_NAME"]);
                             vacationsubreqs.Add(vacationsubreq); 
                         }

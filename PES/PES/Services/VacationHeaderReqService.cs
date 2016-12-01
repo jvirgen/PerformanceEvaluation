@@ -85,8 +85,8 @@ namespace PES.Services
                                            ",HE.COMMENTS" +
                                            ",HE.ID_REQ_STATUS" +
                                            ",HE.REPLAY_COMMENT" +
-                                           ",HE.LEAD_NAME" +
-                                           ",HE.HAVE_PROJECT" +
+                                           ",SUB.LEAD_NAME" +
+                                           ",SUB.HAVE_PROJECT" +
                                            ",HE.NO_UNPAID_DAYS" +
                                            ",ST.REQ_STATUS" +
                                            ",SUB.START_DATE" +

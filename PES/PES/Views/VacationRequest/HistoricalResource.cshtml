@@ -48,10 +48,7 @@
                             {
 
                                 <tr>
-                                    @if (profileId == 2)
-                                    {
-                                        <td>@headerVM.first_name @headerVM.last_name</td>
-                                    }
+                                    
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
@@ -90,10 +87,7 @@
                             if (userID == headerVM.employeeId && headerVM.status.ToLower() == "rejected")
                             {
                                 <tr>
-                                    @if (profileId == 2)
-                                    {
-                                        <td>@headerVM.first_name @headerVM.last_name</td>
-                                    }
+                                    
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
@@ -132,10 +126,7 @@
                             if (userID == headerVM.employeeId && headerVM.status.ToLower() == "approved")
                             {
                                 <tr>
-                                    @if (profileId == 2)
-                                    {
-                                        <td>@headerVM.first_name @headerVM.last_name</td>
-                                    }
+                                   
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
@@ -174,10 +165,7 @@
                             if (userID == headerVM.employeeId && headerVM.status.ToLower() == "canceled")
                             {
                                 <tr>
-                                    @if (profileId == 2)
-                                    {
-                                        <td>@headerVM.first_name @headerVM.last_name</td>
-                                    }
+                                   
                                     <td>
                                         <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{

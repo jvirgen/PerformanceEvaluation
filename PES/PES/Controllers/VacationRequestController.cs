@@ -70,8 +70,6 @@ namespace PES.Controllers
                 {
                     var headerReqVm = new VacHeadReqViewModel
                     {
-                        first_name = headerReq.first_name,
-                        last_name = headerReq.last_name,
                         vacationHeaderReqId = headerReq.vacationHeaderReqId,
                         employeeId = headerReq.employeeId,
                         title = headerReq.title,
@@ -79,7 +77,9 @@ namespace PES.Controllers
                         status = _ReqStatusService.GetVacationReqStatusById(headerReq.ReqStatusId).name,
                         start_date = headerReq.start_date,
                         end_date = headerReq.end_date,
-                        return_date = headerReq.return_date
+                        return_date = headerReq.return_date,
+                        first_name = headerReq.first_name,
+                        last_name = headerReq.last_name
                     };
                     listHeaderReqVM.Add(headerReqVm);
                 }
