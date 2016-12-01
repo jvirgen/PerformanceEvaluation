@@ -24,16 +24,17 @@ namespace PES.Controllers
             _ReqStatusService = new VacationReqStatusService();
         }
 
-        /*// GET: VacationRequest
-        public ActionResult HistoricalResource()
+        //GET: VacationRequest NEW 
+        [HttpGet]
+        public ActionResult VacationRequest(String email)
         {
-            ViewBag.title = "Resource Name";
+            ViewBag.status = "NEW";
             return View();
-        }*/
+        }
 
         // GET: VacationRequest Existing 
         [HttpGet]
-        public ActionResult VacationRequest(int headerReqId)
+        public ActionResult GetVacationRequest(int headerReqId)
         {
             VacHeadReqViewModel currentRequest= new VacHeadReqViewModel();
             _headerReqService = new VacationHeaderReqService();
@@ -42,7 +43,7 @@ namespace PES.Controllers
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
         
-            return View(currentRequest);
+            return View("VacationRequest",currentRequest);
         }
 
         // GET: VacationRequest/HistoricalResource
@@ -79,6 +80,7 @@ namespace PES.Controllers
             ViewBag.Username = currentUser.FirstName + " " + currentUser.LastName;
             ViewBag.UserID = currentUser.EmployeeId;
             ViewBag.FreeDays = currentUser.Freedays;
+            ViewBag.mail = currentUserEmail;
             return View(listHeaderReqVM);
         }
     }

@@ -43,7 +43,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -77,7 +77,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -111,7 +111,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -145,7 +145,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -164,6 +164,6 @@
         </div>
 
     </div>
-    <a href="@Url.Action("VacationRequest", "VacationRequest")" class="btn btn-lg btn-primary">New Request</a>
+    <a href="@Url.Action("VacationRequest", "VacationRequest" , new { mail = ViewBag.mail})" class="btn btn-lg btn-primary">New Request</a>
 
     @Styles.Render("~/Content/css/historical-resource.css")
