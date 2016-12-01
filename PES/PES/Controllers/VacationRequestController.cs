@@ -41,10 +41,7 @@ namespace PES.Controllers
             _employeeService = new EmployeeService();
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
-        
-            
 
-            ViewBag.userName = currentUser.FirstName + " " + currentUser.LastName;
             return View(currentRequest);
         }
 

@@ -69,5 +69,16 @@ namespace PES.Models
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public DateTime return_date { get; set; }
+        public List<VacationDay> VacationDays { get; set; }
     }
+
+    public class VacationDay
+    {
+        public bool NoProject { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime end_date { get; set; }
+        public DateTime return_date { get; set; }
+
+    }
+
 }
