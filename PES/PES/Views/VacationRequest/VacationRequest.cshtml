@@ -65,14 +65,14 @@
                             }
                             else
                             {
-                            <span id="daysVac" class="label label-default">@Model.noVacDays</span>
+                            <span id="daysVac" class="label label-default">@ViewBag.freedays</span>
                             }
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span id="daysReq" class="label label-default">0</span>
+                            <span id="daysReq" class="label label-default">@Model.noVacDays</span>
                         </label>
                     </div>
                     <div id="checkarea" class="col-md-8 checkbox">
@@ -130,14 +130,14 @@
 
 @section Styles
 {
-                            @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
     @Styles.Render("~/content/themes/base/daterangepicker.css")
 }
 
-                        @section Scripts
-                        {
+@section Scripts
+{
 
-                            @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
 
