@@ -457,6 +457,7 @@
     <Content Include="Views\Lateness\Index.cshtml" />
     <Content Include="Views\Shared\_LatenessReportsPartial.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\latenessMenu.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

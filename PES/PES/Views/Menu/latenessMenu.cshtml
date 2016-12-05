@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Choose";
+}
+<hr />
+<div class="well">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>Lateness System</h2>
+        </div>
+
+        <div class="col-md-12">
+            <label> Manager </label>
+        </div>
+        <hr>
+
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-6">
+            <a href="@Url.Action("Index", "Lateness")" class="btn btn-lg btn-primary" style="width: 250px">List of Lateness</a>
+        </div>
+        <div class="col-md-6">
+            <a href="@Url.Action("ShowLatenesExcel", "lateness")" class="btn btn-lg btn-primary" style="width: 250px">Import an Excel File</a>
+        </div>
+    </div>
+</div>
