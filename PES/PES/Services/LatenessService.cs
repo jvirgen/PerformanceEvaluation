@@ -93,5 +93,33 @@ namespace PES.Services
             }
             return latenesses;
         }
+
+         public bool insertLateness(List<Lateness> latenesses)
+        {
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    foreach (Lateness l in latenesses)
+                    {
+                        String date = l.Date.ToString("dd/MM/yyyy")+ " "+l.Time.ToString("H:mm:ss");
+                        string InsertQuery = "INSERT INTO lateness(\"DATE\", ID_EMPLOYEE)" +
+                                         "VALUES(TO_DATE('"+date+"', 'dd/mm/yyyy hh24:mi:ss'), " +
+                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE EMAIL='"+l.EmployeeEmail+"'))";
+
+                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                        Comand.ExecuteNonQuery();
+                    }
+                    db.Close();
+                }  
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
     }
 }
