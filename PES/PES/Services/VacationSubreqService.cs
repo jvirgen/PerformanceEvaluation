@@ -69,5 +69,53 @@ namespace PES.Services
 
             return vacationsubreqs;
         }
+
+        public bool InsertSubReq(VacationSubreq vacSubReq)
+        {
+            bool status = false;
+
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string query = @"INSERT INTO 
+                                    VACATION_SUBREQ 
+                                        (ID_HEADER_REQ, 
+                                        START_DATE, 
+                                        END_DATE, 
+                                        RETURN_DATE, 
+                                        LEAD_NAME, 
+                                        HAVE_PROJECT) 
+                                VALUES
+                                    (:IdHeaderReq, 
+                                    :StartDate, 
+                                    :EndDate, 
+                                    :ReturnDate, 
+                                    :LeadName, 
+                                    :HaveProject)";
+
+                using (OracleCommand command = new OracleCommand(query, db))
+                {
+                    command.Parameters.Add(new OracleParameter("IdHeaderReq", vacSubReq.vacationHeaderReqId));
+                    command.Parameters.Add(new OracleParameter("StartDate", vacSubReq.startDate));
+                    command.Parameters.Add(new OracleParameter("EndDate", vacSubReq.endDate));
+                    command.Parameters.Add(new OracleParameter("ReturnDate", vacSubReq.returnDate));
+                    command.Parameters.Add(new OracleParameter("LeadName", vacSubReq.lead_name));
+                    command.Parameters.Add(new OracleParameter("HaveProject", vacSubReq.have_project));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                    status = true;
+                }
+            }
+            return status;
+        }
     }
 }

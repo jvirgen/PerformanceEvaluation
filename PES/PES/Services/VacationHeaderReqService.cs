@@ -150,6 +150,7 @@ namespace PES.Services
                                         "HE.TITLE, " +
                                         "HE.NO_VAC_DAYS, " +
                                         "HE.ID_REQ_STATUS," +
+                                        "SUB.HAVE_PROJECT, " +
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
                                         "SUB.RETURN_DATE " +
@@ -175,6 +176,7 @@ namespace PES.Services
                             Header.title = Convert.ToString(reader["TITLE"]);
                             Header.noVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             Header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
+                            Header.have_project = Convert.ToChar(reader["HAVE_PROJECT"]);
                             Header.start_date = Convert.ToDateTime(reader["START_DATE"]);
                             Header.end_date = Convert.ToDateTime(reader["END_DATE"]);
                             Header.return_date = Convert.ToDateTime(reader["RETURN_DATE"]);
@@ -190,6 +192,53 @@ namespace PES.Services
             }
 
             return Headers;
+        }
+
+        public bool InsertVacHeaderReq(VacationHeaderReq vacHeadReq)
+        {
+            bool status = false;
+
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string query = @"INSERT INTO 
+                                    VACATION_HEADER_REQ 
+                                        (ID_EMPLOYEE, 
+                                        TITLE, 
+                                        NO_VAC_DAYS, 
+                                        COMMENTS, 
+                                        ID_REQ_STATUS, 
+                                        NO_UNPAID_DAYS 
+                                VALUES 
+                                    (:IdEmployee, 
+                                    :Title, 
+                                    :NoVacDays, 
+                                    :Comments, 
+                                    :IdReqStatus, 
+                                    :NoUnpaidDays)";
+                using (OracleCommand command = new OracleCommand(query, db))
+                {
+                    command.Parameters.Add(new OracleParameter("IdEmployee", vacHeadReq.employeeId));
+                    command.Parameters.Add(new OracleParameter("Title", vacHeadReq.title));
+                    command.Parameters.Add(new OracleParameter("NoVacDays", vacHeadReq.noVacDays));
+                    command.Parameters.Add(new OracleParameter("Comments", vacHeadReq.comments));
+                    command.Parameters.Add(new OracleParameter("IdReqStatus", vacHeadReq.ReqStatusId));
+                    command.Parameters.Add(new OracleParameter("NoUnpaidDays", vacHeadReq.noUnpaidDays));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+                    status = true;
+                }
+            }
+            return status;
         }
     }
 }

@@ -16,12 +16,14 @@ namespace PES.Controllers
         private EmployeeService _employeeService;
         private VacationHeaderReqService _headerReqService;
         private VacationReqStatusService _ReqStatusService;
+        private VacationSubreqService _subReqService;
 
         public VacationRequestController()
         {
             _employeeService = new EmployeeService();
             _headerReqService = new VacationHeaderReqService();
             _ReqStatusService = new VacationReqStatusService();
+            _subReqService = new VacationSubreqService();
         }
 
         /*// GET: VacationRequest
@@ -35,10 +37,8 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult VacationRequest(int headerReqId)
         {
-            VacHeadReqViewModel currentRequest= new VacHeadReqViewModel();
-            _headerReqService = new VacationHeaderReqService();
+            VacHeadReqViewModel currentRequest = new VacHeadReqViewModel();
             currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
-            _employeeService = new EmployeeService();
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
         
@@ -79,7 +79,8 @@ namespace PES.Controllers
                         end_date = headerReq.end_date,
                         return_date = headerReq.return_date,
                         first_name = headerReq.first_name,
-                        last_name = headerReq.last_name
+                        last_name = headerReq.last_name,
+                        have_project = headerReq.have_project
                     };
                     listHeaderReqVM.Add(headerReqVm);
                 }
