@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace PES.Models
 {
@@ -23,6 +24,7 @@ namespace PES.Models
         /// <summary>
         /// Title of the request
         /// </summary>
+        [Required(ErrorMessage = "Request title is required")]
         public string title { get; set; }
 
         /// <summary>
@@ -33,6 +35,7 @@ namespace PES.Models
         /// <summary>
         /// Comments
         /// </summary>
+        [Required(ErrorMessage = "Please submit a comment")]
         public string comments { get; set; }
 
         /// <summary>
@@ -43,6 +46,7 @@ namespace PES.Models
         /// <summary>
         /// Replay Comment
         /// </summary>
+        [Required(ErrorMessage = "A cancel reason is required")]
         public string replayComment { get; set; }
 
         /// <summary>
