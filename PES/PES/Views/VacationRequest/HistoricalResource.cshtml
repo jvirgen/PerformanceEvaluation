@@ -186,6 +186,6 @@
         </div>
 
     </div>
-    <a href="@Url.Action("VacationRequest", "VacationRequest" , new { mail = ViewBag.mail})" class="btn btn-lg btn-primary">New Request</a>
+    <a href="@Url.Action("InsertNewRequest", "VacationRequest", ViewBag.UserID)" class="btn btn-lg btn-primary">New Request</a>
 
     @Styles.Render("~/Content/css/historical-resource.css")

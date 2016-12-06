@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PES.Services;
 using PES.Models;
 using System.Threading.Tasks;
+using PES.ViewModels;
 
 namespace PES.Controllers
 {
@@ -24,11 +25,32 @@ namespace PES.Controllers
             _ReqStatusService = new VacationReqStatusService();
         }
 
-        //GET: VacationRequest NEW 
+        //GET: New VacationRequest 
         [HttpGet]
-        public ActionResult VacationRequest(String email)
+        public ActionResult InsertNewRequest(int employeeId)
         {
-            ViewBag.status = "NEW";
+
+            Employee currentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            currentEmployee = _employeeService.GetByID(employeeId);
+            InsertNewRequestViewModel model = new InsertNewRequestViewModel();
+            model.status = "new";
+            model.employeeId = employeeId;
+
+            return View(model);
+        }
+
+        //POST: New VacationRequest 
+        [HttpPost]
+        public ActionResult InsertNewRequest(VacHeadReqViewModel model)
+        {
+            return View();
+        }
+
+        // GET: VacationRequest Existing
+        [HttpGet]
+        public ActionResult VacationRequest()
+        {
             return View();
         }
 
@@ -44,7 +66,7 @@ namespace PES.Controllers
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
 
             ViewBag.freedays = currentUser.Freedays;
-            return View("VacationRequest",currentRequest);
+            return View("VacationRequest", currentRequest);
         }
 
         // GET: VacationRequest/HistoricalResource
