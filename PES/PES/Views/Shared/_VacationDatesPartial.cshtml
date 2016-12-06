@@ -1,7 +1,4 @@
-﻿@*@using PES.Models
-@{
-    VacationSubreq subrequest = new VacationSubreq();
-}*@
+﻿
 <hr class="divisor">
 <div id="datesGroup" class="form-group">
     <div id="subDatesGroup" class="form-group">
@@ -10,6 +7,7 @@
                 <label for="start">Start Date - End Date</label>
                 @if (Model.status == "New")
                 {
+
                     <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"/>
                     <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
                 }
