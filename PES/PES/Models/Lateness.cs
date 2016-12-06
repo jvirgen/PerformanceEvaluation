@@ -19,5 +19,7 @@ namespace PES.Models
 
         [DataType(DataType.Time)]
         public DateTime Time { get; set; }
+
+        public String EmployeeName { get; set; }
     }
 }

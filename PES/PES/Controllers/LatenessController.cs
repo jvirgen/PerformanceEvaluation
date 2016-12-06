@@ -39,16 +39,27 @@ namespace PES.Controllers
             return PartialView("_LatenessReportsPartial", lateness);
         }
 
+        public ActionResult LatenessAllUsers()
+        {
+            if ((int)Session["UserProfile"] != 2)
+                return RedirectToAction("Index", "Menu");
+
+            LatenessService GetLateness = new LatenessService();
+            List<Lateness> lateness = new List<Lateness>();
+
+            lateness = GetLateness.GetLatenessByCurrentMonth();
+            return View(lateness);
+        }
+
         public ActionResult ShowLatenesExcel(List<Lateness> lateness)
         {
             if((int)Session["UserProfile"] != 2)
-            {
                 return RedirectToAction("Index", "Menu");
-            }
                
             return View(lateness);
         }
 
+        [HttpPost]
         public ActionResult UploadLatenessExcel()
         {
             List<Lateness> latenesses = new List<Lateness>();
@@ -87,6 +98,7 @@ namespace PES.Controllers
             return View("ShowLatenesExcel", latenesses);
         }
 
+        [HttpPost]
         public bool saveLatenessExcel()
         {
             LatenessService lateness = new LatenessService();

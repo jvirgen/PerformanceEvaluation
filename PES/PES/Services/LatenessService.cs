@@ -59,7 +59,7 @@ namespace PES.Services
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '"+ email +"' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         default:
@@ -94,7 +94,47 @@ namespace PES.Services
             return latenesses;
         }
 
-         public bool insertLateness(List<Lateness> latenesses)
+        public List<Lateness> GetLatenessByCurrentMonth()
+        {
+            List<Lateness> latenesses = new List<Lateness>();
+            Lateness lateness = new Lateness();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.LAST_NAME || ' ' || E.FIRST_NAME AS \"NAME\", E.EMAIL, E.ID_EMPLOYEE " +
+                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
+                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 " +
+                                    "ORDER BY \"DATE\"";
+                        
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+
+                    while (Read.Read())
+                    {
+                        lateness = new Lateness();
+                        lateness.LatenessId = Convert.ToInt32(Read["ID_LATENESS"]);
+                        string date = Convert.ToString(Read["DATE"]);
+                        lateness.Date = Convert.ToDateTime(date);
+                        lateness.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
+                        lateness.EmployeeEmail = Convert.ToString(Read["EMAIL"]);
+                        lateness.EmployeeName = Convert.ToString(Read["NAME"]);
+                        latenesses.Add(lateness);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return latenesses;
+        }
+
+        public bool insertLateness(List<Lateness> latenesses)
         {
             try
             {
