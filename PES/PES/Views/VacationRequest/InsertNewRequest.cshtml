@@ -1,8 +1,9 @@
-﻿@model PES.Models.VacHeadReqViewModel
+﻿@model PES.ViewModels.InsertNewRequestViewModel
 @using PES.Models
-@{ 
-    Model.status = "New";
-}
+    @{ 
+        VacationSubreq subRequest = new VacationSubreq();
+        ViewBag.status = "New";
+    }
 <div>
     <section>
         <div class="page-header text-center">
@@ -14,7 +15,7 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-3">
-                        <label for="title" class="control-label col-form-label">Request Title</label>
+                        @Html.LabelFor(model => Model.title, "Request Title", new { @class = "control-label col-form-label" })
                         <div>
                             @Html.EditorFor(model => Model.title, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
@@ -23,7 +24,7 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">@Model.noVacDays</span>
+                            <span id="daysVac" class="label label-default">@Model.freedays</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
@@ -41,7 +42,7 @@
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
             <!-- PARTIAL VIEW WITH REQUEST DATES -->
-            @Html.Partial("_VacationDatesPartial", Model)
+            @Html.Partial("_VacationDatesPartial", subRequest)
 
             <div class="form-group">
                 <div class="container">
@@ -53,7 +54,7 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-8">
-                        <label for="comments" class="control-label">Comments:</label>
+                        @Html.LabelFor(model => Model.comments, "Comments:", new { @class = "control-label" })
                         @Html.TextAreaFor(model => Model.comments, htmlAttributes: new { @class = "form-control"})
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                     </div>
