@@ -29,15 +29,15 @@ namespace PES.Controllers
 
         //GET: New VacationRequest 
         [HttpGet]
-        public ActionResult InsertNewRequest()
+        public ActionResult InsertNewRequest(int userid)
         {
             //int employeeId = 12;
             Employee currentEmployee = new Employee();
             _employeeService = new EmployeeService();
-            currentEmployee = _employeeService.GetByID(employeeId);
+            currentEmployee = _employeeService.GetByID(userid);
             InsertNewRequestViewModel model = new InsertNewRequestViewModel();
             model.status = "New";
-            model.employeeId = employeeId;
+            model.employeeId = userid;
             model.freedays = currentEmployee.Freedays;
 
             return View(model);

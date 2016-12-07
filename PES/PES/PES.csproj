@@ -475,6 +475,7 @@
     <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
     <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
     <Content Include="Views\VacationRequest\InsertNewRequest.cshtml" />
+    <Content Include="Views\Shared\_NewVacationDatesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

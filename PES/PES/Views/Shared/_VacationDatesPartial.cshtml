@@ -1,23 +1,13 @@
-﻿
-<hr class="divisor">
+﻿<hr class="divisor">
 <div id="datesGroup" class="form-group">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexEnd">
             <div class="col-md-3 text-center">
                 <label for="start">Start Date - End Date</label>
-                @if (Model.status == "New")
-                {
-
-                    <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"/>
-                    <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
-                }
-                else
-                {
                 <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"
-                       value="@Model.start_date - @Model.end_date"
+                       value="@Model.star_date - @Model.end_Date"
                        @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
-                }
             </div>
             <div class="col-md-3">
                 <label>Return Date</label>
@@ -50,7 +40,7 @@
                     else
                     {
                         <input id="lead" type="text" value="@Model.lead_name"@{ @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) } class="form-control" data-val="true" data-val-required="Lead name is required" />
-                    }
+                            }
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
             </div>
@@ -66,9 +56,11 @@
                     }
                 </label>
             </div>
+
             <div class="removeBtn col-md-1 hidden">
                 <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
             </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
-</div> <!-- form-group end -->
+</div>
+ <!-- form-group end -->

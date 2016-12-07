@@ -54,6 +54,7 @@ namespace PES.Models
         /// </summary>
         public int? noUnpaidDays { get; set; }
 
+
     }
 
     public class VacHeadReqViewModel : VacationHeaderReq
