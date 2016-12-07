@@ -51,7 +51,7 @@
                     }
                     else
                     {
-                        <input id="lead" type="text" value="@Model.lead_name"@{ @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) } class="form-control" data-val="true" data-val-required="Lead name is required" />
+                        <input id="lead" type="text" value="@Model.lead_name" @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} class="form-control" data-val="true" data-val-required="Lead name is required" />
                     }
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
@@ -60,11 +60,17 @@
                 <label id="checktext">
                     @if (Model.status == "New")
                     {
-                        <input type="checkbox" id="unpaid" value="I do not have a project" />
+                        <input type="checkbox" id="unpaid"/>
+                        <script>
+                            document.getElementById("checktext").innerHTML += "I do not have a project";
+                        </script>
                     }
                     else
                     {
-                    <input type="checkbox" value="I do not have a project" id="unpaid" checked="@(Convert.ToChar(Model.have_project) == 'N' ? "checked" : "")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
+                        <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.have_project) == 'N' ? "checked" : "")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
+                        <script>
+                            document.getElementById("checktext").innerHTML += "I do not have a project";
+                        </script>
                     }
                 </label>
             </div>
