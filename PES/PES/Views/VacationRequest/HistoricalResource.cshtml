@@ -1,10 +1,10 @@
-﻿@model IEnumerable<PES.Models.VacHeadReqViewModel>
-@using PES.Models
-@{
+﻿    @model IEnumerable<PES.Models.VacHeadReqViewModel>
+    @using PES.Models
+    @{
         int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
         int freeDays = ViewBag.FreeDays != null ? (int)ViewBag.FreeDays : 0;
         int profileId = ViewBag.profileId != null ? (int)ViewBag.profileId : 0;
-}
+    }
     <div class="row text-center">
         <br />
         <div class="col-md-12">
@@ -196,7 +196,7 @@
                 </table>
             </div>
         </div>
-        <a href="@Url.Action("InsertNewRequest", "VacationRequest", @{ employeeId = userID})" class="btn btn-lg btn-primary">New Request</a>
+        <a href="@Url.Action("InsertNewRequest", "VacationRequest")" class="btn btn-lg btn-primary">New Request</a>
     </div>
     <a href="@Url.Action("InsertNewRequest", "VacationRequest", ViewBag.UserID)" class="btn btn-lg btn-primary">New Request</a>
 
