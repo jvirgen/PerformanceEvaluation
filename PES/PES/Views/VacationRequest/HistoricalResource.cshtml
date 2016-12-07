@@ -198,6 +198,6 @@
         </div>
         <a href="@Url.Action("InsertNewRequest", "VacationRequest", @{ employeeId = userID})" class="btn btn-lg btn-primary">New Request</a>
     </div>
-    
+    <a href="@Url.Action("InsertNewRequest", "VacationRequest", ViewBag.UserID)" class="btn btn-lg btn-primary">New Request</a>
 
     @Styles.Render("~/Content/css/historical-resource.css")

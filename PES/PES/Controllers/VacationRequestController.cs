@@ -31,21 +31,20 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult InsertNewRequest(int employeeId)
         {
-            //int employeeId = 12;
+
             Employee currentEmployee = new Employee();
             _employeeService = new EmployeeService();
             currentEmployee = _employeeService.GetByID(employeeId);
             InsertNewRequestViewModel model = new InsertNewRequestViewModel();
-            model.status = "New";
+            model.status = "new";
             model.employeeId = employeeId;
-            model.freedays = currentEmployee.Freedays;
 
             return View(model);
         }
 
         //POST: New VacationRequest 
         [HttpPost]
-        public ActionResult InsertNewRequest(InsertNewRequestViewModel model)
+        public ActionResult InsertNewRequest(VacHeadReqViewModel model)
         {
             return View();
         }
