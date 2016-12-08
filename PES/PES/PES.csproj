@@ -208,12 +208,14 @@
     <Compile Include="ViewModels\ChangeProfileViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\InsertNewRequestViewModel.cs" />
+    <Compile Include="ViewModels\NewVacationDates.cs" />
     <Compile Include="ViewModels\TransferEmployeeViewModel.cs" />
     <Compile Include="ViewModels\UpdateEmployeeViewModel.cs" />
     <Compile Include="ViewModels\InsertEmployeeViewModel.cs" />
     <Compile Include="ViewModels\PerformanceRankHelper.cs" />
     <Compile Include="ViewModels\PerformanceFilesPartial.cs" />
     <Compile Include="ViewModels\PEVisualizationViewModel.cs" />
+    <Compile Include="ViewModels\VacHeadReqViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\create_user_pe.sql" />
@@ -475,6 +477,7 @@
     <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
     <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
     <Content Include="Views\VacationRequest\InsertNewRequest.cshtml" />
+    <Content Include="Views\Shared\_NewVacationDatesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
