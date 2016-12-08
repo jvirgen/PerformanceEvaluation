@@ -1,21 +1,38 @@
-﻿<hr class="divisor">
+﻿
+<hr class="divisor">
 <div id="datesGroup" class="form-group">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexEnd">
             <div class="col-md-3 text-center">
                 <label for="start">Start Date - End Date</label>
+                @if (Model.status == "New")
+                {
+
+                    <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"/>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+                }
+                else
+                {
                 <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"
                        value="@Model.start_date - @Model.end_date"
                        @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+                }
             </div>
             <div class="col-md-3">
                 <label>Return Date</label>
+                @if (Model.status == "New")
+                {
+                    <input type="text" class="form-control" id="return" disabled="disabled" />
+                }
+                else
+                {
                 <input type="text" class="form-control" id="return" value="@Model.return_date" disabled="disabled" />
+                }
             </div>
             <div class="col-md-2">
                 <button onclick="addDate(this)" type="button" class="btn btn-default addBtn"
-                        @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })>
+                        @(Model.status.ToLower() == "rejected" || Model.status == "New" ? null : new { disabled = "disabled" })>
                     Add Date
                 </button>
             </div>
@@ -26,16 +43,33 @@
             <div id="leadName" class="col-md-4">
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
-                    <input id="lead" type="text" value="@Model.lead_name"
-                           @{ @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) }
-                           class="form-control" data-val="true" data-val-required="Lead name is required" />
+                    @if (Model.status == "New")
+                    {
+                        <input id="lead" type="text" class="form-control" data-val="true" data-val-required="Lead name is required" />
+                    }
+                    else
+                    {
+                        <input id="lead" type="text" value="@Model.lead_name" @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} class="form-control" data-val="true" data-val-required="Lead name is required" />
+                    }
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
             </div>
             <div id="checkarea" class="col-md-2 checkbox">
                 <label id="checktext">
-                    <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.have_project) == 'N' ? "checked" : "")"
-                           @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />I do not have a project
+                    @if (Model.status == "New")
+                    {
+                        <input type="checkbox" id="unpaid"/>
+                        <script>
+                            document.getElementById("checktext").innerHTML += "I do not have a project";
+                        </script>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.have_project) == 'N' ? "checked" : "")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
+                        <script>
+                            document.getElementById("checktext").innerHTML += "I do not have a project";
+                        </script>
+                    }
                 </label>
             </div>
             <div class="removeBtn col-md-1 hidden">

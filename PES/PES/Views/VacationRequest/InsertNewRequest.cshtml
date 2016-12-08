@@ -1,0 +1,86 @@
+﻿@model PES.ViewModels.InsertNewRequestViewModel
+@using PES.Models
+    @{ 
+        VacationSubreq subRequest = new VacationSubreq();
+        ViewBag.status = "New";
+    }
+<div>
+    <section>
+        <div class="page-header text-center">
+            <h1>New Vacation Request</h1>
+        </div>
+        @using (Html.BeginForm("InsertNewRequest", "VacationRequest", FormMethod.Post))
+        {
+        <form id="form" class="form-horizontal">
+            <div class="form-group">
+                <div class="container flexEnd">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => Model.title, "Request Title", new { @class = "control-label col-form-label" })
+                        <div>
+                            @Html.EditorFor(model => Model.title, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
+                    </div>
+                    <div id="vacationarea" class="col-md-2 text-center">
+                        <label>
+                            Vacation Days:
+                            <span id="daysVac" class="label label-default">@Model.freedays</span>
+                        </label>
+                    </div>
+                    <div id="requestarea" class="col-md-2 text-left">
+                        <label>
+                            Days Requested:
+                            <span id="daysReq" class="label label-default">0</span>
+                        </label>
+                    </div>
+                    <div id="reqStatus" class="col-md-5 text-right">
+                        <label class="control-label text-center">
+                            Request Status:
+                            <span class="label label-default" id="status">@Model.status</span>
+                        </label>
+                    </div>
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+            <!-- PARTIAL VIEW WITH REQUEST DATES -->
+            @Html.Partial("_VacationDatesPartial", subRequest)
+
+            <div class="form-group">
+                <div class="container">
+                    <div class="col-md-4">
+                        <span class="label label-warning">All vacations days must be in the same month</span>
+                    </div>
+                </div> <!-- container end -->
+            </div><!-- form-group end -->
+            <div class="form-group">
+                <div class="container flexEnd">
+                    <div class="col-md-8">
+                        @Html.LabelFor(model => Model.comments, "Comments:", new { @class = "control-label" })
+                        @Html.TextAreaFor(model => Model.comments, htmlAttributes: new { @class = "form-control"})
+                        <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
+                        @Html.Partial("_ModalCancelRequestPartial")     
+                        <input type="submit" value="Send Request" class="btn btn-lg btn-primary btn-block" />                   
+                    </div>
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+        </form>
+        }                                                                                                                         
+    </section>
+</div>
+
+@section Styles
+{
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/content/themes/base/daterangepicker.css")
+}
+
+@section Scripts
+{
+
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+
+}

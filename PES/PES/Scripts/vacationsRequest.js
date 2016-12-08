@@ -94,3 +94,15 @@ function statusColor() {
         $('#status').attr('class', 'label label-success');
     }
 }
+
+function getDaysRequested() {
+
+}
+
+function getReturnDate() {
+
+}
+
+function reviewDates() {
+
+}

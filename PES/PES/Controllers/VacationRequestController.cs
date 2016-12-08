@@ -27,23 +27,47 @@ namespace PES.Controllers
             _subReqService = new VacationSubreqService();
         }
 
-        /*// GET: VacationRequest
-        public ActionResult HistoricalResource()
+        //GET: New VacationRequest 
+        [HttpGet]
+        public ActionResult InsertNewRequest()
         {
-            ViewBag.title = "Resource Name";
+            //int employeeId = 12;
+            Employee currentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            currentEmployee = _employeeService.GetByID(employeeId);
+            InsertNewRequestViewModel model = new InsertNewRequestViewModel();
+            model.status = "New";
+            model.employeeId = employeeId;
+            model.freedays = currentEmployee.Freedays;
+
+            return View(model);
+        }
+
+        //POST: New VacationRequest 
+        [HttpPost]
+        public ActionResult InsertNewRequest(InsertNewRequestViewModel model)
+        {
             return View();
-        }*/
+        }
+
+        // GET: VacationRequest Existing
+        [HttpGet]
+        public ActionResult VacationRequest()
+        {
+            return View();
+        }
 
         // GET: VacationRequest Existing 
         [HttpGet]
-        public ActionResult VacationRequest(int headerReqId)
+        public ActionResult GetVacationRequest(int headerReqId)
         {
             VacHeadReqViewModel currentRequest = new VacHeadReqViewModel();
             currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
-        
-            return View(currentRequest);
+
+            ViewBag.freedays = currentUser.Freedays;
+            return View("VacationRequest", currentRequest);
         }
 
         // GET: VacationRequest/HistoricalResource

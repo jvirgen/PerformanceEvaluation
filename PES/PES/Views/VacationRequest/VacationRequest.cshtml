@@ -8,10 +8,10 @@
         {
             @Html.AntiForgeryToken()
 
-            <form id="form" class="form-horizontal">
-                <div class="form-group">
-                    <div class="container flexEnd">
-                        <div class="col-md-3">
+        <form id="form" class="form-horizontal">
+            <div class="form-group">
+                <div class="container flexEnd">
+                    <div class="col-md-3">
                             @Html.LabelFor(model => model.title, "Request Title", new { @class = "control-label col-form-label" })
                             @if (Model.status.ToLower() == "rejected")
                             {
@@ -24,40 +24,39 @@
 
                             @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
                         </div>
-                        <div id="vacationarea" class="col-md-2 text-center">
-                            <label>
-                                Vacation Days:
-                                <span id="daysVac" class="label label-default">@Model.noVacDays</span>
-                            </label>
-                        </div>
-                        <div id="requestarea" class="col-md-2 text-left">
-                            <label>
-                                Days Requested:
-                                <span id="daysReq" class="label label-default">0</span>
-                            </label>
-                        </div>
-                        <div id="reqStatus" class="col-md-5 text-right">
-                            <label class="control-label text-center">
-                                Request Status:
-                                <span class="label label-default" id="status">@Model.status</span>
-                            </label>
-                        </div>
-                    </div> <!-- container end -->
-                </div> <!-- form-group end -->
+                    <div id="vacationarea" class="col-md-2 text-center">
+                        <label>
+                            Vacation Days:
+                            <span id="daysVac" class="label label-default">0</span>
+                        </label>
+                    </div>
+                    <div id="requestarea" class="col-md-2 text-left">
+                        <label>
+                            Days Requested:
+                            <span id="daysReq" class="label label-default">0</span>
+                        </label>
+                    </div>
+                    <div id="reqStatus" class="col-md-5 text-right">
+                        <label class="control-label text-center">
+                            Request Status:
+                            <span class="label label-default" id="status">@Model.status</span>
+                        </label>
+                    </div>
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+            <!-- PARTIAL VIEW WITH REQUEST DATES -->
+            @Html.Partial("_VacationDatesPartial", Model)
 
-                <!-- PARTIAL VIEW WITH REQUEST DATES -->
-                @Html.Partial("_VacationDatesPartial", Model)
-
-                <div class="form-group">
-                    <div class="container">
-                        <div class="col-md-4">
-                            <span class="label label-warning">All vacations days must be in the same month</span>
-                        </div>
-                    </div> <!-- container end -->
-                </div><!-- form-group end -->
-                <div class="form-group">
-                    <div class="container flexEnd">
-                        <div class="col-md-8">
+            <div class="form-group">
+                <div class="container">
+                    <div class="col-md-4">
+                        <span class="label label-warning">All vacations days must be in the same month</span>
+                    </div>
+                </div> <!-- container end -->
+            </div><!-- form-group end -->
+            <div class="form-group">
+                <div class="container flexEnd">
+                    <div class="col-md-8">
                             <!--COMMENTS-->
                             @Html.LabelFor(model => model.comments, "Comments", new { @class = "control-label" })
                             @if (Model.status.ToLower() == "rejected")
@@ -72,37 +71,37 @@
                             @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
 
                             <!--REASON-->
-                            @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
-                            {
+                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                        {
                                 @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
                                 @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @placeholder = "Add a cancel reason...", @style = "min-width:100%;" })
-                            }
-                            else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
-                            {
+                        }
+                        else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
+                        {
                                 @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
                                 @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @style = "min-width:100%;", @disabled = "disabled" })
-                            }
+                        }
 
                             @Html.ValidationMessageFor(model => model.replayComment, "", new { @class = "text-danger" })
-                        </div>
+                    </div>
                     
                         <!-- BLOCK BUTTONS -->
-                        <div class="col-md-4 text-center">
-                            @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
-                            {
-                                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
-                                <button id="cancelReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
-                                @Html.Partial("_ModalCancelRequestPartial")
-                            }
-                            else if (Model.status.ToLower() == "rejected")
-                            {
-                                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
-                                <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
-                            }
-                        </div>
-                    </div> <!-- container end -->
-                </div> <!-- form-group end -->
-            </form>
+                    <div class="col-md-4 text-center">
+                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
+                        {
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
+                            <button id="cancelReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                            @Html.Partial("_ModalCancelRequestPartial")
+                        }
+                        else if (Model.status.ToLower() == "rejected")
+                        {
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
+                            <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
+                        }
+                    </div>
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+        </form>
         }
     </section>
 </div>
