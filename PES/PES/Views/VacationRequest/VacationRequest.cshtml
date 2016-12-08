@@ -1,4 +1,4 @@
-﻿@model PES.Models.VacHeadReqViewModel
+﻿@model PES.ViewModels.VacHeadReqViewModel
 <div>
     <section>
         <div class="page-header text-center">
@@ -28,7 +28,7 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">0</span>
+                            <span id="daysVac" class="label label-default">@Model.freedays</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
@@ -46,6 +46,7 @@
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
             <!-- PARTIAL VIEW WITH REQUEST DATES -->
+            
             @Html.Partial("_VacationDatesPartial", Model)
 
             <div class="form-group">

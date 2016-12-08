@@ -1,9 +1,4 @@
 ﻿@model PES.ViewModels.InsertNewRequestViewModel
-@using PES.Models
-    @{ 
-        VacationSubreq subRequest = new VacationSubreq();
-        ViewBag.status = "New";
-    }
 <div>
     <section>
         <div class="page-header text-center">
@@ -36,13 +31,15 @@
                     <div id="reqStatus" class="col-md-5 text-right">
                         <label class="control-label text-center">
                             Request Status:
-                            <span class="label label-default" id="status">@Model.status</span>
+                            <span class="label label-default" id="status">New</span>
                         </label>
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
             <!-- PARTIAL VIEW WITH REQUEST DATES -->
-            @Html.Partial("_VacationDatesPartial", subRequest)
+            
+            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model.subRequest)
+            
 
             <div class="form-group">
                 <div class="container">
