@@ -215,6 +215,7 @@
     <Compile Include="ViewModels\PerformanceRankHelper.cs" />
     <Compile Include="ViewModels\PerformanceFilesPartial.cs" />
     <Compile Include="ViewModels\PEVisualizationViewModel.cs" />
+    <Compile Include="ViewModels\VacHeadReqViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\create_user_pe.sql" />
