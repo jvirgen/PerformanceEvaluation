@@ -29,7 +29,7 @@ namespace PES.Controllers
 
         //GET: New VacationRequest 
         [HttpGet]
-        public ActionResult InsertNewRequest()
+        public ActionResult InsertNewRequest(int employeeId)
         {
             //int employeeId = 12;
             Employee currentEmployee = new Employee();

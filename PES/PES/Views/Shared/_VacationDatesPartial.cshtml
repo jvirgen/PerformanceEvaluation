@@ -13,9 +13,8 @@
                 }
                 else
                 {
-                <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"
-                       value="@Model.start_date - @Model.end_date"
-                       @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
+                <input id="start" type="text" name="daterange" class="form-control text-center datesBox" data-val="true" data-val-required="Start date is required"
+                       value="@Model.start_date - @Model.end_date" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
                 }
             </div>
