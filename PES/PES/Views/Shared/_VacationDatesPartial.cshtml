@@ -1,10 +1,10 @@
-﻿<hr class="divisor">
-<div id="datesGroup" class="form-group">
+﻿<div class="form-group datesGroup">
+    <hr class="divisor">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexEnd">
             <div class="col-md-3 text-center">
                 <label for="start">Start Date - End Date</label>
-                <input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"
+                <input id="start" type="text" name="daterange" class="form-control text-center datesBox" data-val="true" data-val-required="Start date is required"
                        value="@Model.start_date - @Model.end_date"
                        @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
@@ -16,7 +16,7 @@
                 
             </div>
             <div class="col-md-2">
-                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn"
+                <button onclick="addDate(this)" type="button" class="btn btn-default btn-block addBtn"
                         @(Model.status.ToLower() == "rejected" || Model.status == "New" ? null : new { disabled = "disabled" })>
                     Add Date
                 </button>
@@ -45,8 +45,8 @@
                 </label>
             </div>
 
-            <div class="removeBtn col-md-1 hidden">
-                <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
+            <div class="removeBtn col-md-2 hidden">
+                <button onclick="removeDate(this)" type="button" class="btn btn-danger btn-block">Remove Date</button>
             </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->

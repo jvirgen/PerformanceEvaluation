@@ -1,24 +1,25 @@
 ﻿$(document).ready(function () {
     $(function() {
-        $('input[name="daterange"]').daterangepicker({
-
-        });
+        $('input[name="daterange"]').daterangepicker();
 
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
 
-        getDaysRequested();
-
+        //getDaysRequested();
         $(document).on('change', 'input.datesBox', function () {
             getDaysRequested();
         });
-
+        /*
         $(document).on('DOMNodeRemoved', 'input.datesBox', function () {
             getDaysRequested();
         });
+        */
     });
 });
 
 function addDate(btnAdd) {
+    var last = $('.datesGroup')[$('.datesGroup').length - 1];
+    $(last).after($(last).clone());
+    /*
     $('#datesGroup').after('<hr class="divisor">' +
                             '<div id="datesGroup" class="form-group">' +
                                 '<div id="subDatesGroup" class="form-group">' +
@@ -32,8 +33,8 @@ function addDate(btnAdd) {
                                             '<label>Return Date</label>' +
                                             '<input type="text" class="form-control" id="return" disabled="disabled"/>' +
                                         '</div>' +
-                                        '<div class="col-md-1">' +
-                                            '<button onclick="addDate(this)" type="button" class="btn btn-default addBtn">' +
+                                        '<div class="col-md-2">' +
+                                            '<button onclick="addDate(this)" type="button" class="btn btn-default btn-block addBtn">' +
                                                 'Add Date' +
                                             '</button>' +
                                         '</div>' +
@@ -53,17 +54,23 @@ function addDate(btnAdd) {
                                                 '<input type="checkbox" id="unpaid"/>I do not have a project' +
                                             '</label>' +
                                         '</div>' +
-                                        '<div class="removeBtn col-md-1">' +
-                                            '<button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>' +
+                                        '<div class="removeBtn col-md-2">' +
+                                            '<button onclick="removeDate(this)" type="button" class="btn btn-danger btn-block">Remove Date</button>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>');
-
-    $('input[name="daterange"]').daterangepicker();
+                            */
+    
+    
+    $($('.datesBox')[$('.datesBox').length - 1]).daterangepicker({
+        startDate: getSysdate(),
+        endDate: getSysdate()
+    });
 
     disableBtn();
     showBtn();
+    getDaysRequested();
 }
 
 function removeDate(btnRemove) {
@@ -92,7 +99,7 @@ function showBtn() {
 }
 
 function statusColor() {
-    statusText = $('#status').text();
+    var statusText = $('#status').text();
 
     if (statusText.localeCompare('PENDING') == 0) {
         $('#status').attr('class', 'label label-warning');
@@ -109,14 +116,19 @@ function statusColor() {
 }
 
 function getDaysRequested() {
-    total = 0;
-
+    var total = 0;
+    var dates = '';
+    var start = null;
+    var end = null;
+    
     $('.datesBox').each(function (i, input) {
         dates = $(input).val();
-        start = moment(dates.split(" - ")[0]);
-        end = moment(dates.split(" - ")[1]);
+        if (dates != '') {
+            start = moment(dates.split(" - ")[0]);
+            end = moment(dates.split(" - ")[1]);
 
-        total += end.diff(start, 'days')
+            total += end.diff(start, 'days');
+        }
     });
 
     $("#daysReq").text(validateDaysRequested(total));
@@ -129,7 +141,7 @@ function validateDaysRequested(daysReq) {
         });
 
         alert('no more vacations days available');
-
+        
         return 0;
     }
     else {
@@ -143,4 +155,14 @@ function getReturnDate() {
 
 function reviewDates() {
 
+}
+
+function getSysdate() {
+    var d = new Date();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+
+    var output = (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day + '/' + d.getFullYear();
+
+    return output;
 }
