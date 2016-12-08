@@ -1,31 +1,31 @@
 ﻿$(document).ready(function () {
     $(function() {
-        $('.daterange').daterangepicker();
+        $('input[name="daterange"]').daterangepicker({
 
-        statusColor();//changes the color of the status span tag
+        });
+
+        statusColor();//changes the color of the status, <span> tag in VacationRequest view
+
+        getDaysRequested();
+
+        $(document).on('change', 'input.datesBox', function () {
+            getDaysRequested();
+        });
+
+        $(document).on('DOMNodeRemoved', 'input.datesBox', function () {
+            getDaysRequested();
+        });
     });
 });
 
 function addDate(btnAdd) {
-
-    // Get date group element
-    var dateGroup = $("#dateGroup-0");
-
-    // Clone into another div
-    var parentDiv = $("#datesGroups");
-    parentDiv.append('<div class="dateGroup" id="dateGroup-1">');
-    $("#dateGroup-1").append('<input type="text" name="subRequest[1].date" class="daterange" />');
-    $("#dateGroup-1").append('<input type="text" name="subRequest[1].lead_name" class="daterange" />');
-
-
-
     $('#datesGroup').after('<hr class="divisor">' +
                             '<div id="datesGroup" class="form-group">' +
                                 '<div id="subDatesGroup" class="form-group">' +
                                     '<div id="datesCont" class="container flexEnd">' +
                                         '<div class="col-md-3 text-center">' +
                                             '<label for="start">Start Date - End Date</label>' +
-                                            '<input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"/>' +
+                                            '<input id="start" type="text" name="daterange" class="form-control text-center datesBox" data-val="true" data-val-required="Start date is required"/>' +
                                             '<span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>' +
                                         '</div>' +
                                         '<div class="col-md-3">' +
@@ -60,7 +60,7 @@ function addDate(btnAdd) {
                                 '</div>' +
                             '</div>');
 
-    $('.daterange').daterangepicker();
+    $('input[name="daterange"]').daterangepicker();
 
     disableBtn();
     showBtn();
@@ -70,6 +70,7 @@ function removeDate(btnRemove) {
     $(btnRemove).parent().parent().parent().parent().prev('hr.divisor').remove();
     $(btnRemove).parent().parent().parent().parent().remove();//removeBtn->datesCont->subdatesGroup->datesGroup->remove()
     enableBtn();
+    getDaysRequested();
 }
 
 function enableBtn(btnRemove) {
@@ -78,16 +79,16 @@ function enableBtn(btnRemove) {
 
 function disableBtn() {
     for (var i = 0, l = $('.addBtn').length - 1; i < l; i++) {
-        $('.addBtn').eq(i).prop('disabled', true);
+        $('.addBtn').eq(i).prop('disabled', true);//disables all elements with "addBtn" class except the last one of them
     }
 }
 
 function showBtn() {
     for (var i = 0, l = $('.removeBtn').length - 1; i < l; i++) {
-            $('.removeBtn').eq(i).removeClass('hidden');
+            $('.removeBtn').eq(i).removeClass('hidden');//shows all elements with "removeBtn" class
     }
 
-    $('.removeBtn').eq($('.removeBtn').length - 1).addClass('hidden');
+    $('.removeBtn').eq($('.removeBtn').length - 1).addClass('hidden');//hides the last element of the collection of elements with "removeBtn" class
 }
 
 function statusColor() {
@@ -108,7 +109,32 @@ function statusColor() {
 }
 
 function getDaysRequested() {
+    total = 0;
 
+    $('.datesBox').each(function (i, input) {
+        dates = $(input).val();
+        start = moment(dates.split(" - ")[0]);
+        end = moment(dates.split(" - ")[1]);
+
+        total += end.diff(start, 'days')
+    });
+
+    $("#daysReq").text(validateDaysRequested(total));
+}
+
+function validateDaysRequested(daysReq) {
+    if ($(daysVac).text() < daysReq) {
+        $('.datesBox').each(function (i, input) {
+            $(input).val('');
+        });
+
+        alert('no more vacations days available');
+
+        return 0;
+    }
+    else {
+        return daysReq;
+    }
 }
 
 function getReturnDate() {
