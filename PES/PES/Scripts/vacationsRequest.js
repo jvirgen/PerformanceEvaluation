@@ -1,12 +1,24 @@
 ﻿$(document).ready(function () {
     $(function() {
-        $('input[name="daterange"]').daterangepicker();
+        $('.daterange').daterangepicker();
 
         statusColor();//changes the color of the status span tag
     });
 });
 
 function addDate(btnAdd) {
+
+    // Get date group element
+    var dateGroup = $("#dateGroup-0");
+
+    // Clone into another div
+    var parentDiv = $("#datesGroups");
+    parentDiv.append('<div class="dateGroup" id="dateGroup-1">');
+    $("#dateGroup-1").append('<input type="text" name="subRequest[1].date" class="daterange" />');
+    $("#dateGroup-1").append('<input type="text" name="subRequest[1].lead_name" class="daterange" />');
+
+
+
     $('#datesGroup').after('<hr class="divisor">' +
                             '<div id="datesGroup" class="form-group">' +
                                 '<div id="subDatesGroup" class="form-group">' +
@@ -48,7 +60,7 @@ function addDate(btnAdd) {
                                 '</div>' +
                             '</div>');
 
-    $('input[name="daterange"]').daterangepicker();
+    $('.daterange').daterangepicker();
 
     disableBtn();
     showBtn();
@@ -93,4 +105,16 @@ function statusColor() {
     else if (statusText.localeCompare('APPROVED') == 0) {
         $('#status').attr('class', 'label label-success');
     }
+}
+
+function getDaysRequested() {
+
+}
+
+function getReturnDate() {
+
+}
+
+function reviewDates() {
+
 }

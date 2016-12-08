@@ -44,5 +44,6 @@ namespace PES.Models
         /// Flag to know if have a project
         /// </summary>
         public char have_project { get; set; }
+
     }
 }

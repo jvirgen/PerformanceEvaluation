@@ -53,7 +53,7 @@
                                         <td style= "@style">@headerVM.first_name @headerVM.last_name</td>
                                     }
                                     <td style="@style">
-                                        <a href="@Url.Action("VacationRequest", "VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }

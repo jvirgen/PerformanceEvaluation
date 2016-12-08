@@ -31,14 +31,14 @@
                     <div id="reqStatus" class="col-md-5 text-right">
                         <label class="control-label text-center">
                             Request Status:
-                            <span class="label label-default" id="status">@Model.status</span>
+                            <span class="label label-default" id="status">New</span>
                         </label>
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
             <!-- PARTIAL VIEW WITH REQUEST DATES -->
             
-            @Html.Partial("_NewVacationDatesPartial", Model.subReqList)
+            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model.subRequest)
             
 
             <div class="form-group">
