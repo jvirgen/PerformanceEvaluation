@@ -67,7 +67,7 @@ namespace PES.Controllers
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
             ViewBag.status = currentRequest.status;
-            ViewBag.freedays = currentUser.Freedays;
+            currentRequest.freedays = currentUser.Freedays;
             return View("VacationRequest", currentRequest);
         }
     
