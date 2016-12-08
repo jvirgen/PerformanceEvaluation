@@ -1,8 +1,4 @@
-﻿@model PES.Models.VacHeadReqViewModel
-@using PES.Models
-@{ 
-    Model.status = "New";
-}
+﻿@model PES.ViewModels.InsertNewRequestViewModel
 <div>
     <section>
         <div class="page-header text-center">
@@ -14,7 +10,7 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-3">
-                        <label for="title" class="control-label col-form-label">Request Title</label>
+                        @Html.LabelFor(model => Model.title, "Request Title", new { @class = "control-label col-form-label" })
                         <div>
                             @Html.EditorFor(model => Model.title, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
@@ -23,7 +19,7 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">@Model.noVacDays</span>
+                            <span id="daysVac" class="label label-default">@Model.freedays</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
@@ -35,13 +31,15 @@
                     <div id="reqStatus" class="col-md-5 text-right">
                         <label class="control-label text-center">
                             Request Status:
-                            <span class="label label-default" id="status">@Model.status</span>
+                            <span class="label label-default" id="status">New</span>
                         </label>
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->
             <!-- PARTIAL VIEW WITH REQUEST DATES -->
-            @Html.Partial("_VacationDatesPartial", Model)
+            
+            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model.subRequest)
+            
 
             <div class="form-group">
                 <div class="container">
@@ -53,7 +51,7 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-8">
-                        <label for="comments" class="control-label">Comments:</label>
+                        @Html.LabelFor(model => Model.comments, "Comments:", new { @class = "control-label" })
                         @Html.TextAreaFor(model => Model.comments, htmlAttributes: new { @class = "form-control"})
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                     </div>

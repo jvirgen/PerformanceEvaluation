@@ -205,6 +205,6 @@ C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\bin\System.Web.WebPa
 C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\bin\System.Web.WebPages.Razor.xml
 C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\bin\Antlr3.Runtime.pdb
 C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\bin\Newtonsoft.Json.xml
-C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\obj\Debug\PES.csprojResolveAssemblyReference.cache
 C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\obj\Debug\PES.dll
 C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\obj\Debug\PES.pdb
+C:\Users\jCortes\Source\Repos\PerformanceEvaluation\PES\PES\obj\Debug\PES.csprojResolveAssemblyReference.cache
