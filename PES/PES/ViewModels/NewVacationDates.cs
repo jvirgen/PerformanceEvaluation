@@ -30,8 +30,6 @@ namespace PES.ViewModels
         public char? have_project { get; set; }
 
         public string date { get; set; }
-        //añkdjaskfdgfas
 
-        public string date2 { get; set; }
     }
 }
