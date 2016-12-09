@@ -40,8 +40,22 @@
         });
     });
 
+    function paintSelect() {
+        var date = new Date();
+        var element = "<div class='form-group'>" +
+                        "<select class='form-control' id='sYear' style='margin-top:3%; margin-left:5%; width:100px;'>" +
+                            "<option>" + date.getFullYear() + "</option>" +
+                            "<option>" + (date.getFullYear() - 1) + "</option>" +
+                            "<option>" + (date.getFullYear() - 2) + "</option>" +
+                            "<option>" + (date.getFullYear() - 3) + "</option>" +
+                            "<option>" + (date.getFullYear() - 4) + "</option>" +
+                            "<option>" + (date.getFullYear() - 5) + "</option>" +
+                        "</select>" +
+                       "</div>";
+        $("#container").before(element);
+    }
+
     function chart(year) {
-        
         var month = {"January":0, "February":0, "March":0, "April":0, "May":0, "June":0, "July":0, "August":0, "September":0, "October":0, "November":0, "December":0};
 
         //select the column date and compare the months
@@ -114,21 +128,4 @@
             }]
         });
     }
-
-    function paintSelect() {
-        var date = new Date();
-        var element = "<div class='form-group'>"+
-                        "<select class='form-control' id='sYear' style='margin-top:3%; margin-left:5%; width:100px;'>"+
-                            "<option>" + date.getFullYear() + "</option>"+
-                            "<option>" + (date.getFullYear()-1) + "</option>" +
-                            "<option>" + (date.getFullYear()-2) + "</option>" +
-                            "<option>" + (date.getFullYear()-3) + "</option>" +
-                            "<option>" + (date.getFullYear()-4) + "</option>" +
-                            "<option>" + (date.getFullYear()-5) + "</option>" +
-                        "</select>"+
-                       "</div>";
-        $("#container").before(element);
-    }
-    
-
 });

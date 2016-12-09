@@ -15,7 +15,7 @@ namespace PES.Controllers
 {
     public class LatenessController : Controller
     {
-        // GET: LatenessReports
+        //Show the latenesses to the current user
         public ActionResult Index()
         {
             LatenessService GetLateness = new LatenessService();
@@ -26,19 +26,30 @@ namespace PES.Controllers
             return View(lateness);
         }
 
+        //Get the lateness from period: today, week, month, year and last 5 years
         [HttpPost]
-        public ActionResult GetLatenessByFilter(string period)
+        public ActionResult GetLatenessByFilter(string period, string email)
         {
             LatenessService GetLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
-            var userEmail = (string)Session["UserEmail"];
-            lateness = GetLateness.GetLatenessByEmail(userEmail, period);
+            if (email != null)
+            {
+                lateness = GetLateness.GetLatenessByEmail(email, period);
+            }
+            else
+            {
+                var currentUserEmail = (string)Session["UserEmail"];
+                lateness = GetLateness.GetLatenessByEmail(currentUserEmail
+                    , period);
+            }
+            
 
             ViewBag.period = period.ToUpper();
             return PartialView("_LatenessReportsPartial", lateness);
         }
 
+        //To show all the latenesses to manager
         public ActionResult LatenessAllUsers()
         {
             if ((int)Session["UserProfile"] != 2)
@@ -51,6 +62,7 @@ namespace PES.Controllers
             return View(lateness);
         }
 
+        //Show the excel file imported by manager
         public ActionResult ShowLatenesExcel(List<Lateness> lateness)
         {
             if((int)Session["UserProfile"] != 2)
@@ -59,6 +71,7 @@ namespace PES.Controllers
             return View(lateness);
         }
 
+        //Read the excel file imported by manager
         [HttpPost]
         public ActionResult UploadLatenessExcel()
         {
@@ -98,6 +111,7 @@ namespace PES.Controllers
             return View("ShowLatenesExcel", latenesses);
         }
 
+        //Save the excel file imported by manager
         [HttpPost]
         public bool saveLatenessExcel()
         {
@@ -115,6 +129,18 @@ namespace PES.Controllers
             }
 
             return true;
+        }
+
+        //For the manager to see the list of lateness by user
+        [HttpGet]
+        public ActionResult LatenessByUser(string name, string email)
+        {
+            LatenessService GetLateness = new LatenessService();
+            List<Lateness> lateness = new List<Lateness>();
+
+            ViewBag.name = name;
+            lateness = GetLateness.GetLatenessByEmail(email, "today");
+            return View(lateness);
         }
     }
 }
