@@ -4,64 +4,13 @@
 
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
 
-        //getDaysRequested();
-        $(document).on('change', 'input.datesBox', function () {
-            getDaysRequested();
-        });
-        /*
-        $(document).on('DOMNodeRemoved', 'input.datesBox', function () {
-            getDaysRequested();
-        });
-        */
+        $(document).on('change', 'input.datesBox', getDaysRequested);
     });
 });
 
 function addDate(btnAdd) {
     var last = $('.datesGroup')[$('.datesGroup').length - 1];
     $(last).after($(last).clone());
-    /*
-    $('#datesGroup').after('<hr class="divisor">' +
-                            '<div id="datesGroup" class="form-group">' +
-                                '<div id="subDatesGroup" class="form-group">' +
-                                    '<div id="datesCont" class="container flexEnd">' +
-                                        '<div class="col-md-3 text-center">' +
-                                            '<label for="start">Start Date - End Date</label>' +
-                                            '<input id="start" type="text" name="daterange" class="form-control text-center datesBox" data-val="true" data-val-required="Start date is required"/>' +
-                                            '<span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>' +
-                                        '</div>' +
-                                        '<div class="col-md-3">' +
-                                            '<label>Return Date</label>' +
-                                            '<input type="text" class="form-control" id="return" disabled="disabled"/>' +
-                                        '</div>' +
-                                        '<div class="col-md-2">' +
-                                            '<button onclick="addDate(this)" type="button" class="btn btn-default btn-block addBtn">' +
-                                                'Add Date' +
-                                            '</button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div id="subDatesGroup" class="form-group">' +
-                                    '<div id="datesCont" class="container flexCenter">' +
-                                        '<div id="leadName" class="col-md-4">' +
-                                            '<label for="lead" class="control-label">Lead Name</label>' +
-                                            '<div>' +
-                                                '<input id="lead" type="text" class="form-control" data-val="true" data-val-required="Lead name is required" />' +
-                                            '</div>' +
-                                            '<span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>' +
-                                        '</div>' +
-                                        '<div id="checkarea" class="col-md-2 checkbox">' +
-                                            '<label id="checktext">' +
-                                                '<input type="checkbox" id="unpaid"/>I do not have a project' +
-                                            '</label>' +
-                                        '</div>' +
-                                        '<div class="removeBtn col-md-2">' +
-                                            '<button onclick="removeDate(this)" type="button" class="btn btn-danger btn-block">Remove Date</button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>');
-                            */
-    
     
     $($('.datesBox')[$('.datesBox').length - 1]).daterangepicker({
         startDate: getSysdate(),
@@ -92,7 +41,7 @@ function disableBtn() {
 
 function showBtn() {
     for (var i = 0, l = $('.removeBtn').length - 1; i < l; i++) {
-            $('.removeBtn').eq(i).removeClass('hidden');//shows all elements with "removeBtn" class
+        $('.removeBtn').eq(i).removeClass('hidden');//shows all elements with "removeBtn" class
     }
 
     $('.removeBtn').eq($('.removeBtn').length - 1).addClass('hidden');//hides the last element of the collection of elements with "removeBtn" class
@@ -127,19 +76,17 @@ function getDaysRequested() {
             start = moment(dates.split(" - ")[0]);
             end = moment(dates.split(" - ")[1]);
 
-            total += end.diff(start, 'days');
+            total += getWorkableDays(start, end);
+            //total += end.diff(start, 'days');
         }
     });
 
-    $("#daysReq").text(validateDaysRequested(total));
+    $("#daysReq").text(validateDaysRequested(total, this));
 }
 
-function validateDaysRequested(daysReq) {
-    if ($(daysVac).text() < daysReq) {
-        $('.datesBox').each(function (i, input) {
-            $(input).val('');
-        });
-
+function validateDaysRequested(daysReq, input) {
+    if ($('#daysVac').text() < daysReq) {
+        $(input).val('');
         alert('no more vacations days available');
         
         return 0;
@@ -153,10 +100,6 @@ function getReturnDate() {
 
 }
 
-function reviewDates() {
-
-}
-
 function getSysdate() {
     var d = new Date();
     var month = d.getMonth() + 1;
@@ -165,4 +108,41 @@ function getSysdate() {
     var output = (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day + '/' + d.getFullYear();
 
     return output;
+}
+
+// Expects start date to be before end date
+// start and end are Date objects
+function getWorkableDays(start, end) {
+
+    // Copy date objects so don't modify originals
+    var s = new Date(+start);
+    var e = new Date(+end);
+
+    // Set time to midday to avoid daylight saving and browser quirks
+    s.setHours(12, 0, 0, 0);
+    e.setHours(12, 0, 0, 0);
+
+    // Get the difference in whole days
+    var totalDays = Math.round((e - s) / 8.64e7);
+
+    // Get the difference in whole weeks
+    var wholeWeeks = totalDays / 7 | 0;
+
+    // Estimate business days as number of whole weeks * 5
+    var days = wholeWeeks * 5;
+
+    // If not even number of weeks, calc remaining weekend days
+    if (totalDays % 7) {
+        s.setDate(s.getDate() + wholeWeeks * 7);
+
+        while (s < e) {
+            s.setDate(s.getDate() + 1);
+
+            // If day isn't a Sunday or Saturday, add to business days
+            if (s.getDay() != 0 && s.getDay() != 6) {
+                ++days;
+            }
+        }
+    }
+    return days;
 }
