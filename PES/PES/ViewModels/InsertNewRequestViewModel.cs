@@ -12,33 +12,33 @@ namespace PES.ViewModels
         /// <summary>
         /// Employee Id
         /// </summary>  
-        public int employeeId { get; set; }
+        public int EmployeeId { get; set; }
 
         /// <summary>
         /// Title of the request
         /// </summary>
         [Required(ErrorMessage = "Request title is required")]
-        public string title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Number of vacation days
         /// </summary>
-        public int noVacDays { get; set; }
+        public int NoVacDays { get; set; }
 
         /// <summary>
         /// Comments
         /// </summary>
         [Required(ErrorMessage = "Please submit a comment")]
-        public string comments { get; set; }
+        public string Comments { get; set; }
 
         /// <summary>
         /// Number of unpaid days
         /// </summary>
-        public int? noUnpaidDays { get; set; }
+        public int? NoUnpaidDays { get; set; }
 
-        public IEnumerable<NewVacationDates> subRequest { get; set; }
+        public IEnumerable<NewVacationDates> SubRequest { get; set; }
 
-        public int freedays {get; set; }
+        public int Freedays {get; set; }
 
 
     }

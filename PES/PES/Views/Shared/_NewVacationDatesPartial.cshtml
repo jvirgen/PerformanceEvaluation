@@ -2,24 +2,14 @@
 <hr class="divisor">
 
 <div id="datesGroups">
-    <div class="dateGroup" id="dateGroup-1">
-        <input type="text" name="subRequest[0].date" class="daterange" />
-        <input type="text" name="subRequest[0].lead_name" class="daterange" />
-    </div>
-    <div class="dateGroup" id="dateGroup-1">
-        <input type="text" name="subRequest[0].date" class="daterange" />
-        <input type="text" name="subRequest[0].lead_name" class="daterange" />
-    </div>
 </div>
-
-
+ 
 <div id="datesGroup" class="form-group">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexEnd">
             <div class="col-md-3 text-center">
                 <label for="start">Start Date - End Date</label>
                 <input type="text" name="subRequest[0].date" class="daterange"/>
-                <input type="text" name="subRequest[1].date" class="daterange" />
                @*<input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"/>*@
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
             </div>
@@ -30,7 +20,7 @@
 
             </div>
             <div class="col-md-2">
-                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">
+                <button onclick="insertNewDates(this)" type="button" class="btn btn-default addBtn">
                     Add Date
                 </button>
             </div>
@@ -42,7 +32,7 @@
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
                     
-                    <input id="lead" type="text" class="form-control" data-val="true" data-val-required="Lead name is required" />
+                    <input id="lead" type="text" name="subRequest[0].lead_name" class="form-control" data-val="true" data-val-required="Lead name is required" />
                     
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
@@ -50,7 +40,7 @@
             <div id="checkarea" class="col-md-2 checkbox">
                 <label id="checktext">
                     
-                    <input type="checkbox" value="I do not have a project" id="unpaid"/>
+                    <input type="checkbox" id="unpaid" name="have_project"/>I do not have a project
                     
                 </label>
             </div>

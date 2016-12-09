@@ -35,9 +35,9 @@ namespace PES.Controllers
             _employeeService = new EmployeeService();
             currentEmployee = _employeeService.GetByID(userid);
             InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
-            newRequest.employeeId = userid;
-            newRequest.freedays = currentEmployee.Freedays;
-            newRequest.subRequest = new List<NewVacationDates>();
+            newRequest.EmployeeId = userid;
+            newRequest.Freedays = currentEmployee.Freedays;
+            newRequest.SubRequest = new List<NewVacationDates>();
 
             return View(newRequest);
         }

@@ -10,16 +10,16 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-3">
-                        @Html.LabelFor(model => Model.title, "Request Title", new { @class = "control-label col-form-label" })
+                        @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
                         <div>
-                            @Html.EditorFor(model => Model.title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => Model.Title, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                         <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
                     </div>
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">@Model.freedays</span>
+                            <span id="daysVac" class="label label-default">@Model.Freedays</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
@@ -38,7 +38,7 @@
             </div> <!-- form-group end -->
             <!-- PARTIAL VIEW WITH REQUEST DATES -->
             
-            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model.subRequest)
+            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model.SubRequest)
             
 
             <div class="form-group">
@@ -51,8 +51,8 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-8">
-                        @Html.LabelFor(model => Model.comments, "Comments:", new { @class = "control-label" })
-                        @Html.TextAreaFor(model => Model.comments, htmlAttributes: new { @class = "form-control"})
+                        @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
+                        @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control"})
                         <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-md-4 text-center">

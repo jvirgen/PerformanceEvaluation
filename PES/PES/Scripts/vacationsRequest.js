@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $(function() {
-        $('input[name="daterange"]').daterangepicker({
+        $('.daterange').daterangepicker({
 
         });
 
@@ -18,12 +18,31 @@
     });
 });
 
+function insertNewDates(a) {
+    // Get date group element
+    var dateGroup = $("#dateGroup-0");
+    // Clone into another div
+    var parentDiv = $("#datesGroups");
+    parentDiv.append('<div class="dateGroup" id="dateGroup-1">');
+    $("#dateGroup-1").append('<div id="subDatesGroup-1" class="form-group">');
+    $("#subDatesGroup-1").append('<div id="datesCont-1" class="container flexEnd">');
+    $("#datesCont-1").append('<div class="col-md-3 text-center" id="data-1">');
+    $("#data-1").append(' <label for="start" id="lable-1">Start Date - End Date</label>');
+    $("#lable-1").append('<input type="text" name="subRequest[' + add() + '].date" class="daterange" /></div></div></div></div>');
+}
+
+var add = (function () {
+    var counter = 0;
+    return function () { return counter += 1; }
+    })();
+
 function addDate(btnAdd) {
-    $('#datesGroup').after('<hr class="divisor">' +
+        $('#datesGroup').after('<hr class="divisor">' +
                             '<div id="datesGroup" class="form-group">' +
                                 '<div id="subDatesGroup" class="form-group">' +
                                     '<div id="datesCont" class="container flexEnd">' +
-                                        '<div class="col-md-3 text-center">' +
+                                        '<div class="col-md-3 text-center">' + -+
+
                                             '<label for="start">Start Date - End Date</label>' +
                                             '<input id="start" type="text" name="daterange" class="form-control text-center datesBox" data-val="true" data-val-required="Start date is required"/>' +
                                             '<span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>' +
@@ -60,7 +79,7 @@ function addDate(btnAdd) {
                                 '</div>' +
                             '</div>');
 
-    $('input[name="daterange"]').daterangepicker();
+    $('.daterange').daterangepicker();
 
     disableBtn();
     showBtn();
