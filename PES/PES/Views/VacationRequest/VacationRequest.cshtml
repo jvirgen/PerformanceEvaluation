@@ -12,18 +12,18 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-3">
-                            @Html.LabelFor(model => model.title, "Request Title", new { @class = "control-label col-form-label" })
-                            @if (Model.status.ToLower() == "rejected")
-                            {
-                                @Html.TextBoxFor(model => model.title, new { @class = "form-control" })
-                            }
-                            else
-                            {
-                                @Html.TextBoxFor(model => model.title, new { @class = "form-control", @disabled = "disabled" })
-                            }
+                        @Html.LabelFor(model => model.title, "Request Title", new { @class = "control-label col-form-label" })
+                        @if (Model.status.ToLower() == "rejected")
+                        {
+                            @Html.TextBoxFor(model => model.title, new { @class = "form-control" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.title, new { @class = "form-control", @disabled = "disabled" })
+                        }
 
-                            @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
-                        </div>
+                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    </div>
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
@@ -33,7 +33,7 @@
                     <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span id="daysReq" class="label label-default">0</span>
+                            <span id="daysReq" class="label label-default">@Model.noVacDays</span>
                         </label>
                     </div>
                     <div id="reqStatus" class="col-md-5 text-right">
@@ -58,32 +58,32 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-8">
-                            <!--COMMENTS-->
-                            @Html.LabelFor(model => model.comments, "Comments", new { @class = "control-label" })
-                            @if (Model.status.ToLower() == "rejected")
-                            {
-                                @Html.TextAreaFor(model => model.comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
-                            }
-                            else
-                            {
-                                @Html.TextAreaFor(model => model.comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
-                            }
+                        <!--COMMENTS-->
+                        @Html.LabelFor(model => model.comments, "Comments", new { @class = "control-label" })
+                        @if (Model.status.ToLower() == "rejected")
+                        {
+                            @Html.TextAreaFor(model => model.comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+                        }
+                        else
+                        {
+                            @Html.TextAreaFor(model => model.comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+                        }
 
-                            @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
-
-                            <!--REASON-->
+                        @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+                        
+                        <!--REASON-->
                         @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
                         {
-                                @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
-                                @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @placeholder = "Add a cancel reason...", @style = "min-width:100%;" })
+                            @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @placeholder = "Add a cancel reason...", @style = "min-width:100%;" })
                         }
                         else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
                         {
-                                @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
-                                @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @style = "min-width:100%;", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @style = "min-width:100%;", @disabled = "disabled" })
                         }
 
-                            @Html.ValidationMessageFor(model => model.replayComment, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.replayComment, "", new { @class = "text-danger" })
                     </div>
                     
                         <!-- BLOCK BUTTONS -->
