@@ -31,7 +31,7 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult InsertNewRequest()
         {
-            //int employeeId = 12;
+            int employeeId = 12;
             Employee currentEmployee = new Employee();
             _employeeService = new EmployeeService();
             currentEmployee = _employeeService.GetByID(employeeId);
