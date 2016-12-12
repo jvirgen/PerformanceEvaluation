@@ -2,13 +2,13 @@
     $(function() {
         $('.daterange').daterangepicker({
 
-        statusColor();//changes the color of the status, <span> tag in VacationRequest view
+            statusColor();//changes the color of the status, <span> tag in VacationRequest view
+            
+                $(document).on('change', 'input.datesBox', getDaysRequested);
+            });
+    });
 
-        $(document).on('change', 'input.datesBox', getDaysRequested);
-        });
-        });
-
-function insertNewDates(a) {
+function insertNewDates() {
     // Get date group element
     var dateGroup = $("#dateGroup-0");
     // Clone into another div
