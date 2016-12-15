@@ -4,6 +4,7 @@
 <br /><br />
 
 <h3 class="text-center">@ViewBag.name's latenesses</h3>
+<hr>
 <label class="radio-inline"><input type="radio" name="period" value="today" checked>Today</label>
 <label class="radio-inline"><input type="radio" name="period" value="week">Week</label>
 <label class="radio-inline"><input type="radio" name="period" value="month">Month</label>
@@ -13,7 +14,7 @@
 <br /><br />
 
 <div id="table-content">
-    @Html.Partial("_LatenessReportsPartial")
+    @Html.Partial("_LatenessReportsByUserPartial")
 </div>
 
 

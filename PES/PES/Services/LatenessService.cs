@@ -38,35 +38,35 @@ namespace PES.Services
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
+                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "month":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "year":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "last 5 years":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         default:
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.EMAIL = '" + email + "'";
+                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 ";
                             break;
                     }
 
@@ -106,7 +106,7 @@ namespace PES.Services
                     string Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.LAST_NAME || ' ' || E.FIRST_NAME AS \"NAME\", E.EMAIL, E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND DELETE_STATUS=0" +
                                     "ORDER BY \"DATE\"";
                         
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -154,6 +154,31 @@ namespace PES.Services
                     }
                     db.Close();
                 }  
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
+
+
+        //********************************AGREGADOOOOO*****************************************************
+        public bool delete(int id)
+        {
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string UpdateQuery = "UPDATE LATENESS SET DELETE_STATUS = 1 WHERE ID_LATENESS = "  + id;
+
+
+                    OracleCommand Comand = new OracleCommand(UpdateQuery, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    db.Close();
+                }
             }
             catch (Exception ex)
             {

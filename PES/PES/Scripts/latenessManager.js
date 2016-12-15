@@ -50,6 +50,8 @@
     });
 
 
+    
+
     $('input[name="period"]').click(function () {
         var period = $('input[name="period"]:checked').val();
         var email = (location.search.split("email" + "=")[1] || "").split("&")[0];
@@ -81,6 +83,33 @@
                     });
                 }
 
+
+                //AGREGADO RECIENTE **************************
+                $('button').click(function () {
+                    var id = $(this).attr("id");
+                    var row = $(this).closest("tr");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Lateness/LatenessLogicDelete/",
+                        data: { id: id },
+                        success: function (data) {
+                            if (data == "True") {
+                                row.remove();
+                                alert("Action Complete");
+
+                            }
+                            else
+                            {
+                                alert("An error has ocurred");
+                            }
+                        }
+                    });
+
+
+                    
+                });
+                //********************************************
             }
         });
     });
@@ -118,7 +147,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Leness Chart'
+                text: 'Lateness Chart'
             },
             xAxis: {
                 type: 'category',

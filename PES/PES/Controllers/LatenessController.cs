@@ -33,19 +33,19 @@ namespace PES.Controllers
             LatenessService GetLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
+            ViewBag.period = period.ToUpper();
+
             if (email != null)
             {
                 lateness = GetLateness.GetLatenessByEmail(email, period);
+                return PartialView("_LatenessReportsByUserPartial", lateness);
             }
             else
             {
                 var currentUserEmail = (string)Session["UserEmail"];
-                lateness = GetLateness.GetLatenessByEmail(currentUserEmail
-                    , period);
+                lateness = GetLateness.GetLatenessByEmail(currentUserEmail, period);
             }
             
-
-            ViewBag.period = period.ToUpper();
             return PartialView("_LatenessReportsPartial", lateness);
         }
 
@@ -141,6 +141,20 @@ namespace PES.Controllers
             ViewBag.name = name;
             lateness = GetLateness.GetLatenessByEmail(email, "today");
             return View(lateness);
+        }
+
+        //for the manager to delete ***************************************************** AGREGADOOO **************
+        [HttpPost]
+        public bool LatenessLogicDelete(int id)
+        {
+            LatenessService LatenessDelete = new LatenessService();
+
+            if (LatenessDelete.delete(id))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

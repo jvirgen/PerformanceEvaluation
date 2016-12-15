@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<PES.Models.Lateness>
 @using PES.Models
-
+manager
 <div class="row">
     <div class="col-md-6">
         <div class="text-right">
-            Total lateness: @Model.Count()
+            Total Lateness: @Model.Count()
         </div>
         <div class="well">
             @if (Model.Count() > 0)
@@ -18,6 +18,9 @@
                             <th class="text-center">
                                 TIME
                             </th>
+                            <th class="text-center">
+                                ACTION
+                            </th>                          
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +32,9 @@
                                 </td>
                                 <td class="text-center">
                                     @lateness.Date.ToString("hh:mm:ss tt")
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-danger btn-delete" id="@lateness.LatenessId">Delete</button>
                                 </td>
                             </tr>
                         }
