@@ -462,6 +462,7 @@
     <Content Include="Views\Lateness\LatenessAllUsers.cshtml" />
     <Content Include="Views\Lateness\LatenessByUser.cshtml" />
     <Content Include="Views\Shared\_LatenessReportsByUserPartial.cshtml" />
+    <Content Include="Views\Menu\latenessMenu.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
