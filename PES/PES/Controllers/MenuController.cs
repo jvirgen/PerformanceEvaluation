@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PES.Models;
+using PES.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +18,11 @@ namespace PES.Controllers
 
         public ActionResult latenessMenu()
         {
-            return View();
+            LatenessService GetLateness = new LatenessService();
+            List<Lateness> lateness = new List<Lateness>();
+            lateness = GetLateness.GetEmployeesByManager((int)Session["UserId"]);
+
+            return View(lateness);
         }
     }
 }

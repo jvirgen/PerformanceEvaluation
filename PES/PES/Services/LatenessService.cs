@@ -133,6 +133,41 @@ namespace PES.Services
             return latenesses;
         }
 
+        public List<Lateness> GetEmployeesByManager(int idManager)
+        {
+            List<Lateness> latenesses = new List<Lateness>();
+            Lateness lateness = new Lateness();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = "SELECT LAST_NAME || ' ' || FIRST_NAME AS \"NAME\", EMAIL " +
+                                   "FROM EMPLOYEE " +
+                                   "WHERE ID_MANAGER = " + idManager + " " +
+                                   "ORDER BY \"NAME\"" ;
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+
+                    while (Read.Read())
+                    {
+                        lateness = new Lateness();
+                        lateness.EmployeeEmail = Convert.ToString(Read["EMAIL"]);
+                        lateness.EmployeeName = Convert.ToString(Read["NAME"]);
+                        latenesses.Add(lateness);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return latenesses;
+        }
+
         public bool insertLateness(List<Lateness> latenesses)
         {
             try
