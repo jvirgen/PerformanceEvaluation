@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Menu";
+    int useProfile = (int)Session["UserProfile"];
 }
 <hr />
 <div class="well">
@@ -16,11 +17,27 @@
 
     <div class="row text-center">
         <div class="col-md-6">
-            <a href="@Url.Action("Choose", "LoginUser")" class="btn btn-lg btn-primary" style="width: 250px">Performance Evaluation</a>
+            @if (useProfile == 1)
+            {
+                <a href="@Url.Action("ChoosePeriod", "PerformanceEvaluation")" class="btn btn-lg btn-primary" style="width: 250px">Performance Evaluation</a>
+
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "PerformanceEvaluation")" class="btn btn-lg btn-primary" style="width: 250px">Performance Evaluation</a>
+            }  
         </div>
         <div class="col-md-6">
-            <a href="@Url.Action("Choose", "Menu")" class="btn btn-lg btn-primary" style="width: 250px">Lateness Report</a>
-        </div>
+            @if (useProfile == 1)
+            {
+                <a href="@Url.Action("Index", "Lateness")" class="btn btn-lg btn-primary" style="width: 250px">Lateness Report</a>
+
+            }
+            else
+            {
+                <a href="@Url.Action("latenessMenu", "Menu")" class="btn btn-lg btn-primary" style="width: 250px">Lateness Report</a>
+            }  
+         </div>
     </div>
     <div class="row text-center">
         <div class="col-md-pull-6">

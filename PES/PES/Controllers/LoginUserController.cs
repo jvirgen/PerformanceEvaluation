@@ -116,24 +116,5 @@ namespace PES.Controllers
             Session.Abandon();
             return RedirectToAction("Login", "LoginUser");
         }
-
-
-        //Redirect Profiles TO PerformanceEvaluation according the UserProfile
-        public ActionResult Choose()
-        {
-            //Get the session to make validations
-            int useProfile = (int)Session["UserProfile"];
-            string employeeEmail = (string)Session["UserEmail"];
-            int employeeID = (int)Session["UserId"];
-
-
-            //Redirecting to PerformanceEvaluation according USERPROFILE (1.-Resourse, 2.-Manager, 3.-Director)
-            if (useProfile == 1)
-            {
-                return RedirectToAction("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail, employeeID });
-            }
-            else
-                return RedirectToAction("Index", "PerformanceEvaluation", new { employeeEmail = Session["UserEmail"], employeeID = Session["UserId"] });
-        }
     }
 }

@@ -27,6 +27,7 @@
 
     //To upload the excel
     $(document).on('change', ':file', function () { $("#lateness").submit(); });
+
     $("#saveFile").on("click", function () { $("#myModal").modal(); });
 
     $("#confirm").on("click", function () {
@@ -38,10 +39,17 @@
                                 "The lateness report has been saved successfully!" +
                               "</div>";
                 $("body table:last").before(message);
-            } else {
+            } else if(done == "saved") {
                 var message = "<div class=\"alert alert-danger\">" +
                                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
                                 "You already save this file, reload the file or select a new file." +
+                              "</div>";
+                $(".alert").remove();
+                $("body table:last").before(message);
+            } else if (done == "error") {
+                var message = "<div class=\"alert alert-danger\">" +
+                                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+                                "Something went wrong. (The information doesn't match.)" +
                               "</div>";
                 $(".alert").remove();
                 $("body table:last").before(message);
@@ -84,7 +92,7 @@
                 }
 
 
-                //AGREGADO RECIENTE **************************
+    //AGREGADO RECIENTE **************************
                 $('button').click(function () {
                     var id = $(this).attr("id");
                     var row = $(this).closest("tr");
@@ -104,12 +112,10 @@
                                 alert("An error has ocurred");
                             }
                         }
-                    });
-
-
-                    
+                    });           
                 });
-                //********************************************
+
+        //********************************************
             }
         });
     });

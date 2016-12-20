@@ -113,22 +113,28 @@ namespace PES.Controllers
 
         //Save the excel file imported by manager
         [HttpPost]
-        public bool saveLatenessExcel()
+        public string saveLatenessExcel()
         {
-            LatenessService lateness = new LatenessService();
-            var latenessList = Session["tmpLateness"] as List<Lateness>;
-
-            if (latenessList != null)
+            try
             {
-                lateness.insertLateness(latenessList);
-                Session.Remove("tmpLateness");
-            }
-            else
-            {
-                return false;
-            }
+                LatenessService lateness = new LatenessService();
+                var latenessList = Session["tmpLateness"] as List<Lateness>;
 
-            return true;
+                if (latenessList != null)
+                {
+                    lateness.insertLateness(latenessList);
+                    Session.Remove("tmpLateness");
+                }
+                else
+                {
+                    return "saved";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+            return "true";
         }
 
         //For the manager to see the list of lateness by user
@@ -143,7 +149,7 @@ namespace PES.Controllers
             return View(lateness);
         }
 
-        //for the manager to delete ***************************************************** AGREGADOOO **************
+        //for the manager to delete
         [HttpPost]
         public bool LatenessLogicDelete(int id)
         {
