@@ -21,5 +21,7 @@ namespace PES.Models
         public DateTime Time { get; set; }
 
         public String EmployeeName { get; set; }
+
+        public int NoLateness { get; set; }
     }
 }

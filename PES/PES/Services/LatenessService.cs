@@ -103,24 +103,23 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.LAST_NAME || ' ' || E.FIRST_NAME AS \"NAME\", E.EMAIL, E.ID_EMPLOYEE " +
-                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
-                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND DELETE_STATUS=0" +
-                                    "ORDER BY \"DATE\"";
+                    string Query = "SELECT MAX(TO_CHAR(\"DATE\", 'DD/MM/YYYY')) AS \"DATE\", E.LAST_NAME || ' ' || E.FIRST_NAME AS \"NAME\", E.EMAIL, COUNT(E.ID_EMPLOYEE) AS NO_LATENESS " +
+                                   "FROM LATENESS L INNER JOIN EMPLOYEE E " +
+                                   "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
+                                   "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND DELETE_STATUS = 0 " +
+                                   "GROUP BY E.LAST_NAME, E.FIRST_NAME, E.EMAIL  ORDER BY \"DATE\" DESC ";
                         
                     OracleCommand Comand = new OracleCommand(Query, db);
                     OracleDataReader Read = Comand.ExecuteReader();
 
                     while (Read.Read())
                     {
-                        lateness = new Lateness();
-                        lateness.LatenessId = Convert.ToInt32(Read["ID_LATENESS"]);
+                        lateness = new Lateness();    
                         string date = Convert.ToString(Read["DATE"]);
-                        lateness.Date = Convert.ToDateTime(date);
-                        lateness.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
                         lateness.EmployeeEmail = Convert.ToString(Read["EMAIL"]);
                         lateness.EmployeeName = Convert.ToString(Read["NAME"]);
+                        lateness.NoLateness = Convert.ToInt32(Read["NO_LATENESS"]);
+                        lateness.Date = Convert.ToDateTime(date);
                         latenesses.Add(lateness);
                     }
 
