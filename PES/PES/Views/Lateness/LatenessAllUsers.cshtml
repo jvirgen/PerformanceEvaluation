@@ -32,7 +32,7 @@
                                 DATE
                             </th>
                             <th class="text-center">
-                                TIME
+                                NO. LATENESSES
                             </th>
                         </tr>
                     </thead>
@@ -50,7 +50,7 @@
                                     @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
                                 </td>
                                 <td class="text-center">
-                                    @lateness.Date.ToString("hh:mm:ss tt")
+                                    @lateness.NoLateness
                                 </td>
                             </tr>
                         }

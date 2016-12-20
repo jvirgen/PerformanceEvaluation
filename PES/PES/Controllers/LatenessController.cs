@@ -49,7 +49,7 @@ namespace PES.Controllers
             return PartialView("_LatenessReportsPartial", lateness);
         }
 
-        //To show all the latenesses to manager
+        //To show all the latenesses to manager (current month)
         public ActionResult LatenessAllUsers()
         {
             if ((int)Session["UserProfile"] != 2)
