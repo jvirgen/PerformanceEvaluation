@@ -26,18 +26,27 @@
     
 
     //To upload the excel
-    $(document).on('change', ':file', function () { $("#lateness").submit(); });
+    FileSelected = function(sender) {
+       if (sender.value.indexOf('xls', 'xlsx') > -1)
+        {
+            $("#lateness").submit();
+        }
+        else {
+            alert('File not allowed. \nOnly accept .xsl and .xslx');
+        }
+    };
 
     $("#saveFile").on("click", function () { $("#myModal").modal(); });
 
     $("#confirm").on("click", function () {
         $.post("/Lateness/SaveLatenessExcel", function (done) {
-            if(done == "True")
+            if(done == "true")
             {
                 var message = "<div class=\"alert alert-success\">" +
                                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
                                 "The lateness report has been saved successfully!" +
                               "</div>";
+                $(".alert").remove();
                 $("body table:last").before(message);
             } else if(done == "saved") {
                 var message = "<div class=\"alert alert-danger\">" +
@@ -92,10 +101,17 @@
                 }
 
 
-    //AGREGADO RECIENTE **************************
-                $('button').click(function () {
-                    var id = $(this).attr("id");
-                    var row = $(this).closest("tr");
+    //To delete registers on the table view.
+                var id;
+                var row;
+                $('.btn-delete').click(function () {
+                    id = $(this).attr("id");
+                    row = $(this).closest("tr");
+                    $("#modalUser").modal();
+                });
+
+
+                $("#deleteConfirm").on("click", function () {                   
 
                     $.ajax({
                         type: "POST",
@@ -104,18 +120,13 @@
                         success: function (data) {
                             if (data == "True") {
                                 row.remove();
-                                alert("Action Complete");
-
                             }
-                            else
-                            {
+                            else {
                                 alert("An error has ocurred");
                             }
                         }
-                    });           
+                    });
                 });
-
-        //********************************************
             }
         });
     });
