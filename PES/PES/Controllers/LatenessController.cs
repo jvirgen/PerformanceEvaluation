@@ -123,7 +123,7 @@ namespace PES.Controllers
                 if (latenessList != null)
                 {
                     lateness.insertLateness(latenessList);
-                    Session.Remove("tmpLateness");
+                    Session.Remove("tmpLateness");                    
                 }
                 else
                 {
