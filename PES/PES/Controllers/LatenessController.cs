@@ -58,7 +58,7 @@ namespace PES.Controllers
             LatenessService GetLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
-            lateness = GetLateness.GetLatenessByCurrentMonth();
+            lateness = GetLateness.GetLatenessByCurrentMonth((int)Session["UserId"]);
             return View(lateness);
         }
 

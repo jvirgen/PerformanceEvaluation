@@ -94,7 +94,7 @@ namespace PES.Services
             return latenesses;
         }
 
-        public List<Lateness> GetLatenessByCurrentMonth()
+        public List<Lateness> GetLatenessByCurrentMonth(int idManager)
         {
             List<Lateness> latenesses = new List<Lateness>();
             Lateness lateness = new Lateness();
@@ -106,7 +106,7 @@ namespace PES.Services
                     string Query = "SELECT MAX(TO_CHAR(\"DATE\", 'DD/MM/YYYY')) AS \"DATE\", E.LAST_NAME || ' ' || E.FIRST_NAME AS \"NAME\", E.EMAIL, COUNT(E.ID_EMPLOYEE) AS NO_LATENESS " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                   "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND DELETE_STATUS = 0 " +
+                                   "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND DELETE_STATUS = 0 AND ID_MANAGER = " + idManager + " " +
                                    "GROUP BY E.LAST_NAME, E.FIRST_NAME, E.EMAIL  ORDER BY \"DATE\" DESC ";
                         
                     OracleCommand Comand = new OracleCommand(Query, db);
