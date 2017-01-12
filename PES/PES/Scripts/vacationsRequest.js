@@ -30,6 +30,9 @@ function addDate(btnAdd) {
     var last = $('.datesGroup')[$('.datesGroup').length - 1];
     $(last).after($(last).clone());
 
+    //updates inner array in name attribute of a determined start date, return date and lead name
+    updateLastDateBox();
+
     $($('.datesBox')[$('.datesBox').length - 1]).daterangepicker({
         startDate: getSysdate(),
         endDate: getSysdate()
@@ -45,6 +48,9 @@ function removeDate(btnRemove) {
     $(btnRemove).parent().parent().parent().parent().remove();//removeBtn->datesCont->subdatesGroup->datesGroup->remove()
     enableBtn();
     getDaysRequested();
+
+    //updates inner array in name attribute of a determined start date, return date and lead name
+    updateLastDateBox();
 }
 
 function enableBtn(btnRemove) {
@@ -163,4 +169,23 @@ function getWorkableDays(start, end) {
         }
     }
     return days;
+}
+
+function updateLastDateBox() {
+    var datesPieces = $($('.datesBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
+    var returnPieces = $($('.returnBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
+    var leadPieces = $($('.leadBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
+    
+    if ($('.datesBox').length > 1) {
+        $('.datesBox').each(function (i, element) {
+            $($('.datesBox')[i]).attr('name', datesPieces[0] + i + datesPieces[1]);
+            $($('.returnBox')[i]).attr('name', returnPieces[0] + i + returnPieces[1]);
+            $($('.leadBox')[i]).attr('name', leadPieces[0] + i + leadPieces[1]);
+        });
+    }
+    else {
+        $($('.datesBox')[0]).attr('name', datesPieces[0] + 0 + datesPieces[1]);
+        $($('.returnBox')[0]).attr('name', returnPieces[0] + 0 + returnPieces[1]);
+        $($('.leadBox')[0]).attr('name', leadPieces[0] + 0 + leadPieces[1]);
+    }
 }
