@@ -21,7 +21,7 @@ namespace PES.ViewModels
         public string Title { get; set; }
 
         /// <summary>
-        /// Number of vacation days
+        /// Number of days requested 
         /// </summary>
         public int NoVacDays { get; set; }
 
@@ -36,8 +36,14 @@ namespace PES.ViewModels
         /// </summary>
         public int? NoUnpaidDays { get; set; }
 
+        /// <summary>
+        /// List of New vacation date Viewmodel 
+        /// </summary>
         public IEnumerable<NewVacationDates> SubRequest { get; set; }
 
+        /// <summary>
+        /// Number of vacation days that employee have 
+        /// </summary>
         public int Freedays {get; set; }
 
 
