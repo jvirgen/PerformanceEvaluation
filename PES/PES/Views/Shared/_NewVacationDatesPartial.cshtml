@@ -1,20 +1,26 @@
 ﻿@model IEnumerable<PES.ViewModels.NewVacationDates>
 <hr class="divisor">
+
+<div id="datesGroups">
+</div>
  
-<div id="datesGroup" class="datesGroup form-group">
+<div id="datesGroup" class="form-group">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexEnd">
             <div class="col-md-3 text-center">
                 <label for="start">Start Date - End Date</label>
-               <input id="start" type="text" name="subRequest[0].date" class="daterange form-control text-center " data-val="true" data-val-required="Start date is required"/>
+                <input type="text" name="subRequest[0].date" class="daterange"/>
+               @*<input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"/>*@
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
             </div>
             <div class="col-md-3">
                 <label>Return Date</label>
-                <input id="start" type="text" name="subRequest[0].returnDate" class="form-control text-center " />
+              
+                <input type="text" class="returnBox" name="subRequest[0].returnDate"/>
+
             </div>
             <div class="col-md-2">
-                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">
+                <button onclick="insertNewDates(this)" type="button" class="btn btn-default addBtn">
                     Add Date
                 </button>
             </div>
@@ -26,7 +32,7 @@
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
                     
-                    <input id="lead" type="text" name="subRequest[0].lead_name" class="form-control" data-val="true" data-val-required="Lead name is required" />
+                    <input id="lead" type="text" name="subRequest[0].lead_name" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" />
                     
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
