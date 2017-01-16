@@ -27,7 +27,7 @@ namespace PES.ViewModels
         /// <summary>
         /// Flag to know if have a project
         /// </summary>
-        public char? have_project { get; set; }
+        public bool have_project { get; set; }
 
         public string date { get; set; }
 
