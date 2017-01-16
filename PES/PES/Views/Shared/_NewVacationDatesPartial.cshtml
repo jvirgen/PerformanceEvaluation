@@ -1,0 +1,80 @@
+﻿@model IEnumerable<PES.ViewModels.NewVacationDates>
+<hr class="divisor">
+
+<div id="datesGroups">
+    <div id="datesGroup" class="form-group">
+                <div class="col-md-3 pull-right">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Celebration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01/01</td>
+                                <td>New Year's</td>
+                            </tr>
+                            <tr>
+                                <td>02/02</td>
+                                <td>Candelaria's Day</td>
+                            </tr>
+                            <tr>
+                                <td>03/03</td>
+                                <td>Dummy date</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+ 
+<div id="datesGroup" class="form-group">
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCont" class="container flexEnd">
+            <div class="col-md-3 text-center">
+                <label for="start">Start Date - End Date</label>
+                <input type="text" name="subRequest[0].date" class="daterange"/>
+               @*<input id="start" type="text" name="daterange" class="form-control text-center" data-val="true" data-val-required="Start date is required"/>*@
+                <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+            </div>
+            <div class="col-md-3">
+                <label>Return Date</label>
+              
+                <input type="text" class="returnBox" name="subRequest[0].returnDate"/>
+
+            </div>
+            <div class="col-md-2">
+                <button onclick="insertNewDates(this)" type="button" class="btn btn-default addBtn">
+                    Add Date
+                </button>
+            </div>
+        </div> <!-- container end -->
+    </div> <!-- subform-group end -->
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCont" class="container flexCenter">
+            <div id="leadName" class="col-md-4">
+                <label for="lead" class="control-label">Lead Name</label>
+                <div>
+                    
+                    <input id="lead" type="text" name="subRequest[0].lead_name" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" />
+                    
+                </div>
+                <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
+            </div>
+            <div id="checkarea" class="col-md-2 checkbox">
+                <label id="checktext">
+                    
+                    <input type="checkbox" id="unpaid" name="have_project"/>I do not have a project
+                    
+                </label>
+            </div>
+
+            <div class="removeBtn col-md-1 hidden">
+                <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
+            </div>
+        </div> <!-- container end -->
+    </div> <!-- subform-group end -->
+</div>
+<!-- form-group end -->

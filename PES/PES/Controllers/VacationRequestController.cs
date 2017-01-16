@@ -29,24 +29,25 @@ namespace PES.Controllers
 
         //GET: New VacationRequest 
         [HttpGet]
-        public ActionResult InsertNewRequest()
+        public ActionResult InsertNewRequest(int userid)
         {
-            int employeeId = 12;
             Employee currentEmployee = new Employee();
             _employeeService = new EmployeeService();
-            currentEmployee = _employeeService.GetByID(employeeId);
-            InsertNewRequestViewModel model = new InsertNewRequestViewModel();
-            model.status = "New";
-            model.employeeId = employeeId;
-            model.freedays = currentEmployee.Freedays;
+            currentEmployee = _employeeService.GetByID(userid);
+            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
+            newRequest.EmployeeId = userid;
+            newRequest.Freedays = currentEmployee.Freedays;
+            newRequest.SubRequest = new List<NewVacationDates>();
 
-            return View(model);
+            return View(newRequest);
         }
 
         //POST: New VacationRequest 
         [HttpPost]
         public ActionResult InsertNewRequest(InsertNewRequestViewModel model)
         {
+
+            string x = "";
             return View();
         }
 
@@ -65,8 +66,8 @@ namespace PES.Controllers
             currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.employeeId);
-
-            ViewBag.freedays = currentUser.Freedays;
+            ViewBag.status = currentRequest.status;
+            currentRequest.freedays = currentUser.Freedays;
             return View("VacationRequest", currentRequest);
         }
 

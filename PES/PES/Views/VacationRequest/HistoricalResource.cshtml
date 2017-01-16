@@ -1,4 +1,4 @@
-﻿    @model IEnumerable<PES.Models.VacHeadReqViewModel>
+﻿    @model IEnumerable<PES.ViewModels.VacHeadReqViewModel>
     @using PES.Models
     @{
         int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
@@ -53,7 +53,7 @@
                                         <td style= "@style">@headerVM.first_name @headerVM.last_name</td>
                                     }
                                     <td style="@style">
-                                        <a href="@Url.Action("VacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -64,8 +64,8 @@
                                     <td style="@style">@headerVM.end_date.ToShortDateString()</td>
                                     <td style="@style">@headerVM.return_date.ToShortDateString()</td>
                                 </tr>
-                            }
-                        } 
+                                                    }
+                                                } 
                     </tbody>
                 </table>
             </div>
@@ -87,7 +87,7 @@
                     <tbody>
                         @foreach (var headerVM in Model)
                         {
-                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "rejected")
+                            if (headerVM.status.ToLower() == "rejected")
                             {
                                 <tr>
                                     @if (profileId == 2)
@@ -95,7 +95,7 @@
                                         <td>@headerVM.first_name @headerVM.last_name</td>
                                     }
                                     <td>
-                                        <a href="@Url.Action("GetVacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -129,7 +129,7 @@
                     <tbody>
                         @foreach (var headerVM in Model)
                         {
-                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "approved")
+                            if (headerVM.status.ToLower() == "approved")
                             {
                                 <tr>
                                     @if (profileId == 2)
@@ -137,7 +137,7 @@
                                         <td>@headerVM.first_name @headerVM.last_name</td>
                                     }
                                     <td>
-                                        <a href="@Url.Action("GetVacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -171,7 +171,7 @@
                     <tbody>
                         @foreach (var headerVM in Model)
                         {
-                            if (userID == headerVM.employeeId && headerVM.status.ToLower() == "canceled")
+                            if (headerVM.status.ToLower() == "canceled")
                             {
                                 <tr>
                                     @if (profileId == 2)
@@ -179,7 +179,7 @@
                                         <td>@headerVM.first_name @headerVM.last_name</td>
                                     }
                                     <td>
-                                        <a href="@Url.Action("GetVacationRequest","VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.vacationHeaderReqId })">
                                             @{
                                                 @(headerVM.title)
                                             }
@@ -196,8 +196,7 @@
                 </table>
             </div>
         </div>
-        <a href="@Url.Action("InsertNewRequest", "VacationRequest")" class="btn btn-lg btn-primary">New Request</a>
+        <a href="@Url.Action("InsertNewRequest", "VacationRequest", new { userid= userID })" class="btn btn-lg btn-primary">New Request</a>
     </div>
-    
-
+ 
     @Styles.Render("~/Content/css/historical-resource.css")

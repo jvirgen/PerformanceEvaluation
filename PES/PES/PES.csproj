@@ -208,6 +208,7 @@
     <Compile Include="ViewModels\ChangeProfileViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\InsertNewRequestViewModel.cs" />
+    <Compile Include="ViewModels\NewVacationDates.cs" />
     <Compile Include="ViewModels\TransferEmployeeViewModel.cs" />
     <Compile Include="ViewModels\UpdateEmployeeViewModel.cs" />
     <Compile Include="ViewModels\InsertEmployeeViewModel.cs" />
@@ -476,6 +477,7 @@
     <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
     <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
     <Content Include="Views\VacationRequest\InsertNewRequest.cshtml" />
+    <Content Include="Views\Shared\_NewVacationDatesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
