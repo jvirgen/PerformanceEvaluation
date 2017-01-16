@@ -4,10 +4,13 @@
 
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
             
+        //this event catches any modification on a start/end date field
         $(document).on('change', 'input.datesBox', getDaysRequested);
     });
 });
 
+/*
+SUPPOSEDLY OBSOLETE
 function insertNewDates() {
     // Get date group element
     var dateGroup = $("#dateGroup-0");
@@ -21,17 +24,22 @@ function insertNewDates() {
     $("#lable-1").append('<input type="text" name="subRequest[' + add() + '].date" class="daterange" /></div></div></div></div>');
 }
 
+//global counter
 var add = (function () {
     var counter = 0;
-    return function () { return counter += 1; }
-    })();
+    return function () {
+        return counter += 1;
+    }
+})();
+*/
+
 
 function addDate(btnAdd) {
     var last = $('.datesGroup')[$('.datesGroup').length - 1];
     $(last).after($(last).clone());
 
     //updates inner array in name attribute of a determined start date, return date and lead name
-    updateLastDateBox();
+    updateEnumerationBoxes();
 
     $($('.datesBox')[$('.datesBox').length - 1]).daterangepicker({
         startDate: getSysdate(),
@@ -50,7 +58,7 @@ function removeDate(btnRemove) {
     getDaysRequested();
 
     //updates inner array in name attribute of a determined start date, return date and lead name
-    updateLastDateBox();
+    updateEnumerationBoxes();
 }
 
 function enableBtn(btnRemove) {
@@ -97,14 +105,13 @@ function getDaysRequested() {
     $('.datesBox').each(function (i, input) {
         dates = $(input).val();
         if (dates != '') {
-        start = moment(dates.split(" - ")[0]);
+        start = moment(dates.split(" - ")[0]).subtract(1, 'days');//subtract a day to count the first day selected in calendar till the last
         end = moment(dates.split(" - ")[1]);
 
             total += getWorkableDays(start, end);
-            //total += end.diff(start, 'days');
         }
     });
-
+    console.log(total);
     $("#daysReq").text(validateDaysRequested(total, this));
 }
 
@@ -137,7 +144,6 @@ function getSysdate() {
 // Expects start date to be before end date
 // start and end are Date objects
 function getWorkableDays(start, end) {
-
     // Copy date objects so don't modify originals
     var s = new Date(+start);
     var e = new Date(+end);
@@ -171,19 +177,26 @@ function getWorkableDays(start, end) {
     return days;
 }
 
-function updateLastDateBox() {
+/*
+
+DESCRIPTION
+this function searches for the following fields: datesBox, returnBox, leadBox, that may repeat many times depending on how many dates the user is requesting for vacations. Once found the elements proceeds to update their names according to the structure agreed "subRequest[n]"
+
+*/
+function updateEnumerationBoxes() {
+    //here are defined the body of the name, we set two elements: subRequest[ and ].date, ].lead_name, ].returnDate respectively
     var datesPieces = $($('.datesBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
     var returnPieces = $($('.returnBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
     var leadPieces = $($('.leadBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
     
     if ($('.datesBox').length > 1) {
-        $('.datesBox').each(function (i, element) {
+        $('.datesBox').each(function (i, element) {//for each element we set the numeration based on the "i" variable
             $($('.datesBox')[i]).attr('name', datesPieces[0] + i + datesPieces[1]);
             $($('.returnBox')[i]).attr('name', returnPieces[0] + i + returnPieces[1]);
             $($('.leadBox')[i]).attr('name', leadPieces[0] + i + leadPieces[1]);
         });
     }
-    else {
+    else {//if only one set of elements is present there is no need to enumerate, all are set to 0
         $($('.datesBox')[0]).attr('name', datesPieces[0] + 0 + datesPieces[1]);
         $($('.returnBox')[0]).attr('name', returnPieces[0] + 0 + returnPieces[1]);
         $($('.leadBox')[0]).attr('name', leadPieces[0] + 0 + leadPieces[1]);
