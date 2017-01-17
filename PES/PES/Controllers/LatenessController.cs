@@ -10,6 +10,8 @@ using PES.Services;
 using PES.ViewModels;
 using System.Threading.Tasks;
 using OfficeOpenXml;
+using System.Globalization;
+using System.Threading;
 
 namespace PES.Controllers
 {
@@ -45,7 +47,7 @@ namespace PES.Controllers
                 var currentUserEmail = (string)Session["UserEmail"];
                 lateness = GetLateness.GetLatenessByEmail(currentUserEmail, period);
             }
-            
+
             return PartialView("_LatenessReportsPartial", lateness);
         }
 
@@ -65,9 +67,9 @@ namespace PES.Controllers
         //Show the excel file imported by manager
         public ActionResult ShowLatenesExcel(List<Lateness> lateness)
         {
-            if((int)Session["UserProfile"] != 2)
+            if ((int)Session["UserProfile"] != 2)
                 return RedirectToAction("Index", "Menu");
-               
+
             return View(lateness);
         }
 
@@ -76,6 +78,7 @@ namespace PES.Controllers
         public ActionResult UploadLatenessExcel()
         {
             List<Lateness> latenesses = new List<Lateness>();
+            DateTime date = DateTime.Today;
 
             if (Request != null)
             {
@@ -98,36 +101,46 @@ namespace PES.Controllers
                         {
                             Lateness lateness = new Lateness();
                             lateness.EmployeeEmail = workSheet.Cells[rowIterator, 1].Value.ToString();
-                            lateness.Date = Convert.ToDateTime(workSheet.Cells[rowIterator, 2].Value.ToString());
+                            DateTime tmpDate = Convert.ToDateTime(workSheet.Cells[rowIterator, 2].Value.ToString());
+                            lateness.Date = Convert.ToDateTime(tmpDate.Month + "/" + tmpDate.Day + "/" + tmpDate.Year);
                             lateness.Time = Convert.ToDateTime(workSheet.Cells[rowIterator, 3].Value.ToString());
                             latenesses.Add(lateness);
+
+                            date = lateness.Date;
                         }
                     }
                 }
 
             }
             Session["tmpLateness"] = latenesses;
+            ViewBag.sunday = date.Date.AddDays(-(int)date.Date.DayOfWeek).ToString("MM/dd/yyyy");
+            ViewBag.saturday = date.Date.AddDays(-(int)date.Date.DayOfWeek + (int)DayOfWeek.Saturday).ToString("MM/dd/yyyy");
+            Session["startWeek"] = date.Date.AddDays(-(int)date.Date.DayOfWeek).ToString("dd/MM/yy");
+            Session["endWeek"] = date.Date.AddDays(-(int)date.Date.DayOfWeek + (int)DayOfWeek.Saturday).ToString("dd/MM/yy");
 
             return View("ShowLatenesExcel", latenesses);
         }
 
         //Save the excel file imported by manager
         [HttpPost]
-        public string saveLatenessExcel()
+        public string saveLatenessExcel(bool confirm)
         {
             try
             {
                 LatenessService lateness = new LatenessService();
                 var latenessList = Session["tmpLateness"] as List<Lateness>;
 
-                if (latenessList != null)
+                if (confirm)
                 {
-                    lateness.insertLateness(latenessList);
-                    Session.Remove("tmpLateness");                    
+                    lateness.replaceExcel(latenessList, (string)Session["startWeek"], (string)Session["endWeek"]);
+                }
+                else if (!lateness.isExcelImported((string)Session["startWeek"], (string)Session["endWeek"]))
+                {
+                    lateness.insertLateness(latenessList);                 
                 }
                 else
                 {
-                    return "saved";
+                    return "imported";
                 }
             }
             catch (Exception ex)

@@ -38,35 +38,35 @@ namespace PES.Services
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
+                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "month":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "year":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "last 5 years":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         default:
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.EMAIL = '" + email + "' AND DELETE_STATUS=0 ";
+                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2)  ";
                             break;
                     }
 
@@ -108,13 +108,13 @@ namespace PES.Services
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND DELETE_STATUS = 0 AND ID_MANAGER = " + idManager + " " +
                                    "GROUP BY E.LAST_NAME, E.FIRST_NAME, E.EMAIL  ORDER BY \"DATE\" DESC ";
-                        
+
                     OracleCommand Comand = new OracleCommand(Query, db);
                     OracleDataReader Read = Comand.ExecuteReader();
 
                     while (Read.Read())
                     {
-                        lateness = new Lateness();    
+                        lateness = new Lateness();
                         string date = Convert.ToString(Read["DATE"]);
                         lateness.EmployeeEmail = Convert.ToString(Read["EMAIL"]);
                         lateness.EmployeeName = Convert.ToString(Read["NAME"]);
@@ -145,7 +145,7 @@ namespace PES.Services
                     string Query = "SELECT LAST_NAME || ' ' || FIRST_NAME AS \"NAME\", EMAIL " +
                                    "FROM EMPLOYEE " +
                                    "WHERE ID_MANAGER = " + idManager + " " +
-                                   "ORDER BY \"NAME\"" ;
+                                   "ORDER BY \"NAME\"";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
                     OracleDataReader Read = Comand.ExecuteReader();
@@ -178,25 +178,92 @@ namespace PES.Services
 
                     foreach (Lateness l in latenesses)
                     {
-                        String date = l.Date.ToString("dd/MM/yyyy")+ " "+l.Time.ToString("H:mm:ss");
-                        string InsertQuery = "INSERT INTO lateness(\"DATE\", ID_EMPLOYEE)" +
-                                         "VALUES(TO_DATE('"+date+"', 'dd/mm/yyyy hh24:mi:ss'), " +
-                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE EMAIL='"+l.EmployeeEmail+"'))";
+                        String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
+                        string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE)" +
+                                         "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
+                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE EMAIL='" + l.EmployeeEmail + "'))";
 
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
                         Comand.ExecuteNonQuery();
                     }
                     db.Close();
-                }  
+                }
             }
             catch (Exception ex)
             {
-                throw;  
+                throw;
             }
             return true;
         }
 
+        public bool isExcelImported(string startWeek, string endWeek)
+        {
 
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string Query = "SELECT COUNT(*) AS \"MATCH\" FROM LATENESS " + 
+                                   "WHERE \"DATE\" BETWEEN '" + startWeek + "' AND '" + endWeek + "'";
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+
+                    if (Read.Read())
+                    {
+                        if (Convert.ToInt16(Read["MATCH"]) > 0)
+                        {
+                            db.Close();
+                            return true;
+                        }
+                        
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return false;
+        }
+
+        public bool replaceExcel(List<Lateness> latenesses, string startWeek, string endWeek)
+        {
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string DeleteQuery = "DELETE FROM LATENESS WHERE \"DATE\" BETWEEN '" + startWeek + "' AND '" + endWeek + "'";
+
+                    OracleCommand Com = new OracleCommand(DeleteQuery, db);
+                    Com.ExecuteNonQuery();
+
+                    foreach (Lateness l in latenesses)
+                    {
+                        String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
+                        string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE, DELETE_STATUS)" +
+                                         "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
+                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE EMAIL='" + l.EmployeeEmail + "'), 2)";
+
+                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                        Comand.ExecuteNonQuery();
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
         //********************************AGREGADOOOOO*****************************************************
         public bool delete(int id)
         {
