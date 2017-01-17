@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PES.ViewModels
 {
+    /// <summary>
+    /// Class to sotre all Data of a New Request
+    /// </summary>
     public class InsertNewRequestViewModel
     {
         /// <summary>

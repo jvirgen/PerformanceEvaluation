@@ -1,4 +1,6 @@
-﻿@model IEnumerable<PES.ViewModels.NewVacationDates>
+﻿@* Partial view to Get all vacation periods of a NEW VACATION REQUEST*@
+
+@model IEnumerable<PES.ViewModels.NewVacationDates>
 
 <div id="datesGroups">
     <div id="datesGroup" class="form-group">
@@ -28,14 +30,11 @@
                 </div>
         </div>
     </div>
- 
-<div id="datesGroup" class="form-group">
-@{ ViewBag.title = "I do not have a project";}
 <div id="datesGroup" class="form-group datesGroup">
     <hr class="divisor">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexEnd">
-            <div class="col-md-3 text-center">
+            <div class="col-md-4 text-center">
                 <label for="start">Start Date - End Date</label>
                <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required"/>
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
@@ -53,11 +52,11 @@
     </div> <!-- subform-group end -->
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexCenter">
-            <div id="leadName" class="col-md-4">
+            <div id="leadName" class="col-md-3">
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
                     
-                    <input id="lead" type="text" name="subRequest[0].lead_name" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" />
+                    <input id="lead" type="text" name="subRequest[0].lead_name" class="form-control leadBox" data-val="true" data-val-required="Lead name is required"/>
                     
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
@@ -65,8 +64,9 @@
             <div id="checkarea" class="col-md-2 checkbox">
                 <label id="checktext">
                     
-                        <input type="checkbox" id="unpaid" name="subRequest[0].have_project"/>@ViewBag.title
-                    
+                        <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].have_project" value="true"/>I do not have a project
+                        <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].have_project" value="false"/>
+
                 </label>
             </div>
 

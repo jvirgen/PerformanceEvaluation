@@ -16,6 +16,11 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
+        /// <summary>
+        /// Metod to GET all subRequests of a request by RequestId 
+        /// </summary>
+        /// <param name="headerId"></param>
+        /// <returns>A list of Sub Resquests</returns>
         public List<VacationSubreq> GetVacationSubreqByHeaderReqId(int headerId)
         {
             List<VacationSubreq> vacationsubreqs = new List<VacationSubreq>();
@@ -70,6 +75,11 @@ namespace PES.Services
             return vacationsubreqs;
         }
 
+        /// <summary>
+        /// Metod to INSERT a subrequest in the DB using a VacationSubreq object
+        /// </summary>
+        /// <param name="vacSubReq"></param>
+        /// <returns>True if the insert was successful</returns>
         public bool InsertSubReq(VacationSubreq vacSubReq)
         {
             bool status = false;

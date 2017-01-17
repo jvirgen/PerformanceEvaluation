@@ -16,6 +16,11 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
+        /// <summary>
+        /// Metod to GET the status by Description
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns>An object VacationReqStatus</returns>
         public VacationReqStatus GetVacationReqStatusByDescription(string description)
         {
             VacationReqStatus status =null;
@@ -51,6 +56,11 @@ namespace PES.Services
             return status;
         }
 
+        /// <summary>
+        /// Metod to GET the status by status Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An object of VacationReqStatus</returns>
         public VacationReqStatus GetVacationReqStatusById(int id)
         {
             VacationReqStatus status = null;

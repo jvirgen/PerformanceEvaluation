@@ -7,6 +7,9 @@ namespace PES.ViewModels
 {
     public class NewVacationDates
     {
+        /// <summary>
+        /// Start Date
+        /// </summary>
         public DateTime? startDate { get; set; }
 
         /// <summary>
@@ -29,6 +32,9 @@ namespace PES.ViewModels
         /// </summary>
         public bool have_project { get; set; }
 
+        /// <summary>
+        /// Comeplete date, start and end Dates.
+        /// </summary>
         public string date { get; set; }
 
     }

@@ -180,7 +180,7 @@ function getWorkableDays(start, end) {
 /*
 
 DESCRIPTION
-this function searches for the following fields: datesBox, returnBox, leadBox, that may repeat many times depending on how many dates the user is requesting for vacations. Once found the elements proceeds to update their names according to the structure agreed "subRequest[n]"
+this function searches for the following fields: datesBox, returnBox, leadBox, projectBox that may repeat many times depending on how many dates the user is requesting for vacations. Once found the elements proceeds to update their names according to the structure agreed "subRequest[n]"
 
 */
 function updateEnumerationBoxes() {
@@ -188,17 +188,23 @@ function updateEnumerationBoxes() {
     var datesPieces = $($('.datesBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
     var returnPieces = $($('.returnBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
     var leadPieces = $($('.leadBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
-    
+    var projectPiece = $($('.projectBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
+    var projectHiddenPiece = $($('.projectHiddenBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
+
     if ($('.datesBox').length > 1) {
         $('.datesBox').each(function (i, element) {//for each element we set the numeration based on the "i" variable
             $($('.datesBox')[i]).attr('name', datesPieces[0] + i + datesPieces[1]);
             $($('.returnBox')[i]).attr('name', returnPieces[0] + i + returnPieces[1]);
             $($('.leadBox')[i]).attr('name', leadPieces[0] + i + leadPieces[1]);
+            $($('.projectBox')[i]).attr('name', projectPiece[0] + i + projectPiece[1]);
+            $($('.projectHiddenBox')[i]).attr('name', leadPieces[0] + i + leadPieces[1]);
         });
     }
     else {//if only one set of elements is present there is no need to enumerate, all are set to 0
         $($('.datesBox')[0]).attr('name', datesPieces[0] + 0 + datesPieces[1]);
         $($('.returnBox')[0]).attr('name', returnPieces[0] + 0 + returnPieces[1]);
         $($('.leadBox')[0]).attr('name', leadPieces[0] + 0 + leadPieces[1]);
+        $($('.projectBox')[0]).attr('name', projectPiece[0] + 0 + projectPiece[1]);
+        $($('.projectHiddenBox')[0]).attr('name', leadPieces[0] + 0 + leadPieces[1]);
     }
 }

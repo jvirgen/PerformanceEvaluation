@@ -17,7 +17,7 @@ namespace PES.Controllers
         private EmployeeService _employeeService;
         private VacationHeaderReqService _headerReqService;
         private VacationReqStatusService _ReqStatusService;
-        private VacationSubreqService _subReqService;
+        private VacationSubreqService _subReqService;        
 
         public VacationRequestController()
         {
@@ -27,7 +27,11 @@ namespace PES.Controllers
             _subReqService = new VacationSubreqService();
         }
 
-        //GET: New VacationRequest 
+        /// <summary>
+        /// GET: New vacation requests. The metod only need a User Id parameter 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns>New Request Screen</returns>
         [HttpGet]
         public ActionResult InsertNewRequest(int userid)
         {
@@ -42,23 +46,43 @@ namespace PES.Controllers
             return View(newRequest);
         }
 
-        //POST: New VacationRequest 
+        /// <summary>
+        /// POST of New Vacation Request to get all data form the New Request View to process and insert them in the DB
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Redirect to Historial Screen</returns>
         [HttpPost]
         public ActionResult InsertNewRequest(InsertNewRequestViewModel model)
         {
+            string[] dates;
+            //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
 
-            string x = "";
+            foreach (var date in model.SubRequest)
+            {
+                //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
+                dates = date.date.Split('-');
+                date.startDate = Convert.ToDateTime(dates[0]);
+                date.endDate = Convert.ToDateTime(dates[1]);
+            }
+            // Return a message in the screen a redirect to the Historical Request Screen.
             return View();
         }
 
-        // GET: VacationRequest Existing
+        /// <summary>
+        /// GET: VacationRequest Existing
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult VacationRequest()
         {
             return View();
         }
 
-        // GET: VacationRequest Existing 
+        /// <summary>
+        /// GET: VacationRequest Existing. Metod to get a existing request using Header Request Id 
+        /// </summary>
+        /// <param name="headerReqId"></param>
+        /// <returns>Redirect Vacation Request passing the data of the existing request</returns>
         [HttpGet]
         public ActionResult GetVacationRequest(int headerReqId)
         {
@@ -70,8 +94,11 @@ namespace PES.Controllers
             currentRequest.freedays = currentUser.Freedays;
             return View("VacationRequest", currentRequest);
         }
-    
-        // GET: VacationRequest/HistoricalResource
+
+        /// <summary>
+        /// GET: HistoricalResource. Metod to Get all the data of the current employee and all its vacation requests 
+        /// </summary>
+        /// <returns>A list of all Resquests in the Historical Resource View</returns>
         [HttpGet]
         public ActionResult HistoricalResource()
         {

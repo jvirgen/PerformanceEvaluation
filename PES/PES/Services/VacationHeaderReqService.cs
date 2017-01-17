@@ -17,6 +17,11 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
+        /// <summary>
+        /// Metod to get all Vacation Requests by a employee Id 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns>A list a Vacation Requests </returns>
         public List<VacHeadReqViewModel> GetGeneralVacationHeaderReqByEmployeeId(int employeeId)
         {
             List<VacHeadReqViewModel> Headers = new List<VacHeadReqViewModel>();
@@ -71,6 +76,11 @@ namespace PES.Services
             return Headers;
         }
 
+        /// <summary>
+        /// Metod to get all Vacation Request data by a Vacation Resquest Id  
+        /// </summary>
+        /// <param name="headerId"></param>
+        /// <returns>A vacation resquest object </returns>
         public VacHeadReqViewModel GetAllVacRequestInfoByVacReqId(int headerId)
         {
             VacHeadReqViewModel header = new VacHeadReqViewModel();
@@ -134,6 +144,11 @@ namespace PES.Services
             return header;
         }
 
+        /// <summary>
+        /// Metod to get all Vacation Requests by a employee(Manager) Id 
+        /// </summary>
+        /// <param name="managerId"></param>
+        /// <returns>A list of Vacation Resquests</returns>
         public List<VacHeadReqViewModel> GetAllGeneralVacationHeaderReqByManagerId(int managerId)
         {
             List<VacHeadReqViewModel> Headers = new List<VacHeadReqViewModel>();
@@ -195,6 +210,11 @@ namespace PES.Services
             return Headers;
         }
 
+        /// <summary>
+        /// Metod to insert the data of the Object vacHeaderReq in the DB
+        /// </summary>
+        /// <param name="vacHeadReq"></param>
+        /// <returns>True if the insert was successful</returns>
         public bool InsertVacHeaderReq(VacationHeaderReq vacHeadReq)
         {
             bool status = false;
