@@ -22,8 +22,8 @@
                             </button>
                         </div>
                         <div class="col-md-6">
-                            <div style="width: 210px; padding-top: 8px;" class="text-center">
-                                <strong>@ViewBag.sunday - @ViewBag.saturday</strong> 
+                            <div style="width: 250px; padding-top: 8px; color: #E7DA50" class="text-center">
+                                <strong>Week(s): @ViewBag.sunday - @ViewBag.saturday</strong> 
                             </div>
                         </div>
                     </div> 
@@ -39,33 +39,36 @@
 
 @if (Model != null)
 {
-    <table class="table">
-        <tr>
-            <th>
-                EMAIL
-            </th>
-            <th>
-                DATE
-            </th>
-            <th>
-                TIME
-            </th>
-        </tr>
-
-        @foreach (var lateness in Model)
-        {
+    <table id="ExcelTable" class="table table-striped">
+        <thead>
             <tr>
-                <td>
-                    @lateness.EmployeeEmail
-                </td>
-                <td>
-                    @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
-                </td>
-                <td>
-                    @lateness.Time.ToString("hh:mm:ss tt")
-                </td>
+                <th>
+                    EMAIL
+                </th>
+                <th>
+                    DATE
+                </th>
+                <th>
+                    TIME
+                </th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var lateness in Model)
+            {
+                <tr>
+                    <td>
+                        @lateness.EmployeeEmail
+                    </td>
+                    <td>
+                        @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
+                    </td>
+                    <td>
+                        @lateness.Time.ToString("hh:mm:ss tt")
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 
@@ -94,10 +97,11 @@
         <div class="modal-content panel-danger">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Confirmation</h4>
+                <h4 class="modal-title">Attention!</h4>
             </div>
             <div class="modal-body">
-                This file is already saved!. Do you want to replace it?
+                The week(s) @ViewBag.sunday - @ViewBag.saturday is already saved. 
+                Are you sure to replace this week(s)?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmImported">Yes</button>
@@ -106,6 +110,20 @@
         </div>
     </div>
 </div>
+
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+
+}
+
 @section Scripts {
     @Scripts.Render("~/Scripts/latenessManager.js")
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/jszip.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/pdfmake.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
 }

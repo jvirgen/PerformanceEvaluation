@@ -78,7 +78,9 @@ namespace PES.Controllers
         public ActionResult UploadLatenessExcel()
         {
             List<Lateness> latenesses = new List<Lateness>();
-            DateTime date = DateTime.Today;
+            DateTime minDate = DateTime.Today;
+            DateTime maxDate = DateTime.Today;
+
 
             if (Request != null)
             {
@@ -97,6 +99,10 @@ namespace PES.Controllers
                         var noOfCol = workSheet.Dimension.End.Column;
                         var noOfRow = workSheet.Dimension.End.Row;
 
+                        DateTime tmp = Convert.ToDateTime(workSheet.Cells[2, 2].Value.ToString());
+                        minDate = Convert.ToDateTime(tmp.Month + "/" + tmp.Day + "/" + tmp.Year);
+                        maxDate = Convert.ToDateTime(tmp.Month + "/" + tmp.Day + "/" + tmp.Year);
+
                         for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                         {
                             Lateness lateness = new Lateness();
@@ -106,17 +112,29 @@ namespace PES.Controllers
                             lateness.Time = Convert.ToDateTime(workSheet.Cells[rowIterator, 3].Value.ToString());
                             latenesses.Add(lateness);
 
-                            date = lateness.Date;
+                            if(minDate > lateness.Date)
+                            {
+                                minDate = lateness.Date;
+                            }
+
+                            if (maxDate < lateness.Date)
+                            {
+                                maxDate = lateness.Date;
+                            }
+                            //minDate = lateness.Date;
                         }
-                    }
-                }
+                        //DateTime tmpMaxDate = Convert.ToDateTime(workSheet.Cells[2, 2].Value.ToString());
+                        //maxDate = Convert.ToDateTime(tmpMaxDate.Month + "/" + tmpMaxDate.Day + "/" + tmpMaxDate.Year); 
+                       
+                   }
+}
 
             }
             Session["tmpLateness"] = latenesses;
-            ViewBag.sunday = date.Date.AddDays(-(int)date.Date.DayOfWeek).ToString("MM/dd/yyyy");
-            ViewBag.saturday = date.Date.AddDays(-(int)date.Date.DayOfWeek + (int)DayOfWeek.Saturday).ToString("MM/dd/yyyy");
-            Session["startWeek"] = date.Date.AddDays(-(int)date.Date.DayOfWeek).ToString("dd/MM/yy");
-            Session["endWeek"] = date.Date.AddDays(-(int)date.Date.DayOfWeek + (int)DayOfWeek.Saturday).ToString("dd/MM/yy");
+            ViewBag.sunday = minDate.Date.AddDays(-(int)minDate.Date.DayOfWeek).ToString("MM/dd/yyyy");
+            ViewBag.saturday = maxDate.Date.AddDays(-(int)maxDate.Date.DayOfWeek + (int)DayOfWeek.Saturday).ToString("MM/dd/yyyy");
+            Session["startWeek"] = minDate.Date.AddDays(-(int)minDate.Date.DayOfWeek).ToString("dd/MM/yy");
+            Session["endWeek"] = maxDate.Date.AddDays(-(int)maxDate.Date.DayOfWeek + (int)DayOfWeek.Saturday).ToString("dd/MM/yy");
 
             return View("ShowLatenesExcel", latenesses);
         }

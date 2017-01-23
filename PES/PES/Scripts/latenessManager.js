@@ -10,6 +10,16 @@
         });
     }
 
+    if ($('#ExcelTable').length) {
+        $('#ExcelTable').DataTable({
+            dom: '<"row"<"col-md-6"B><"col-md-6"f>> rtp',
+            buttons: [
+                'excel', 'pdf'],
+            "order": [[ 1, "desc" ]],
+            pagingType: "full_numbers"
+        });
+    }
+
     
     $("tr").not(':first').hover(function () {
         $(this).css("background", "#D6D5C3");
@@ -96,11 +106,11 @@
 
 
                 if (period == "year") {
-                    chart("2016");
+                    chart("2017");
                 }
                 else if (period == "last 5 years") {
                     paintSelect();
-                    chart("2016");
+                    chart("2017");
                     $('select').on('change', function () {
                         chart(this.value);
                     });
