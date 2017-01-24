@@ -121,13 +121,9 @@ namespace PES.Controllers
                             {
                                 maxDate = lateness.Date;
                             }
-                            //minDate = lateness.Date;
                         }
-                        //DateTime tmpMaxDate = Convert.ToDateTime(workSheet.Cells[2, 2].Value.ToString());
-                        //maxDate = Convert.ToDateTime(tmpMaxDate.Month + "/" + tmpMaxDate.Day + "/" + tmpMaxDate.Year); 
-                       
                    }
-}
+                }
 
             }
             Session["tmpLateness"] = latenesses;
