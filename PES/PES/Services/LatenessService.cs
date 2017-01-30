@@ -106,7 +106,7 @@ namespace PES.Services
                     string Query = "SELECT MAX(TO_CHAR(\"DATE\", 'DD/MM/YYYY')) AS \"DATE\", E.LAST_NAME || ' ' || E.FIRST_NAME AS \"NAME\", E.EMAIL, COUNT(E.ID_EMPLOYEE) AS NO_LATENESS " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                   "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND DELETE_STATUS = 0 AND ID_MANAGER = " + idManager + " " +
+                                   "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND (DELETE_STATUS = 0 OR DELETE_STATUS = 2) AND ID_MANAGER = " + idManager + " " +
                                    "GROUP BY E.LAST_NAME, E.FIRST_NAME, E.EMAIL  ORDER BY \"DATE\" DESC ";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -115,10 +115,14 @@ namespace PES.Services
                     while (Read.Read())
                     {
                         lateness = new Lateness();
+
                         string date = Convert.ToString(Read["DATE"]);
                         lateness.EmployeeEmail = Convert.ToString(Read["EMAIL"]);
                         lateness.EmployeeName = Convert.ToString(Read["NAME"]);
                         lateness.NoLateness = Convert.ToInt32(Read["NO_LATENESS"]);
+
+                        //DateTime tmpDate = Convert.ToDateTime(Convert.ToString(Read["DATE"]));
+                        //lateness.Date = Convert.ToDateTime(tmpDate.Month + "/" + tmpDate.Day + "/" + tmpDate.Year);
                         lateness.Date = Convert.ToDateTime(date);
                         latenesses.Add(lateness);
                     }
