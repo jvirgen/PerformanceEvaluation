@@ -162,7 +162,7 @@
         $("#container").before(element);
     }
 
-    function chart(year) {
+   /* function chart(year) {
         var month = { "January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June": 0, "July": 0, "August": 0, "September": 0, "October": 0, "November": 0, "December": 0 };
 
         //select the column date and compare the months
@@ -232,6 +232,146 @@
                         fontFamily: 'Verdana, sans-serif'
                     }
                 }
+            }]
+        });
+    }*/
+
+    function chart(year) {
+        var month = { "January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June": 0, "July": 0, "August": 0, "September": 0, "October": 0, "November": 0, "December": 0 };
+        var monthB = { "January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June": 0, "July": 0, "August": 0, "September": 0, "October": 0, "November": 0, "December": 0 };
+        var time;
+        var limit =1;
+        
+
+        //select the column date and compare the months
+        $('#Tableview tbody tr td:nth-child(1)').each(function () {
+            var i = 0;
+
+            $('#Tableview tbody tr td:nth-child(2)').each(function () {
+                if (i == limit) {
+                    return false;
+                }
+                time = $.trim($(this).text());
+                time = parseInt(time.substr(1, 1) + time.substr(3, 2));
+                i++;
+            });
+            limit++;
+            console.log(time);
+
+            var date = $.trim($(this).text()).toLowerCase();
+
+
+            if (time >= 815 && time <= 930) {
+                for (var key in month) {
+                    if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
+                        month[key] += 1;
+                    }
+                }
+            }
+            else {
+                for (var key in monthB) {
+                    if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
+                        monthB[key] += 1;
+                    }
+                }
+            }
+        /*$('#Tableview tbody tr td:nth-child(2)').each(function () {
+
+            time = $.trim($(this).text());
+            time = parseInt(time.substr(1, 1) + time.substr(3, 2));
+
+            if (time >= 815 && time <= 930) {
+                    $('#Tableview tbody tr td:nth-child(1)').each(function () {
+                        var date = $.trim($(this).text()).toLowerCase();
+
+                
+                            for (var key in month) {
+                                if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
+                                    month[key] += 1;
+                                }
+                            }
+                            return false;
+                    });
+            }
+            else {
+                $('#Tableview tbody tr td:nth-child(1)').each(function () {
+                    var date = $.trim($(this).text()).toLowerCase();
+                    for (var key in monthB) {
+                        if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
+                            monthB[key] += 1;
+                        }
+                    }
+                    return false;
+                });
+            }*/  
+        });
+
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Lateness Chart'
+            },
+            xAxis: {
+                type: 'category',
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'No. Lateness'
+                }
+            },
+            tooltip: {
+                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                shared: true
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'point'
+                }
+            },
+            series: [{
+                name: 'Between 08:15am to 09:30',
+                data: [
+                    ['January', month["January"]],
+                    ['February', month["February"]],
+                    ['March', month["March"]],
+                    ['April', month["April"]],
+                    ['May', month["May"]],
+                    ['June', month["June"]],
+                    ['July', month["July"]],
+                    ['August', month["August"]],
+                    ['September', month["September"]],
+                    ['October', month["October"]],
+                    ['November', month["November"]],
+                    ['December', month["December"]]
+                    ]
+            }, {
+                name: 'Before 9:30',
+                data: [
+                    ['January', monthB["January"]],
+                    ['February', monthB["February"]],
+                    ['March', monthB["March"]],
+                    ['April', monthB["April"]],
+                    ['May', monthB["May"]],
+                    ['June', monthB["June"]],
+                    ['July', monthB["July"]],
+                    ['August', monthB["August"]],
+                    ['September', monthB["September"]],
+                    ['October', monthB["October"]],
+                    ['November', monthB["November"]],
+                    ['December', monthB["December"]]
+                ]
             }]
         });
     }
