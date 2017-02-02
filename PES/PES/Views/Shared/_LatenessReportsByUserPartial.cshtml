@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PES.Models.Lateness>
 @using PES.Models
-manager
+<br />
 <div class="row">
     <div class="col-md-6">
         <div class="text-right">
@@ -12,7 +12,7 @@ manager
                 <table id="Tableview" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>
+                            <th width="38%">
                                 DATE
                             </th>
                             <th class="text-center">
@@ -27,7 +27,7 @@ manager
                         @foreach (var lateness in Model)
                         {
                             <tr>
-                                <td>
+                                <td width="38%">
                                     @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
                                 </td>
                                 <td class="text-center">

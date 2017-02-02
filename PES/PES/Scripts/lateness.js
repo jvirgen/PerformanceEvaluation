@@ -26,11 +26,11 @@
 
                 
                 if (period == "year") {
-                    chart("2016");
+                    chart(new Date().getFullYear().toString());
                 }
                 else if (period == "last 5 years") {
                     paintSelect();
-                    chart("2016");
+                    chart(new Date().getFullYear().toString());
                     $('select').on('change', function () {
                         chart(this.value);
                     });
