@@ -84,7 +84,7 @@
         });
     });
     
-
+    //To select the period with radio button
     $('input[name="period"]').click(function () {
         var period = $('input[name="period"]:checked').val();
         var email = (location.search.split("email" + "=")[1] || "").split("&")[0];
@@ -183,7 +183,6 @@
                 i++;
             });
             limit++;
-            console.log(time);
 
             var date = $.trim($(this).text()).toLowerCase();
 
@@ -202,35 +201,6 @@
                     }
                 }
             }
-        /*$('#Tableview tbody tr td:nth-child(2)').each(function () {
-
-            time = $.trim($(this).text());
-            time = parseInt(time.substr(1, 1) + time.substr(3, 2));
-
-            if (time >= 815 && time <= 930) {
-                    $('#Tableview tbody tr td:nth-child(1)').each(function () {
-                        var date = $.trim($(this).text()).toLowerCase();
-
-                
-                            for (var key in month) {
-                                if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
-                                    month[key] += 1;
-                                }
-                            }
-                            return false;
-                    });
-            }
-            else {
-                $('#Tableview tbody tr td:nth-child(1)').each(function () {
-                    var date = $.trim($(this).text()).toLowerCase();
-                    for (var key in monthB) {
-                        if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
-                            monthB[key] += 1;
-                        }
-                    }
-                    return false;
-                });
-            }*/  
         });
 
         Highcharts.chart('container', {
@@ -284,7 +254,7 @@
                     ['December', month["December"]]
                     ]
             }, {
-                name: 'Before 9:30',
+                name: 'After 9:30',
                 data: [
                     ['January', monthB["January"]],
                     ['February', monthB["February"]],

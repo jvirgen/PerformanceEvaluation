@@ -23,5 +23,7 @@ namespace PES.Models
         public String EmployeeName { get; set; }
 
         public int NoLateness { get; set; }
+
+        public int status { get; set; }
     }
 }

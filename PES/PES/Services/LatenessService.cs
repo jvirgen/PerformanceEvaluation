@@ -35,38 +35,38 @@ namespace PES.Services
                     switch (period)
                     {
                         case "week":
-                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
+                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
+                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "month":
-                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
+                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "year":
-                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
+                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "last 5 years":
-                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
+                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2) " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.EMAIL = '" + email + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         default:
-                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE " +
+                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.EMAIL = '" + email + "' AND (DELETE_STATUS=0 OR DELETE_STATUS=2)  ";
+                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.EMAIL = '" + email + "' ";
                             break;
                     }
 
@@ -80,7 +80,7 @@ namespace PES.Services
                         string date = Convert.ToString(Read["DATE"]);
                         lateness.Date = Convert.ToDateTime(date);
                         lateness.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
-
+                        lateness.status = Convert.ToInt32(Read["DELETE_STATUS"]);
                         latenesses.Add(lateness);
                     }
 
