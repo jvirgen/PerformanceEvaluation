@@ -291,5 +291,28 @@ namespace PES.Services
             }
             return true;
         }
+
+        public bool cancel(int id)
+        {
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string UpdateQuery = "UPDATE LATENESS SET DELETE_STATUS = 0 WHERE ID_LATENESS = " + id;
+
+
+                    OracleCommand Comand = new OracleCommand(UpdateQuery, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
     }
 }

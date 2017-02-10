@@ -189,5 +189,19 @@ namespace PES.Controllers
 
             return false;
         }
+
+        //for the manager to cancel the justify
+        [HttpPost]
+        public bool LatenessLogicCancel(int id)
+        {
+            LatenessService LatenessCancel = new LatenessService();
+
+            if (LatenessCancel.cancel(id))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿$(function () {
-
+   
     if ($('#Tableview').length) 
     {
         $('#Tableview').DataTable({
@@ -84,8 +84,10 @@
         });
     });
     
+    var lateness;
     //To select the period with radio button
     $('input[name="period"]').click(function () {
+        localStorage['my.checkbox'] = $('input[name="period"]:checked').val();
         var period = $('input[name="period"]:checked').val();
         var email = (location.search.split("email" + "=")[1] || "").split("&")[0];
 
@@ -94,6 +96,8 @@
             url: "/Lateness/GetLatenessByFilter/",
             data: { period: period, email: email},
             success: function (data) {
+                lateness = data;
+
                 $("#table-content").html("").hide("fast");
                 $("#table-content").html(data).fadeOut("normal").fadeIn(1000);
 
@@ -118,24 +122,42 @@
 
 
     //To delete registers on the table view.
-                var id;
-                var row;
+                var idDelete;
+                var idCancel;
                 $('.btn-delete').click(function () {
                     id = $(this).attr("id");
-                    row = $(this).closest("tr");
                     $("#modalUser").modal();
                 });
 
-
-                $("#deleteConfirm").on("click", function () {                   
-
+                $("#deleteConfirm").on("click", function () {    
                     $.ajax({
                         type: "POST",
                         url: "/Lateness/LatenessLogicDelete/",
                         data: { id: id },
                         success: function (data) {
                             if (data == "True") {
-                                row.remove();
+                                location.reload();
+                            }
+                            else {
+                                alert("An error has ocurred");
+                            }
+                        }
+                    });
+                });
+
+                $('.btn-cancel').click(function () {
+                    idCancel = $(this).attr("id");
+                    $("#modalCancel").modal();
+                });
+
+                $("#cancelConfirm").on("click", function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Lateness/LatenessLogicCancel/",
+                        data: { id: idCancel },
+                        success: function (data) {
+                            if (data == "True") {
+                                location.reload();
                             }
                             else {
                                 alert("An error has ocurred");
@@ -161,12 +183,16 @@
                        "</div>";
         $("#container").before(element);
     }
-
+    /*('#Tableview').on("click", "tbody tr td:nth-child(3)", function () {
+        console.log("asd");
+    });*/
 
     function chart(year) {
         var month = { "January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June": 0, "July": 0, "August": 0, "September": 0, "October": 0, "November": 0, "December": 0 };
         var monthB = { "January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June": 0, "July": 0, "August": 0, "September": 0, "October": 0, "November": 0, "December": 0 };
+        var monthJ = { "January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June": 0, "July": 0, "August": 0, "September": 0, "October": 0, "November": 0, "December": 0 };
         var time;
+        var justify;
         var limit =1;
         
 
@@ -180,24 +206,43 @@
                 }
                 time = $.trim($(this).text());
                 time = parseInt(time.substr(1, 1) + time.substr(3, 2));
+
                 i++;
             });
+
+            i = 0;
+
+            $('#Tableview tbody tr td:nth-child(3)').each(function () {
+                if (i == limit) {
+                    return false;
+                }
+                justify = $.trim($(this).text());
+                i++;
+            });
+
             limit++;
 
             var date = $.trim($(this).text()).toLowerCase();
 
 
-            if (time >= 815 && time <= 930) {
+            if (time >= 815 && time <= 930 && justify != "Cancel") {
                 for (var key in month) {
                     if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
                         month[key] += 1;
                     }
                 }
             }
-            else {
+            else if ((time > 930 || time < 815) && justify != "Cancel") {
                 for (var key in monthB) {
                     if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
                         monthB[key] += 1;
+                    }
+                }
+            }
+            else {
+                for (var key in monthJ) {
+                    if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
+                        monthJ[key] += 1;
                     }
                 }
             }
@@ -269,7 +314,27 @@
                     ['November', monthB["November"]],
                     ['December', monthB["December"]]
                 ]
+            }, {
+                name: 'Justified',
+                data: [
+                    ['January', monthJ["January"]],
+                    ['February', monthJ["February"]],
+                    ['March', monthJ["March"]],
+                    ['April', monthJ["April"]],
+                    ['May', monthJ["May"]],
+                    ['June', monthJ["June"]],
+                    ['July', monthJ["July"]],
+                    ['August', monthJ["August"]],
+                    ['September', monthJ["September"]],
+                    ['October', monthJ["October"]],
+                    ['November', monthJ["November"]],
+                    ['December', monthJ["December"]]
+                ]
             }]
         });
     }
+
+   
+    $("input[name='period']").filter("[value='" + localStorage['my.checkbox'] + "']").prop('checked', true);
+    $("input[name='period'][value='" + localStorage['my.checkbox'] + "']").trigger("click");
 });
