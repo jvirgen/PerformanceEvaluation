@@ -57,16 +57,32 @@
 
     function chart(year) {
         var month = {"January":0, "February":0, "March":0, "April":0, "May":0, "June":0, "July":0, "August":0, "September":0, "October":0, "November":0, "December":0};
+        var limit = 1;
+        var justify;
 
         //select the column date and compare the months
-        $('#Tableview tbody tr td:nth-child(1)').each(function () {            
+        $('#Tableview tbody tr td:nth-child(1)').each(function () {
+
+            var i = 0;
+            $('#Tableview tbody tr td:nth-child(3)').each(function () {
+                if (i == limit) {
+                    return false;
+                }
+                justify = ($.trim($(this).text()) == "Justified") ? true : false;
+                i++;
+            });
+            console.log(justify);
+            limit++;
+
+
             var date = $.trim($(this).text()).toLowerCase();
             for (var key in month) {
-                if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0) {
+                if (date.indexOf(key.toLowerCase()) >= 0 && date.indexOf(year) >= 0 && !justify) {
                     month[key] += 1;
                 }
-            }  
+            }
         });
+
       
         Highcharts.chart('container', {
             chart: {

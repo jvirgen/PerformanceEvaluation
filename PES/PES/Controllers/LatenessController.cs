@@ -99,27 +99,48 @@ namespace PES.Controllers
                         var noOfCol = workSheet.Dimension.End.Column;
                         var noOfRow = workSheet.Dimension.End.Row;
 
-                        DateTime tmp = Convert.ToDateTime(workSheet.Cells[2, 2].Value.ToString());
+                                             
+                        long date = long.Parse(workSheet.Cells[2, 2].Value.ToString());
+                        var tmp = DateTime.FromOADate(date);
+                        minDate = tmp;
+                        maxDate = tmp;
+
+                       /*DateTime tmp = Convert.ToDateTime(workSheet.Cells[2, 2].Value.ToString());
                         minDate = Convert.ToDateTime(tmp.Month + "/" + tmp.Day + "/" + tmp.Year);
-                        maxDate = Convert.ToDateTime(tmp.Month + "/" + tmp.Day + "/" + tmp.Year);
+                        maxDate = Convert.ToDateTime(tmp.Month + "/" + tmp.Day + "/" + tmp.Year);*/
 
                         for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                         {
-                            Lateness lateness = new Lateness();
-                            lateness.EmployeeEmail = workSheet.Cells[rowIterator, 1].Value.ToString();
-                            DateTime tmpDate = Convert.ToDateTime(workSheet.Cells[rowIterator, 2].Value.ToString());
-                            lateness.Date = Convert.ToDateTime(tmpDate.Month + "/" + tmpDate.Day + "/" + tmpDate.Year);
-                            lateness.Time = Convert.ToDateTime(workSheet.Cells[rowIterator, 3].Value.ToString());
-                            latenesses.Add(lateness);
-
-                            if(minDate > lateness.Date)
+                           try
                             {
-                                minDate = lateness.Date;
+                                Lateness lateness = new Lateness();
+                                lateness.EmployeeEmail = workSheet.Cells[rowIterator, 1].Value.ToString();
+
+                                long tmpDate = long.Parse(workSheet.Cells[rowIterator, 2].Value.ToString());
+                                lateness.Date = DateTime.FromOADate(tmpDate);
+
+                                //DateTime tmpDate = Convert.ToDateTime(workSheet.Cells[rowIterator, 2].Value.ToString());
+                                //lateness.Date = Convert.ToDateTime(tmpDate.Month + "/" + tmpDate.Day + "/" + tmpDate.Year);
+
+                                double tmpTime = double.Parse(workSheet.Cells[rowIterator, 3].Value.ToString());
+                                lateness.Time = DateTime.FromOADate(tmpTime);
+
+                                //lateness.Time = Convert.ToDateTime(workSheet.Cells[rowIterator, 3].Value.ToString());
+                                latenesses.Add(lateness);
+
+                                if (minDate > lateness.Date)
+                                {
+                                    minDate = lateness.Date;
+                                }
+
+                                if (maxDate < lateness.Date)
+                                {
+                                    maxDate = lateness.Date;
+                                }
                             }
-
-                            if (maxDate < lateness.Date)
+                            catch (Exception ex)
                             {
-                                maxDate = lateness.Date;
+                                Console.Write(ex.Message);
                             }
                         }
                    }

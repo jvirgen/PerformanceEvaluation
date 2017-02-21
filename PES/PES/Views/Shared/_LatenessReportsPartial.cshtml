@@ -12,11 +12,14 @@
                 <table id="Tableview" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>
+                            <th width="45%">
                                 DATE
                             </th>
-                            <th class="text-center">
+                            <th class="text-center" >
                                 TIME
+                            </th>
+                            <th class="text-center" width="22%">
+                                STATUS
                             </th>
                         </tr>
                     </thead>
@@ -24,11 +27,20 @@
                         @foreach (var lateness in Model)
                         {
                             <tr>
-                                <td>
+                                <td width="40%">
                                     @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
                                 </td>
                                 <td class="text-center">
                                     @lateness.Date.ToString("hh:mm:ss tt")
+                                </td>
+                                <td class="text-center" width="25%">
+                                    @if (lateness.status.Equals(1)){
+                                       <label style="color:darkgreen">Justified</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:indianred;">Delay</label>
+                                    }
                                 </td>
                             </tr>
                         }

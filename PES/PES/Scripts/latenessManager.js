@@ -46,7 +46,9 @@
         }
     };
 
-    $("#saveFile").on("click", function () { $("#myModal").modal(); });
+    $("#saveFile").on("click", function () {
+        $("#myModal").modal();
+    });
 
     $("#confirm").on("click", function () {
         $.post("/Lateness/SaveLatenessExcel", { confirm: false }, function (done) {
@@ -84,19 +86,19 @@
         });
     });
     
-    var lateness;
+
     //To select the period with radio button
     $('input[name="period"]').click(function () {
         localStorage['my.checkbox'] = $('input[name="period"]:checked').val();
         var period = $('input[name="period"]:checked').val();
-        var email = (location.search.split("email" + "=")[1] || "").split("&")[0];
+        var email = (location.search.split("name" + "=")[1] || "").split("&")[0];
+        email = email.replace(/%20/g, " ");
 
         $.ajax({
             type: "POST",
             url: "/Lateness/GetLatenessByFilter/",
             data: { period: period, email: email},
             success: function (data) {
-                lateness = data;
 
                 $("#table-content").html("").hide("fast");
                 $("#table-content").html(data).fadeOut("normal").fadeIn(1000);
@@ -121,7 +123,7 @@
                 }
 
 
-    //To delete registers on the table view.
+                //To delete registers on the table view.
                 var idDelete;
                 var idCancel;
                 $('.btn-delete').click(function () {
@@ -183,9 +185,7 @@
                        "</div>";
         $("#container").before(element);
     }
-    /*('#Tableview').on("click", "tbody tr td:nth-child(3)", function () {
-        console.log("asd");
-    });*/
+
 
     function chart(year) {
         var month = { "January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June": 0, "July": 0, "August": 0, "September": 0, "October": 0, "November": 0, "December": 0 };
@@ -194,9 +194,7 @@
         var time;
         var justify;
         var limit =1;
-        
-
-        //select the column date and compare the months
+       
         $('#Tableview tbody tr td:nth-child(1)').each(function () {
             var i = 0;
 
