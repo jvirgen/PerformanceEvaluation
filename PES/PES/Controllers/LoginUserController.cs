@@ -49,7 +49,7 @@ namespace PES.Controllers
                         // Store the Resource profile in a variable session
                         Session["UserProfile"] = (int)resource.ProfileId;
                         // Store the Resource user name in a variable session
-                        Session["UserEmail"] = (resource.LastName + " " + resource.FirstName).ToLower();
+                        Session["UserEmail"] = resource.Email;
                         // Set flag that user is logged in
                         Session["UserName"] = string.Format("{0} {1}", resource.FirstName, resource.LastName);
                         // Store the Resource user id in a variable session

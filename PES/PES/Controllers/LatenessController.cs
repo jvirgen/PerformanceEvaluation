@@ -24,7 +24,9 @@ namespace PES.Controllers
             List<Lateness> lateness = new List<Lateness>();
 
             var userEmail = (string)Session["UserEmail"];
-            lateness = GetLateness.GetLatenessByEmail(userEmail, "today");
+            var nickName = GetLateness.getNickName(userEmail);
+
+            lateness = GetLateness.GetLatenessByEmail(nickName, "today");
             return View(lateness);
         }
 
@@ -45,7 +47,8 @@ namespace PES.Controllers
             else
             {
                 var currentUserEmail = (string)Session["UserEmail"];
-                lateness = GetLateness.GetLatenessByEmail(currentUserEmail, period);
+                var nickName = GetLateness.getNickName(currentUserEmail);
+                lateness = GetLateness.GetLatenessByEmail(nickName, period);
             }
 
             return PartialView("_LatenessReportsPartial", lateness);
@@ -112,20 +115,16 @@ namespace PES.Controllers
                         for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                         {
                            try
-                            {
+                           {
                                 Lateness lateness = new Lateness();
                                 lateness.EmployeeEmail = workSheet.Cells[rowIterator, 1].Value.ToString();
 
                                 long tmpDate = long.Parse(workSheet.Cells[rowIterator, 2].Value.ToString());
                                 lateness.Date = DateTime.FromOADate(tmpDate);
-
-                                //DateTime tmpDate = Convert.ToDateTime(workSheet.Cells[rowIterator, 2].Value.ToString());
-                                //lateness.Date = Convert.ToDateTime(tmpDate.Month + "/" + tmpDate.Day + "/" + tmpDate.Year);
-
+                            
                                 double tmpTime = double.Parse(workSheet.Cells[rowIterator, 3].Value.ToString());
                                 lateness.Time = DateTime.FromOADate(tmpTime);
 
-                                //lateness.Time = Convert.ToDateTime(workSheet.Cells[rowIterator, 3].Value.ToString());
                                 latenesses.Add(lateness);
 
                                 if (minDate > lateness.Date)
@@ -137,11 +136,11 @@ namespace PES.Controllers
                                 {
                                     maxDate = lateness.Date;
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.Write(ex.Message);
-                            }
+                           }
+                           catch (Exception ex)
+                           {
+                              Console.Write(ex.Message);
+                           }
                         }
                    }
                 }
@@ -158,14 +157,14 @@ namespace PES.Controllers
 
         //Save the excel file imported by manager
         [HttpPost]
-        public string saveLatenessExcel(bool confirm)
+        public string saveLatenessExcel(bool confirmReplace)
         {
             try
             {
                 LatenessService lateness = new LatenessService();
                 var latenessList = Session["tmpLateness"] as List<Lateness>;
 
-                if (confirm)
+                if (confirmReplace)
                 {
                     lateness.replaceExcel(latenessList, (string)Session["startWeek"], (string)Session["endWeek"]);
                 }
@@ -180,7 +179,7 @@ namespace PES.Controllers
             }
             catch (Exception ex)
             {
-                return "error";
+                return ex.Message;
             }
             return "true";
         }
@@ -223,6 +222,14 @@ namespace PES.Controllers
             }
 
             return false;
+        }
+
+        //get the nickname of employee
+        [HttpPost]
+        public string getNickName(string email)
+        {
+            LatenessService lateness = new LatenessService();
+            return lateness.getNickName(email);   
         }
     }
 }

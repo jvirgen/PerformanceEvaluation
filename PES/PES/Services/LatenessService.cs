@@ -9,6 +9,7 @@ using OfficeOpenXml;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace PES.Services
 {
@@ -31,6 +32,7 @@ namespace PES.Services
                 {
                     db.Open();
                     string Query = "";
+                    var nickname = Regex.Replace(email.ToLower(), @"\s+", "");
 
                     switch (period)
                     {
@@ -38,35 +40,35 @@ namespace PES.Services
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND LOWER(E.LAST_NAME || ' ' || E.FIRST_NAME) = '" + email.ToLower() + "' " +
+                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "month":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND LOWER(E.LAST_NAME || ' ' || E.FIRST_NAME) = '" + email.ToLower() + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "year":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND LOWER(E.LAST_NAME || ' ' || E.FIRST_NAME) = '" + email.ToLower() + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "last 5 years":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND LOWER(E.LAST_NAME || ' ' || E.FIRST_NAME) = '" + email.ToLower() + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         default:
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND LOWER(E.LAST_NAME || ' ' || E.FIRST_NAME) = '" + email.ToLower() + "' ";
+                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.NICK_NAME = '" + nickname + "' ";
                             break;
                     }
 
@@ -174,6 +176,7 @@ namespace PES.Services
 
         public bool insertLateness(List<Lateness> latenesses)
         {
+            var nameNotFound = "";
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -183,10 +186,12 @@ namespace PES.Services
                     foreach (Lateness l in latenesses)
                     {
                         String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
+                        var nickname = Regex.Replace(l.EmployeeEmail.ToLower(), @"\s+", "");
                         string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE)" +
                                          "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
-                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE LOWER(LAST_NAME || ', ' || FIRST_NAME) = '"+ l.EmployeeEmail.ToLower() + "'))";
+                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE NICK_NAME = '"+ nickname + "'))";
 
+                        nameNotFound = l.EmployeeEmail;
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
                         Comand.ExecuteNonQuery();
                     }
@@ -195,7 +200,7 @@ namespace PES.Services
             }
             catch (Exception ex)
             {
-                throw;
+                throw new System.InvalidOperationException(nameNotFound + " is not found in the database.");
             }
             return true;
         }
@@ -238,6 +243,7 @@ namespace PES.Services
 
         public bool replaceExcel(List<Lateness> latenesses, string startWeek, string endWeek)
         {
+            var nameNotFound = "";
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -251,10 +257,13 @@ namespace PES.Services
                     foreach (Lateness l in latenesses)
                     {
                         String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
+                        var nickname = Regex.Replace(l.EmployeeEmail.ToLower(), @"\s+", "");
+
                         string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE, DELETE_STATUS)" +
                                          "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
-                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE LOWER(LAST_NAME || ', ' || FIRST_NAME) = '" + l.EmployeeEmail.ToLower() + "'), 2)";
+                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE NICK_NAME = '" + nickname + "'), 2)";
 
+                        nameNotFound = l.EmployeeEmail;
                         OracleCommand Comand = new OracleCommand(InsertQuery, db);
                         Comand.ExecuteNonQuery();
                     }
@@ -264,7 +273,7 @@ namespace PES.Services
             }
             catch (Exception ex)
             {
-                throw;
+                throw new System.InvalidOperationException(nameNotFound + " is not found in the database.");
             }
             return true;
         }
@@ -313,6 +322,37 @@ namespace PES.Services
                 throw;
             }
             return true;
+        }
+
+        public string getNickName(string email)
+        {
+            String nickName="";
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string Query = "SELECT NICK_NAME " +
+                                   "FROM EMPLOYEE " +
+                                   "WHERE EMAIL = '" + email +"'";
+                                   
+
+                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleDataReader Read = Comand.ExecuteReader();
+
+                    if (Read.Read())
+                    {
+                        nickName = Convert.ToString(Read["NICK_NAME"]);
+                    }
+
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return nickName;
         }
     }
 }

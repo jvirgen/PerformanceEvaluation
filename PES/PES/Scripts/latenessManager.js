@@ -31,7 +31,11 @@
     $("#Tableview").on("click", "tr", function () {
         var name = $.trim($(this).find('td:eq(0)').text());
         var email = $.trim($(this).find('td:eq(1)').text());
-        window.location.href = "/Lateness/LatenessByUser?name=" + name + "&email=" + email ;
+
+        $.post("/Lateness/getNickName", { email: email }, function (nickname) {
+            window.location.href = "/Lateness/LatenessByUser?name=" + nickname + "&email=" + email;
+        });
+        
     });
     
 
@@ -51,7 +55,7 @@
     });
 
     $("#confirm").on("click", function () {
-        $.post("/Lateness/SaveLatenessExcel", { confirm: false }, function (done) {
+        $.post("/Lateness/SaveLatenessExcel", { confirmReplace: false }, function (done) {
             if(done == "true")
             {
                 var message = "<div class=\"alert alert-success\">" +
@@ -62,10 +66,10 @@
                 $("body table:last").before(message);
             } else if(done == "imported") {
                 $("#modalImported").modal();
-            } else if (done == "error") {
+            } else {
                 var message = "<div class=\"alert alert-danger\">" +
                                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-                                "Something went wrong. (The information doesn't match.)" +
+                                done +
                               "</div>";
                 $(".alert").remove();
                 $("body table:last").before(message);
@@ -74,11 +78,19 @@
     });
 
     $("#confirmImported").on("click", function () {
-        $.post("/Lateness/SaveLatenessExcel", { confirm: true }, function (done) {
+        $.post("/Lateness/SaveLatenessExcel", { confirmReplace: true }, function (done) {
             if (done == "true") {
                 var message = "<div class=\"alert alert-success\">" +
                                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
                                 "The lateness report has been replace successfully!" +
+                              "</div>";
+                $(".alert").remove();
+                $("body table:last").before(message);
+            }
+            else {
+                var message = "<div class=\"alert alert-danger\">" +
+                                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+                                done +
                               "</div>";
                 $(".alert").remove();
                 $("body table:last").before(message);
