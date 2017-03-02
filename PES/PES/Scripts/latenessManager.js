@@ -67,7 +67,7 @@
             } else if(done == "imported") {
                 $("#modalImported").modal();
             } else {
-                var message = "<div class=\"alert alert-danger\">" +
+                var message = "<div class=\"alert alert-warning\">" +
                                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
                                 done +
                               "</div>";
@@ -88,7 +88,7 @@
                 $("body table:last").before(message);
             }
             else {
-                var message = "<div class=\"alert alert-danger\">" +
+                var message = "<div class=\"alert alert-warning\">" +
                                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
                                 done +
                               "</div>";

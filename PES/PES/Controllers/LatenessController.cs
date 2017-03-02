@@ -163,19 +163,23 @@ namespace PES.Controllers
             {
                 LatenessService lateness = new LatenessService();
                 var latenessList = Session["tmpLateness"] as List<Lateness>;
+                string nameNotFound = "";
 
                 if (confirmReplace)
                 {
-                    lateness.replaceExcel(latenessList, (string)Session["startWeek"], (string)Session["endWeek"]);
+                    nameNotFound = lateness.replaceExcel(latenessList, (string)Session["startWeek"], (string)Session["endWeek"]);
                 }
                 else if (!lateness.isExcelImported((string)Session["startWeek"], (string)Session["endWeek"]))
                 {
-                    lateness.insertLateness(latenessList);                 
+                    nameNotFound = lateness.insertLateness(latenessList);                 
                 }
                 else
                 {
                     return "imported";
                 }
+
+                if (nameNotFound != "")
+                    return "The file has been saved successfully, but <strong>" + nameNotFound + "</strong> were not found in the database";
             }
             catch (Exception ex)
             {

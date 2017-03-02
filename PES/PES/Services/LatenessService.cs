@@ -174,9 +174,10 @@ namespace PES.Services
             return latenesses;
         }
 
-        public bool insertLateness(List<Lateness> latenesses)
+        public string insertLateness(List<Lateness> latenesses)
         {
-            var nameNotFound = "";
+            var nameNotFound = new List<string>();
+
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -185,29 +186,35 @@ namespace PES.Services
 
                     foreach (Lateness l in latenesses)
                     {
-                        String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
-                        var nickname = Regex.Replace(l.EmployeeEmail.ToLower(), @"\s+", "");
-                        string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE)" +
-                                         "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
-                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE NICK_NAME = '"+ nickname + "'))";
+                        try
+                        {
+                            String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
+                            var nickname = Regex.Replace(l.EmployeeEmail.ToLower(), @"\s+", "");
+                            string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE)" +
+                                             "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
+                                             "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE NICK_NAME = '" + nickname + "'))";
 
-                        nameNotFound = l.EmployeeEmail;
-                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
-                        Comand.ExecuteNonQuery();
+                            OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                            Comand.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            nameNotFound.Add(l.EmployeeEmail.Replace(",", ""));
+                        }
                     }
                     db.Close();
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                throw new System.InvalidOperationException(nameNotFound + " is not found in the database.");
+                throw new System.InvalidOperationException(ex.Message);
             }
-            return true;
+            
+            return String.Join(", ", nameNotFound.Distinct().ToList());
         }
 
         public bool isExcelImported(string startWeek, string endWeek)
         {
-
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -241,9 +248,10 @@ namespace PES.Services
             return false;
         }
 
-        public bool replaceExcel(List<Lateness> latenesses, string startWeek, string endWeek)
+        public string replaceExcel(List<Lateness> latenesses, string startWeek, string endWeek)
         {
-            var nameNotFound = "";
+            var nameNotFound = new List<string>();
+
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
@@ -256,26 +264,32 @@ namespace PES.Services
 
                     foreach (Lateness l in latenesses)
                     {
-                        String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
-                        var nickname = Regex.Replace(l.EmployeeEmail.ToLower(), @"\s+", "");
+                        try
+                        {
+                            String date = l.Date.ToString("dd/MM/yyyy") + " " + l.Time.ToString("H:mm:ss");
+                            var nickname = Regex.Replace(l.EmployeeEmail.ToLower(), @"\s+", "");
 
-                        string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE, DELETE_STATUS)" +
-                                         "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
-                                         "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE NICK_NAME = '" + nickname + "'), 2)";
+                            string InsertQuery = "INSERT INTO LATENESS(\"DATE\", ID_EMPLOYEE, DELETE_STATUS)" +
+                                             "VALUES(TO_DATE('" + date + "', 'dd/mm/yyyy hh24:mi:ss'), " +
+                                             "(SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE NICK_NAME = '" + nickname + "'), 2)";
 
-                        nameNotFound = l.EmployeeEmail;
-                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
-                        Comand.ExecuteNonQuery();
+                            OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                            Comand.ExecuteNonQuery();
+                        }
+                        catch
+                        {
+                            nameNotFound.Add(l.EmployeeEmail.Replace(",", ""));
+                        }
                     }
 
                     db.Close();
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                throw new System.InvalidOperationException(nameNotFound + " is not found in the database.");
+                throw new System.InvalidOperationException(ex.Message);
             }
-            return true;
+            return String.Join(", ", nameNotFound.Distinct().ToList());
         }
         //********************************AGREGADOOOOO*****************************************************
         public bool delete(int id)
