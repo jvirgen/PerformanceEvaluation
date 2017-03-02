@@ -32,8 +32,8 @@
         var name = $.trim($(this).find('td:eq(0)').text());
         var email = $.trim($(this).find('td:eq(1)').text());
 
-        $.post("/Lateness/getNickName", { email: email }, function (nickname) {
-            window.location.href = "/Lateness/LatenessByUser?name=" + nickname + "&email=" + email;
+       $.post("/Lateness/getNickName", { email: email }, function (nickname) {
+            window.location.href = "/Lateness/LatenessByUser?name=" + nickname + "&email=" + email + "&vname=" + name;
         });
         
     });

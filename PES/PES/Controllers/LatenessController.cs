@@ -190,12 +190,12 @@ namespace PES.Controllers
 
         //For the manager to see the list of lateness by user
         [HttpGet]
-        public ActionResult LatenessByUser(string name, string email)
+        public ActionResult LatenessByUser(string name, string email, string vname)
         {
             LatenessService GetLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
-            ViewBag.name = name;
+            ViewBag.name = vname;
             lateness = GetLateness.GetLatenessByEmail(email, "today");
             return View(lateness);
         }
