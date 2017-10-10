@@ -149,6 +149,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LatenessController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PerformanceEvaluationController.cs" />
     <Compile Include="Controllers\VacationRequestController.cs" />
     <Compile Include="DBContext\DBContext.cs" />
@@ -228,6 +229,7 @@
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\vacation_request_resource.css" />
+    <Content Include="Content\css\StyleLateness.css" />
     <Content Include="Content\datatables\dataTables.bootstrap.min.css" />
     <Content Include="Content\ExportDataTables\buttons.dataTables.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -414,6 +416,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\latenessManager.js" />
     <Content Include="Scripts\location.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />
@@ -422,7 +425,7 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\moveEmployees.js" />
     <Content Include="Scripts\new-manager-validations.js" />
-    <Content Include="Scripts\radios.js" />
+    <Content Include="Scripts\lateness.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.js" />
@@ -472,12 +475,6 @@
     <Content Include="Views\PerformanceEvaluation\ReportrsHistory.cshtml" />
     <Content Include="Views\Lateness\Index.cshtml" />
     <Content Include="Views\Shared\_LatenessReportsPartial.cshtml" />
-    <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
-    <Content Include="Views\VacationRequest\VacationRequest.cshtml" />
-    <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
-    <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
-    <Content Include="Views\VacationRequest\InsertNewRequest.cshtml" />
-    <Content Include="Views\Shared\_NewVacationDatesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
