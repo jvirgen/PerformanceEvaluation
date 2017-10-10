@@ -243,5 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/PES/PES/Scripts
-/PES/PES/ViewModels/ResoruceVacationRequestViewModel.cs
+"PES/.vs/" 
