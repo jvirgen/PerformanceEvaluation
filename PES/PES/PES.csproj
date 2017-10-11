@@ -478,6 +478,15 @@
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
     <Content Include="Views\VacationRequest\InsertNewRequest.cshtml" />
     <Content Include="Views\VacationRequest\VacationRequest.cshtml" />
+    <Content Include="Views\Lateness\LatenessAllUsers.cshtml" />
+    <Content Include="Views\Lateness\LatenessByUser.cshtml" />
+    <Content Include="Views\Lateness\ShowLatenesExcel.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\latenessMenu.cshtml" />
+    <Content Include="Views\Shared\_LatenessReportsByUserPartial.cshtml" />
+    <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
+    <Content Include="Views\Shared\_NewVacationDatesPartial.cshtml" />
+    <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
