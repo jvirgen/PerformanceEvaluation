@@ -20,13 +20,13 @@ namespace PES.Controllers
         //Show the latenesses to the current user
         public ActionResult Index()
         {
-            LatenessService GetLateness = new LatenessService();
+            LatenessService getLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
             var userEmail = (string)Session["UserEmail"];
-            var nickName = GetLateness.getNickName(userEmail);
+            var nickName = getLateness.GetNickName(userEmail);
 
-            lateness = GetLateness.GetLatenessByEmail(nickName, "today");
+            lateness = getLateness.GetLatenessByEmail(nickName, "today");
             return View(lateness);
         }
 
@@ -34,21 +34,21 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult GetLatenessByFilter(string period, string email)
         {
-            LatenessService GetLateness = new LatenessService();
+            LatenessService getLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
             ViewBag.period = period.ToUpper();
 
             if (email != null)
             {
-                lateness = GetLateness.GetLatenessByEmail(email, period);
+                lateness = getLateness.GetLatenessByEmail(email, period);
                 return PartialView("_LatenessReportsByUserPartial", lateness);
             }
             else
             {
                 var currentUserEmail = (string)Session["UserEmail"];
-                var nickName = GetLateness.getNickName(currentUserEmail);
-                lateness = GetLateness.GetLatenessByEmail(nickName, period);
+                var nickName = getLateness.GetNickName(currentUserEmail);
+                lateness = getLateness.GetLatenessByEmail(nickName, period);
             }
 
             return PartialView("_LatenessReportsPartial", lateness);
@@ -60,10 +60,10 @@ namespace PES.Controllers
             if ((int)Session["UserProfile"] != 2)
                 return RedirectToAction("Index", "Menu");
 
-            LatenessService GetLateness = new LatenessService();
+            LatenessService getLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
-            lateness = GetLateness.GetLatenessByCurrentMonth((int)Session["UserId"]);
+            lateness = getLateness.GetLatenessByCurrentMonth((int)Session["UserId"]);
             return View(lateness);
         }
 
@@ -167,11 +167,11 @@ namespace PES.Controllers
 
                 if (confirmReplace)
                 {
-                    nameNotFound = lateness.replaceExcel(latenessList, (string)Session["startWeek"], (string)Session["endWeek"]);
+                    nameNotFound = lateness.ReplaceExcel(latenessList, (string)Session["startWeek"], (string)Session["endWeek"]);
                 }
                 else if (!lateness.isExcelImported((string)Session["startWeek"], (string)Session["endWeek"]))
                 {
-                    nameNotFound = lateness.insertLateness(latenessList);                 
+                    nameNotFound = lateness.InsertLateness(latenessList);                 
                 }
                 else
                 {
@@ -192,11 +192,11 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult LatenessByUser(string name, string email, string vname)
         {
-            LatenessService GetLateness = new LatenessService();
+            LatenessService getLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
             ViewBag.name = vname;
-            lateness = GetLateness.GetLatenessByEmail(email, "today");
+            lateness = getLateness.GetLatenessByEmail(email, "today");
             return View(lateness);
         }
 
@@ -206,7 +206,7 @@ namespace PES.Controllers
         {
             LatenessService LatenessDelete = new LatenessService();
 
-            if (LatenessDelete.delete(id))
+            if (LatenessDelete.Delete(id))
             {
                 return true;
             }
@@ -218,9 +218,9 @@ namespace PES.Controllers
         [HttpPost]
         public bool LatenessLogicCancel(int id)
         {
-            LatenessService LatenessCancel = new LatenessService();
+            LatenessService latenessCancel = new LatenessService();
 
-            if (LatenessCancel.cancel(id))
+            if (latenessCancel.Cancel(id))
             {
                 return true;
             }
@@ -233,7 +233,7 @@ namespace PES.Controllers
         public string getNickName(string email)
         {
             LatenessService lateness = new LatenessService();
-            return lateness.getNickName(email);   
+            return lateness.GetNickName(email);   
         }
     }
 }

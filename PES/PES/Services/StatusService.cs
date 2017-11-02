@@ -19,11 +19,11 @@ namespace PES.Services
             {
                 db.Open();
 
-                string Query = "SELECT ID_STATUS," +
+                string query = "SELECT ID_STATUS," +
                                       "STATUS " +
                                "FROM STATUS WHERE LOWER(STATUS) = '" + description.ToLower() + "'";
 
-                OracleCommand Comand = new OracleCommand(Query, db);
+                OracleCommand Comand = new OracleCommand(query, db);
                 OracleDataReader Read = Comand.ExecuteReader();
                 while (Read.Read())
                 {

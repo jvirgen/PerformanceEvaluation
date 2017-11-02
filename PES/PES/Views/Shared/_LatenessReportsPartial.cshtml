@@ -26,7 +26,7 @@
                     <tbody>
                         @foreach (var lateness in Model)
                         {
-                            <tr>
+                            <tr> 
                                 <td width="40%">
                                     @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
                                 </td>
@@ -34,7 +34,7 @@
                                     @lateness.Date.ToString("hh:mm:ss tt")
                                 </td>
                                 <td class="text-center" width="25%">
-                                    @if (lateness.status.Equals(1)){
+                                    @if (lateness.Status.Equals(1)){
                                        <label style="color:darkgreen">Justified</label>
                                     }
                                     else

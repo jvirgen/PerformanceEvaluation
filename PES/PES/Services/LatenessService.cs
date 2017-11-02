@@ -82,7 +82,7 @@ namespace PES.Services
                         string date = Convert.ToString(Read["DATE"]);
                         lateness.Date = Convert.ToDateTime(date);
                         lateness.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
-                        lateness.status = Convert.ToInt32(Read["DELETE_STATUS"]);
+                        lateness.Status = Convert.ToInt32(Read["DELETE_STATUS"]);
                         latenesses.Add(lateness);
                     }
 
@@ -174,7 +174,7 @@ namespace PES.Services
             return latenesses;
         }
 
-        public string insertLateness(List<Lateness> latenesses)
+        public string InsertLateness(List<Lateness> latenesses)
         {
             var nameNotFound = new List<string>();
 
@@ -248,7 +248,7 @@ namespace PES.Services
             return false;
         }
 
-        public string replaceExcel(List<Lateness> latenesses, string startWeek, string endWeek)
+        public string ReplaceExcel(List<Lateness> latenesses, string startWeek, string endWeek)
         {
             var nameNotFound = new List<string>();
 
@@ -292,7 +292,7 @@ namespace PES.Services
             return String.Join(", ", nameNotFound.Distinct().ToList());
         }
         //********************************AGREGADOOOOO*****************************************************
-        public bool delete(int id)
+        public bool Delete(int id)
         {
             try
             {
@@ -315,7 +315,7 @@ namespace PES.Services
             return true;
         }
 
-        public bool cancel(int id)
+        public bool Cancel(int id)
         {
             try
             {
@@ -338,7 +338,7 @@ namespace PES.Services
             return true;
         }
 
-        public string getNickName(string email)
+        public string GetNickName(string email)
         {
             String nickName="";
             try

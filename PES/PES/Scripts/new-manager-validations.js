@@ -10,7 +10,7 @@ var hasAssigned = $("#Assigned").val();
 
 function getNewManagersByProfile() {
     // Execute validate profile function
-        if (profile == 1 || profile == 2 || profile == 3) {
+        if (profile ==  || profile == 2 || profile == 3) {
             // Remove current options dropdown
             comboNewManager.children().remove();
 

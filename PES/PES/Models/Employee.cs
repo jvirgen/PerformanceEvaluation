@@ -102,10 +102,10 @@ namespace PES.Models
 
     public class EmployeeManagerViewModel 
     {
-        public Employee employee { get; set; }
-        public Employee manager { get; set; }
-        public PEs lastPe { get; set; }
-        public Location location { get; set; }
+        public Employee Employee { get; set; }
+        public Employee Manager { get; set; }
+        public PEs LastPe { get; set; }
+        public Location Location { get; set; }
         //public double totalScore { get; set; }
         //public double? rank { get; set; }
         //public double englishScore { get; set; }
@@ -113,22 +113,22 @@ namespace PES.Models
 
     public class EmployeeChoosePeriodViewModel 
     {
-        public int employeeid { get; set; }
-        public int pesid { get; set; }
-        public DateTime period { get; set; }
-        public double totalEvaluation { get; set; }
-        public double totalPerforformance { get; set; }
-        public double totalCompetences { get; set; }
-        public double totalEnglish { get; set; }
-        public int evaluationYear { get; set; }
-        public Period periodName { get; set; }
+        public int EmployeeId { get; set; }
+        public int PESId { get; set; }
+        public DateTime Period { get; set; }
+        public double TotalEvaluation { get; set; }
+        public double TotalPerforformance { get; set; }
+        public double TotalCompetences { get; set; }
+        public double TotalEnglish { get; set; }
+        public int EvaluationYear { get; set; }
+        public Period PeriodName { get; set; }
     }
 
-    public enum ProfileUser
-    {
-        None = 0,
-        Resource = 1,
-        Manager = 2,
-        Director = 3
-    }
+    //public enum ProfileUser
+    //{
+    //    None = 0,
+    //    Resource = 1,
+    //    Manager = 2,
+    //    Director = 3
+    //}
 }

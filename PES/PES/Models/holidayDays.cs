@@ -13,11 +13,11 @@ namespace PES.Models
         /// <summary>
         /// Holiday Id
         /// </summary>
-        public int holidayId { get; set; }
+        public int HolidayId { get; set; }
 
         /// <summary>
         /// Holiday day
         /// </summary>
-        public DateTime holidayDay { get; set; }
+        public DateTime HolidayDay { get; set; }
     }
 }

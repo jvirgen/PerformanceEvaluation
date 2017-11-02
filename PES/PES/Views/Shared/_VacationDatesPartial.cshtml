@@ -3,14 +3,14 @@
     <hr class="divisor">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexEnd">
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 text-center"> 
                 <label for="start">Start Date - End Date</label>
-                <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" value="@Model.start_date - @Model.end_date" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>
+                <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" value="@Model.StartDate - @Model.EndDate" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
             </div>
             <div class="col-md-3">
-                <label>Return Date</label>
-                <input type="text" class="form-control returnBox" id="return" name="subRequest[0].returnDate" value="@Model.return_date" disabled="disabled"/>
+                <label>Return Date</label> 
+                <input type="text" class="form-control returnBox" id="return" name="subRequest[0].returnDate" value="@Model.ReturnDate" disabled="disabled"/>
             </div>
             <div class="col-md-2">
                 <button onclick="addDate(this)" type="button" class="btn btn-default btn-block addBtn" @(Model.status.ToLower() == "rejected" || Model.status == "New" ? null : new { disabled = "disabled" })>
@@ -18,19 +18,19 @@
                 </button>
             </div>
         </div> <!-- container end -->
-    </div> <!-- subform-group end -->
+    </div> <!-- subform-group end --> 
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont" class="container flexCenter">
             <div id="leadName" class="col-md-4">
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
-                    <input id="lead" type="text" name="subRequest[0].lead_name" value="@Model.lead_name" @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} class="form-control leadBox" data-val="true" data-val-required="Lead name is required" />
+                    <input id="lead" type="text" name="subRequest[0].lead_name" value="@Model.LeadName" @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} class="form-control leadBox" data-val="true" data-val-required="Lead name is required" />
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
             </div>
             <div id="checkarea" class="col-md-2 checkbox">
                 <label id="checktext">
-                    <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.have_project) == 'N' ? "checked" : "")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
+                    <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.HaveProject) == 'N' ? "checked" : "")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
                     <script>
                         document.getElementById("checktext").innerHTML += "I do not have a project";
                     </script>

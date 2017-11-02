@@ -17,12 +17,12 @@ namespace PES.Services
             bool status = false;
             using(OracleConnection db = dbContext.GetDBConnection())
             {
-                string InsertQuery = @"INSERT INTO SUBTITLE (SUBTITLE, 
+                string insertQuery = @"INSERT INTO SUBTITLE (SUBTITLE, 
                                                             ID_TITLE) 
                                         VALUES (:Name, 
                                                 :TitleId)";
 
-                using (OracleCommand Command = new OracleCommand(InsertQuery, db))
+                using (OracleCommand Command = new OracleCommand(insertQuery, db))
                 {
                     Command.Parameters.Add(new OracleParameter("Name", subtitle.Name));
                     Command.Parameters.Add(new OracleParameter("TitleId", subtitle.TitleId));

@@ -26,7 +26,7 @@ namespace PES.Services
                     using (OracleConnection db = dbContext.GetDBConnection())
                     {
 
-                string Insertquery = @" INSERT INTO SCORE (ID_DESCRIPTION,
+                string insertQuery = @" INSERT INTO SCORE (ID_DESCRIPTION,
                                                                  ID_PE, 
                                                                  SCORE_EMPLOYEE, 
                                                                  SCORE_EVALUATOR, 
@@ -39,7 +39,7 @@ namespace PES.Services
                                                       :Comments, 
                                                       :Calculation)";
 
-                using (OracleCommand Command = new OracleCommand(Insertquery, db))
+                using (OracleCommand Command = new OracleCommand(insertQuery, db))
                 {
                     Command.Parameters.Add(new OracleParameter("DescriptionId", score.DescriptionId));
                     Command.Parameters.Add(new OracleParameter("PEId", score.PEId));
@@ -70,8 +70,8 @@ namespace PES.Services
 
         public List<Score> GetPEScoresbyPEID(int peID)
         {
-            List<Score> Scores = new List<Score>();
-            Score Score = new Score();
+            List<Score> scores = new List<Score>();
+            Score score = new Score();
 
             try
             {
@@ -91,15 +91,15 @@ namespace PES.Services
                     OracleDataReader Reader = Command.ExecuteReader();
                     while (Reader.Read())
                     {
-                        Score = new Score();
-                        Score.ScoreId = Convert.ToInt32(Reader["ID_SCORE"]);
-                        Score.DescriptionId = Convert.ToInt32(Reader["ID_DESCRIPTION"]);
-                        Score.PEId = Convert.ToInt32(Reader["ID_PE"]);
-                        Score.ScoreEmployee = Convert.ToInt32(Reader["SCORE_EMPLOYEE"]);
-                        Score.ScoreEvaluator = Convert.ToInt32(Reader["SCORE_EVALUATOR"]);
-                        Score.Comments = Convert.ToString(Reader["COMMENTS"]);
-                        Score.Calculation = Convert.ToInt32(Reader["CALCULATION"]);
-                        Scores.Add(Score);
+                        score = new Score();
+                        score.ScoreId = Convert.ToInt32(Reader["ID_SCORE"]);
+                        score.DescriptionId = Convert.ToInt32(Reader["ID_DESCRIPTION"]);
+                        score.PEId = Convert.ToInt32(Reader["ID_PE"]);
+                        score.ScoreEmployee = Convert.ToInt32(Reader["SCORE_EMPLOYEE"]);
+                        score.ScoreEvaluator = Convert.ToInt32(Reader["SCORE_EVALUATOR"]);
+                        score.Comments = Convert.ToString(Reader["COMMENTS"]);
+                        score.Calculation = Convert.ToInt32(Reader["CALCULATION"]);
+                        scores.Add(score);
                     }
                     db.Close();
                 }
@@ -108,7 +108,7 @@ namespace PES.Services
             {
                 throw;
             }
-            return Scores;
+            return scores;
         }
 
         public Score GetPEScorebyPEIdDescId(int peID, int DescID)
@@ -120,7 +120,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string SelectScores = "SELECT ID_SCORE, " +
+                    string selectScores = "SELECT ID_SCORE, " +
                                                    "ID_DESCRIPTION, " +
                                                    "ID_PE, " +
                                                    "SCORE_EMPLOYEE, " +
@@ -128,7 +128,7 @@ namespace PES.Services
                                                    "COMMENTS, " +
                                                    "CALCULATION " +
                                                    "FROM SCORE WHERE ID_PE = " + peID + "AND ID_DESCRIPTION = " + DescID;
-                    OracleCommand Command = new OracleCommand(SelectScores, db);
+                    OracleCommand Command = new OracleCommand(selectScores, db);
                     Command.ExecuteReader();
                     OracleDataReader Reader = Command.ExecuteReader();
                     while (Reader.Read())

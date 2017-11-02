@@ -31,7 +31,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = @"SELECT " +
+                    string query = @"SELECT " +
                                         "HE.ID_HEADER_REQ, " +
                                         "HE.ID_EMPLOYEE, " +
                                         "HE.TITLE, " +
@@ -46,7 +46,7 @@ namespace PES.Services
                                     "WHERE " +
                                         "HE.ID_EMPLOYEE = :employeeId " +
                                     "ORDER BY HE.ID_HEADER_REQ";
-                    using (OracleCommand command = new OracleCommand(Query, db))
+                    using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("employeeId", employeeId));
                         command.ExecuteReader();
@@ -54,14 +54,14 @@ namespace PES.Services
                         while (reader.Read())
                         {
                             Header = new VacHeadReqViewModel();
-                            Header.vacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
-                            Header.employeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
+                            Header.VacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
+                            Header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
                             Header.title = Convert.ToString(reader["TITLE"]);
-                            Header.noVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
+                            Header.NoVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             Header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
-                            Header.start_date = Convert.ToDateTime(reader["START_DATE"]);
-                            Header.end_date = Convert.ToDateTime(reader["END_DATE"]);
-                            Header.return_date = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
+                            Header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
+                            Header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
                             Headers.Add(Header);
                         }
                     }
@@ -89,7 +89,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = @"SELECT HE.ID_HEADER_REQ" +
+                    string query = @"SELECT HE.ID_HEADER_REQ" +
                                            ",HE.ID_EMPLOYEE" +
                                            ",HE.TITLE" + 
                                            ",HE.NO_VAC_DAYS" +
@@ -110,27 +110,27 @@ namespace PES.Services
                                       " AND HE.ID_HEADER_REQ = :headerId" +
                                       " AND HE.ID_REQ_STATUS = ST.ID_REQ_STATUS" +
                                     " ORDER BY HE.ID_HEADER_REQ";
-                    using (OracleCommand command = new OracleCommand(Query, db))
+                    using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("headerId", headerId));
                         command.ExecuteReader();
                         OracleDataReader reader = command.ExecuteReader();
                         while (reader.Read())
                         {
-                            header.vacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
-                            header.employeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);                            
+                            header.VacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
+                            header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);                            
                             header.title = Convert.ToString(reader["TITLE"]);
-                            header.noVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
-                            header.comments = Convert.ToString(reader["COMMENTS"]);
+                            header.NoVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
+                            header.Comments = Convert.ToString(reader["COMMENTS"]);
                             header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
-                            header.replayComment = Convert.ToString(reader["REPLAY_COMMENT"]);
-                            header.lead_name = Convert.ToString(reader["LEAD_NAME"]);
-                            header.have_project = Convert.ToChar(reader["HAVE_PROJECT"]);
-                            header.noUnpaidDays = Convert.ToInt32(reader["NO_UNPAID_DAYS"]);
+                            header.ReplayComment = Convert.ToString(reader["REPLAY_COMMENT"]);
+                            header.LeadName = Convert.ToString(reader["LEAD_NAME"]);
+                            header.HaveProject = Convert.ToChar(reader["HAVE_PROJECT"]);
+                            header.NoUnpaidDays = Convert.ToInt32(reader["NO_UNPAID_DAYS"]);
                             header.status = Convert.ToString(reader["REQ_STATUS"]);
-                            header.start_date = Convert.ToDateTime(reader["START_DATE"]);
-                            header.end_date = Convert.ToDateTime(reader["END_DATE"]);
-                            header.return_date = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
+                            header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
+                            header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
                         }
                     }
                     db.Close();
@@ -158,7 +158,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = @"SELECT " +
+                    string query = @"SELECT " +
                                         "EMP.FIRST_NAME, " +
                                         "EMP.LAST_NAME, " +
                                         "HE.ID_HEADER_REQ, " +
@@ -177,7 +177,7 @@ namespace PES.Services
                                     "WHERE " +
                                         "EMP.ID_MANAGER = :managerId " +
                                     "ORDER BY HE.ID_HEADER_REQ";
-                    using (OracleCommand command = new OracleCommand(Query, db))
+                    using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("managerId", managerId));
                         command.ExecuteReader();
@@ -185,17 +185,17 @@ namespace PES.Services
                         while (reader.Read())
                         {
                             Header = new VacHeadReqViewModel();
-                            Header.first_name = Convert.ToString(reader["FIRST_NAME"]);
-                            Header.last_name = Convert.ToString(reader["LAST_NAME"]);
-                            Header.vacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
-                            Header.employeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
+                            Header.FirstName = Convert.ToString(reader["FIRST_NAME"]);
+                            Header.LastName = Convert.ToString(reader["LAST_NAME"]);
+                            Header.VacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
+                            Header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
                             Header.title = Convert.ToString(reader["TITLE"]);
-                            Header.noVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
+                            Header.NoVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             Header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
-                            Header.have_project = Convert.ToChar(reader["HAVE_PROJECT"]);
-                            Header.start_date = Convert.ToDateTime(reader["START_DATE"]);
-                            Header.end_date = Convert.ToDateTime(reader["END_DATE"]);
-                            Header.return_date = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            Header.HaveProject = Convert.ToChar(reader["HAVE_PROJECT"]);
+                            Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
+                            Header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
+                            Header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
                             Headers.Add(Header);
                         }
                     }
@@ -238,12 +238,12 @@ namespace PES.Services
                                     :NoUnpaidDays)";
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
-                    command.Parameters.Add(new OracleParameter("IdEmployee", vacHeadReq.employeeId));
+                    command.Parameters.Add(new OracleParameter("IdEmployee", vacHeadReq.EmployeeId));
                     command.Parameters.Add(new OracleParameter("Title", vacHeadReq.title));
-                    command.Parameters.Add(new OracleParameter("NoVacDays", vacHeadReq.noVacDays));
-                    command.Parameters.Add(new OracleParameter("Comments", vacHeadReq.comments));
+                    command.Parameters.Add(new OracleParameter("NoVacDays", vacHeadReq.NoVacDays));
+                    command.Parameters.Add(new OracleParameter("Comments", vacHeadReq.Comments));
                     command.Parameters.Add(new OracleParameter("IdReqStatus", vacHeadReq.ReqStatusId));
-                    command.Parameters.Add(new OracleParameter("NoUnpaidDays", vacHeadReq.noUnpaidDays));
+                    command.Parameters.Add(new OracleParameter("NoUnpaidDays", vacHeadReq.NoUnpaidDays));
 
                     try
                     {

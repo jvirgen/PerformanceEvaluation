@@ -21,9 +21,9 @@ namespace PES.Services
 
             using (OracleConnection db = dbContext.GetDBConnection())
             {
-                string InsertTitle = @"INSERT INTO TITLE (TITLE)
+                string insertTitle = @"INSERT INTO TITLE (TITLE)
                                         VALUES (:Name)";
-                using (OracleCommand Command = new OracleCommand(InsertTitle, db))
+                using (OracleCommand Command = new OracleCommand(insertTitle, db))
                 {
                     Command.Parameters.Add(new OracleParameter("Name", title.Name));
 

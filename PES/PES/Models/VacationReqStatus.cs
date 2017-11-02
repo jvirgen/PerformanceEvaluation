@@ -13,12 +13,12 @@ namespace PES.Models
         /// <summary>
         /// Vacation request status Id
         /// </summary>
-        public int reqStatusId { get; set; }
+        public int ReqStatusId { get; set; }
 
         /// <summary>
         /// Vacation request status name
         /// </summary>
-        public string name { get; set; }
+        public string Name { get; set; }
         
     }
 }

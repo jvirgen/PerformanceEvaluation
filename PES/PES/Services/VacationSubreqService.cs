@@ -23,15 +23,15 @@ namespace PES.Services
         /// <returns>A list of Sub Resquests</returns>
         public List<VacationSubreq> GetVacationSubreqByHeaderReqId(int headerId)
         {
-            List<VacationSubreq> vacationsubreqs = new List<VacationSubreq>();
-            VacationSubreq vacationsubreq = new VacationSubreq();
+            List<VacationSubreq> vacationSubReqs = new List<VacationSubreq>();
+            VacationSubreq vacationSubReq = new VacationSubreq();
 
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = "SELECT " +
+                    string query = "SELECT " +
                                         "ID_SUBREQ, " +
                                         "ID_HEADER_REQ, " +
                                         "START_DATE, " +
@@ -44,22 +44,22 @@ namespace PES.Services
                                     "WHERE " +
                                         "ID_HEADER_REQ = :headerId " +
                                     "ORDER BY ID_SUBREQ ASC";
-                    using (OracleCommand command = new OracleCommand(Query, db))
+                    using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("headerId", headerId));
                         command.ExecuteReader();
                         OracleDataReader Reader = command.ExecuteReader();
                         while (Reader.Read())
                         {
-                            vacationsubreq = new VacationSubreq();
-                            vacationsubreq.subreqId = Convert.ToInt32(Reader["ID_SUBREQ"]);
-                            vacationsubreq.vacationHeaderReqId = Convert.ToInt32(Reader["ID_HEADER_REQ"]);
-                            vacationsubreq.startDate = Convert.ToDateTime(Reader["START_DATE"]);
-                            vacationsubreq.endDate = Convert.ToDateTime(Reader["END_DATE"]);
-                            vacationsubreq.returnDate = Convert.ToDateTime(Reader["RETURN_DATE"]);
-                            vacationsubreq.have_project = Convert.ToChar(Reader["HAVE_PROJECT"]);
-                            vacationsubreq.lead_name = Convert.ToString(Reader["LEAD_NAME"]);
-                            vacationsubreqs.Add(vacationsubreq); 
+                            vacationSubReq = new VacationSubreq();
+                            vacationSubReq.SubreqId = Convert.ToInt32(Reader["ID_SUBREQ"]);
+                            vacationSubReq.VacationHeaderReqId = Convert.ToInt32(Reader["ID_HEADER_REQ"]);
+                            vacationSubReq.StartDate = Convert.ToDateTime(Reader["START_DATE"]);
+                            vacationSubReq.EndDate = Convert.ToDateTime(Reader["END_DATE"]);
+                            vacationSubReq.ReturnDate = Convert.ToDateTime(Reader["RETURN_DATE"]);
+                            vacationSubReq.HaveProject = Convert.ToChar(Reader["HAVE_PROJECT"]);
+                            vacationSubReq.LeadName = Convert.ToString(Reader["LEAD_NAME"]);
+                            vacationSubReqs.Add(vacationSubReq); 
                         }
                     }
 
@@ -72,7 +72,7 @@ namespace PES.Services
                 throw;
             }
 
-            return vacationsubreqs;
+            return vacationSubReqs;
         }
 
         /// <summary>
@@ -104,12 +104,12 @@ namespace PES.Services
 
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
-                    command.Parameters.Add(new OracleParameter("IdHeaderReq", vacSubReq.vacationHeaderReqId));
-                    command.Parameters.Add(new OracleParameter("StartDate", vacSubReq.startDate));
-                    command.Parameters.Add(new OracleParameter("EndDate", vacSubReq.endDate));
-                    command.Parameters.Add(new OracleParameter("ReturnDate", vacSubReq.returnDate));
-                    command.Parameters.Add(new OracleParameter("LeadName", vacSubReq.lead_name));
-                    command.Parameters.Add(new OracleParameter("HaveProject", vacSubReq.have_project));
+                    command.Parameters.Add(new OracleParameter("IdHeaderReq", vacSubReq.VacationHeaderReqId));
+                    command.Parameters.Add(new OracleParameter("StartDate", vacSubReq.StartDate));
+                    command.Parameters.Add(new OracleParameter("EndDate", vacSubReq.EndDate));
+                    command.Parameters.Add(new OracleParameter("ReturnDate", vacSubReq.ReturnDate));
+                    command.Parameters.Add(new OracleParameter("LeadName", vacSubReq.LeadName));
+                    command.Parameters.Add(new OracleParameter("HaveProject", vacSubReq.HaveProject));
 
                     try
                     {

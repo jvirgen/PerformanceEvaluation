@@ -13,37 +13,37 @@ namespace PES.Models
         /// <summary>
         /// Subrequest Id
         /// </summary>  
-        public int subreqId { get; set; }
+        public int SubreqId { get; set; }
 
         /// <summary>
         /// Vacation header request Id
         /// </summary>
-        public int vacationHeaderReqId { get; set; }
+        public int VacationHeaderReqId { get; set; }
 
         /// <summary>
         /// Start date
         /// </summary>
-        public DateTime startDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// End date
         /// </summary>
-        public DateTime endDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         /// <summary>
         /// Return date
         /// </summary>
-        public DateTime returnDate { get; set; }
+        public DateTime ReturnDate { get; set; }
 
         /// <summary>
         /// Name of lead
         /// </summary>
-        public string lead_name { get; set; }
+        public string LeadName { get; set; }
 
         /// <summary>
         /// Flag to know if have a project
         /// </summary>
-        public char have_project { get; set; }
+        public char HaveProject { get; set; }
 
     }
 }

@@ -12,17 +12,17 @@ namespace PES.ViewModels
         /// <summary>
         /// Fist name of the employee
         /// </summary>
-        public string first_name { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// Last name of the employee
         /// </summary>
-        public string last_name { get; set; } 
+        public string LastName { get; set; } 
 
         /// <summary>
         /// Days requested 
         /// </summary>
-        public int freedays { get; set; }
+        public int FreeDays { get; set; }
 
         /// <summary>
         /// Status of the Request
@@ -32,26 +32,26 @@ namespace PES.ViewModels
         /// <summary>
         /// Start Date of the Vacation Request
         /// </summary>
-        public DateTime start_date { get; set; }
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// End Date of the Vacation Request
         /// </summary>
-        public DateTime end_date { get; set; }
+        public DateTime EndDate { get; set; }
 
         /// <summary>
         /// Return Date of the Employee's Vacations
         /// </summary>
-        public DateTime return_date { get; set; }
+        public DateTime ReturnDate { get; set; }
 
         /// <summary>
         /// Lead's Name of the employee in the period of the vacations
         /// </summary>
-        public string lead_name { get; set; }
+        public string LeadName { get; set; }
 
         /// <summary>
         /// Flag to know if the employee has a project
         /// </summary>
-        public char have_project { get; set; }
+        public char HaveProject { get; set; }
     }
 }

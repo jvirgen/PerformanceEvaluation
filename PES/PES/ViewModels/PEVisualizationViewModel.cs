@@ -18,7 +18,7 @@ namespace PES.ViewModels
     {
         public Employee Employee { get; set; }
         public Employee Evaluator { get; set; }
-        public double totalEvaluation { get; set; }
+        public double TotalEvaluation { get; set; }
     }
 
     public class PerformanceSectionsPartial

@@ -60,9 +60,9 @@ namespace PES.Controllers
             foreach (var date in model.SubRequest)
             {
                 //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
-                dates = date.date.Split('-');
-                date.startDate = Convert.ToDateTime(dates[0]);
-                date.endDate = Convert.ToDateTime(dates[1]);
+                dates = date.Date.Split('-');
+                date.StartDate = Convert.ToDateTime(dates[0]);
+                date.EndDate = Convert.ToDateTime(dates[1]);
             }
             // Return a message in the screen a redirect to the Historical Request Screen.
             return View();
@@ -89,9 +89,9 @@ namespace PES.Controllers
             VacHeadReqViewModel currentRequest = new VacHeadReqViewModel();
             currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
             Employee currentUser = new Employee();
-            currentUser = _employeeService.GetByID(currentRequest.employeeId);
+            currentUser = _employeeService.GetByID(currentRequest.EmployeeId);
             ViewBag.status = currentRequest.status;
-            currentRequest.freedays = currentUser.Freedays;
+            currentRequest.FreeDays = currentUser.Freedays;
             return View("VacationRequest", currentRequest);
         }
 
@@ -109,11 +109,11 @@ namespace PES.Controllers
 
             List<VacHeadReqViewModel> listHeaderReqDB = new List<VacHeadReqViewModel>();
             List<VacHeadReqViewModel> listHeaderReqVM = new List<VacHeadReqViewModel>();
-            if (currentUser.ProfileId == 2)
+            if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.Manager))
             {
                 listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByManagerId(currentUser.EmployeeId);
             }
-            else if (currentUser.ProfileId == 1)
+            else if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.Resource))
             {
                 listHeaderReqDB = _headerReqService.GetGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
             }
@@ -123,17 +123,17 @@ namespace PES.Controllers
                 {
                     var headerReqVm = new VacHeadReqViewModel
                     {
-                        vacationHeaderReqId = headerReq.vacationHeaderReqId,
-                        employeeId = headerReq.employeeId,
+                        VacationHeaderReqId = headerReq.VacationHeaderReqId,
+                        EmployeeId = headerReq.EmployeeId,
                         title = headerReq.title,
-                        noVacDays = headerReq.noVacDays,
-                        status = _ReqStatusService.GetVacationReqStatusById(headerReq.ReqStatusId).name,
-                        start_date = headerReq.start_date,
-                        end_date = headerReq.end_date,
-                        return_date = headerReq.return_date,
-                        first_name = headerReq.first_name,
-                        last_name = headerReq.last_name,
-                        have_project = headerReq.have_project
+                        NoVacDays = headerReq.NoVacDays,
+                        status = _ReqStatusService.GetVacationReqStatusById(headerReq.ReqStatusId).Name,
+                        StartDate = headerReq.StartDate,
+                        EndDate = headerReq.EndDate,
+                        ReturnDate = headerReq.ReturnDate,
+                        FirstName = headerReq.FirstName,
+                        LastName = headerReq.LastName,
+                        HaveProject = headerReq.HaveProject
                     };
                     listHeaderReqVM.Add(headerReqVm);
                 }

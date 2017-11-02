@@ -10,8 +10,8 @@ namespace PES.ViewModels
     public class PerformanceFilesPartial
     {
         public IEnumerable<EmployeeManagerViewModel> listFiles { get; set; }
-        public Employee currentUser { get; set; }
-        public int? countRankUpdated { get; set; }
+        public Employee CurrentUser { get; set; }
+        public int? CountRankUpdated { get; set; }
         public int SelectedYear { get; set; }
         public int SelectedPeriod { get; set; }
         public List<SelectListItem> ListYear { get; set; }
@@ -20,8 +20,8 @@ namespace PES.ViewModels
         public PerformanceFilesPartial(IEnumerable<EmployeeManagerViewModel> listFiles, Employee currentUser)
         {
             this.listFiles = listFiles;
-            this.currentUser = currentUser;
-            this.countRankUpdated = null;
+            this.CurrentUser = currentUser;
+            this.CountRankUpdated = null;
         }
     }
 }

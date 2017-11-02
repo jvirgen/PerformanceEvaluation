@@ -44,11 +44,11 @@ namespace PES.Models
         public bool AuthorizeCore(HttpContextBase httpContext, int profile)
         {
             var user = httpContext.User;
-            if (profile == 2)
+            if (profile == (int)ProfileUser.Manager)
             {
                 user.IsInRole("Manager");
             }
-            else if (profile == 3)
+            else if (profile == (int)ProfileUser.Director)
             {
                 user.IsInRole("Director");
             }

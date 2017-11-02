@@ -23,7 +23,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="@Url.Action("Index","Menu")">
                     <img alt="4th Source" src="~/Content/images/4thSource_logo.png" height="40">
-                </a>
+                </a> 
                 @if (userLogged)
                 {
                     if (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager)
@@ -74,7 +74,7 @@
                             <a class="btn-link" href="@Url.Action("EmployeeDetails", "Employee", new { email = Session["UserEmail"]})">View my information</a>                            
                         </div>
                         }
-                    </div>
+                    </div> 
                 }
             </div>            
         </div>
@@ -108,3 +108,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+ 

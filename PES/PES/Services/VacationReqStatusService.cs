@@ -29,7 +29,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = "SELECT " +
+                    string query = "SELECT " +
                                         "ID_REQ_STATUS, " +
                                             "REQ_STATUS " +
                                     "FROM " +
@@ -42,8 +42,8 @@ namespace PES.Services
                     while (Read.Read())
                     {
                         status = new VacationReqStatus();
-                        status.reqStatusId = Convert.ToInt32(Read["ID_REQ_STATUS"]);
-                        status.name = Convert.ToString(Read["REQ_STATUS"]);
+                        status.ReqStatusId = Convert.ToInt32(Read["ID_REQ_STATUS"]);
+                        status.Name = Convert.ToString(Read["REQ_STATUS"]);
                     }
 
                     db.Close();
@@ -69,14 +69,14 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = "SELECT " +
+                    string query = "SELECT " +
                                         "ID_REQ_STATUS, " +
                                         "REQ_STATUS " +
                                     "FROM " +
                                         "VACATION_REQ_STATUS " +
                                     "WHERE " +
                                         "ID_REQ_STATUS = :id";
-                    using (OracleCommand command = new OracleCommand(Query, db))
+                    using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("id", id));
                         command.ExecuteReader();
@@ -84,14 +84,14 @@ namespace PES.Services
                         while (Read.Read())
                         {
                             status = new VacationReqStatus();
-                            status.reqStatusId = Convert.ToInt32(Read["ID_REQ_STATUS"]);
-                            status.name = Convert.ToString(Read["REQ_STATUS"]);
+                            status.ReqStatusId = Convert.ToInt32(Read["ID_REQ_STATUS"]);
+                            status.Name = Convert.ToString(Read["REQ_STATUS"]);
                         }
                     }                        
                     db.Close();
                 }
             }
-            catch (Exception xe)
+            catch (Exception ex)
             {
                 throw;
             }

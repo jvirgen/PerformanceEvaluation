@@ -10,32 +10,32 @@ namespace PES.ViewModels
         /// <summary>
         /// Start Date
         /// </summary>
-        public DateTime? startDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         /// <summary>
         /// End date
         /// </summary>
-        public DateTime? endDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// Return date
         /// </summary>
-        public DateTime? returnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
 
         /// <summary>
         /// Name of lead
         /// </summary>
-        public string lead_name { get; set; }
+        public string LeadName { get; set; }
 
         /// <summary>
         /// Flag to know if have a project
         /// </summary>
-        public bool have_project { get; set; }
+        public bool HaveProject { get; set; }
 
         /// <summary>
         /// Comeplete date, start and end Dates.
         /// </summary>
-        public string date { get; set; }
+        public string Date { get; set; }
 
     }
 }

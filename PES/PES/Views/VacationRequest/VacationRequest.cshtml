@@ -28,13 +28,13 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">@Model.freedays</span>
+                            <span id="daysVac" class="label label-default">@Model.FreeDays</span>
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span id="daysReq" class="label label-default">@Model.noVacDays</span>
+                            <span id="daysReq" class="label label-default">@Model.NoVacDays</span>
                         </label>
                     </div>
                     <div id="reqStatus" class="col-md-5 text-right">
@@ -60,31 +60,31 @@
                 <div class="container flexEnd">
                     <div class="col-md-8">
                         <!--COMMENTS-->
-                        @Html.LabelFor(model => model.comments, "Comments", new { @class = "control-label" })
+                        @Html.LabelFor(model => model.Comments, "Comments", new { @class = "control-label" })
                         @if (Model.status.ToLower() == "rejected")
                         {
-                            @Html.TextAreaFor(model => model.comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+                            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
                         }
                         else
                         {
-                            @Html.TextAreaFor(model => model.comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+                            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
                         }
 
-                        @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
                         
                         <!--REASON-->
                         @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
                         {
-                            @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
-                            @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @placeholder = "Add a cancel reason...", @style = "min-width:100%;" })
+                            @Html.LabelFor(model => model.ReplayComment, "Reason of Cancellation", new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a cancel reason...", @style = "min-width:100%;" })
                         }
                         else if (Model.status.ToLower() == "rejected" || Model.status.ToLower() == "canceled")
                         {
-                            @Html.LabelFor(model => model.replayComment, "Reason of Cancellation", new { @class = "control-label" })
-                            @Html.TextAreaFor(model => model.replayComment, new { @class = "form-control", @style = "min-width:100%;", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.ReplayComment, "Reason of Cancellation", new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @style = "min-width:100%;", @disabled = "disabled" })
                         }
 
-                        @Html.ValidationMessageFor(model => model.replayComment, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.ReplayComment, "", new { @class = "text-danger" })
                     </div>
                     
                         <!-- BLOCK BUTTONS -->

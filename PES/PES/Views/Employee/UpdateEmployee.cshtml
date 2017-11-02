@@ -37,7 +37,7 @@
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-2">
-                        @Html.EditorFor(model => model.textEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.EditorFor(model => model.TextEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     </div>
                 </div>
                 @if (Model.SelectedProfile == (int)ProfileUser.Resource)

@@ -16,11 +16,11 @@ namespace PES.Controllers
             return View();
         }
 
-        public ActionResult latenessMenu()
+        public ActionResult LatenessMenu()
         {
-            LatenessService GetLateness = new LatenessService();
+            LatenessService getLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
-            lateness = GetLateness.GetEmployeesByManager((int)Session["UserId"]);
+            lateness = getLateness.GetEmployeesByManager((int)Session["UserId"]);
 
             return View(lateness);
         }

@@ -39,17 +39,13 @@ namespace PES.ViewModels
         //[DisplayFormat(DataFormatString = "{0:dd/mm/y}", ApplyFormatInEditMode = true)]
         //public DateTime HireDate { get; set; }     
 
-        string _textEmail = "@4thsource.com";
-        public string textEmail
+        public string TextEmail
         {
             get
             {
-                return _textEmail;
+                return  "@4thsource.com";
             }
-            set
-            {
-                _textEmail = value;
-            }
+            set { }
         }
 
         public List<SelectListItem> ListLocations { get; set; }

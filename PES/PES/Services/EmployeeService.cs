@@ -219,7 +219,7 @@ namespace PES.Services
         }
 
         //Get employees by porfile id
-        public List<Employee> getByPorfileId(int porfileId)
+        public List<Employee> GetByPorfileId(int porfileId)
         {
             List<Employee> employees = new List<Employee>();
             Employee employee = new Employee();
@@ -485,7 +485,7 @@ namespace PES.Services
             }
         }
 
-        public List<Employee> getEmployeesByProfile(int userId, int profileId)
+        public List<Employee> GetEmployeesByProfile(int userId, int profileId)
         {
             List<Employee> employees = new List<Employee>();
             Employee employee = new Employee();
@@ -536,7 +536,7 @@ namespace PES.Services
                     }
                     else
                     {
-                        var DirectorsEmployees = getEmployeesByDirector(userId);
+                        var DirectorsEmployees = GetEmployeesByDirector(userId);
                         foreach (var item in DirectorsEmployees)
                         {
                             employees.Add(item);
@@ -553,7 +553,7 @@ namespace PES.Services
             return employees;
         }
 
-        public bool insertDirector(Employee employee)
+        public bool InsertDirector(Employee employee)
         {
             try
             {
@@ -583,7 +583,7 @@ namespace PES.Services
             return true;
         }
 
-        public List<Employee> getEmployeesByDirector(int DirectorId)
+        public List<Employee> GetEmployeesByDirector(int DirectorId)
         {
             List<Employee> Employees = new List<Employee>();
             Employee employee = new Employee();
@@ -920,7 +920,7 @@ namespace PES.Services
         }
 
         // Get employees by location
-        public List<Employee> getEmployeesByLocation(int locationId)
+        public List<Employee> GetEmployeesByLocation(int locationId)
         {
             List<Employee> employees = new List<Employee>();
             Employee employee = new Employee();

@@ -62,20 +62,22 @@ namespace PES.Controllers
                             //Return the Resource's view 
                             //return RedirectToAction("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = resource.Email, employeeID = resource.EmployeeId });
 
-                            return RedirectToAction("Index", "Menu");
+                            return RedirectToAction("Index", "Home");
                         }
                         //Check if the user is a Manager or Director 
-                        else if ((ProfileUser)resource.ProfileId == ProfileUser.Manager)
+                        else if ((ProfileUser)resource.ProfileId== ProfileUser.Manager)
                         {
                             //Return the Manager's view                   
                             //return RedirectToAction("Index", "PerformanceEvaluation");
-                            return RedirectToAction("Index", "Menu");
+                            return RedirectToAction("Index", "Home");
                         }
-                        else if ((ProfileUser)resource.ProfileId == ProfileUser.Director)
+                        else if ((ProfileUser)resource.
+                            
+                            ProfileUser.Director)
                         {
                             //Return the Manager's view
                             //return RedirectToAction("Index", "PerformanceEvaluation");
-                            return RedirectToAction("Index", "Menu");
+                            return RedirectToAction("Index", "Home");
                         }
                         else
                         {

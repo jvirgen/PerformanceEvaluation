@@ -24,6 +24,6 @@ namespace PES.Models
 
         public int NoLateness { get; set; }
 
-        public int status { get; set; }
+        public int Status { get; set; }
     }
 }

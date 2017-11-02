@@ -14,12 +14,12 @@ namespace PES.Models
         /// <summary>
         /// Vacation header request Id
         /// </summary>  
-        public int vacationHeaderReqId { get; set; }
+        public int VacationHeaderReqId { get; set; }
 
         /// <summary>
         /// Employee Id
         /// </summary>  
-        public int employeeId { get; set; }
+        public int EmployeeId { get; set; }
 
         /// <summary>
         /// Title of the request
@@ -30,13 +30,13 @@ namespace PES.Models
         /// <summary>
         /// Number of vacation days
         /// </summary>
-        public int noVacDays { get; set; }
+        public int NoVacDays { get; set; }
 
         /// <summary>
         /// Comments
         /// </summary>
         [Required(ErrorMessage = "Please submit a comment")]
-        public string comments { get; set; }
+        public string Comments { get; set; }
 
         /// <summary>
         /// Request status Id
@@ -47,12 +47,12 @@ namespace PES.Models
         /// Replay Comment
         /// </summary>
         [Required(ErrorMessage = "A cancel reason is required")]
-        public string replayComment { get; set; }
+        public string ReplayComment { get; set; }
 
         /// <summary>
         /// Number of unpaid days
         /// </summary>
-        public int? noUnpaidDays { get; set; }
+        public int? NoUnpaidDays { get; set; }
 
 
     }

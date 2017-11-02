@@ -5,7 +5,7 @@
     <div class="col-md-6">
         <div class="text-right">
             Total Lateness: @Model.Count()
-        </div>
+        </div>   
         <div class="well">
             @if (Model.Count() > 0)
             {
@@ -34,7 +34,7 @@
                                     @lateness.Date.ToString("hh:mm:ss tt")
                                 </td>
                                 @{
-                                    if (lateness.status.Equals(1))
+                                    if (lateness.Status.Equals(1))
                                     {
                                         <td class="text-center">
                                             <button type="button" class="btn btn-success btn-cancel" id="@lateness.LatenessId">Cancel</button>

@@ -42,17 +42,13 @@ namespace PES.ViewModels
         [Display(Name = "Manager")]
         public int SelectedManager { get; set; }
 
-        string _textEmail = "@4thsource.com";
-        public string textEmail
+        public string TextEmail
         {
             get
             {
-                return _textEmail;
+                return "@4thsource.com";
             }
-            set
-            {
-                _textEmail = value;
-            }
+            set {   }
         }
         public List<SelectListItem> ListLocation { get; set; }
         [Display(Name = "Location")]

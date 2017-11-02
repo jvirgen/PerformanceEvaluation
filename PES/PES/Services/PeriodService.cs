@@ -64,11 +64,11 @@ namespace PES.Services
                 {
                     db.Open();
 
-                    string Query = "SELECT ID_PERIOD," +
+                    string query = "SELECT ID_PERIOD," +
                                     "NAME " +
                                     "FROM PERIOD WHERE ID_PERIOD = '" + id + "'";
 
-                    OracleCommand Comand = new OracleCommand(Query, db);
+                    OracleCommand Comand = new OracleCommand(query, db);
                     OracleDataReader Read = Comand.ExecuteReader();
                     while (Read.Read())
                     {

@@ -377,7 +377,7 @@ namespace PES.Services
                     db.Close();
                 }
             }
-            catch (Exception xe)
+            catch (Exception ex)
             {
                 throw;   
             }

@@ -31,11 +31,11 @@ namespace PES.Controllers
         public ActionResult Index()
         {
 
-            Login Mail = new Login();
-            EmployeeService Getemployee = new EmployeeService();
+            Login mail = new Login();
+            EmployeeService getEmployee = new EmployeeService();
             Employee Employee = new Employee();
 
-            Employee = Getemployee.GetByEmail(Mail.UserEmail);
+            Employee = getEmployee.GetByEmail(mail.UserEmail);
             return View(Employee);
         }
 
@@ -96,7 +96,7 @@ namespace PES.Controllers
                     var newDirectorInserted = _employeeService.GetByEmail(newEmployee.Email);
                     if (newDirectorInserted.ProfileId == (int)ProfileUser.Director)
                     {
-                        _employeeService.insertDirector(newDirectorInserted);
+                        _employeeService.InsertDirector(newDirectorInserted);
                         return RedirectToAction("ViewEmployees");
                     }
                     else
@@ -288,7 +288,8 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if ((int)profileUser == (int)ProfileUser.Director && (manager.ProfileId == 2 || manager.ProfileId == 3))
+                if ((int)profileUser == (int)ProfileUser.Director && (manager.
+                    Convert.ToInt32(ProfileUser.Manager) || manager.ProfileId == Convert.ToInt32(ProfileUser.Director)))
                 {
                     var newItem = new SelectListItem()
                     {
@@ -298,7 +299,7 @@ namespace PES.Controllers
                     };
                     managersList.Add(newItem);
                 }
-                else if ((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == 2)
+                else if ((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == Convert.ToInt32(ProfileUser.Manager))
                 {
                     var newItem = new SelectListItem()
                     {
@@ -371,7 +372,7 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if ((int)profileUser == (int)ProfileUser.Director && (manager.ProfileId == 2 || manager.ProfileId == 3))
+                if ((int)profileUser == (int)ProfileUser.Director && (manager.ProfileId == Convert.ToInt32(ProfileUser.Manager) || manager.ProfileId == Convert.ToInt32(ProfileUser.Director)))
                 {
                     var newItem = new SelectListItem()
                     {
@@ -381,7 +382,7 @@ namespace PES.Controllers
                     };
                     managersList.Add(newItem);
                 }
-                else if ((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == 2)
+                else if ((int)profileUser == (int)ProfileUser.Manager && manager.ProfileId == Convert.ToInt32(ProfileUser.Manager))
                 {
                     var newItem = new SelectListItem()
                     {
@@ -409,12 +410,12 @@ namespace PES.Controllers
         {
             //Get curren employee selected
             var currentEmployee = _employeeService.GetByEmail(email + "@4thsource.com");
-            if (currentEmployee.EmployeeId == 0)
+            if (currentEmployee.EmployeeId == Convert.ToInt32(ProfileUser.None))
             {
                 currentEmployee = _employeeService.GetByEmail(email);
             }
             //Get all employees depending profile
-            var employees = _employeeService.getByPorfileId((profile));
+            var employees = _employeeService.GetByPorfileId((profile));
             var item = employees.Find(x => x.EmployeeId == currentEmployee.EmployeeId);
             employees.Remove(item);
             var has = _employeeService.GetEmployeeByManager(currentEmployee.EmployeeId).Count;
@@ -426,7 +427,7 @@ namespace PES.Controllers
         public JsonResult GetEmployeesByProifile(int profile)
         {
             //Get all employees depending profile
-            var employees = _employeeService.getByPorfileId(profile);
+            var employees = _employeeService.GetByPorfileId(profile);
 
             //Return employees json file
             return Json(new { employees = employees}, JsonRequestBehavior.AllowGet);
@@ -486,8 +487,8 @@ namespace PES.Controllers
         {
             // Get current user  
             Employee currentUser = new Employee();
-            EmployeeService EmployeeService = new EmployeeService();
-            currentUser = EmployeeService.GetByEmail((string)Session["UserEmail"]);
+            EmployeeService employeeService = new EmployeeService();
+            currentUser = employeeService.GetByEmail((string)Session["UserEmail"]);
 
             if (ModelState.IsValid)
             {
@@ -573,10 +574,10 @@ namespace PES.Controllers
             else if (currentUser.ProfileId == (int)ProfileUser.Director)
             {
                 // Get all employees
-                List<Employee> EmployeeList = _employeeService.getEmployeesByDirector(currentUser.EmployeeId);
-                List<EmployeeDetailsViewModel> ModelList = new List<EmployeeDetailsViewModel>();
+                List<Employee> employeeList = _employeeService.GetEmployeesByDirector(currentUser.EmployeeId);
+                List<EmployeeDetailsViewModel> modelList = new List<EmployeeDetailsViewModel>();
 
-                foreach (var employee in EmployeeList)
+                foreach (var employee in employeeList)
                 {
                     EmployeeDetailsViewModel model = new EmployeeDetailsViewModel();
 
@@ -601,11 +602,11 @@ namespace PES.Controllers
 
                     if (model.EmployeeId != currentUser.EmployeeId)
                     {
-                        ModelList.Add(model);
+                        modelList.Add(model);
                     }
                 }
 
-                return View(ModelList);
+                return View(modelList);
             }
             else
             {
@@ -652,7 +653,7 @@ namespace PES.Controllers
             var profile = _profileService.GetProfileByID(user.ProfileId);
 
             // Get employees of the user, depending on its profile
-            var employees = _employeeService.getEmployeesByProfile(user.EmployeeId, profile.ProfileId);
+            var employees = _employeeService.GetEmployeesByProfile(user.EmployeeId, profile.ProfileId);
             
             // Validate filter
             if (filter == "enabled")
@@ -760,24 +761,24 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult ChangeProfile(string email)
         {
-            ChangeProfileViewModel ChangedEmployee = new ChangeProfileViewModel();
+            ChangeProfileViewModel changedEmployee = new ChangeProfileViewModel();
             var employee = _employeeService.GetByEmail(email + "@4thsource.com");
 
             if ((int)Session["UserProfile"] != (int)ProfileUser.Resource)
             {
-                ChangedEmployee.FirstName = employee.FirstName;
-                ChangedEmployee.LastName = employee.LastName;
-                ChangedEmployee.Email = employee.Email;
-                ChangedEmployee.SelectedProfile = employee.ProfileId;
-                ChangedEmployee.SelectedManager = employee.ManagerId;
-                ChangedEmployee.CurrentProfile = _profileService.GetProfileByID(employee.ProfileId);
-                SetUpDropdowns(ChangedEmployee);
+                changedEmployee.FirstName = employee.FirstName;
+                changedEmployee.LastName = employee.LastName;
+                changedEmployee.Email = employee.Email;
+                changedEmployee.SelectedProfile = employee.ProfileId;
+                changedEmployee.SelectedManager = employee.ManagerId;
+                changedEmployee.CurrentProfile = _profileService.GetProfileByID(employee.ProfileId);
+                SetUpDropdowns(changedEmployee);
 
                 foreach (var item in _employeeService.GetEmployeeByManager(employee.EmployeeId)) {
-                    ChangedEmployee.Assigned++;
+                    changedEmployee.Assigned++;
                 }
 
-                return View(ChangedEmployee);
+                return View(changedEmployee);
             }
             else if ((int)Session["UserProfile"] == (int)ProfileUser.Resource)
             {
@@ -829,17 +830,17 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult TransferEmployees()
         {
-            TransferEmployeeViewModel TransferModel = new TransferEmployeeViewModel();
+            TransferEmployeeViewModel transferModel = new TransferEmployeeViewModel();
             //Get current user
             var currentUser = _employeeService.GetByEmail(Session["UserEmail"].ToString());
 
             if (currentUser.ProfileId == (int)ProfileUser.Director)
             {
                 List<Employee> employeeList = new List<Employee>();
-                TransferModel.ManagerEmployeeList = employeeList;
-                SetUpDropdowns(TransferModel);
+                transferModel.ManagerEmployeeList = employeeList;
+                SetUpDropdowns(transferModel);
                 
-                return View(TransferModel);
+                return View(transferModel);
             }
             else
             {
