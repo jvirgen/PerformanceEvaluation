@@ -288,8 +288,7 @@ namespace PES.Controllers
             List<SelectListItem> managersList = new List<SelectListItem>();
             foreach (var manager in managers)
             {
-                if ((int)profileUser == (int)ProfileUser.Director && (manager.
-                    Convert.ToInt32(ProfileUser.Manager) || manager.ProfileId == Convert.ToInt32(ProfileUser.Director)))
+                if ((int)profileUser == (int)ProfileUser.Director && (manager.ProfileId == Convert.ToInt32(ProfileUser.Manager) || manager.ProfileId == Convert.ToInt32(ProfileUser.Director)))
                 {
                     var newItem = new SelectListItem()
                     {

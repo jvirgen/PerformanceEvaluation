@@ -300,10 +300,10 @@ namespace PES.Services
                 {
                     db.Open();
 
-                    string UpdateQuery = "UPDATE LATENESS SET DELETE_STATUS = 1 WHERE ID_LATENESS = "  + id;
+                    string updateQuery = "UPDATE LATENESS SET DELETE_STATUS = 1 WHERE ID_LATENESS = "  + id;
 
 
-                    OracleCommand Comand = new OracleCommand(UpdateQuery, db);
+                    OracleCommand Comand = new OracleCommand(updateQuery, db);
                     OracleDataReader Read = Comand.ExecuteReader();
                     db.Close();
                 }
@@ -346,17 +346,18 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string Query = "SELECT NICK_NAME " +
+
+                    string query = "SELECT NICK_NAME " +
                                    "FROM EMPLOYEE " +
                                    "WHERE EMAIL = '" + email +"'";
                                    
 
-                    OracleCommand Comand = new OracleCommand(Query, db);
-                    OracleDataReader Read = Comand.ExecuteReader();
+                    OracleCommand comand = new OracleCommand(query, db);
+                    OracleDataReader read = comand.ExecuteReader();
 
-                    if (Read.Read())
+                    if (read.Read())
                     {
-                        nickName = Convert.ToString(Read["NICK_NAME"]);
+                        nickName = Convert.ToString(read["NICK_NAME"]);
                     }
 
                     db.Close();

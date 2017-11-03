@@ -31,8 +31,7 @@
                 <table id="Tableview" border="1" class="table table-striped">
                     <thead>
                         <tr>
-                            @if (
-                                Convert.ToInt32(ProfileUser.Manager))
+                            @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                             {
                                 <th>Name</th>
                             }
@@ -75,7 +74,7 @@
                 <table id="Tableview" border="1" class="table table-striped">
                     <thead>
                         <tr>
-                            @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                            @if (profileId == (int)ProfileUser.Manager)
                             {
                                 <th>Name</th>
                             }

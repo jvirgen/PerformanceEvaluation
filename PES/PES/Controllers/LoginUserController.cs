@@ -71,9 +71,7 @@ namespace PES.Controllers
                             //return RedirectToAction("Index", "PerformanceEvaluation");
                             return RedirectToAction("Index", "Home");
                         }
-                        else if ((ProfileUser)resource.
-                            
-                            ProfileUser.Director)
+                        else if ((ProfileUser)resource.ProfileId ==  ProfileUser.Director)
                         {
                             //Return the Manager's view
                             //return RedirectToAction("Index", "PerformanceEvaluation");
