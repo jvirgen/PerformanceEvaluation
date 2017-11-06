@@ -338,36 +338,36 @@ namespace PES.Services
             return true;
         }
 
-        public string GetNickName(string email)
-        {
-            String nickName="";
-            try
-            {
-                using (OracleConnection db = dbContext.GetDBConnection())
-                {
-                    db.Open();
+        //public string GetNickName(string email)
+        //{
+        //    String nickName="";
+        //    try
+        //    {
+        //        using (OracleConnection db = dbContext.GetDBConnection())
+        //        {
+        //            db.Open();
 
-                    string query = "SELECT NICK_NAME " +
-                                   "FROM EMPLOYEE " +
-                                   "WHERE EMAIL = '" + email +"'";
+        //            string query = "SELECT NICK_NAME " +
+        //                           "FROM EMPLOYEE " +
+        //                           "WHERE EMAIL = '" + email +"'";
                                    
 
-                    OracleCommand comand = new OracleCommand(query, db);
-                    OracleDataReader read = comand.ExecuteReader();
+        //            OracleCommand comand = new OracleCommand(query, db);
+        //            OracleDataReader read = comand.ExecuteReader();
 
-                    if (read.Read())
-                    {
-                        nickName = Convert.ToString(read["NICK_NAME"]);
-                    }
+        //            if (read.Read())
+        //            {
+        //                nickName = Convert.ToString(read["NICK_NAME"]);
+        //            }
 
-                    db.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return nickName;
-        }
+        //            db.Close();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //    return nickName;
+        //}
     }
 }

@@ -23,6 +23,7 @@
                         <label for="UserEmail" class="col-md-2 control-label">Email</label>
                         <div class="col-md-10">
                             @Html.TextBoxFor(u => u.UserEmail, new { @class = "form-control" })
+                            
                             @Html.ValidationMessageFor(u => u.UserEmail, "", new { @class = "text-danger" })
                         </div>
                     </div>

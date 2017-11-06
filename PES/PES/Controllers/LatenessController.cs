@@ -17,16 +17,23 @@ namespace PES.Controllers
 {
     public class LatenessController : Controller
     {
+        private LatenessService getLateness; // _latenessService;
+
+        public LatenessController()
+        {
+            getLateness = new LatenessService();
+        }
+
         //Show the latenesses to the current user
         public ActionResult Index()
         {
-            LatenessService getLateness = new LatenessService();
+            //LatenessService getLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
             var userEmail = (string)Session["UserEmail"];
-            var nickName = getLateness.GetNickName(userEmail);
+            //var nickName = getLateness.GetNickName(userEmail);
 
-            lateness = getLateness.GetLatenessByEmail(nickName, "today");
+            lateness = getLateness.GetLatenessByEmail(userEmail, "today");
             return View(lateness);
         }
 
@@ -34,7 +41,7 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult GetLatenessByFilter(string period, string email)
         {
-            LatenessService getLateness = new LatenessService();
+            //LatenessService getLateness = new LatenessService();
             List<Lateness> lateness = new List<Lateness>();
 
             ViewBag.period = period.ToUpper();
@@ -47,8 +54,8 @@ namespace PES.Controllers
             else
             {
                 var currentUserEmail = (string)Session["UserEmail"];
-                var nickName = getLateness.GetNickName(currentUserEmail);
-                lateness = getLateness.GetLatenessByEmail(nickName, period);
+                //var nickName = getLateness.GetNickName(currentUserEmail);
+                lateness = getLateness.GetLatenessByEmail(currentUserEmail, period);
             }
 
             return PartialView("_LatenessReportsPartial", lateness);
@@ -229,11 +236,11 @@ namespace PES.Controllers
         }
 
         //get the nickname of employee
-        [HttpPost]
-        public string getNickName(string email)
-        {
-            LatenessService lateness = new LatenessService();
-            return lateness.GetNickName(email);   
-        }
+        //[HttpPost]
+        //public string getNickName(string email)
+        //{
+        //    LatenessService lateness = new LatenessService();
+        //    return lateness.GetNickName(email);   
+        //}
     }
 }
