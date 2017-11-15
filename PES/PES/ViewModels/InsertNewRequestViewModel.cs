@@ -20,7 +20,7 @@ namespace PES.ViewModels
         /// <summary>
         /// Title of the request
         /// </summary>
-        [Required(ErrorMessage = "Request title is required")]
+        [Required(ErrorMessage = "Request Title is required")]
         public string Title { get; set; }
 
         /// <summary>

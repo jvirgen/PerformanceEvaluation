@@ -6,7 +6,7 @@ using System.Web;
 namespace PES.Models
 {
     /// <summary>
-    /// This class will store a title
+    /// This class will store a Title
     /// </summary>
     public class Title
     {

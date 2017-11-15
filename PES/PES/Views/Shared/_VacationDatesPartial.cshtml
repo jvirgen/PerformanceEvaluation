@@ -10,7 +10,9 @@
             </div>
             <div class="col-md-3">
                 <label>Return Date</label> 
-                <input type="text" class="form-control returnBox" id="return" name="subRequest[0].returnDate" value="@Model.ReturnDate" disabled="disabled"/>
+                <input id="returnDay" type="text" name="subRequest[0].ReturnDate" class="form-control returnBox"  value="@Model.ReturnDate"/>
+
+                                                                                
             </div>
             <div class="col-md-2">
                 <button onclick="addDate(this)" type="button" class="btn btn-default btn-block addBtn" @(Model.status.ToLower() == "rejected" || Model.status == "New" ? null : new { disabled = "disabled" })>

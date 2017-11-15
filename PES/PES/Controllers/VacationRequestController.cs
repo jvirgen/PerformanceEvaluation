@@ -17,7 +17,9 @@ namespace PES.Controllers
         private EmployeeService _employeeService;
         private VacationHeaderReqService _headerReqService;
         private VacationReqStatusService _ReqStatusService;
-        private VacationSubreqService _subReqService;        
+        private VacationSubreqService _subReqService;
+        //Added
+        //private HolidayService _holiday;
 
         public VacationRequestController()
         {
@@ -25,6 +27,8 @@ namespace PES.Controllers
             _headerReqService = new VacationHeaderReqService();
             _ReqStatusService = new VacationReqStatusService();
             _subReqService = new VacationSubreqService();
+            //Added
+            //_holiday = new HolidayService();
         }
 
         /// <summary>
@@ -42,7 +46,7 @@ namespace PES.Controllers
             newRequest.EmployeeId = userid;
             newRequest.Freedays = currentEmployee.Freedays;
             newRequest.SubRequest = new List<NewVacationDates>();
-
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
             return View(newRequest);
         }
 
@@ -63,10 +67,41 @@ namespace PES.Controllers
                 dates = date.Date.Split('-');
                 date.StartDate = Convert.ToDateTime(dates[0]);
                 date.EndDate = Convert.ToDateTime(dates[1]);
+                
             }
             // Return a message in the screen a redirect to the Historical Request Screen.
             return View();
         }
+
+        /// <summary>
+        /// GET: New vacation requests. The metod only need a User Id parameter 
+        /// </summary>
+        /// <param name="userid"></param>
+        ///// <returns>New Request Screen</returns>
+        
+    
+
+
+        //[HttpPost]
+        //public ActionResult InsertNewHoliday(Holiday model)
+        //{
+        //    string[] dates;
+        //    string description;
+        //    //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
+
+        //    foreach (var date in model.Day)
+        //    {
+        //        //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
+        //        dates = date.Date.Split('-');
+        //        date.StartDate = Convert.ToDateTime(dates[0]);
+        //        date.EndDate = Convert.ToDateTime(dates[1]);
+
+        //    }
+        //    // Return a message in the screen a redirect to the Historical Request Screen.
+        //    return View();
+        //}
+
+
 
         /// <summary>
         /// GET: VacationRequest Existing
@@ -125,7 +160,7 @@ namespace PES.Controllers
                     {
                         VacationHeaderReqId = headerReq.VacationHeaderReqId,
                         EmployeeId = headerReq.EmployeeId,
-                        title = headerReq.title,
+                        Title = headerReq.Title,
                         NoVacDays = headerReq.NoVacDays,
                         status = _ReqStatusService.GetVacationReqStatusById(headerReq.ReqStatusId).Name,
                         StartDate = headerReq.StartDate,

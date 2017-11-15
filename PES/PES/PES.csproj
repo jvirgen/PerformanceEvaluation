@@ -162,7 +162,7 @@
     <Compile Include="Models\Description.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />
-    <Compile Include="Models\HolidayDays.cs" />
+    <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\Lateness.cs" />
     <Compile Include="Models\LM_Skill.cs" />
     <Compile Include="Models\Location.cs" />
@@ -188,7 +188,7 @@
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\DescriptionService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
-    <Compile Include="Services\HolidayDaysService.cs" />
+    <Compile Include="Services\HolidayService.cs" />
     <Compile Include="Services\LatenessService.cs" />
     <Compile Include="Services\LM_SkillService.cs" />
     <Compile Include="Services\LocationService.cs" />
@@ -222,7 +222,7 @@
   <ItemGroup>
     <Content Include="App_Data\create_user_pe.sql" />
     <Content Include="App_Data\export_pedb.sql" />
-    <Content Include="App_Data\export_pedb_vacations.sql" />
+    <Content Include="App_Data\PES_Database_2017.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\historical-resource.css" />

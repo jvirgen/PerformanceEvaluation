@@ -56,7 +56,7 @@ namespace PES.Services
                             Header = new VacHeadReqViewModel();
                             Header.VacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
                             Header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
-                            Header.title = Convert.ToString(reader["TITLE"]);
+                            Header.Title = Convert.ToString(reader["TITLE"]);
                             Header.NoVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             Header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
                             Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
@@ -119,7 +119,7 @@ namespace PES.Services
                         {
                             header.VacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
                             header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);                            
-                            header.title = Convert.ToString(reader["TITLE"]);
+                            header.Title = Convert.ToString(reader["TITLE"]);
                             header.NoVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             header.Comments = Convert.ToString(reader["COMMENTS"]);
                             header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
@@ -189,7 +189,7 @@ namespace PES.Services
                             Header.LastName = Convert.ToString(reader["LAST_NAME"]);
                             Header.VacationHeaderReqId = Convert.ToInt32(reader["ID_HEADER_REQ"]);
                             Header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
-                            Header.title = Convert.ToString(reader["TITLE"]);
+                            Header.Title = Convert.ToString(reader["TITLE"]);
                             Header.NoVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             Header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
                             Header.HaveProject = Convert.ToChar(reader["HAVE_PROJECT"]);
@@ -239,7 +239,7 @@ namespace PES.Services
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
                     command.Parameters.Add(new OracleParameter("IdEmployee", vacHeadReq.EmployeeId));
-                    command.Parameters.Add(new OracleParameter("Title", vacHeadReq.title));
+                    command.Parameters.Add(new OracleParameter("Title", vacHeadReq.Title));
                     command.Parameters.Add(new OracleParameter("NoVacDays", vacHeadReq.NoVacDays));
                     command.Parameters.Add(new OracleParameter("Comments", vacHeadReq.Comments));
                     command.Parameters.Add(new OracleParameter("IdReqStatus", vacHeadReq.ReqStatusId));

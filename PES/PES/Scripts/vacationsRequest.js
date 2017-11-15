@@ -6,6 +6,8 @@
             
         //this event catches any modification on a start/end date field
         $(document).on('change', 'input.datesBox', getDaysRequested);
+        //$(document).on('change', 'input.datesBox', getReturnDate);
+
     });
 });
 
@@ -45,7 +47,6 @@ function addDate(btnAdd) {
         startDate: getSysdate(),
         endDate: getSysdate()
     });
-
     disableBtn();
     showBtn();
     getDaysRequested();
@@ -56,7 +57,7 @@ function removeDate(btnRemove) {
     $(btnRemove).parent().parent().parent().parent().remove();//removeBtn->datesCont->subdatesGroup->datesGroup->remove()
     enableBtn();
     getDaysRequested();
-
+  
     //updates inner array in name attribute of a determined start date, return date and lead name
     updateEnumerationBoxes();
 }
@@ -123,14 +124,41 @@ function validateDaysRequested(daysReq, input) {
         return 0;
     }
     else {
+        getReturnDate();
         return daysReq;
     }
 }
 
+
+
 function getReturnDate() {
+    //var returnDay = new Date();
+    var dates = '';
+    var endDate = null;
+    $('.datesBox').each(function (i, input) {
+        dates = $(input).val();
+        if (dates != '') {
+            endDate = moment(dates.split(" - ")[1]);
+        }
+    });
+    var returnDay = new Date(endDate);
 
+    //To validate NoWorkDays
+    if (returnDay.getDay() == 6) {
+        returnDay.setDate(returnDay.getDate() + 2);
+    }
+    else if (returnDay.getDay() == 0) {
+        returnDay.setDate(returnDay.getDate() + 1);
+    } else {
+        returnDay.setDate(returnDay.getDate());
+    }
+    // Change date format to ('DD/MM/YYYY')
+    function pad(n) { return n < 10 ? "0" + n : n; }
+    var result = (returnDay.getMonth() + 1) + "/" + pad(returnDay.getDate()) + "/" + returnDay.getFullYear();
+    console.log(result);
+    //return de date 
+    $("#returnDay").val(result);
 }
-
 function getSysdate() {
     var d = new Date();
     var month = d.getMonth() + 1;
@@ -175,7 +203,7 @@ function getWorkableDays(start, end) {
         }
     }
     return days;
-}
+}   
 
 /*
 

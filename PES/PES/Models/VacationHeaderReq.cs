@@ -24,8 +24,8 @@ namespace PES.Models
         /// <summary>
         /// Title of the request
         /// </summary>
-        [Required(ErrorMessage = "Request title is required")]
-        public string title { get; set; }
+        [Required(ErrorMessage = "Request Title is required")]
+        public string Title { get; set; }
 
         /// <summary>
         /// Number of vacation days

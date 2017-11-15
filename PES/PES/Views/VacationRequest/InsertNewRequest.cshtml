@@ -39,7 +39,7 @@
             </div> <!-- form-group end -->
             <!-- PARTIAL VIEW WITH REQUEST DATES -->
             
-            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model.SubRequest)
+            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", (List<PES.Models.Holiday>) ViewBag.MyHoliday )
             
 
             <div class="form-group">
@@ -59,8 +59,9 @@
                         <label>Select file</label>
                     </div>
                     <div class="col-md-4 text-center">
-                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
+                        <button href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to Historical </button> <br />
                         @Html.Partial("_ModalCancelRequestPartial")     
+
                         <button type="submit" class="btn btn-lg btn-primary btn-block">Send Request </button>                  
                     </div>
                 </div> <!-- container end -->

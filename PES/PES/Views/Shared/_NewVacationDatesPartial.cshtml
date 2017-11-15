@@ -1,11 +1,12 @@
 ﻿@* Partial view to Get all vacation periods of a NEW VACATION REQUEST*@
 
-@model IEnumerable<PES.ViewModels.NewVacationDates>
+@model IEnumerable<PES.Models.Holiday>
 
+<!-- TABLE TO HOLIDAYS -->
 <div id="datesGroups">
     <div id="datesGroup" class="form-group">
                 <div class="col-md-3 pull-right">
-                    <table class="table table-bordered">
+                    <table id="holidayTable" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Day</th>
@@ -13,19 +14,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr> 
-                                <td>01/01</td>
-                                <td>New Year's</td>
-                            </tr> 
-                            <tr>
-                                <td>02/02</td>
-                                <td>Candelaria's Day</td>
-                            </tr>
-                            <tr>
-                                <td>03/03</td>
-                                <td>Dummy date</td>
-                            </tr>
-                        </tbody>
+                            @foreach (var holiday in Model)
+                            {
+                                <tr>
+                                    <td >@holiday.Day.Date.ToString("dd MMM yyyy") </td>
+                                    <td >@holiday.Description</td>
+                                </tr>
+                            }
+                        </tbody>         
                     </table>
                 </div>
         </div>
@@ -41,7 +37,7 @@
             </div>
             <div class="col-md-3">
                 <label>Return Date</label>
-                <input type="text" class="form-control text-center returnBox" name="subRequest[0].returnDate" disabled="disabled"/>
+               <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" />
             </div>
             <div class="col-md-2">
                 <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">
@@ -56,7 +52,7 @@
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
                     
-                    <input id="lead" type="text" name="subRequest[0].lead_name" class="form-control leadBox" data-val="true" data-val-required="Lead name is required"/>
+                    <input id="lead" type="text" name="subRequest[0].LeadName" class="form-control leadBox" data-val="true" data-val-required="Lead name is required"/>
                     
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
@@ -64,8 +60,8 @@
             <div id="checkarea" class="col-md-2 checkbox">
                 <label id="checktext">
                     
-                        <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].have_project" value="true"/>I do not have a project
-                        <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].have_project" value="false"/>
+                        <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="true"/>I do not have a project
+                        <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false"/>
 
                 </label>
             </div>    
