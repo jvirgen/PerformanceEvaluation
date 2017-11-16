@@ -4,7 +4,7 @@
 DROP TABLE "PE"."COMMENT" cascade constraints;
 DROP TABLE "PE"."DESCRIPTION" cascade constraints;
 DROP TABLE "PE"."EMPLOYEE" cascade constraints;
-DROP TABLE "PE"."HOLIDAY_DAYS" cascade constraints;
+DROP TABLE "PE"."HOLIDAYS" cascade constraints;
 DROP TABLE "PE"."LATENESS" cascade constraints;
 DROP TABLE "PE"."LM_SKILL" cascade constraints;
 DROP TABLE "PE"."LOCATION" cascade constraints;
@@ -24,7 +24,7 @@ DROP TABLE "PE"."VACATION_SUBREQ" cascade constraints;
 DROP SEQUENCE "PE"."SEQCOMMENT";
 DROP SEQUENCE "PE"."SEQDESCRIPTION";
 DROP SEQUENCE "PE"."SEQEMPLOYEE";
-DROP SEQUENCE "PE"."SEQHOLIDAY_DAYS";
+DROP SEQUENCE "PE"."SEQHOLIDAYS";
 DROP SEQUENCE "PE"."SEQLATENESS";
 DROP SEQUENCE "PE"."SEQLMSKILL";
 DROP SEQUENCE "PE"."SEQPE";
@@ -48,7 +48,7 @@ DROP SYNONYM "PE"."TAB";
 DROP SYNONYM "PE"."TABQUOTAS";
 DROP SYNONYM "PUBLIC"."DUAL";
 
-  
+
 --------------------------------------------------------
 --  DDL for Table COMMENT
 --------------------------------------------------------
@@ -107,10 +107,10 @@ DROP SYNONYM "PUBLIC"."DUAL";
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM" ;
 --------------------------------------------------------
---  DDL for Table HOLIDAY_DAYS
+--  DDL for Table HOLIDAYS
 --------------------------------------------------------
 
-  CREATE TABLE "PE"."HOLIDAY_DAYS" 
+  CREATE TABLE "PE"."HOLIDAYS" 
    (	"ID_HOLIDAY" NUMBER(4,0) NOT NULL , 
 	"HOLIDAY_DAY" DATE,
     "DESCRIPTION" VARCHAR2(100 CHAR),
@@ -350,10 +350,10 @@ DROP SYNONYM "PUBLIC"."DUAL";
 
    CREATE SEQUENCE  "PE"."SEQEMPLOYEE"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 121 CACHE 20 ORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence SEQHOLIDAY_DAYS
+--  DDL for Sequence SEQHOLIDAYS
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "PE"."SEQHOLIDAY_DAYS"  MINVALUE 1 MAXVALUE 99999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 ORDER  NOCYCLE ;
+   CREATE SEQUENCE  "PE"."SEQHOLIDAYS"  MINVALUE 1 MAXVALUE 99999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 ORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQLATENESS
 --------------------------------------------------------
@@ -514,7 +514,7 @@ Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITIO
 Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (58,'Alejandro','Munoz Osorio','alejandro.munoz@4thsource.com','No Customer','Developer',1,2,to_date('23/10/17','DD/MM/RR'),null,null,2,0);
 Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (59,'Jesus','Gutierrez','jesus.gutierrez@4thsource.com','No Customer','Developer',1,2,to_date('23/10/17','DD/MM/RR'),null,null,2,0);
 Insert into PE.EMPLOYEE (ID_EMPLOYEE,FIRST_NAME,LAST_NAME,EMAIL,CUSTOMER,POSITION,ID_PROFILE,ID_MANAGER,HIRE_DATE,END_DATE,PROJECT,ID_LOCATION,FREE_DAYS) values (57,'Julio','Virgen','julio.virgen@4thsource.com','No Customer','Developer',1,2,to_date('22/12/15','DD/MM/RR'),null,null,2,0);
-REM INSERTING into PE.HOLIDAY_DAYS
+REM INSERTING into PE.HOLIDAYS
 SET DEFINE OFF;
 REM INSERTING into PE.LATENESS
 SET DEFINE OFF;
@@ -643,21 +643,21 @@ end;
 /
 ALTER TRIGGER "PE"."TRIGGEMPLOYEE" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger TRIGGHOLIDAY_DAYS
+--  DDL for Trigger TRIGGHOLIDAYS
 --------------------------------------------------------
 
-  CREATE OR REPLACE TRIGGER "PE"."TRIGGHOLIDAY_DAYS" 
-   before insert on "PE"."HOLIDAY_DAYS" 
+  CREATE OR REPLACE TRIGGER "PE"."TRIGGHOLIDAYS" 
+   before insert on "PE"."HOLIDAYS" 
    for each row 
 begin  
    if inserting then 
-      if :NEW."ID_HOLIDAY" is null then 
-         select SEQHOLIDAY_DAYS.nextval into :NEW."ID_HOLIDAY" from dual; 
+      if :NEW."ID_HOLIDAYS" is null then 
+         select SEQHOLIDAYS.nextval into :NEW."ID_HOLIDAYS" from dual; 
       end if; 
    end if; 
 end;
 /
-ALTER TRIGGER "PE"."TRIGGHOLIDAY_DAYS" ENABLE;
+ALTER TRIGGER "PE"."TRIGGHOLIDAYS" ENABLE;
 --------------------------------------------------------
 --  DDL for Trigger TRIGGLATENESS
 --------------------------------------------------------
