@@ -651,8 +651,8 @@ ALTER TRIGGER "PE"."TRIGGEMPLOYEE" ENABLE;
    for each row 
 begin  
    if inserting then 
-      if :NEW."ID_HOLIDAYS" is null then 
-         select SEQHOLIDAYS.nextval into :NEW."ID_HOLIDAYS" from dual; 
+      if :NEW."ID_HOLIDAY" is null then 
+         select SEQHOLIDAYS.nextval into :NEW."ID_HOLIDAY" from dual; 
       end if; 
    end if; 
 end;
@@ -973,8 +973,6 @@ ALTER TRIGGER "PE"."TRIGGVAC_SUBREQ" ENABLE;
   ALTER TABLE "PE"."VACATION_SUBREQ" ADD CONSTRAINT "VAC_SUBREQ_ID_HEADER_REQ_FK" FOREIGN KEY ("ID_HEADER_REQ")
 	  REFERENCES "PE"."VACATION_HEADER_REQ" ("ID_HEADER_REQ") ENABLE;
         
-      
-      
       
       
       
