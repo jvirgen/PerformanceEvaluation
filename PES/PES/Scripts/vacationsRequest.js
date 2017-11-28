@@ -3,11 +3,10 @@
         $('.daterange').daterangepicker({});
 
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
-            
-        //this event catches any modification on a start/end date field
+        //editHolidayDay();
+        //this event caches any modification on a start/end date field
         $(document).on('change', 'input.datesBox', getDaysRequested);
-        //$(document).on('change', 'input.datesBox', getReturnDate);
-
+       
     });
 });
 
@@ -112,7 +111,7 @@ function getDaysRequested() {
             total += getWorkableDays(start, end);
         }
     });
-    console.log(total);
+
     $("#daysReq").text(validateDaysRequested(total, this));
 }
 
@@ -130,6 +129,47 @@ function validateDaysRequested(daysReq, input) {
 }
 
 
+//function validateHolidays(returnDay) {
+//    //To validate NoWorkDays
+//    if (returnDay.getDay() == 6) {
+//        returnDay.setDate(returnDay.getDate() + 2);
+//    }
+//    else if (returnDay.getDay() == 0) {
+//        returnDay.setDate(returnDay.getDate() + 1);
+//    } else {
+//        returnDay.setDate(returnDay.getDate());
+//    }
+
+//    //_____________________________________________
+//    console.log($('#holidayTable #day').text());
+
+//    if (returnDay.getDate() == $('#holidayTable #day').text()) {
+//        console.log("Hola");
+
+//    }
+//    //_____________________________________________
+//    function pad(n) { return n < 10 ? "0" + n : n; }
+//    var result = (returnDay.getMonth() + 1) + "/" + pad(returnDay.getDate()) + "/" + returnDay.getFullYear();
+//    return result;
+//}
+
+function validateReturnDate(returnDate) {
+    $.ajax({
+        url: "/VacationRequest/ValidateResultDate",
+        data: { returnDate: returnDate.toISOString() }
+    })
+        .done(function (data) {
+            //alert("success");
+            //alert(data.date);
+            $("#returnDay").val(data.date);
+        })
+        .fail(function () {
+
+            alert("error");
+        })
+        .always(function () {});
+}
+
 
 function getReturnDate() {
     //var returnDay = new Date();
@@ -143,21 +183,11 @@ function getReturnDate() {
     });
     var returnDay = new Date(endDate);
 
-    //To validate NoWorkDays
-    if (returnDay.getDay() == 6) {
-        returnDay.setDate(returnDay.getDate() + 2);
-    }
-    else if (returnDay.getDay() == 0) {
-        returnDay.setDate(returnDay.getDate() + 1);
-    } else {
-        returnDay.setDate(returnDay.getDate());
-    }
-    // Change date format to ('DD/MM/YYYY')
-    function pad(n) { return n < 10 ? "0" + n : n; }
-    var result = (returnDay.getMonth() + 1) + "/" + pad(returnDay.getDate()) + "/" + returnDay.getFullYear();
-    console.log(result);
-    //return de date 
-    $("#returnDay").val(result);
+    validateReturnDate(returnDay);
+
+    //return date 
+    //$("#returnDay").val(validateHolidays(returnDay));
+   // $("#returnDay").val(result);
 }
 function getSysdate() {
     var d = new Date();

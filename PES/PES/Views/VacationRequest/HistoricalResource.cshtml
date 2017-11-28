@@ -9,7 +9,7 @@
     <div class="row text-center">
         <br />
         <div class="col-md-12">
-            <h2>Vacation List</h2>
+            <h2>Vacation Resquest History </h2>
         </div>
     </div>
     <div class="well">
@@ -43,7 +43,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var headerVM in Model)
+                        @*@foreach (var headerVM in Model)
                         {
                             if (headerVM.status.ToLower() == "pending")
                             {
@@ -66,7 +66,30 @@
                                     <td style="@style">@headerVM.ReturnDate.ToShortDateString()</td>
                                 </tr>
                                                     }
-                                                } 
+                                                }*@ 
+                        @foreach (var headerVM in Model)
+                        {
+                            if (headerVM.status.ToLower() == "pending")
+                            {
+                                <tr>
+                                    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                                    {
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
+                                    }
+                                    <td>
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                            @{
+                                                @(headerVM.Title)
+                                            }
+                                        </a>
+                                    </td>
+                                    <td>@headerVM.NoVacDays</td>
+                                    <td>@headerVM.StartDate.ToShortDateString()</td>
+                                    <td>@headerVM.EndDate.ToShortDateString()</td>
+                                    <td>@headerVM.ReturnDate.ToShortDateString()</td>
+                                </tr>
+                                                    }
+                                                }
                     </tbody>
                 </table>
             </div>
@@ -98,7 +121,9 @@
                                     <td>
                                         <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
                                             @{
+
                                                 @(headerVM.Title)
+
                                             }
                                         </a>
                                     </td>
@@ -107,8 +132,8 @@
                                     <td>@headerVM.EndDate.ToShortDateString()</td>
                                     <td>@headerVM.ReturnDate.ToShortDateString()</td>
                                 </tr>
-                                                    }
-                                                }
+                            }
+                         }
                     </tbody>
                 </table>
             </div>
@@ -149,8 +174,8 @@
                                     <td>@headerVM.EndDate.ToShortDateString()</td>
                                     <td>@headerVM.ReturnDate.ToShortDateString()</td>
                                 </tr>
-                                                    }
-                                                }
+                            }
+                         }
                     </tbody>
                 </table>
             </div>

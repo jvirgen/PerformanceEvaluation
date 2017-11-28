@@ -37,38 +37,38 @@ namespace PES.Services
                     switch (period)
                     {
                         case "week":
-                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
+                            Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE /*, L.DELETE_STATUS*/ " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
+                                    "WHERE \"DATE\" BETWEEN TRUNC(TO_DATE(SYSDATE), 'D') AND TO_DATE(SYSDATE) + 1 /*AND E.NICK_NAME = '" + nickname + "'*/ " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "month":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'MM')) AND to_date(SYSDATE) + 1 /*AND E.NICK_NAME = '" + nickname + "'*/ " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "year":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(TRUNC(TO_DATE(SYSDATE), 'YY')) AND to_date(SYSDATE) + 1 /* AND E.NICK_NAME = '" + nickname + "'*/ " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         case "last 5 years":
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                     "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                     "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 AND E.NICK_NAME = '" + nickname + "' " +
+                                    "WHERE \"DATE\" BETWEEN TO_DATE(ADD_MONTHS(TRUNC(TO_DATE(SYSDATE), 'YY'), -12 * 5)) AND to_date(SYSDATE) + 1 /* AND E.NICK_NAME = '" + nickname + "'*/ " +
                                     "ORDER BY \"DATE\" DESC";
                             break;
                         default:
                             Query = "SELECT L.ID_LATENESS, L.\"DATE\", E.ID_EMPLOYEE, L.DELETE_STATUS " +
                                    "FROM LATENESS L INNER JOIN EMPLOYEE E " +
                                    "ON L.ID_EMPLOYEE = E.ID_EMPLOYEE " +
-                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) AND E.NICK_NAME = '" + nickname + "' ";
+                                   "WHERE TRUNC(\"DATE\") = TO_DATE(SYSDATE) /* AND E.NICK_NAME = '" + nickname + "'*/ ";
                             break;
                     }
 
@@ -82,7 +82,7 @@ namespace PES.Services
                         string date = Convert.ToString(Read["DATE"]);
                         lateness.Date = Convert.ToDateTime(date);
                         lateness.EmployeeId = Convert.ToInt32(Read["ID_EMPLOYEE"]);
-                        lateness.Status = Convert.ToInt32(Read["DELETE_STATUS"]);
+                        //lateness.Status = Convert.ToInt32(Read["DELETE_STATUS"]);
                         latenesses.Add(lateness);
                     }
 

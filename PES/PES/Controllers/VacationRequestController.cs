@@ -19,7 +19,7 @@ namespace PES.Controllers
         private VacationReqStatusService _ReqStatusService;
         private VacationSubreqService _subReqService;
         //Added
-        //private HolidayService _holiday;
+        private HolidayService _holidayService;
 
         public VacationRequestController()
         {
@@ -28,7 +28,7 @@ namespace PES.Controllers
             _ReqStatusService = new VacationReqStatusService();
             _subReqService = new VacationSubreqService();
             //Added
-            //_holiday = new HolidayService();
+            _holidayService = new HolidayService();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace PES.Controllers
                 dates = date.Date.Split('-');
                 date.StartDate = Convert.ToDateTime(dates[0]);
                 date.EndDate = Convert.ToDateTime(dates[1]);
-                
+
             }
             // Return a message in the screen a redirect to the Historical Request Screen.
             return View();
@@ -78,8 +78,8 @@ namespace PES.Controllers
         /// </summary>
         /// <param name="userid"></param>
         ///// <returns>New Request Screen</returns>
-        
-    
+
+
 
 
         //[HttpPost]
@@ -125,6 +125,7 @@ namespace PES.Controllers
             currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.EmployeeId);
+
             ViewBag.status = currentRequest.status;
             currentRequest.FreeDays = currentUser.Freedays;
             return View("VacationRequest", currentRequest);
@@ -154,7 +155,7 @@ namespace PES.Controllers
             }
             if (listHeaderReqDB != null && listHeaderReqDB.Count > 0)
             {
-                foreach(var headerReq in listHeaderReqDB)
+                foreach (var headerReq in listHeaderReqDB)
                 {
                     var headerReqVm = new VacHeadReqViewModel
                     {
@@ -180,5 +181,58 @@ namespace PES.Controllers
             ViewBag.profileId = currentUser.ProfileId;
             return View(listHeaderReqVM);
         }
+
+        [HttpGet]
+        public JsonResult ValidateResultDate(DateTime returnDate)
+        {
+            //send parameter where will be validate
+            var date = IsNotHoliday(returnDate); //is not holiday
+            var nDate = IsNotSatOrSun(date);  //is not Saturday or Sunday
+            var returnFinalDate = IsNotHoliday(nDate);//is not holiday _Again_
+
+            //Date confirm
+            return Json(new { date = returnFinalDate.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
+        }
+
+        public DateTime IsNotSatOrSun(DateTime returnDate)
+        {
+            var newDate = new DateTime();
+            if (returnDate.DayOfWeek == DayOfWeek.Sunday)
+            {
+                newDate = returnDate.AddDays(1);
+            }
+            if (returnDate.DayOfWeek == DayOfWeek.Saturday)
+            {
+                newDate = returnDate.AddDays(2);
+            }
+            else
+            {
+                newDate = returnDate;
+            }
+            return newDate;
+        }
+
+        public DateTime IsNotHoliday(DateTime returnDate)
+        {           
+            // Get holidays
+            List<Holiday> holidays = _holidayService.GetAllHolidays();
+            var newDate = new DateTime();
+            foreach (var holiday in holidays)
+            {
+                if (returnDate.Date == holiday.Day.Date)
+                {
+                newDate = returnDate.AddDays(1);
+                }
+                else
+                {
+                    newDate = returnDate;
+                }
+            }
+            return newDate;
+        }
     }
+
+
+
 }
+
