@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-3">
                 <label>Return Date</label> 
-                <input id="returnDay" type="text" name="subRequest[0].ReturnDate" class="form-control returnBox"  value="@Model.ReturnDate.ToString("MM/dd/yyyy") "/>                          
+                <input id="returnDay" type="text" name="subRequest[0].ReturnDate" class="form-control returnBox"  value="@Model.ReturnDate.ToString("MM/dd/yyyy") " @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>                          
                 
             </div>
             <div class="col-md-2">
