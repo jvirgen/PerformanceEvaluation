@@ -105,16 +105,47 @@ function getDaysRequested() {
     $('.datesBox').each(function (i, input) {
         dates = $(input).val();
         if (dates != '') {
-        start = moment(dates.split(" - ")[0]).subtract(1, 'days');//subtract a day to count the first day selected in calendar till the last
-        end = moment(dates.split(" - ")[1]);
+            start = moment(dates.split(" - ")[0]).subtract(1, 'days');//subtract a day to count the first day selected in calendar till the last
+            end = moment(dates.split(" - ")[1]);
 
-            total += getWorkableDays(start, end);
+            //json countHolidays
+            //_________________________________________________________
+          
+            var sD = new Date (start) ;          
+            console.log(sD);
+
+            var eD = new Date(end);
+            console.log(eD);
+            
+            var count = 0 ; 
+
+            $.ajax({
+                url: "/VacationRequest/CountHolidaysAndValidateDates",
+                data: { start: sD.toISOString(), end: eD.toISOString(), count: count}
+            })
+                .done(function (data) {
+                    //alert("success");
+                    //var json1 = JSON.parse(data); 
+                    //var data = JSON.stringify(count);
+                    //alert(data);
+                    console.log(data);
+                            
+                    console.log(total);
+
+                    $("#daysReq").text(validateDaysRequested(getWorkableDays(start, end) - data, this));
+                })
+                .fail(function () {
+
+                    //alert("error");
+                })
+                .always(function () { });    
+            //_________________________________________________________
+            //total += getWorkableDays(start, end);
         }
     });
 
-    $("#daysReq").text(validateDaysRequested(total, this));
+    //$("#daysReq").text(validateDaysRequested(total, this));
 }
-
 function validateDaysRequested(daysReq, input) {
     if ($('#daysVac').text() < daysReq) {
             $(input).val('');
@@ -154,6 +185,7 @@ function validateDaysRequested(daysReq, input) {
 //}
 
 function validateReturnDate(returnDate) {
+    //console.log(returnDate);
     $.ajax({
         url: "/VacationRequest/ValidateResultDate",
         data: { returnDate: returnDate.toISOString() }
@@ -169,8 +201,6 @@ function validateReturnDate(returnDate) {
         })
         .always(function () {});
 }
-
-
 function getReturnDate() {
     //var returnDay = new Date();
     var dates = '';
@@ -182,13 +212,13 @@ function getReturnDate() {
         }
     });
     var returnDay = new Date(endDate);
-
-    validateReturnDate(returnDay);
-
-    //return date 
-    //$("#returnDay").val(validateHolidays(returnDay));
-   // $("#returnDay").val(result);
+    //var finalReturnDay = new Date(returnDay.getDate() + 1);
+    var finalDate = new Date();
+    finalDate.setDate(returnDay.getDate() + 1);
+    console.log(finalDate);
+    validateReturnDate(finalDate);
 }
+
 function getSysdate() {
     var d = new Date();
     var month = d.getMonth() + 1;
@@ -227,12 +257,13 @@ function getWorkableDays(start, end) {
             s.setDate(s.getDate() + 1);
 
             // If day isn't a Sunday or Saturday, add to business days
-            if (s.getDay() != 0 && s.getDay() != 6) {
+            if (s.getDay() != 0 && s.getDay() != 6) {               
                 ++days;
             }
         }
     }
-    return days;
+
+        return days;       
 }   
 
 /*

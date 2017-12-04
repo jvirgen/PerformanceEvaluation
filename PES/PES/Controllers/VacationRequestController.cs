@@ -182,38 +182,74 @@ namespace PES.Controllers
             return View(listHeaderReqVM);
         }
 
+
+
+
+
         [HttpGet]
         public JsonResult ValidateResultDate(DateTime returnDate)
         {
             //send parameter where will be validate
-            var date = IsNotHoliday(returnDate); //is not holiday
-            var nDate = IsNotSatOrSun(date);  //is not Saturday or Sunday
-            var returnFinalDate = IsNotHoliday(nDate);//is not holiday _Again_
+
+            // check if is holiday 
+            var ifIsHoliday = IsHoliday(returnDate);
+
+            // if is Saturday or Sunday
+            var ifIsSaturdayOrSunday = IsSatOrSun(ifIsHoliday);
+
+            // if is holiday _Again_
+            var ifIsHolidayAgain = IsHoliday(ifIsSaturdayOrSunday);
+
+            //if is final of month
+            var isEndOfMonth = IsEndDayOfMonth(ifIsHolidayAgain);
+
+            //if is holiday _Again_
+            var ifIsHolidate = IsHoliday(isEndOfMonth);
+
+            // if is Saturday or Sunday
+            var finalDate = IsSatOrSun(ifIsHolidate);
+
 
             //Date confirm
-            return Json(new { date = returnFinalDate.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
+            return Json(new { date = finalDate.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
         }
 
-        public DateTime IsNotSatOrSun(DateTime returnDate)
+        public DateTime IsEndDayOfMonth(DateTime returnDate)
         {
+           
+            var returnDateVal = returnDate.AddDays(1);
+            var finaldate = returnDate;
+            if(returnDateVal.Month != returnDate.Month)
+            {
+                finaldate =  returnDateVal ;
+            }
+ 
+            return finaldate;
+        }
+
+        public DateTime IsSatOrSun(DateTime returnDate)
+        {
+
             var newDate = new DateTime();
             if (returnDate.DayOfWeek == DayOfWeek.Sunday)
             {
                 newDate = returnDate.AddDays(1);
+                
             }
             if (returnDate.DayOfWeek == DayOfWeek.Saturday)
             {
                 newDate = returnDate.AddDays(2);
             }
-            else
+            if (returnDate.DayOfWeek != DayOfWeek.Saturday && returnDate.DayOfWeek != DayOfWeek.Sunday)
             {
                 newDate = returnDate;
             }
+
             return newDate;
         }
 
-        public DateTime IsNotHoliday(DateTime returnDate)
-        {           
+        public DateTime IsHoliday(DateTime returnDate)
+        {
             // Get holidays
             List<Holiday> holidays = _holidayService.GetAllHolidays();
             var newDate = new DateTime();
@@ -221,7 +257,8 @@ namespace PES.Controllers
             {
                 if (returnDate.Date == holiday.Day.Date)
                 {
-                newDate = returnDate.AddDays(1);
+                    newDate = returnDate.AddDays(1);
+                    break;
                 }
                 else
                 {
@@ -230,6 +267,55 @@ namespace PES.Controllers
             }
             return newDate;
         }
+
+        [HttpGet]
+        public JsonResult CountHolidaysAndValidateDates(DateTime start, DateTime end, int count)
+        {
+            int countH = 0;
+            //send parameter where will be validate
+            
+             countH = IsHolidayStartAndEndDates(start, end, count);
+
+            //Date confirm
+            return Json( countH , JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public int IsHolidayStartAndEndDates(DateTime start, DateTime end, int count)
+        {
+            // Get holidays
+            List<Holiday> holidays = _holidayService.GetAllHolidays();
+          
+            var sDate = start.AddDays(1);         
+            var eDate = end;
+            int i = 0;
+            DateTime[] date = new DateTime[100];
+            while( sDate.Day <= eDate.Day)
+            { 
+
+                date[i] = sDate;
+                i++;
+                sDate = sDate.AddDays(1);
+            }
+
+            var countHolidays = count;
+
+            foreach (var holiday in holidays)
+            {
+                foreach(var day in date)
+                {
+                    if (day.Date == holiday.Day.Date)
+                    {
+                        countHolidays++;
+                    }
+                }
+            }
+            Array.Clear(date, 0, 100);
+            return countHolidays;
+            
+        }
+
     }
 
 
