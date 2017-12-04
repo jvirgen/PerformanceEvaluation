@@ -13,17 +13,17 @@
             <div class="form-group">
                 <div class="container flexEnd">
                     <div class="col-md-3">
-                        @Html.LabelFor(model => model.title, "Request Title", new { @class = "control-label col-form-label" })
+                        @Html.LabelFor(model => model.Title, "Request Title", new { @class = "control-label col-form-label" })
                         @if (Model.status.ToLower() == "rejected")
                         {
-                            @Html.TextBoxFor(model => model.title, new { @class = "form-control" })
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(model => model.title, new { @class = "form-control", @disabled = "disabled" })
-                        }
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @disabled = "disabled" })
+                        }           
 
-                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
@@ -91,9 +91,14 @@
                     <div class="col-md-4 text-center">
                         @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
                         {
+                            if ( Model.StartDate > DateTime.Today)  
+                            {
+                                <button id="cancelReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                                @Html.Partial("_ModalCancelRequestPartial")
+                            }
                             <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
-                            <button id="cancelReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
-                            @Html.Partial("_ModalCancelRequestPartial")
+
+
                         }
                         else if (Model.status.ToLower() == "rejected")
                         {
