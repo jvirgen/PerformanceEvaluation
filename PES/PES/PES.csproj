@@ -147,6 +147,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\HolidaysController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LatenessController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
@@ -487,6 +488,8 @@
     <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
     <Content Include="Views\Shared\_NewVacationDatesPartial.cshtml" />
     <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
+    <Content Include="Views\Holidays\Index.cshtml" />
+    <Content Include="Views\Shared\_EditHolidaysPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
