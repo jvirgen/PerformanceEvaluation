@@ -5,14 +5,16 @@
         <div id="datesCont" class="container flexEnd">
             <div class="col-md-3 text-center"> 
                 <label for="start">Start Date - End Date</label>
-                <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" value="@Model.StartDate - @Model.EndDate" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>
+                <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" value="@Model.StartDate.ToString("MM/dd/yyyy") - @Model.EndDate.ToString("MM/dd/yyyy")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>
+
+
+
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
             </div>
             <div class="col-md-3">
                 <label>Return Date</label> 
-                <input id="returnDay" type="text" name="subRequest[0].ReturnDate" class="form-control returnBox"  value="@Model.ReturnDate"/>
-
-                                                                                
+                <input id="returnDay" type="text" name="subRequest[0].ReturnDate" class="form-control returnBox"  value="@Model.ReturnDate.ToString("MM/dd/yyyy") " @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })/>                          
+                
             </div>
             <div class="col-md-2">
                 <button onclick="addDate(this)" type="button" class="btn btn-default btn-block addBtn" @(Model.status.ToLower() == "rejected" || Model.status == "New" ? null : new { disabled = "disabled" })>

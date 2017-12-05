@@ -477,7 +477,6 @@
     <Content Include="Views\PerformanceEvaluation\ReportrsHistory.cshtml" />
     <Content Include="Views\Lateness\Index.cshtml" />
     <Content Include="Views\Shared\_LatenessReportsPartial.cshtml" />
-    <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
     <Content Include="Views\VacationRequest\InsertNewRequest.cshtml" />
     <Content Include="Views\VacationRequest\VacationRequest.cshtml" />
     <Content Include="Views\Lateness\LatenessAllUsers.cshtml" />
@@ -490,6 +489,7 @@
     <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
     <Content Include="Views\Holidays\Index.cshtml" />
     <Content Include="Views\Shared\_EditHolidaysPartial.cshtml" />
+    <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

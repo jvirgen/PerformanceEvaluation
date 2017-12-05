@@ -108,32 +108,33 @@
 
                   
 
-                    <div class="form-group">
-                        <div>
-                            <div class="col-md-4">
-                                <span class="label label-warning">All vacations days must be in the same month</span>
-                            </div>
-                        </div> <!-- container end -->
-                    </div><!-- form-group end -->
-                    <div class="form-group">
-                        <div class="row flexEnd">
-                            <div class="col-md-8">
-                                @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
-                                @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
-                                <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
-                                <input type="file" class="inputfile" />
-                                <label>Select file</label>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <button href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to Historical </button>
-                                @Html.Partial("_ModalCancelRequestPartial")
-                                <button type="submit" class="btn btn-lg btn-primary btn-block">Send Request </button>
-                            </div>
-                        </div> <!-- container end -->
-                    </div> <!-- form-group end -->
-                </form>
-            </div>
-        @*container ends*@
+            <div class="form-group">
+                <div class="container">
+                    <div class="col-md-4">
+                        <span class="label label-warning">All vacations days must be in the same month</span>
+                    </div>
+                </div> <!-- container end -->
+            </div><!-- form-group end -->
+            <div class="form-group">
+                <div class="container flexEnd">
+                    <div class="col-md-8">
+                        @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
+                        @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;"})
+                        <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                        <input type="file" class="inputfile"/>
+                        <label>Select file</label>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
+
+                        <br />
+                        @Html.Partial("_ModalCancelRequestPartial")
+
+                        <button type="submit" class="btn btn-lg btn-primary btn-block">Send Request </button>                  
+                    </div>
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+        </form>
         }                                                                                                                         
     </section>
 </div>

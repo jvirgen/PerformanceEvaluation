@@ -965,7 +965,7 @@ ALTER TRIGGER "PE"."TRIGGVAC_SUBREQ" ENABLE;
   ALTER TABLE "PE"."VACATION_HEADER_REQ" ADD CONSTRAINT "VH_REQ_ID_SUB_REQ_STATUS_FK" FOREIGN KEY ("ID_REQ_STATUS")
 	  REFERENCES "PE"."VACATION_REQ_STATUS" ("ID_REQ_STATUS") ENABLE;
 
-      
+     
 --------------------------------------------------------
 --  Ref Constraints for Table VACATION_SUBREQ
 --------------------------------------------------------     

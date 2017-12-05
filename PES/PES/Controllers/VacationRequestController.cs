@@ -19,7 +19,7 @@ namespace PES.Controllers
         private VacationReqStatusService _ReqStatusService;
         private VacationSubreqService _subReqService;
         //Added
-        //private HolidayService _holiday;
+        private HolidayService _holidayService;
 
         public VacationRequestController()
         {
@@ -28,7 +28,7 @@ namespace PES.Controllers
             _ReqStatusService = new VacationReqStatusService();
             _subReqService = new VacationSubreqService();
             //Added
-            //_holiday = new HolidayService();
+            _holidayService = new HolidayService();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace PES.Controllers
                 dates = date.Date.Split('-');
                 date.StartDate = Convert.ToDateTime(dates[0]);
                 date.EndDate = Convert.ToDateTime(dates[1]);
-                
+
             }
             // Return a message in the screen a redirect to the Historical Request Screen.
             return View();
@@ -147,6 +147,7 @@ namespace PES.Controllers
             currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.EmployeeId);
+
             ViewBag.status = currentRequest.status;
             currentRequest.FreeDays = currentUser.Freedays;
             return View("VacationRequest", currentRequest);
@@ -176,7 +177,7 @@ namespace PES.Controllers
             }
             if (listHeaderReqDB != null && listHeaderReqDB.Count > 0)
             {
-                foreach(var headerReq in listHeaderReqDB)
+                foreach (var headerReq in listHeaderReqDB)
                 {
                     var headerReqVm = new VacHeadReqViewModel
                     {
@@ -202,5 +203,144 @@ namespace PES.Controllers
             ViewBag.profileId = currentUser.ProfileId;
             return View(listHeaderReqVM);
         }
+
+
+
+
+
+        [HttpGet]
+        public JsonResult ValidateResultDate(DateTime returnDate)
+        {
+            //send parameter where will be validate
+
+            // check if is holiday 
+            var ifIsHoliday = IsHoliday(returnDate);
+
+            // if is Saturday or Sunday
+            var ifIsSaturdayOrSunday = IsSatOrSun(ifIsHoliday);
+
+            // if is holiday _Again_
+            var ifIsHolidayAgain = IsHoliday(ifIsSaturdayOrSunday);
+
+            //if is final of month
+            var isEndOfMonth = IsEndDayOfMonth(ifIsHolidayAgain);
+
+            //if is holiday _Again_
+            var ifIsHolidate = IsHoliday(isEndOfMonth);
+
+            // if is Saturday or Sunday
+            var finalDate = IsSatOrSun(ifIsHolidate);
+
+
+            //Date confirm
+            return Json(new { date = finalDate.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
+        }
+
+        public DateTime IsEndDayOfMonth(DateTime returnDate)
+        {
+           
+            var returnDateVal = returnDate.AddDays(1);
+            var finaldate = returnDate;
+            if(returnDateVal.Month != returnDate.Month)
+            {
+                finaldate =  returnDateVal ;
+            }
+ 
+            return finaldate;
+        }
+
+        public DateTime IsSatOrSun(DateTime returnDate)
+        {
+
+            var newDate = new DateTime();
+            if (returnDate.DayOfWeek == DayOfWeek.Sunday)
+            {
+                newDate = returnDate.AddDays(1);
+                
+            }
+            if (returnDate.DayOfWeek == DayOfWeek.Saturday)
+            {
+                newDate = returnDate.AddDays(2);
+            }
+            if (returnDate.DayOfWeek != DayOfWeek.Saturday && returnDate.DayOfWeek != DayOfWeek.Sunday)
+            {
+                newDate = returnDate;
+            }
+
+            return newDate;
+        }
+
+        public DateTime IsHoliday(DateTime returnDate)
+        {
+            // Get holidays
+            List<Holiday> holidays = _holidayService.GetAllHolidays();
+            var newDate = new DateTime();
+            foreach (var holiday in holidays)
+            {
+                if (returnDate.Date == holiday.Day.Date)
+                {
+                    newDate = returnDate.AddDays(1);
+                    break;
+                }
+                else
+                {
+                    newDate = returnDate;
+                }
+            }
+            return newDate;
+        }
+
+        [HttpGet]
+        public JsonResult CountHolidaysAndValidateDates(DateTime start, DateTime end, int count)
+        {
+            int countH = 0;
+            //send parameter where will be validate
+            
+             countH = IsHolidayStartAndEndDates(start, end, count);
+
+            //Date confirm
+            return Json( countH , JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public int IsHolidayStartAndEndDates(DateTime start, DateTime end, int count)
+        {
+            // Get holidays
+            List<Holiday> holidays = _holidayService.GetAllHolidays();
+          
+            var sDate = start.AddDays(1);         
+            var eDate = end;
+            int i = 0;
+            DateTime[] date = new DateTime[100];
+            while( sDate.Day <= eDate.Day)
+            { 
+
+                date[i] = sDate;
+                i++;
+                sDate = sDate.AddDays(1);
+            }
+
+            var countHolidays = count;
+
+            foreach (var holiday in holidays)
+            {
+                foreach(var day in date)
+                {
+                    if (day.Date == holiday.Day.Date)
+                    {
+                        countHolidays++;
+                    }
+                }
+            }
+            Array.Clear(date, 0, 100);
+            return countHolidays;
+            
+        }
+
     }
+
+
+
 }
+

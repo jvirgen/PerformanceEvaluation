@@ -18,8 +18,8 @@
                             @foreach (var holiday in Model)
                             {
                                 <tr>
-                                    <td >@holiday.Day.Date.ToString("dd MMM yyyy") </td>
-                                    <td >@holiday.Description</td>
+                                    <td id="day" >@holiday.Day.ToString("MM/dd/yyyy") </td><!--.ToString("MM/dd/yyyy")-->
+                                    <td id="description" >@holiday.Description</td>
                                 </tr>
                             }
                         </tbody>         
