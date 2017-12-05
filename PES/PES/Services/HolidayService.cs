@@ -25,36 +25,45 @@ namespace PES.Services
         //{
         //    bool status = false;
 
-        //    using (OracleConnection db = dbContext.GetDBConnection())
+        //    //establish a connection
+        //    try
         //    {
-        //        string query = @"INSERT INTO HOLIDAYS 
-        //                                (ID_HOLIDAY, 
-        //                                HOLIDAY_DAY,
+
+        //        using (OracleConnection db = dbContext.GetDBConnection())
+        //        {
+        //            string query = @"INSERT INTO HOLIDAYS 
+        //                                ( HOLIDAY_DAY,
         //                                DESCRIPTION) 
         //                        VALUES
         //                            (:Holiday,
         //                             :Description)";
 
-        //        using (OracleCommand command = new OracleCommand(query, db))
-        //        {
-        //            command.Parameters.Add(new OracleParameter("Holiday", holiday.Day));
-        //            command.Parameters.Add(new OracleParameter("Description", holiday.Description));
+        //            using (OracleCommand command = new OracleCommand(query, db))
+        //            {
+        //                command.Parameters.Add(new OracleParameter("Holiday", holiday.Day));
+        //                command.Parameters.Add(new OracleParameter("Description", holiday.Description));
 
 
-        //            try
-        //            {
-        //                command.Connection.Open();
-        //                command.ExecuteNonQuery();
-        //                command.Connection.Close();
+        //                try
+        //                {
+        //                    command.Connection.Open();
+        //                    command.ExecuteNonQuery();
+        //                    command.Connection.Close();
+        //                }
+        //                catch (OracleException ex)
+        //                {
+        //                    Console.WriteLine(ex.ToString());
+        //                    throw;
+        //                }
+        //                status = true;
         //            }
-        //            catch (OracleException ex)
-        //            {
-        //                Console.WriteLine(ex.ToString());
-        //                throw;
-        //            }
-        //            status = true;
         //        }
         //    }
+        //    catch (Exception xe)
+        //    {
+        //        throw;
+        //    }
+
         //    return status;
         //}
         /// <summary>
