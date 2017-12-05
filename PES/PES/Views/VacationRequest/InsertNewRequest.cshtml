@@ -7,66 +7,133 @@
         </div>
         @using (Html.BeginForm("InsertNewRequest", "VacationRequest", FormMethod.Post))
         {
-        <form id="form" class="form-horizontal">
-            <div class="form-group">
-                <div class="container flexEnd">
-                    <div class="col-md-3">
-                        @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
-                        <div>
-                            @Html.EditorFor(model => Model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                        <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
-                    </div>
-                    <div id="vacationarea" class="col-md-2 text-center">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 text-center" id="vacationarea">
                         <label>
                             Vacation Days:
                             <span id="daysVac" class="label label-default">@Model.Freedays</span>
                         </label>
                     </div>
-                    <div id="requestarea" class="col-md-2 text-left"> 
+                    <div class="col-sm-4 text-center" id="requestarea">
                         <label>
                             Days Requested:
                             <span id="daysReq" class="label label-default">0</span>
                         </label>
                     </div>
-                    <div id="reqStatus" class="col-md-5 text-right">
+                    <div class="col-sm-4 text-center" id="reqStatus">
                         <label class="control-label text-center">
                             Request Status:
                             <span class="label label-default" id="status">New</span>
                         </label>
                     </div>
-                </div> <!-- container end -->
-            </div> <!-- form-group end -->
-            <!-- PARTIAL VIEW WITH REQUEST DATES -->
-            
-            @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", (List<PES.Models.Holiday>) ViewBag.MyHoliday )
-            
+                </div>
+                <hr class="divisor">
+                <br />
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div id="datesGroup" class="form-group datesGroup">
+                            <div id="subDatesGroup" class="form-group">
+                                <div id="datesCont" class="container flexEnd">
+                                    <div class="col-md-4 text-center">
+                                        <label for="start">Start Date - End Date</label>
+                                        <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" />
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Return Date</label>
+                                        <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">
+                                            Add Date
+                                        </button>
+                                    </div>
+                                </div> <!-- container end -->
+                            </div> <!-- subform-group end -->
+                            <div id="subDatesGroup" class="form-group">
+                                <div id="datesCont" class="container flexCenter">
+                                    <div id="leadName" class="col-md-3">
+                                        <label for="lead" class="control-label">Lead Name</label>
+                                        <div>
 
-            <div class="form-group">
-                <div class="container">
-                    <div class="col-md-4">
-                        <span class="label label-warning">All vacations days must be in the same month</span>
-                    </div>
-                </div> <!-- container end -->
-            </div><!-- form-group end -->
-            <div class="form-group">
-                <div class="container flexEnd">
-                    <div class="col-md-8">
-                        @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
-                        @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;"})
-                        <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
-                        <input type="file" class="inputfile"/>
-                        <label>Select file</label>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <button href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to Historical </button> <br />
-                        @Html.Partial("_ModalCancelRequestPartial")     
+                                            <input id="lead" type="text" name="subRequest[0].LeadName" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" />
 
-                        <button type="submit" class="btn btn-lg btn-primary btn-block">Send Request </button>                  
+                                        </div>
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div id="checkarea" class="col-md-2 checkbox">
+                                        <label id="checktext">
+
+                                            <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="true" />I do not have a project
+                                            <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false" />
+
+                                        </label>
+                                    </div>
+
+                                    <div class="removeBtn col-md-1 hidden">
+                                        <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
+                                    </div>
+                                </div> <!-- container end -->
+                            </div> <!-- subform-group end -->
+                        </div>
                     </div>
-                </div> <!-- container end -->
-            </div> <!-- form-group end -->
-        </form>
+                    <div class="col-sm-3">
+                        @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", (List<PES.Models.Holiday>)ViewBag.MyHoliday)
+                    </div>
+                </div>
+                <form id="form" class="form-horizontal ">
+                    <div class="form-group">
+                        <div class="flexEnd">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
+                                <div>
+                                    @Html.EditorFor(model => Model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
+                            </div>
+                            @*<div id="vacationarea" class="col-md-2 text-left">
+                                
+                            </div>
+                            <div id="requestarea" class="col-md-2 text-left">
+                                
+                            </div>
+                            <div id="reqStatus" class="col-md-5 text-left">
+                               
+                            </div>*@
+                        </div> <!-- container end -->
+                    </div> <!-- form-group end -->
+                    <!-- PARTIAL VIEW WITH REQUEST DATES -->
+
+                  
+
+                    <div class="form-group">
+                        <div>
+                            <div class="col-md-4">
+                                <span class="label label-warning">All vacations days must be in the same month</span>
+                            </div>
+                        </div> <!-- container end -->
+                    </div><!-- form-group end -->
+                    <div class="form-group">
+                        <div class="row flexEnd">
+                            <div class="col-md-8">
+                                @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
+                                @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
+                                <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                                <input type="file" class="inputfile" />
+                                <label>Select file</label>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <button href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to Historical </button>
+                                @Html.Partial("_ModalCancelRequestPartial")
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">Send Request </button>
+                            </div>
+                        </div> <!-- container end -->
+                    </div> <!-- form-group end -->
+                </form>
+            </div>
+        @*container ends*@
         }                                                                                                                         
     </section>
 </div>

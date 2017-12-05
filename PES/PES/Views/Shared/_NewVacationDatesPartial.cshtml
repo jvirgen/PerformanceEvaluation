@@ -3,9 +3,10 @@
 @model IEnumerable<PES.Models.Holiday>
 
 <!-- TABLE TO HOLIDAYS -->
-<div id="datesGroups">
+@*<div id="datesGroups">
     <div id="datesGroup" class="form-group">
-                <div class="col-md-3 pull-right">
+                <div class="col-md-3 pull-right">*@
+                    
                     <table id="holidayTable" class="table table-bordered">
                         <thead>
                             <tr>
@@ -23,53 +24,8 @@
                             }
                         </tbody>         
                     </table>
-                </div>
+                @*</div>
         </div>
-    </div>
-<div id="datesGroup" class="form-group datesGroup">
-    <hr class="divisor">
-    <div id="subDatesGroup" class="form-group">
-        <div id="datesCont" class="container flexEnd">
-            <div class="col-md-4 text-center">
-                <label for="start">Start Date - End Date</label>
-               <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required"/>
-                <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
-            </div>
-            <div class="col-md-3">
-                <label>Return Date</label>
-               <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" />
-            </div>
-            <div class="col-md-2">
-                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">
-                    Add Date
-                </button>
-            </div>
-        </div> <!-- container end -->
-    </div> <!-- subform-group end -->
-    <div id="subDatesGroup" class="form-group">
-        <div id="datesCont" class="container flexCenter">
-            <div id="leadName" class="col-md-3">
-                <label for="lead" class="control-label">Lead Name</label>
-                <div>
-                    
-                    <input id="lead" type="text" name="subRequest[0].LeadName" class="form-control leadBox" data-val="true" data-val-required="Lead name is required"/>
-                    
-                </div>
-                <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
-            </div>
-            <div id="checkarea" class="col-md-2 checkbox">
-                <label id="checktext">
-                    
-                        <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="true"/>I do not have a project
-                        <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false"/>
+    </div>*@
 
-                </label>
-            </div>    
-
-            <div class="removeBtn col-md-1 hidden">
-                <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
-            </div>
-        </div> <!-- container end -->
-    </div> <!-- subform-group end -->
-</div>
 <!-- form-group end -->
