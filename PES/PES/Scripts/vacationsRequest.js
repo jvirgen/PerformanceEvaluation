@@ -148,9 +148,8 @@ function getDaysRequested() {
 }
 function validateDaysRequested(daysReq, input) {
     if ($('#daysVac').text() < daysReq) {
-            $(input).val('');
-        alert('no more vacations days available');
-
+        $(input).val('');
+        $("#modalNoEnoughDays").modal();
         return 0;
     }
     else {
