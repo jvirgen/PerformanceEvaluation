@@ -7,6 +7,12 @@ using PES.Services;
 using PES.Models;
 using System.Threading.Tasks;
 using PES.ViewModels;
+// email 
+using System.Net.Mail;
+using System.Text;
+using System.Net;
+using System.Web.Routing;
+using System.Web.Optimization;
 
 namespace PES.Controllers
 {
@@ -20,6 +26,8 @@ namespace PES.Controllers
         private VacationSubreqService _subReqService;
         //Added
         private HolidayService _holidayService;
+        private EmailCancelRequestService _emailCancelRequestService;
+        // private EmailService 
 
         public VacationRequestController()
         {
@@ -29,6 +37,7 @@ namespace PES.Controllers
             _subReqService = new VacationSubreqService();
             //Added
             _holidayService = new HolidayService();
+            _emailCancelRequestService = new EmailCancelRequestService();
         }
 
         /// <summary>
@@ -128,6 +137,11 @@ namespace PES.Controllers
 
             ViewBag.status = currentRequest.status;
             currentRequest.FreeDays = currentUser.Freedays;
+            currentRequest.Modal = new CancelRequestViewModel()
+            {
+                HeaderRequestId = currentRequest.VacationHeaderReqId
+            };
+
             return View("VacationRequest", currentRequest);
         }
 
@@ -138,6 +152,7 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult HistoricalResource()
         {
+
             //Get current user
             Employee currentUser = new Employee();
             var currentUserEmail = (string)Session["UserEmail"];
@@ -179,12 +194,53 @@ namespace PES.Controllers
             ViewBag.UserID = currentUser.EmployeeId;
             ViewBag.FreeDays = currentUser.Freedays;
             ViewBag.profileId = currentUser.ProfileId;
+
+
             return View(listHeaderReqVM);
         }
 
+        //[HttpGet]
+        //public ActionResult GetCancelRequest(int headerReqId)
+        //{
+
+        //    VacHeadReqViewModel currentRequest = new VacHeadReqViewModel();
+        //    currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
+        //    Employee currentUser = new Employee();
+        //    currentUser = _employeeService.GetByID(currentRequest.EmployeeId);
+
+        //    ViewBag.status = currentRequest.status;
+        //    currentRequest.FreeDays = currentUser.Freedays;
+        //    return View("VacationRequest", currentRequest);
+        //}
+
+        [HttpPost]
+        public ActionResult CancelRequest(CancelRequestViewModel model)
+        {
 
 
+            //request
+            //Email
+            // Update status of the request
 
+           _emailCancelRequestService.ChangeRequestStatus( model.HeaderRequestId, model.ReasonCancellation);
+
+
+            // Send email if success
+            // Get request by id
+            List<CancelRequestViewModel> data = new List<CancelRequestViewModel>();
+            data =   _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            string reasonCancellation = data[0].ReasonCancellation;
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
+
+             return RedirectToAction("HistoricalResource");
+        }
 
         [HttpGet]
         public JsonResult ValidateResultDate(DateTime returnDate)
@@ -213,7 +269,7 @@ namespace PES.Controllers
             //Date confirm
             return Json(new { date = finalDate.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
         }
-
+       
         public DateTime IsEndDayOfMonth(DateTime returnDate)
         {
            
@@ -280,8 +336,6 @@ namespace PES.Controllers
             return Json( countH , JsonRequestBehavior.AllowGet);
         }
 
-
-
         public int IsHolidayStartAndEndDates(DateTime start, DateTime end, int count)
         {
             // Get holidays
@@ -317,8 +371,5 @@ namespace PES.Controllers
         }
 
     }
-
-
-
 }
 
