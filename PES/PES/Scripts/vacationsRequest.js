@@ -146,11 +146,13 @@ function getDaysRequested() {
 
     //$("#daysReq").text(validateDaysRequested(total, this));
 }
+
 function validateDaysRequested(daysReq, input) {
+
     if ($('#daysVac').text() < daysReq) {
             $(input).val('');
-        alert('no more vacations days available');
-
+        alert('OOops!' + '\n No more vacations days available');
+    
         return 0;
     }
     else {
@@ -158,31 +160,6 @@ function validateDaysRequested(daysReq, input) {
         return daysReq;
     }
 }
-
-
-//function validateHolidays(returnDay) {
-//    //To validate NoWorkDays
-//    if (returnDay.getDay() == 6) {
-//        returnDay.setDate(returnDay.getDate() + 2);
-//    }
-//    else if (returnDay.getDay() == 0) {
-//        returnDay.setDate(returnDay.getDate() + 1);
-//    } else {
-//        returnDay.setDate(returnDay.getDate());
-//    }
-
-//    //_____________________________________________
-//    console.log($('#holidayTable #day').text());
-
-//    if (returnDay.getDate() == $('#holidayTable #day').text()) {
-//        console.log("Hola");
-
-//    }
-//    //_____________________________________________
-//    function pad(n) { return n < 10 ? "0" + n : n; }
-//    var result = (returnDay.getMonth() + 1) + "/" + pad(returnDay.getDate()) + "/" + returnDay.getFullYear();
-//    return result;
-//}
 
 function validateReturnDate(returnDate) {
     //console.log(returnDate);
@@ -201,6 +178,7 @@ function validateReturnDate(returnDate) {
         })
         .always(function () {});
 }
+
 function getReturnDate() {
     //var returnDay = new Date();
     var dates = '';
@@ -266,12 +244,8 @@ function getWorkableDays(start, end) {
         return days;       
 }   
 
-/*
-
-DESCRIPTION
-this function searches for the following fields: datesBox, returnBox, leadBox, projectBox that may repeat many times depending on how many dates the user is requesting for vacations. Once found the elements proceeds to update their names according to the structure agreed "subRequest[n]"
-
-*/
+/*DESCRIPTION
+this function searches for the following fields: datesBox, returnBox, leadBox, projectBox that may repeat many times depending on how many dates the user is requesting for vacations. Once found the elements proceeds to update their names according to the structure agreed "subRequest[n]"*/
 function updateEnumerationBoxes() {
     //here are defined the body of the name, we set two elements: subRequest[ and ].date, ].lead_name, ].returnDate respectively
     var datesPieces = $($('.datesBox')[0]).attr('name').replace(/[0-9]/g, ' ').split(' ');
