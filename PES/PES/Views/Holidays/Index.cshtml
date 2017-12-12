@@ -12,19 +12,24 @@
 @*<div id="datesGroups">
     <div id="datesGroup" class="form-group">
                 <div class="col-md-3 pull-right">*@
-
+<div class="row">
+    <div class="col-md-12">
+        <h2 style="text-align:center;">Holidays Main Menu</h2>
+    </div>
+</div>
 <table id="holidayTable" class="table table-bordered">
     <thead>
         <tr>
             <th>Day</th>
             <th>Celebration</th>
+            <th><button type="button" class="btn btn-success">Add a holiday</button></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var holiday in Model)
         {
             <tr>
-                <td>@holiday.Day.Date.ToString("dd MMM yyyy") </td>
+                <td> @holiday.Day.Date.ToString("D", holiday.USCulture) </td>
                 <td>@holiday.Description</td>
                 <td class="col-sm-3">
                     <button type="button" class="btn btn-primary col-sm-4 col-sm-offset-1"><span style="margin-right: 5px" class="glyphicon glyphicon-align-justify"></span>Edit</button>
