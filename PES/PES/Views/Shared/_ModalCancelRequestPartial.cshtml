@@ -1,6 +1,10 @@
-﻿<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+﻿@model PES.ViewModels.CancelRequestViewModel
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+        @using (Html.BeginForm("CancelRequest", "VacationRequest", FormMethod.Post))
+        {
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -9,16 +13,35 @@
                     Request Cancellation
                 </h4>
             </div>
-            <div class="modal-body">
-                Are you sure you want to cancel this request? 
+            <div class="row">
+               <div class="modal-body">
+                     Are you sure you want to cancel this request?
+
+                   <div class="form-horizontal">
+                       @Html.AntiForgeryToken()
+                       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                  </div>
+                   <br />
+                   <div class="form-group row">
+                       <fieldset>
+                           @Html.HiddenFor(model => model.HeaderRequestId)
+
+                           @Html.LabelFor(model => model.ReasonCancellation, " Please add a reason of request cancellation ", new { @class = "control-label " })
+                           
+                               @Html.EditorFor(model => model.ReasonCancellation, new { htmlAttributes = new { @class = "form-control col-md-offset-3 col-sm-offset-3 col-xs-offset-3" } })
+                               @Html.ValidationMessageFor(model => model.ReasonCancellation, " ", new { @class = "text-danger" })
+                       </fieldset>
+                   </div>
+                  </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
-               <!-- IF the request is canceled shot event to change the satus to cancel and redirected to history list and also send emails to director and user.-->
+                <!-- IF the request is canceled shot event to change the satus to cancel and redirected to history list and also send emails to director and user.-->
 
 
-                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-primary"  >Cancel Request</a>
+                <input type="submit" class="btn btn-primary" value="Cancel Request"/>
             </div>
+        }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

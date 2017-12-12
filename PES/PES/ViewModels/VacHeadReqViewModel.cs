@@ -7,7 +7,7 @@ using PES.Models;
 
 namespace PES.ViewModels
 {
-    public class VacHeadReqViewModel : VacationHeaderReq
+    public class VacHeadReqViewModel : VacationHeaderReq 
     {
         /// <summary>
         /// Fist name of the employee
@@ -53,5 +53,8 @@ namespace PES.ViewModels
         /// Flag to know if the employee has a project
         /// </summary>
         public char HaveProject { get; set; }
+
+        public CancelRequestViewModel Modal { get; set; }
+
     }
 }
