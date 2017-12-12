@@ -116,8 +116,30 @@ namespace PES.Controllers
         /// GET: VacationRequest Existing
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
+        public ActionResult VacationRequest(InsertNewRequestViewModel model)
+        {
+            string[] dates;
+            //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
+
+            foreach (var date in model.SubRequest)
+            {
+                //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
+                dates = date.Date.Split('-');
+                date.StartDate = Convert.ToDateTime(dates[0]);
+                date.EndDate = Convert.ToDateTime(dates[1]);
+
+            }
+            // Return a message in the screen a redirect to the Historical Request Screen.
+            return View();
+        }
+
+        /// <summary>
+        /// GET: VacationRequest Existing
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult VacationRequest()
+        public ActionResult EditHolidays(int userid)
         {
             return View();
         }

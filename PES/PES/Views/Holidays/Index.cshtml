@@ -1,0 +1,43 @@
+﻿@model IEnumerable<PES.Models.Holiday>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br/>
+<br/>
+
+<!-- TABLE TO HOLIDAYS -->
+@*<div id="datesGroups">
+    <div id="datesGroup" class="form-group">
+                <div class="col-md-3 pull-right">*@
+
+<table id="holidayTable" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Day</th>
+            <th>Celebration</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var holiday in Model)
+        {
+            <tr>
+                <td>@holiday.Day.Date.ToString("dd MMM yyyy") </td>
+                <td>@holiday.Description</td>
+                <td class="col-sm-3">
+                    <button type="button" class="btn btn-primary col-sm-4 col-sm-offset-1"><span style="margin-right: 5px" class="glyphicon glyphicon-align-justify"></span>Edit</button>
+
+                    <button type="button" class="btn btn-danger col-sm-4 col-sm-offset-1" onclick="removeHoliday()"><span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span>Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*</div>
+        </div>
+    </div>*@
+
+<!-- form-group end -->
+
