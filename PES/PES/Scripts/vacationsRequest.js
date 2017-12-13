@@ -10,29 +10,6 @@
     });
 });
 
-/*
-SUPPOSEDLY OBSOLETE
-function insertNewDates() {
-    // Get date group element
-    var dateGroup = $("#dateGroup-0");
-    // Clone into another div
-    var parentDiv = $("#datesGroups");
-    parentDiv.append('<div class="dateGroup" id="dateGroup-1">');
-    $("#dateGroup-1").append('<div id="subDatesGroup-1" class="form-group">');
-    $("#subDatesGroup-1").append('<div id="datesCont-1" class="container flexEnd">');
-    $("#datesCont-1").append('<div class="col-md-3 text-center" id="data-1">');
-    $("#data-1").append(' <label for="start" id="lable-1">Start Date - End Date</label>');
-    $("#lable-1").append('<input type="text" name="subRequest[' + add() + '].date" class="daterange" /></div></div></div></div>');
-}
-
-//global counter
-var add = (function () {
-    var counter = 0;
-    return function () {
-        return counter += 1;
-    }
-    })();
-*/
 
 
 function addDate(btnAdd) {
@@ -101,7 +78,7 @@ function getDaysRequested() {
     var dates = '';
     var start = null;
     var end = null;
-    var count = 0;
+
 
     $('.datesBox').each(function (i, input) {
         dates = $(input).val();
@@ -109,12 +86,40 @@ function getDaysRequested() {
             start = moment(dates.split(" - ")[0]).subtract(1, 'days');  //subtract a day to count the first day selected in calendar till the last
             end = moment(dates.split(" - ")[1]);
 
-            ValidateStartDate(start ,end,  count );
-
+            ValidateSameMonth(start , end );
+           
         }
     });
 
 }
+
+function ValidateSameMonth(start, end, count) {
+    var sD = new Date(start);
+    var eD = new Date(end);
+    var count = 0;
+    var flag = false;
+
+    $.ajax({
+        url: "/VacationRequest/ValidateSameMonth",
+        data: { start: sD.toISOString(), end: eD.toISOString(), flag: flag }
+    })
+        .done(function (data) {
+
+            if (!data) {
+
+                $("#sameMonth").modal();
+                $("#daysReq").text("0");
+                $("#returnDay").val("");
+                $('.datesBox').val("invalided date");
+            } else {
+                ValidateStartDate(start, end, count);
+            }
+        })
+        .fail(function () {
+        })
+        .always(function () { });
+}
+
 
 function ValidateStartDate(start, end,  count) {
     var sD = new Date(start);
@@ -254,6 +259,30 @@ function getWorkableDays(start, end) {
 }   
 
 /*
+SUPPOSEDLY OBSOLETE
+function insertNewDates() {
+    // Get date group element
+    var dateGroup = $("#dateGroup-0");
+    // Clone into another div
+    var parentDiv = $("#datesGroups");
+    parentDiv.append('<div class="dateGroup" id="dateGroup-1">');
+    $("#dateGroup-1").append('<div id="subDatesGroup-1" class="form-group">');
+    $("#subDatesGroup-1").append('<div id="datesCont-1" class="container flexEnd">');
+    $("#datesCont-1").append('<div class="col-md-3 text-center" id="data-1">');
+    $("#data-1").append(' <label for="start" id="lable-1">Start Date - End Date</label>');
+    $("#lable-1").append('<input type="text" name="subRequest[' + add() + '].date" class="daterange" /></div></div></div></div>');
+}
+
+//global counter
+var add = (function () {
+    var counter = 0;
+    return function () {
+        return counter += 1;
+    }
+    })();
+*/
+
+/*
 
 DESCRIPTION
 this function searches for the following fields: datesBox, returnBox, leadBox, projectBox that may repeat many times depending on how many dates the user is requesting for vacations. Once found the elements proceeds to update their names according to the structure agreed "subRequest[n]"
@@ -284,3 +313,5 @@ function updateEnumerationBoxes() {
         $($('.projectHiddenBox')[0]).attr('name', leadPieces[0] + 0 + leadPieces[1]);
     }
 }
+
+

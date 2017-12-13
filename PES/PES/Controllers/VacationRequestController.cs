@@ -278,6 +278,21 @@ namespace PES.Controllers
             return Json( flag , JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult ValidateSameMonth(DateTime start, DateTime end,  bool flag)
+        {
+            var sDate = start.AddDays(1);
+            DateTime today = DateTime.Today;
+            if (sDate.Month == end.Month)
+            {
+                flag = true;
+            }
+
+            //Date confirm
+            return Json(flag, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         [HttpGet]
         public JsonResult ValidateResultDate(DateTime returnDate)
