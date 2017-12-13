@@ -265,6 +265,21 @@ namespace PES.Controllers
         }
 
         [HttpGet]
+        public JsonResult ValidateStartDate(DateTime start,  bool flag)
+        {
+            var sDate = start.AddDays(1);
+            DateTime today = DateTime.Today;
+            if (sDate.Date > today.Date)
+            {
+                flag = true;
+            }
+
+            //Date confirm
+            return Json( flag , JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
         public JsonResult ValidateResultDate(DateTime returnDate)
         {
             //send parameter where will be validate
@@ -291,7 +306,8 @@ namespace PES.Controllers
             //Date confirm
             return Json(new { date = finalDate.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
         }
-       
+
+
         public DateTime IsEndDayOfMonth(DateTime returnDate)
         {
            

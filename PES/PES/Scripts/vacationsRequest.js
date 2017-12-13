@@ -101,51 +101,67 @@ function getDaysRequested() {
     var dates = '';
     var start = null;
     var end = null;
+    var count = 0;
 
     $('.datesBox').each(function (i, input) {
         dates = $(input).val();
         if (dates != '') {
-            start = moment(dates.split(" - ")[0]).subtract(1, 'days');//subtract a day to count the first day selected in calendar till the last
+            start = moment(dates.split(" - ")[0]).subtract(1, 'days');  //subtract a day to count the first day selected in calendar till the last
             end = moment(dates.split(" - ")[1]);
 
-            //json countHolidays
-            //_________________________________________________________
-          
-            var sD = new Date (start) ;          
-            console.log(sD);
+            ValidateStartDate(start ,end,  count );
 
-            var eD = new Date(end);
-            console.log(eD);
-            
-            var count = 0 ; 
-
-            $.ajax({
-                url: "/VacationRequest/CountHolidaysAndValidateDates",
-                data: { start: sD.toISOString(), end: eD.toISOString(), count: count}
-            })
-                .done(function (data) {
-                    //alert("success");
-                    //var json1 = JSON.parse(data); 
-                    //var data = JSON.stringify(count);
-                    //alert(data);
-                    console.log(data);
-                            
-                    console.log(total);
-
-                    $("#daysReq").text(validateDaysRequested(getWorkableDays(start, end) - data, this));
-                })
-                .fail(function () {
-
-                    //alert("error");
-                })
-                .always(function () { });    
-            //_________________________________________________________
-            //total += getWorkableDays(start, end);
         }
     });
 
-    //$("#daysReq").text(validateDaysRequested(total, this));
 }
+
+function ValidateStartDate(start, end,  count) {
+    var sD = new Date(start);
+
+    var flag = false;
+
+    $.ajax({
+        url: "/VacationRequest/ValidateStartDate",
+        data: { start: sD.toISOString(), flag: flag }
+    })
+        .done(function (data) {
+
+            if (!data) {
+
+                $("#OldDate").modal();
+                $("#daysReq").text("0");
+                $("#returnDay").val("");
+                $('.datesBox').val("invalided date");
+            } else {
+                CountHolidaysAndValidateDates(start, end, count);
+            }
+
+        })
+        .fail(function () {
+        })
+        .always(function () { });    
+}
+
+function CountHolidaysAndValidateDates(start, end, count) {
+    var sD = new Date(start);
+
+    var eD = new Date(end);
+
+        $.ajax({
+            url: "/VacationRequest/CountHolidaysAndValidateDates",
+            data: { start: sD.toISOString(), end: eD.toISOString(), count: count }
+        })
+            .done(function (data) {
+
+                $("#daysReq").text(validateDaysRequested(getWorkableDays(start, end) - data, this));
+            })
+            .fail(function () {
+            })
+            .always(function () { });
+
+}
+
 function validateDaysRequested(daysReq, input) {
     if ($('#daysVac').text() < daysReq) {
         $(input).val('');
@@ -158,48 +174,21 @@ function validateDaysRequested(daysReq, input) {
     }
 }
 
-
-//function validateHolidays(returnDay) {
-//    //To validate NoWorkDays
-//    if (returnDay.getDay() == 6) {
-//        returnDay.setDate(returnDay.getDate() + 2);
-//    }
-//    else if (returnDay.getDay() == 0) {
-//        returnDay.setDate(returnDay.getDate() + 1);
-//    } else {
-//        returnDay.setDate(returnDay.getDate());
-//    }
-
-//    //_____________________________________________
-//    console.log($('#holidayTable #day').text());
-
-//    if (returnDay.getDate() == $('#holidayTable #day').text()) {
-//        console.log("Hola");
-
-//    }
-//    //_____________________________________________
-//    function pad(n) { return n < 10 ? "0" + n : n; }
-//    var result = (returnDay.getMonth() + 1) + "/" + pad(returnDay.getDate()) + "/" + returnDay.getFullYear();
-//    return result;
-//}
-
 function validateReturnDate(returnDate) {
-    //console.log(returnDate);
     $.ajax({
         url: "/VacationRequest/ValidateResultDate",
         data: { returnDate: returnDate.toISOString() }
     })
         .done(function (data) {
-            //alert("success");
-            //alert(data.date);
+
             $("#returnDay").val(data.date);
         })
         .fail(function () {
 
-            alert("error");
         })
         .always(function () {});
 }
+
 function getReturnDate() {
     //var returnDay = new Date();
     var dates = '';
@@ -214,7 +203,6 @@ function getReturnDate() {
     //var finalReturnDay = new Date(returnDay.getDate() + 1);
     var finalDate = new Date();
     finalDate.setDate(returnDay.getDate() + 1);
-    console.log(finalDate);
     validateReturnDate(finalDate);
 }
 
