@@ -27,6 +27,7 @@ namespace PES.Controllers
         //Added
         private HolidayService _holidayService;
         private EmailCancelRequestService _emailCancelRequestService;
+       
         // private EmailService 
 
         public VacationRequestController()
@@ -38,6 +39,7 @@ namespace PES.Controllers
             //Added
             _holidayService = new HolidayService();
             _emailCancelRequestService = new EmailCancelRequestService();
+          
         }
 
         /// <summary>
@@ -55,6 +57,7 @@ namespace PES.Controllers
             newRequest.EmployeeId = userid;
             newRequest.Freedays = currentEmployee.Freedays;
             newRequest.SubRequest = new List<NewVacationDates>();
+            ViewBag.newRequest = userid;
             ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
             return View(newRequest);
         }
@@ -65,21 +68,26 @@ namespace PES.Controllers
         /// <param name="model"></param>
         /// <returns>Redirect to Historial Screen</returns>
         [HttpPost]
-        public ActionResult InsertNewRequest(InsertNewRequestViewModel model)
+        public ActionResult InsertNewRequestData(InsertNewRequestViewModel model, NewVacationDates newDates)
         {
-            string[] dates;
-            //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
+            _headerReqService.InsertVacHeaderReq(model);
 
+            string[] dates;
+            int idRequest = _subReqService.GetHeaderRequest(model);            //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
             foreach (var date in model.SubRequest)
             {
                 //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
                 dates = date.Date.Split('-');
-                date.StartDate = Convert.ToDateTime(dates[0]);
-                date.EndDate = Convert.ToDateTime(dates[1]);
 
+                dates[0] = Convert.ToString(date.StartDate);
+                dates[1] = Convert.ToString(date.EndDate);
+                //date.EndDate = Convert.ToDateTime(dates[1]);
             }
+            
+            ////_subReqService.InsertSubReq(newDates);
             // Return a message in the screen a redirect to the Historical Request Screen.
-            return View();
+
+            return RedirectToAction("HistoricalResource");
         }
 
         /// <summary>
@@ -116,23 +124,23 @@ namespace PES.Controllers
         /// GET: VacationRequest Existing
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult VacationRequest(InsertNewRequestViewModel model)
-        {
-            string[] dates;
-            //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
+        //[HttpPost]
+        //public ActionResult VacationRequest(InsertNewRequestViewModel model)
+        //{ 
+        //    string[] dates;
+        //    //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
 
-            foreach (var date in model.SubRequest)
-            {
-                //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
-                dates = date.Date.Split('-');
-                date.StartDate = Convert.ToDateTime(dates[0]);
-                date.EndDate = Convert.ToDateTime(dates[1]);
+        //    foreach (var date in model.SubRequest)
+        //    {
+        //        //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
+        //        dates = date.Date.Split('-');
+        //        date.StartDate = Convert.ToDateTime(dates[0]);
+        //        date.EndDate = Convert.ToDateTime(dates[1]);
 
-            }
-            // Return a message in the screen a redirect to the Historical Request Screen.
-            return View();
-        }
+        //    }
+        //    // Return a message in the screen a redirect to the Historical Request Screen.
+        //    return RedirectToAction("HistoricalResource");
+        //}
 
         /// <summary>
         /// GET: VacationRequest Existing

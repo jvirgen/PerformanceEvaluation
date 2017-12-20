@@ -215,35 +215,31 @@ namespace PES.Services
         /// </summary>
         /// <param name="vacHeadReq"></param>
         /// <returns>True if the insert was successful</returns>
-        public bool InsertVacHeaderReq(VacationHeaderReq vacHeadReq)
+        public bool InsertVacHeaderReq(InsertNewRequestViewModel InsertNewRequest)
         {
             bool status = false;
-
+            int RequestStatus = 1 ;
+            int NoUnpaidDays = 1;
             using (OracleConnection db = dbContext.GetDBConnection())
             {
-                string query = @"INSERT INTO 
-                                    VACATION_HEADER_REQ 
-                                        (ID_EMPLOYEE, 
-                                        TITLE, 
-                                        NO_VAC_DAYS, 
-                                        COMMENTS, 
-                                        ID_REQ_STATUS, 
-                                        NO_UNPAID_DAYS 
-                                VALUES 
-                                    (:IdEmployee, 
-                                    :Title, 
-                                    :NoVacDays, 
-                                    :Comments, 
-                                    :IdReqStatus, 
-                                    :NoUnpaidDays)";
+                string query = "INSERT INTO PE.VACATION_HEADER_REQ" +
+                               " (ID_EMPLOYEE," +
+                               "TITLE," +
+                               "NO_VAC_DAYS," +
+                               "COMMENTS," +
+                               "ID_REQ_STATUS," +
+                               "NO_UNPAID_DAYS)" +
+                               "VALUES  (:IdEmployee, :Title, :NoVacDays, :Comments, :IdReqStatus, :NoUnpaidDays)";
+
+
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
-                    command.Parameters.Add(new OracleParameter("IdEmployee", vacHeadReq.EmployeeId));
-                    command.Parameters.Add(new OracleParameter("Title", vacHeadReq.Title));
-                    command.Parameters.Add(new OracleParameter("NoVacDays", vacHeadReq.NoVacDays));
-                    command.Parameters.Add(new OracleParameter("Comments", vacHeadReq.Comments));
-                    command.Parameters.Add(new OracleParameter("IdReqStatus", vacHeadReq.ReqStatusId));
-                    command.Parameters.Add(new OracleParameter("NoUnpaidDays", vacHeadReq.NoUnpaidDays));
+                    command.Parameters.Add(new OracleParameter("IdEmployee", InsertNewRequest.EmployeeId));
+                    command.Parameters.Add(new OracleParameter("Title", InsertNewRequest.Title));
+                    command.Parameters.Add(new OracleParameter("NoVacDays", InsertNewRequest.daysReq));
+                    command.Parameters.Add(new OracleParameter("Comments", InsertNewRequest.Comments));
+                    command.Parameters.Add(new OracleParameter("IdReqStatus", RequestStatus));
+                    command.Parameters.Add(new OracleParameter("NoUnpaidDays", NoUnpaidDays));
 
                     try
                     {
@@ -253,7 +249,6 @@ namespace PES.Services
                     }
                     catch (OracleException ex)
                     {
-                        Console.WriteLine(ex.ToString());
                         throw;
                     }
                     status = true;
@@ -261,7 +256,5 @@ namespace PES.Services
             }
             return status;
         }
-
-   
     }
 }

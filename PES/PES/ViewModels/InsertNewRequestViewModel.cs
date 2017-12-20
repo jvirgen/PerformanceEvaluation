@@ -26,7 +26,7 @@ namespace PES.ViewModels
         /// <summary>
         /// Number of days requested 
         /// </summary>
-        public int NoVacDays { get; set; }
+        public int daysReq { get; set; }
 
         /// <summary>
         /// Comments
@@ -49,6 +49,9 @@ namespace PES.ViewModels
         /// </summary>
         public int Freedays {get; set; }
 
+        public NewVacationDates NewVacationDate { get; set; }
 
+        public VacHeadReqViewModel VacHeaderRequest { get; set;  } 
+        
     }
 }

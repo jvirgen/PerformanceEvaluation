@@ -76,3 +76,16 @@
     background-color: #cccccc;
     cursor: pointer;
 }
+
+.daysReq {
+    border-radius: 3px;
+    border: 0;
+    background-color: #a3a3a3;
+    margin: 0;
+    width: 23px;
+    height: 17px;
+    font-size: 10.5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}

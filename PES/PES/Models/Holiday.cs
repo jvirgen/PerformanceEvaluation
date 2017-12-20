@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using PES.ViewModels;
 
 namespace PES.Models
 {
@@ -37,5 +38,6 @@ namespace PES.Models
                 return CultureInfo.CreateSpecificCulture("en-US");
             }
         }
+         public InsertNewRequestViewModel inser { get; set;  }
     }
 }

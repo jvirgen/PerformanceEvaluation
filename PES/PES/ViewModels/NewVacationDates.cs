@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace PES.ViewModels
 {
@@ -20,7 +21,8 @@ namespace PES.ViewModels
         /// <summary>
         /// Return date
         /// </summary>
-        public DateTime? ReturnDate { get; set; }
+        [Required(ErrorMessage = "Request Title is required")]
+        public DateTime ReturnDate { get; set; }
 
         /// <summary>
         /// Name of lead
