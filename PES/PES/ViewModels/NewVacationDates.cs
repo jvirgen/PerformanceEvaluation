@@ -11,18 +11,18 @@ namespace PES.ViewModels
         /// <summary>
         /// Start Date
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// End date
         /// </summary>
-        public DateTime? EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         /// <summary>
         /// Return date
         /// </summary>
         [Required(ErrorMessage = "Request Title is required")]
-        public DateTime ReturnDate { get; set; }
+        public string ReturnDate { get; set; }
 
         /// <summary>
         /// Name of lead

@@ -120,6 +120,18 @@ function ValidateSameMonth(start, end, count) {
         .always(function () { });
 }
 
+//function disableLeadNameInput()
+//{
+//    var checkbox = document.querySelector("#unpaid");
+//    var input = document.querySelector("#lead");
+
+//    var toogleInput = function (e) {
+//        input.disabled = !e.target.checked;
+//    };
+
+//    toogleInput({ target: checkbox });
+//    checkbox.addEventListener("change", toogleInput);
+//}
 
 function ValidateStartDate(start, end,  count) {
     var sD = new Date(start);
@@ -206,9 +218,9 @@ function getReturnDate() {
     });
     var returnDay = new Date(endDate);
     //var finalReturnDay = new Date(returnDay.getDate() + 1);
-    var finalDate = new Date();
-    finalDate.setDate(returnDay.getDate() + 1);
-    validateReturnDate(finalDate);
+    //var finalDate = new Date();
+    //finalDate.setDate(returnDay.getDate() + 1);
+    validateReturnDate(returnDay);
 }
 
 function getSysdate() {

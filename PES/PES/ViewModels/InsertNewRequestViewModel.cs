@@ -42,14 +42,12 @@ namespace PES.ViewModels
         /// <summary>
         /// List of New vacation date Viewmodel 
         /// </summary>
-        public IEnumerable<NewVacationDates> SubRequest { get; set; }
+        public List<NewVacationDates> SubRequest { get; set; }
 
         /// <summary>
         /// Number of vacation days that employee have 
         /// </summary>
         public int Freedays {get; set; }
-
-        public NewVacationDates NewVacationDate { get; set; }
 
         public VacHeadReqViewModel VacHeaderRequest { get; set;  } 
         

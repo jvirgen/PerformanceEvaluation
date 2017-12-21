@@ -85,54 +85,69 @@ namespace PES.Services
         /// 
 
 
-        //public bool InsertSubReq(NewVacationDates data)
-        //{
-        //    bool status = false;
+        public bool InsertSubReq(int idHeaderReq, List<NewVacationDates> model)
+        {
+            bool status = false;
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string query = "INSERT INTO PE.VACATION_SUBREQ" +
+                    "(" +
+                    "ID_HEADER_REQ," +
+                    "START_DATE," +
+                    "END_DATE," +
+                    "RETURN_DATE," +
+                    "HAVE_PROJECT," +
+                    "LEAD_NAME)" +
+                    "VALUES" +
+                    "(" +
+                    " :IdHeaderReq, " +
+                    " :StartDate," +
+                    " :EndDate," +
+                    " :ReturnDate," +
+                    " :LeadName," +
+                    " :HaveProject)";
 
-        //    using (OracleConnection db = dbContext.GetDBConnection())
-        //    {
-        //        string query = "INSERT INTO PE.VACATION_SUBREQ" +
-        //            "(" +
-        //            "ID_HEADER_REQ," +
-        //            "START_DATE," +
-        //            "END_DATE," +
-        //            "RETURN_DATE," +
-        //            "HAVE_PROJECT," +
-        //            "LEAD_NAME)" +
-        //            "VALUES" +
-        //            "(" +
-        //            ":IdHeaderReq, " +
-        //            ":StartDate," +
-        //            " :EndDate," +
-        //            " :ReturnDate," +
-        //            " :LeadName," +
-        //            " :HaveProject)";
+                using (OracleCommand command = new OracleCommand(query, db))
+                {
+                    try
+                    {
+                      
+                        command.Connection.Open();
+                        foreach (var date in model)
+                        {
+                            string returnDate = date.ReturnDate;
+                            string rMonth = returnDate.Substring(0, 2);
+                            string rDay = returnDate.Substring(3, 2);
+                            string rYear = returnDate.Substring(6, 4);
+                            string FinalReturnDate = (rDay + "/" + rMonth + "/" + rYear);
 
-        //        using (OracleCommand command = new OracleCommand(query, db))
-        //        {
-        //            command.Parameters.Add(new OracleParameter("IdHeaderReq", data.VacationHeaderReqId));
-        //            command.Parameters.Add(new OracleParameter("StartDate", data.StartDate));
-        //            command.Parameters.Add(new OracleParameter("EndDate", data.EndDate));
-        //            command.Parameters.Add(new OracleParameter("ReturnDate", data.ReturnDate));
-        //            command.Parameters.Add(new OracleParameter("LeadName", data.LeadName));
-        //            command.Parameters.Add(new OracleParameter("HaveProject", data.HaveProject));
+                            command.Parameters.Add(new OracleParameter("IdHeaderReq", idHeaderReq));
+                            command.Parameters.Add(new OracleParameter("StartDate", date.StartDate));
+                            command.Parameters.Add(new OracleParameter("EndDate", date.EndDate));
+                            command.Parameters.Add(new OracleParameter("ReturnDate", FinalReturnDate));
+                            command.Parameters.Add(new OracleParameter("LeadName", date.LeadName));
+                            //if (date.HaveProject == true)
+                            //{
+                            //    command.Parameters.Add(new OracleParameter("HaveProject", 'Y'));
+                            //}
+                            //else
+                            //{
+                               command.Parameters.Add(new OracleParameter("HaveProject", (date.HaveProject).ToString()));
+                            //}    
+                            command.ExecuteNonQuery();
+                        }
 
-        //            try
-        //            {
-        //                command.Connection.Open();
-        //                command.ExecuteNonQuery();
-        //                command.Connection.Close();
-        //            }
-        //            catch (OracleException ex)
-        //            {
-        //                Console.WriteLine(ex.ToString());
-        //                throw;
-        //            }
-        //            status = true;
-        //        }
-        //    }
-        //    return status;
-        //}
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        throw;
+                    }
+                    status = true;
+                }
+            }
+            return status;
+        }
 
         public int GetHeaderRequest(InsertNewRequestViewModel data)
         {

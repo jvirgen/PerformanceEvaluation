@@ -68,25 +68,45 @@ namespace PES.Controllers
         /// <param name="model"></param>
         /// <returns>Redirect to Historial Screen</returns>
         [HttpPost]
-        public ActionResult InsertNewRequestData(InsertNewRequestViewModel model, NewVacationDates newDates)
+        public ActionResult InsertNewRequestData(InsertNewRequestViewModel model)
         {
             _headerReqService.InsertVacHeaderReq(model);
 
-            string[] dates;
-            int idRequest = _subReqService.GetHeaderRequest(model);            //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
-            foreach (var date in model.SubRequest)
+            int idRequest = _subReqService.GetHeaderRequest(model);
+              
+            string[] StartAndEndate;
+          
+            //foreach (var date in model.SubRequest)
+            //{
+            //    StartAndEndate = date.Date.Split('-');
+            //    date.StartDate = StartAndEndate[0].Trim();
+            //    date.EndDate = StartAndEndate[1].Trim();
+            //}
+            for (int i = 0; i  < model.SubRequest.Count(); i++)
             {
-                //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
-                dates = date.Date.Split('-');
+                StartAndEndate = model.SubRequest[i].Date.Split('-');
 
-                dates[0] = Convert.ToString(date.StartDate);
-                dates[1] = Convert.ToString(date.EndDate);
-                //date.EndDate = Convert.ToDateTime(dates[1]);
+
+                ////model.SubRequest[i].StartDate = Convert.ToDateTime (StartAndEndate[0].Trim());
+                ////model.SubRequest[i].EndDate = Convert.ToDateTime(StartAndEndate[1].Trim());
+
+                string startDate = StartAndEndate[0].Trim();
+                string month = startDate.Substring(0 , 2 );
+                string day = startDate.Substring(3, 2) ;
+                string year = startDate.Substring(6, 4 );
+                string finalStarDate = (day + "/" + month + "/" + year);
+
+                string endDate = StartAndEndate[1].Trim() ;
+                string eMonth = endDate.Substring(0, 2);
+                string eDay = endDate.Substring(3, 2);
+                string eYear = endDate.Substring(6, 4);
+                string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+
+                model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
+                model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
+
             }
-            
-            ////_subReqService.InsertSubReq(newDates);
-            // Return a message in the screen a redirect to the Historical Request Screen.
-
+            _subReqService.InsertSubReq(idRequest, model.SubRequest);
             return RedirectToAction("HistoricalResource");
         }
 
@@ -306,7 +326,7 @@ namespace PES.Controllers
         public JsonResult ValidateResultDate(DateTime returnDate)
         {
             //send parameter where will be validate
-
+            returnDate = returnDate.AddDays(1);
             // check if is holiday 
             var ifIsHoliday = IsHoliday(returnDate);
 
