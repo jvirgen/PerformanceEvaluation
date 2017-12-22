@@ -17,6 +17,9 @@ namespace PES.ViewModels
         /// </summary>  
         public int EmployeeId { get; set; }
 
+        public string EmployeeEmail { get; set; }
+
+        public string ManagerEmail { get; set; }
         /// <summary>
         /// Title of the request
         /// </summary>

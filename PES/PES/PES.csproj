@@ -161,6 +161,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CompetencesSection.cs" />
     <Compile Include="Models\Description.cs" />
+    <Compile Include="Services\EmailInsertNewRequestService.cs" />
     <Compile Include="ViewModels\CancelRequestViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />

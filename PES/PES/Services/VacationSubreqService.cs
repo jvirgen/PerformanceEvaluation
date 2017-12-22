@@ -104,8 +104,8 @@ namespace PES.Services
                     " :StartDate," +
                     " :EndDate," +
                     " :ReturnDate," +
-                    " :LeadName," +
-                    " :HaveProject)";
+                    " :HaveProject," +
+                    " :LeadName)";
 
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
@@ -125,15 +125,8 @@ namespace PES.Services
                             command.Parameters.Add(new OracleParameter("StartDate", date.StartDate));
                             command.Parameters.Add(new OracleParameter("EndDate", date.EndDate));
                             command.Parameters.Add(new OracleParameter("ReturnDate", FinalReturnDate));
-                            command.Parameters.Add(new OracleParameter("LeadName", date.LeadName));
-                            //if (date.HaveProject == true)
-                            //{
-                            //    command.Parameters.Add(new OracleParameter("HaveProject", 'Y'));
-                            //}
-                            //else
-                            //{
-                               command.Parameters.Add(new OracleParameter("HaveProject", (date.HaveProject).ToString()));
-                            //}    
+                            command.Parameters.Add(new OracleParameter("HaveProject", (date.HaveProject).ToString()));
+                            command.Parameters.Add(new OracleParameter("LeadName", date.LeadName));                    
                             command.ExecuteNonQuery();
                         }
 

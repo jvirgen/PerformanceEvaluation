@@ -27,7 +27,7 @@ namespace PES.Controllers
         //Added
         private HolidayService _holidayService;
         private EmailCancelRequestService _emailCancelRequestService;
-       
+        private EmailInsertNewRequestService _emailInsertNewRequestService;
         // private EmailService 
 
         public VacationRequestController()
@@ -39,7 +39,7 @@ namespace PES.Controllers
             //Added
             _holidayService = new HolidayService();
             _emailCancelRequestService = new EmailCancelRequestService();
-          
+            _emailInsertNewRequestService = new EmailInsertNewRequestService();
         }
 
         /// <summary>
@@ -70,43 +70,49 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult InsertNewRequestData(InsertNewRequestViewModel model)
         {
+            //Insert Header Request.
             _headerReqService.InsertVacHeaderReq(model);
-
+            //Obtain id header request inserted.
             int idRequest = _subReqService.GetHeaderRequest(model);
               
             string[] StartAndEndate;
           
-            //foreach (var date in model.SubRequest)
-            //{
-            //    StartAndEndate = date.Date.Split('-');
-            //    date.StartDate = StartAndEndate[0].Trim();
-            //    date.EndDate = StartAndEndate[1].Trim();
-            //}
             for (int i = 0; i  < model.SubRequest.Count(); i++)
             {
                 StartAndEndate = model.SubRequest[i].Date.Split('-');
-
-
-                ////model.SubRequest[i].StartDate = Convert.ToDateTime (StartAndEndate[0].Trim());
-                ////model.SubRequest[i].EndDate = Convert.ToDateTime(StartAndEndate[1].Trim());
-
+                //Changing date format.
                 string startDate = StartAndEndate[0].Trim();
                 string month = startDate.Substring(0 , 2 );
                 string day = startDate.Substring(3, 2) ;
                 string year = startDate.Substring(6, 4 );
                 string finalStarDate = (day + "/" + month + "/" + year);
-
+                //Changing date format.
                 string endDate = StartAndEndate[1].Trim() ;
                 string eMonth = endDate.Substring(0, 2);
                 string eDay = endDate.Substring(3, 2);
                 string eYear = endDate.Substring(6, 4);
                 string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
-
+                //Sending Information to ViewModel.
                 model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
                 model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
 
             }
-            _subReqService.InsertSubReq(idRequest, model.SubRequest);
+            //inserting sub request.
+            _subReqService.InsertSubReq(idRequest, model.SubRequest);        
+       
+
+            List<InsertNewRequestViewModel> data = new List<InsertNewRequestViewModel>();
+            data = _emailInsertNewRequestService.GetEmail(idRequest);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments );
+            
+            //return to History View.
             return RedirectToAction("HistoricalResource");
         }
 
@@ -273,12 +279,10 @@ namespace PES.Controllers
             // Update status of the request
 
            _emailCancelRequestService.ChangeRequestStatus( model.HeaderRequestId, model.ReasonCancellation);
-
-
             // Send email if success
             // Get request by id
             List<CancelRequestViewModel> data = new List<CancelRequestViewModel>();
-            data =   _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
+            data =  _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
             string employeeEmail = data[0].EmployeeEmail;
             string managerEmail = data[0].ManagerEmail;
             string reasonCancellation = data[0].ReasonCancellation;
@@ -319,7 +323,6 @@ namespace PES.Controllers
             //Date confirm
             return Json(flag, JsonRequestBehavior.AllowGet);
         }
-
 
 
         [HttpGet]
