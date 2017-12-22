@@ -8,6 +8,11 @@
         $(document).on('change', 'input.datesBox', getDaysRequested);
        
     });
+
+    $('#unpaid').click(function () {
+
+        this.checked ? $('#lead').prop('disabled', true) : $('#lead').prop('disabled', false);
+    });
 });
 
 
