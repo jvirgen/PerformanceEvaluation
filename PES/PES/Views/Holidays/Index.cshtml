@@ -14,7 +14,7 @@
                 <div class="col-md-3 pull-right">*@
 <div class="row">
     <div class="col-md-12">
-        <h2 style="text-align:center;">Holidays Main Menu</h2>
+        <h2 style="text-align:center;">Holidays</h2>
     </div>
 </div>
 <table id="holidayTable" class="table table-bordered">
@@ -22,7 +22,9 @@
         <tr>
             <th>Day</th>
             <th>Celebration</th>
-            <th><button type="button" class="btn btn-success">Add a holiday</button></th>
+            <th><a href="@Url.Action("Create", "Holidays")" class="btn btn-success" style="width:100%;">Add a holiday </a></th>
+            
+
         </tr>
     </thead>
     <tbody>
