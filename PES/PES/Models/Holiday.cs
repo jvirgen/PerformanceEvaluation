@@ -24,7 +24,7 @@ namespace PES.Models
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Day { get; set; }
 
-
+        public string InsertDay { get; set; }
         /// <summary>
         ///Description 
         /// </summary>
