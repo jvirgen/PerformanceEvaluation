@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $(function() {
+    $(function () {
         $('.daterange').daterangepicker({});
 
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
@@ -9,6 +9,19 @@
        
     });
 });
+
+$(document).ready(function () {
+    $(function () {
+        $('.datetimer').datetimepicker();
+
+        //statusColor();//changes the color of the status, <span> tag in VacationRequest view
+        ////editHolidayDay();
+        ////this event caches any modification on a start/end date field
+        //$(document).on('change', 'input.datesBox', getDaysRequested);
+
+    });
+});
+
 
 /*
 SUPPOSEDLY OBSOLETE
