@@ -13,9 +13,17 @@
 
         this.checked ? $('#lead').prop('disabled', true) : $('#lead').prop('disabled', false);
     });
+
+    $('#sendRequest').click(function () {
+        $("#startDates ").html($("#start").val());
+        $("#startAndEnd ").attr("style", "color:black;");
+        $("#returnDates").html($("#returnDay").val());
+        $("#retrunDays ").attr("style", "color:black;");
+        $(".activeSpan").attr("style", "color:dodgerblue");
+    });
 });
 
-
+   
 
 function addDate(btnAdd) {
     var last = $('.datesGroup')[$('.datesGroup').length - 1];
