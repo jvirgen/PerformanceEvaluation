@@ -123,58 +123,6 @@ namespace PES.Controllers
         }
 
         /// <summary>
-        /// GET: New vacation requests. The metod only need a User Id parameter 
-        /// </summary>
-        /// <param name="userid"></param>
-        ///// <returns>New Request Screen</returns>
-
-
-
-
-        //[HttpPost]
-        //public ActionResult InsertNewHoliday(Holiday model)
-        //{
-        //    string[] dates;
-        //    string description;
-        //    //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
-
-        //    foreach (var date in model.Day)
-        //    {
-        //        //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
-        //        dates = date.Date.Split('-');
-        //        date.StartDate = Convert.ToDateTime(dates[0]);
-        //        date.EndDate = Convert.ToDateTime(dates[1]);
-
-        //    }
-        //    // Return a message in the screen a redirect to the Historical Request Screen.
-        //    return View();
-        //}
-
-
-
-        /// <summary>
-        /// GET: VacationRequest Existing
-        /// </summary>
-        /// <returns></returns>
-        //[HttpPost]
-        //public ActionResult VacationRequest(InsertNewRequestViewModel model)
-        //{ 
-        //    string[] dates;
-        //    //Here add a new instance of the class VacationHeaderReqService to insert the data in the DB (InsertVacHeaderReq metod)
-
-        //    foreach (var date in model.SubRequest)
-        //    {
-        //        //Here insert the data of the SubResquest in the DB using the metod InsertSubReq in VacationSubreqService
-        //        dates = date.Date.Split('-');
-        //        date.StartDate = Convert.ToDateTime(dates[0]);
-        //        date.EndDate = Convert.ToDateTime(dates[1]);
-
-        //    }
-        //    // Return a message in the screen a redirect to the Historical Request Screen.
-        //    return RedirectToAction("HistoricalResource");
-        //}
-
-        /// <summary>
         /// GET: VacationRequest Existing
         /// </summary>
         /// <returns></returns>
@@ -261,29 +209,10 @@ namespace PES.Controllers
             return View(listHeaderReqVM);
         }
 
-        //[HttpGet]
-        //public ActionResult GetCancelRequest(int headerReqId)
-        //{
-
-        //    VacHeadReqViewModel currentRequest = new VacHeadReqViewModel();
-        //    currentRequest = _headerReqService.GetAllVacRequestInfoByVacReqId(headerReqId);
-        //    Employee currentUser = new Employee();
-        //    currentUser = _employeeService.GetByID(currentRequest.EmployeeId);
-
-        //    ViewBag.status = currentRequest.status;
-        //    currentRequest.FreeDays = currentUser.Freedays;
-        //    return View("VacationRequest", currentRequest);
-        //}
-
         [HttpPost]
         public ActionResult CancelRequest(CancelRequestViewModel model)
         {
-
-
-            //request
-            //Email
             // Update status of the request
-
            _emailCancelRequestService.ChangeRequestStatus( model.HeaderRequestId, model.ReasonCancellation);
             // Send email if success
             // Get request by id

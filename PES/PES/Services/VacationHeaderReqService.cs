@@ -125,7 +125,7 @@ namespace PES.Services
                             header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
                             header.ReplayComment = Convert.ToString(reader["REPLAY_COMMENT"]);
                             header.LeadName = Convert.ToString(reader["LEAD_NAME"]);
-                            header.HaveProject = Convert.ToChar(reader["HAVE_PROJECT"]);
+                            header.HaveProject = Convert.ToString(reader["HAVE_PROJECT"]);
                             header.NoUnpaidDays = Convert.ToInt32(reader["NO_UNPAID_DAYS"]);
                             header.status = Convert.ToString(reader["REQ_STATUS"]);
                             header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
@@ -192,7 +192,7 @@ namespace PES.Services
                             Header.Title = Convert.ToString(reader["TITLE"]);
                             Header.NoVacDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             Header.ReqStatusId = Convert.ToInt32(reader["ID_REQ_STATUS"]);
-                            Header.HaveProject = Convert.ToChar(reader["HAVE_PROJECT"]);
+                            Header.HaveProject = Convert.ToString(reader["HAVE_PROJECT"]);
                             Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
                             Header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
                             Header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);

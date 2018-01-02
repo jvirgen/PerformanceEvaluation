@@ -366,6 +366,7 @@
     <Content Include="Scripts\ExportDataTables\vfs_fonts.js" />
     <Content Include="Scripts\FileValidation.js" />
     <Content Include="Scripts\history-report.js" />
+    <Content Include="Scripts\Holidays.js" />
     <Content Include="Scripts\i18n\az.js" />
     <Content Include="Scripts\i18n\bg.js" />
     <Content Include="Scripts\i18n\ca.js" />
@@ -495,6 +496,7 @@
     <Content Include="Views\Shared\_EditHolidaysPartial.cshtml" />
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
     <Content Include="Views\Shared\_ModalInsertNewRequestPartial.cshtml" />
+    <Content Include="Views\Holidays\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
