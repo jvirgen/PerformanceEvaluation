@@ -13,6 +13,7 @@ using System.Text;
 using System.Net;
 using System.Web.Routing;
 using System.Web.Optimization;
+using System.IO;
 
 namespace PES.Controllers
 {
@@ -70,6 +71,11 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult InsertNewRequestData(InsertNewRequestViewModel model)
         {
+            //:::::::::::::::::Obtain fullPath ::::::::::::::::::
+
+            
+            //::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
             //Insert Header Request.
             _headerReqService.InsertVacHeaderReq(model);
             //Obtain id header request inserted.
@@ -110,7 +116,7 @@ namespace PES.Controllers
                 employeeEmail,
                 managerEmail
             };
-            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments );
+            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.myFile);
             
             //return to History View.
             return RedirectToAction("HistoricalResource");

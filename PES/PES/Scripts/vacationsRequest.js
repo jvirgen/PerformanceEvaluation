@@ -21,9 +21,13 @@
         $("#retrunDays ").attr("style", "color:black;");
         $(".activeSpan").attr("style", "color:dodgerblue");
     });
+    $('#my-button').click(function () {
+        $('#my-file').click();
+        
+    });
 });
 
-   
+
 
 function addDate(btnAdd) {
     var last = $('.datesGroup')[$('.datesGroup').length - 1];
