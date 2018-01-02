@@ -494,6 +494,7 @@
     <Content Include="Views\Holidays\Index.cshtml" />
     <Content Include="Views\Shared\_EditHolidaysPartial.cshtml" />
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
+    <Content Include="Views\Shared\_ModalInsertNewRequestPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
