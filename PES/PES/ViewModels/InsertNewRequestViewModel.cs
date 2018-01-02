@@ -17,6 +17,9 @@ namespace PES.ViewModels
         /// </summary>  
         public int EmployeeId { get; set; }
 
+        public string EmployeeEmail { get; set; }
+
+        public string ManagerEmail { get; set; }
         /// <summary>
         /// Title of the request
         /// </summary>
@@ -26,7 +29,7 @@ namespace PES.ViewModels
         /// <summary>
         /// Number of days requested 
         /// </summary>
-        public int NoVacDays { get; set; }
+        public int daysReq { get; set; }
 
         /// <summary>
         /// Comments
@@ -42,13 +45,14 @@ namespace PES.ViewModels
         /// <summary>
         /// List of New vacation date Viewmodel 
         /// </summary>
-        public IEnumerable<NewVacationDates> SubRequest { get; set; }
+        public List<NewVacationDates> SubRequest { get; set; }
 
         /// <summary>
         /// Number of vacation days that employee have 
         /// </summary>
         public int Freedays {get; set; }
 
-
+        public VacHeadReqViewModel VacHeaderRequest { get; set;  } 
+        
     }
 }

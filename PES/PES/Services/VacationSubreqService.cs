@@ -5,6 +5,8 @@ using System.Web;
 using PES.DBContext;
 using PES.Models;
 using Oracle.ManagedDataAccess.Client;
+using PES.ViewModels;
+
 
 namespace PES.Services
 {
@@ -80,52 +82,97 @@ namespace PES.Services
         /// </summary>
         /// <param name="vacSubReq"></param>
         /// <returns>True if the insert was successful</returns>
-        public bool InsertSubReq(VacationSubreq vacSubReq)
+        /// 
+
+
+        public bool InsertSubReq(int idHeaderReq, List<NewVacationDates> model)
         {
             bool status = false;
-
             using (OracleConnection db = dbContext.GetDBConnection())
             {
-                string query = @"INSERT INTO 
-                                    VACATION_SUBREQ 
-                                        (ID_HEADER_REQ, 
-                                        START_DATE, 
-                                        END_DATE, 
-                                        RETURN_DATE, 
-                                        LEAD_NAME, 
-                                        HAVE_PROJECT) 
-                                VALUES
-                                    (:IdHeaderReq, 
-                                    :StartDate, 
-                                    :EndDate, 
-                                    :ReturnDate, 
-                                    :LeadName, 
-                                    :HaveProject)";
+                string query = "INSERT INTO PE.VACATION_SUBREQ" +
+                    "(" +
+                    "ID_HEADER_REQ," +
+                    "START_DATE," +
+                    "END_DATE," +
+                    "RETURN_DATE," +
+                    "HAVE_PROJECT," +
+                    "LEAD_NAME)" +
+                    "VALUES" +
+                    "(" +
+                    " :IdHeaderReq, " +
+                    " :StartDate," +
+                    " :EndDate," +
+                    " :ReturnDate," +
+                    " :HaveProject," +
+                    " :LeadName)";
 
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
-                    command.Parameters.Add(new OracleParameter("IdHeaderReq", vacSubReq.VacationHeaderReqId));
-                    command.Parameters.Add(new OracleParameter("StartDate", vacSubReq.StartDate));
-                    command.Parameters.Add(new OracleParameter("EndDate", vacSubReq.EndDate));
-                    command.Parameters.Add(new OracleParameter("ReturnDate", vacSubReq.ReturnDate));
-                    command.Parameters.Add(new OracleParameter("LeadName", vacSubReq.LeadName));
-                    command.Parameters.Add(new OracleParameter("HaveProject", vacSubReq.HaveProject));
-
                     try
                     {
+                      
                         command.Connection.Open();
-                        command.ExecuteNonQuery();
+                        foreach (var date in model)
+                        {
+                            string returnDate = date.ReturnDate;
+                            string rMonth = returnDate.Substring(0, 2);
+                            string rDay = returnDate.Substring(3, 2);
+                            string rYear = returnDate.Substring(6, 4);
+                            string FinalReturnDate = (rDay + "/" + rMonth + "/" + rYear);
+
+                            command.Parameters.Add(new OracleParameter("IdHeaderReq", idHeaderReq));
+                            command.Parameters.Add(new OracleParameter("StartDate", date.StartDate));
+                            command.Parameters.Add(new OracleParameter("EndDate", date.EndDate));
+                            command.Parameters.Add(new OracleParameter("ReturnDate", FinalReturnDate));
+                            command.Parameters.Add(new OracleParameter("HaveProject", (date.HaveProject).ToString()));
+                            command.Parameters.Add(new OracleParameter("LeadName", date.LeadName));                    
+                            command.ExecuteNonQuery();
+                        }
+
                         command.Connection.Close();
                     }
                     catch (OracleException ex)
                     {
-                        Console.WriteLine(ex.ToString());
                         throw;
                     }
                     status = true;
                 }
             }
             return status;
+        }
+
+        public int GetHeaderRequest(InsertNewRequestViewModel data)
+        {
+            int iDHeaderReq = 0;
+            try
+            {
+
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    
+                    string query =  "select   max (id_header_req) as    \"currentHeaderReq\"" + 
+                                    "from      PE.VACATION_HEADER_REQ " +
+                                    "where     id_employee = '" + data.EmployeeId + "'" +
+                                    "order by  id_header_req  asc ";
+
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            iDHeaderReq = Convert.ToInt32(reader["currentHeaderReq"]);
+                        }
+                    }
+                    db.Close();
+                }
+             }
+                catch (OracleException ex)
+                {
+                    throw;
+                }
+            return iDHeaderReq;
         }
     }
 }

@@ -41,12 +41,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="EPPlus">
       <HintPath>..\packages\EPPlus.4.0.4\lib\net20\EPPlus.dll</HintPath>
     </Reference>
@@ -154,7 +148,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HolidaysController.cs" />
-    <Compile Include="Controllers\Holidays2Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LatenessController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
@@ -168,7 +161,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CompetencesSection.cs" />
     <Compile Include="Models\Description.cs" />
-    <Compile Include="Models\PESContextx.cs" />
+    <Compile Include="Services\EmailInsertNewRequestService.cs" />
     <Compile Include="ViewModels\CancelRequestViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />
@@ -498,15 +491,9 @@
     <Content Include="Views\Shared\_ModalCancelRequestPartial.cshtml" />
     <Content Include="Views\Shared\_NewVacationDatesPartial.cshtml" />
     <Content Include="Views\Shared\_VacationDatesPartial.cshtml" />
-    <Content Include="Views\Holidays2\Index.cshtml" />
+    <Content Include="Views\Holidays\Index.cshtml" />
     <Content Include="Views\Shared\_EditHolidaysPartial.cshtml" />
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
-    <Content Include="Views\Holidays2\Add.cshtml" />
-    <Content Include="Views\Holidays\Create.cshtml" />
-    <Content Include="Views\Holidays\Delete.cshtml" />
-    <Content Include="Views\Holidays\Details.cshtml" />
-    <Content Include="Views\Holidays\Edit.cshtml" />
-    <Content Include="Views\Holidays\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
