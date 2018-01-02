@@ -245,3 +245,5 @@ ModelManifest.xml
 .fake/
 "PES/.vs/" 
 "PES/PES/obj/Debug/" 
+/PES/PES/Views/Holidays/Edit.cshtml
+/PES/PES/Models/PESContextx.cs

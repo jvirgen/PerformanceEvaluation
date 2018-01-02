@@ -16,60 +16,53 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
-        /// <summary>
-        /// Metod to INSERT a subrequest in the DB using a VacationSubreq object
-        /// </summary>
-        /// <param name="holiday"></param>
-        /// <returns>True if the insert was successful</returns>
-        //public bool InsertSubReq(Holiday holiday)
-        //{
-        //    bool status = false;
 
-        //    //establish a connection
-        //    try
-        //    {
+        public bool CreateHoliday(Holiday holiday)
+        {
+            bool status = false;
+            DateTime date = new DateTime();
+            //establish a connection
+            try
+            {
 
-        //        using (OracleConnection db = dbContext.GetDBConnection())
-        //        {
-        //            string query = @"INSERT INTO HOLIDAYS 
-        //                                ( HOLIDAY_DAY,
-        //                                DESCRIPTION) 
-        //                        VALUES
-        //                            (:Holiday,
-        //                             :Description)";
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    string query = @"INSERT INTO HOLIDAYS 
+                                        ( HOLIDAY_DAY,
+                                          DESCRIPTION) 
+                                VALUES
+                                    (:Holiday,
+                                     :Description)";
 
-        //            using (OracleCommand command = new OracleCommand(query, db))
-        //            {
-        //                command.Parameters.Add(new OracleParameter("Holiday", holiday.Day));
-        //                command.Parameters.Add(new OracleParameter("Description", holiday.Description));
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("Holiday", holiday.InsertDay ));
+                        command.Parameters.Add(new OracleParameter("Description", holiday.Description));
 
 
-        //                try
-        //                {
-        //                    command.Connection.Open();
-        //                    command.ExecuteNonQuery();
-        //                    command.Connection.Close();
-        //                }
-        //                catch (OracleException ex)
-        //                {
-        //                    Console.WriteLine(ex.ToString());
-        //                    throw;
-        //                }
-        //                status = true;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception xe)
-        //    {
-        //        throw;
-        //    }
+                        try
+                        {
+                            command.Connection.Open();
+                            command.ExecuteNonQuery();
+                            command.Connection.Close();
+                        }
+                        catch (OracleException ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                            throw;
+                        }
+                        status = true;
+                    }
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+            return status;
+        }
 
-        //    return status;
-        //}
-        /// <summary>
-        /// Selec date and description  from db 
-        /// </summary>
-        /// <returns></returns>
+
         public List<Holiday> GetAllHolidays()
         {
             List<Holiday> holidays;
