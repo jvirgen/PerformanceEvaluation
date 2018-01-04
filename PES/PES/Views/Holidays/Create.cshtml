@@ -27,7 +27,7 @@
                         </div>
                         <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" />
                     </div>*@
-                @Html.TextBoxFor(model => model.InsertDay, "{0:MM/DD/YYYY}", new { @class = "date-picker form-control", @required = "required" })
+                @Html.TextBoxFor(model => model.InsertDay, "{0:MM/DD/YYYY}", new { @class = "date-picker form-control createFormInput", @required = "required" })
                 @Html.ValidationMessageFor(model => model.InsertDay, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control createFormInput" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -65,7 +65,7 @@
         <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary createFormSubmit" />
             </div>
         </div>
     </div>

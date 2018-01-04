@@ -366,6 +366,7 @@
     <Content Include="Scripts\ExportDataTables\vfs_fonts.js" />
     <Content Include="Scripts\FileValidation.js" />
     <Content Include="Scripts\history-report.js" />
+    <Content Include="Scripts\holidays.js" />
     <Content Include="Scripts\i18n\az.js" />
     <Content Include="Scripts\i18n\bg.js" />
     <Content Include="Scripts\i18n\ca.js" />
