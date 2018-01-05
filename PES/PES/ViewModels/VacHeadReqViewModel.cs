@@ -7,7 +7,7 @@ using PES.Models;
 
 namespace PES.ViewModels
 {
-    public class VacHeadReqViewModel : VacationHeaderReq 
+    public class VacHeadReqViewModel : VacationHeaderReq
     {
         /// <summary>
         /// Fist name of the employee
@@ -17,7 +17,7 @@ namespace PES.ViewModels
         /// <summary>
         /// Last name of the employee
         /// </summary>
-        public string LastName { get; set; } 
+        public string LastName { get; set; }
 
         /// <summary>
         /// Days requested 
@@ -54,7 +54,8 @@ namespace PES.ViewModels
         /// </summary>
         public string HaveProject { get; set; }
 
-        public CancelRequestViewModel Modal { get; set; }
+        public StatusRequestViewModel Modal { get; set; }
 
     }
+
 }
