@@ -30,7 +30,15 @@ namespace PES.Controllers
         {
             return View();
         }
-        
+
+        [HttpGet]
+        public ActionResult Delete(int holidayId)
+        {
+            _holidayService.DeleteHoliday(holidayId);
+            return RedirectToAction("Index");
+        }
+
+        // POST: Holidays1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Holiday holiday)
@@ -49,5 +57,13 @@ namespace PES.Controllers
             }
             return RedirectToAction("Create");
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteHoliday(Holiday holiday)
+        {
+
+            return View();
+        }
+
     }
 }
