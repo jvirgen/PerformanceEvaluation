@@ -12,17 +12,15 @@ using System.Net;
 using PES.ViewModels;
 using System.Web.Routing;
 
-
-
 namespace PES.Services
 {
-    public class EmailCancelRequestService
+    public class EmailApproveRequestService
     {
         private PESDBContext dbContext = new PESDBContext();
     
        
         private SmtpClient client;
-        public EmailCancelRequestService()
+        public EmailApproveRequestService()
         {
             dbContext = new PESDBContext();
 
@@ -33,11 +31,9 @@ namespace PES.Services
             client = new SmtpClient("smtp-mail.outlook.com");
         }
 
-
         public bool SendEmail(string email, string subject, string bodyMessage)
         {
-          
-            
+                   
             MailMessage msje = new MailMessage();
             msje.From = new MailAddress(Globals.SMTPOutlookEmail);
             //msje.To.Add(ManagerEmail);
@@ -117,7 +113,7 @@ namespace PES.Services
             return dataRequests;
         }
 
-        public bool ChangeRequestStatus(int headerRequestId, string ReasonCancellation)
+        public bool ChangeRequestStatus(int headerRequestId, string approveReason , string noVacDays)
         {
 
             try
@@ -128,8 +124,9 @@ namespace PES.Services
                     db.Open();
 
                     string query = @"UPDATE   PE.VACATION_HEADER_REQ 
-                                                  SET     ID_REQ_STATUS = 4, 
-                                                          REPLAY_COMMENT =  '"+ ReasonCancellation + "' " +
+                                                  SET     ID_REQ_STATUS = 3, 
+                                                          REPLAY_COMMENT =  '"+ approveReason  + "' " +
+
                                                           "WHERE    ID_HEADER_REQ = '" + headerRequestId + "'" ;
 
                     using (OracleCommand command = new OracleCommand(query, db))
@@ -147,5 +144,31 @@ namespace PES.Services
 
             return true;
         }
+        //public bool LessNoVacDays(string employeeEmail , int NoVacRequested)
+        //{
+        //    try
+        //    {
+
+        //        using (OracleConnection db = dbContext.GetDBConnection())
+        //        {
+        //            db.Open();
+
+        //            string query = @" UPDATE   PE.EMPLOYEE 
+        //                              SET     FREE_DAYS = (FREE_DAYS - days ) WHERE   EMAIL = '" + employeeEmail + "' ";
+
+        //            using (OracleCommand command = new OracleCommand(query, db))
+        //            {
+        //                OracleDataReader reader = command.ExecuteReader();
+        //            }
+        //            db.Close();
+        //        }
+        //    }
+        //    catch (Exception xe)
+        //    {
+        //        throw;
+        //    }
+
+        //    return true;
+        //}
     }
 }
