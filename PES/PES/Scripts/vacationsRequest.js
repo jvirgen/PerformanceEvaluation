@@ -21,9 +21,14 @@
         $("#retrunDays ").attr("style", "color:black;");
         $(".activeSpan").attr("style", "color:dodgerblue");
     });
+
     $('#my-button').click(function () {
         $('#my-file').click();
         
+    });
+
+    $('#aprove').click(function () {
+        $("#daysReq").val($("#approveDays").val());
     });
 });
 
@@ -136,19 +141,6 @@ function ValidateSameMonth(start, end, count) {
         })
         .always(function () { });
 }
-
-//function disableLeadNameInput()
-//{
-//    var checkbox = document.querySelector("#unpaid");
-//    var input = document.querySelector("#lead");
-
-//    var toogleInput = function (e) {
-//        input.disabled = !e.target.checked;
-//    };
-
-//    toogleInput({ target: checkbox });
-//    checkbox.addEventListener("change", toogleInput);
-//}
 
 function ValidateStartDate(start, end,  count) {
     var sD = new Date(start);

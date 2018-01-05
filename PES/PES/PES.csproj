@@ -161,8 +161,10 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CompetencesSection.cs" />
     <Compile Include="Models\Description.cs" />
+    <Compile Include="Services\EmailRejectRequestService.cs" />
+    <Compile Include="Services\EmailApproveRequestService.cs" />
     <Compile Include="Services\EmailInsertNewRequestService.cs" />
-    <Compile Include="ViewModels\CancelRequestViewModel.cs" />
+    <Compile Include="ViewModels\StatusRequestViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\Globals.cs" />
@@ -497,6 +499,8 @@
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
     <Content Include="Views\Shared\_ModalInsertNewRequestPartial.cshtml" />
     <Content Include="Views\Holidays\Create.cshtml" />
+    <Content Include="Views\Shared\_ModalApproveRequestPartial.cshtml" />
+    <Content Include="Views\Shared\_ModalRejectRequestPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

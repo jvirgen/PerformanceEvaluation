@@ -28,13 +28,13 @@
             <div id="leadName" class="col-md-4">
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
-                    <input id="lead" type="text" name="subRequest[0].lead_name" value="@Model.LeadName" @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} class="form-control leadBox" data-val="true" data-val-required="Lead name is required" />
+                    <input id="lead" type="text" name="subRequest[0].lead_name" value="@Model.LeadName" @{@(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" })} class="form-control leadBox"/>
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
             </div>
             <div id="checkarea" class="col-md-2 checkbox">
                 <label id="checktext">
-                    <input type="checkbox" id="unpaid" checked="@(Convert.ToChar(Model.HaveProject) == 'N' ? "checked" : "")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
+                    <input type="checkbox" id="unpaid" checked="@(Convert.ToString(Model.HaveProject) == "False" ? "checked" : "")" @(Model.status.ToLower() == "rejected" ? null : new { disabled = "disabled" }) />
                     <script>
                         document.getElementById("checktext").innerHTML += "I do not have a project";
                     </script>

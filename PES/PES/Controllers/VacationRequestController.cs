@@ -27,8 +27,11 @@ namespace PES.Controllers
         private VacationSubreqService _subReqService;
         //Added
         private HolidayService _holidayService;
-        private EmailCancelRequestService _emailCancelRequestService;
         private EmailInsertNewRequestService _emailInsertNewRequestService;
+        // status 
+        private EmailCancelRequestService _emailCancelRequestService;
+        private EmailApproveRequestService _emailApproveRequestService;
+        private EmailRejectRequestService _emailRejectRequestService;
         // private EmailService 
 
         public VacationRequestController()
@@ -41,6 +44,8 @@ namespace PES.Controllers
             _holidayService = new HolidayService();
             _emailCancelRequestService = new EmailCancelRequestService();
             _emailInsertNewRequestService = new EmailInsertNewRequestService();
+            _emailApproveRequestService = new EmailApproveRequestService();
+            _emailRejectRequestService = new EmailRejectRequestService();
         }
 
         /// <summary>
@@ -147,7 +152,7 @@ namespace PES.Controllers
 
             ViewBag.status = currentRequest.status;
             currentRequest.FreeDays = currentUser.Freedays;
-            currentRequest.Modal = new CancelRequestViewModel()
+            currentRequest.Modal = new StatusRequestViewModel()
             {
                 HeaderRequestId = currentRequest.VacationHeaderReqId
             };
@@ -208,27 +213,68 @@ namespace PES.Controllers
 
             return View(listHeaderReqVM);
         }
-
+        //method to change reques and send emails 
         [HttpPost]
-        public ActionResult CancelRequest(CancelRequestViewModel model)
+        public ActionResult AcctionRequest(StatusRequestViewModel model)
         {
-            // Update status of the request
-           _emailCancelRequestService.ChangeRequestStatus( model.HeaderRequestId, model.ReasonCancellation);
-            // Send email if success
-            // Get request by id
-            List<CancelRequestViewModel> data = new List<CancelRequestViewModel>();
-            data =  _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
-            string employeeEmail = data[0].EmployeeEmail;
-            string managerEmail = data[0].ManagerEmail;
-            string reasonCancellation = data[0].ReasonCancellation;
-            List<string> emails = new List<string>()
+            if( Convert.ToInt16 (model.currentStatusId) == 4)
+            {
+                // Update status of the request
+                _emailCancelRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
+                // Send email if success
+                // Get request by id
+                List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+                data = _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
+                string employeeEmail = data[0].EmployeeEmail;
+                string managerEmail = data[0].ManagerEmail;
+                string reasonCancellation = data[0].Reason;
+                List<string> emails = new List<string>()
             {
                 employeeEmail,
                 managerEmail
             };
-            _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
+                _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
+               
+            }
+            else if (Convert.ToInt16(model.currentStatusId) == 2)
+            {
+                // Update status of the request
+                _emailRejectRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
+                // Send email if success
+                // Get request by id
+                List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+                data = _emailRejectRequestService.GetDataRequest(model.HeaderRequestId);
+                string employeeEmail = data[0].EmployeeEmail;
+                string managerEmail = data[0].ManagerEmail;
+                string rejectReason = data[0].Reason;
+                List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+                _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
 
-             return RedirectToAction("HistoricalResource");
+            }
+            else if (Convert.ToInt16(model.currentStatusId) == 3)
+            {
+                // Update status of the request
+                _emailApproveRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason, model.NoVacRequested);
+                // Send email if success
+                // Get request by id
+                List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+                data = _emailApproveRequestService.GetDataRequest(model.HeaderRequestId);
+                string employeeEmail = data[0].EmployeeEmail;
+                string managerEmail = data[0].ManagerEmail;
+                string approveReason = data[0].Reason;
+                List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+                _emailApproveRequestService.SendEmails(emails, " Approved Request", approveReason);
+                //_emailApproveRequestService.LessNoVacDays(employeeEmail,  Convert.ToInt16(model.NoVacRequested));
+            }
+            return RedirectToAction("HistoricalResource");
         }
 
         [HttpGet]
