@@ -16,6 +16,44 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
+        public bool EditHoliday(Holiday holiday)
+        {
+            bool status = false;
+
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    string query = @"UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = '18/01/19', HOLIDAYS.DESCRIPTION = 'house' WHERE ID_HOLIDAY = 38;";
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("Holiday_id", holiday.HolidayId));
+                        command.Parameters.Add(new OracleParameter("Holiday_day", holiday.InsertDay));
+                        command.Parameters.Add(new OracleParameter("Holiday_description", holiday.Description));
+
+                        try
+                        {
+                            command.Connection.Open();
+                            command.ExecuteNonQuery();
+                            command.Connection.Close();
+                        }
+                        catch (OracleException ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                            throw;
+                        }
+                        status = true;
+                    }
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+            
+            return status;
+        }
+
         public bool DeleteHoliday(Holiday holiday)
         {
             bool status = false;
@@ -64,7 +102,7 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     //string query = @"delete from PE.holidays where ID_HOLIDAY =  '" + holidayId +"'";
-                    string query = @"delete from PE.holidays where ID_HOLIDAY = "+ holidayId;
+                    string query = @"delete from PE.holidays where ID_HOLIDAY = :Holiday_id";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("Holiday_id", OracleDbType.Int32, holidayId, System.Data.ParameterDirection.Input));
