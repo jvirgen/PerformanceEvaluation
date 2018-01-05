@@ -52,7 +52,7 @@ namespace PES.ViewModels
         /// <summary>
         /// Flag to know if the employee has a project
         /// </summary>
-        public char HaveProject { get; set; }
+        public string HaveProject { get; set; }
 
         public CancelRequestViewModel Modal { get; set; }
 

@@ -52,7 +52,11 @@ namespace PES.ViewModels
         /// </summary>
         public int Freedays {get; set; }
 
-        public VacHeadReqViewModel VacHeaderRequest { get; set;  } 
+        //public string myFile { get; set;  }
+
+        public VacHeadReqViewModel VacHeaderRequest { get; set;  }   
         
+        public string myFile { get; set;  }
     }
+ 
 }

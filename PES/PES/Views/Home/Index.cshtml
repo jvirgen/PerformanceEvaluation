@@ -39,7 +39,15 @@
     </div>
     <div class="row text-center">
         <div class="col-md-pull-6">
-            <a href="@Url.Action("HistoricalResource","VacationRequest")" class="btn btn-lg btn-primary" style="width: 250px;">Vacations</a>
+            @if (useProfile == (int)PES.Models.ProfileUser.Resource)
+            {
+                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary" style="width: 250px">Vacations</a>
+
+            }
+            else
+            {
+                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary" style="width: 250px">Vacations</a>
+            }
         </div>
     </div>
 </div>

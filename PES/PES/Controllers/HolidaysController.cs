@@ -17,7 +17,7 @@ namespace PES.Controllers
         }
 
         // GET: Holidays1
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             IEnumerable<Holiday> holidays = new List<Holiday>();
 
@@ -55,8 +55,7 @@ namespace PES.Controllers
             {
                 _holidayService.CreateHoliday(newHoliday);
             }
-            return View();
-            //return View(holiday);
+            return RedirectToAction("Create");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

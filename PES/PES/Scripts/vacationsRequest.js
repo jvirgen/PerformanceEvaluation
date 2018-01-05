@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $(function () {
+    $(function() {
         $('.daterange').daterangepicker({});
 
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
@@ -9,22 +9,21 @@
        
     });
 
-/*
-SUPPOSEDLY OBSOLETE
-function insertNewDates() {
-    // Get date group element
-    var dateGroup = $("#dateGroup-0");
-    // Clone into another div
-    var parentDiv = $("#datesGroups");
-    parentDiv.append('<div class="dateGroup" id="dateGroup-1">');
-    $("#dateGroup-1").append('<div id="subDatesGroup-1" class="form-group">');
-    $("#subDatesGroup-1").append('<div id="datesCont-1" class="container flexEnd">');
-    $("#datesCont-1").append('<div class="col-md-3 text-center" id="data-1">');
-    $("#data-1").append(' <label for="start" id="lable-1">Start Date - End Date</label>');
-    $("#lable-1").append('<input type="text" name="subRequest[' + add() + '].date" class="daterange" /></div></div></div></div>');
-}
+    $('#unpaid').click(function () {
 
         this.checked ? $('#lead').prop('disabled', true) : $('#lead').prop('disabled', false);
+    });
+
+    $('#sendRequest').click(function () {
+        $("#startDates ").html($("#start").val());
+        $("#startAndEnd ").attr("style", "color:black;");
+        $("#returnDates").html($("#returnDay").val());
+        $("#retrunDays ").attr("style", "color:black;");
+        $(".activeSpan").attr("style", "color:dodgerblue");
+    });
+    $('#my-button').click(function () {
+        $('#my-file').click();
+        
     });
 });
 
@@ -343,3 +342,5 @@ function updateEnumerationBoxes() {
         $($('.projectHiddenBox')[0]).attr('name', leadPieces[0] + 0 + leadPieces[1]);
     }
 }
+
+
