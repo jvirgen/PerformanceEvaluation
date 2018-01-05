@@ -31,10 +31,11 @@ namespace PES.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Delete(int holidayId)
+        [HttpPost]
+        public ActionResult Delete(Holiday model)
         {
-            _holidayService.DeleteHoliday(holidayId);
+            
+            _holidayService.DeleteHoliday(model.HolidayId);
             return RedirectToAction("Index");
         }
 
