@@ -22,9 +22,16 @@
                         @Html.LabelFor(model => model.Title, "Request Title", new { @class = "control-label col-form-label" })
                         @if (Model.status.ToLower() == "rejected")
                         {
-                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                            if (useProfile == (int)ProfileUser.Manager)
+                            {
+                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                            }
                         }
-                        else 
+                        else
                         {
                             @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @disabled = "disabled" })
                         }
@@ -69,7 +76,14 @@
                         @Html.LabelFor(model => model.Comments, "Comments", new { @class = "control-label" })
                         @if (Model.status.ToLower() == "rejected")
                         {
-                            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+                            if (useProfile == (int)ProfileUser.Manager)
+                            {
+                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+                            }
                         }
                         else
                         {
