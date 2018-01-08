@@ -24,7 +24,11 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
-                    string query = @"UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = '18/01/19', HOLIDAYS.DESCRIPTION = 'house' WHERE ID_HOLIDAY = 38;";
+                    //working query
+                    //UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = '04/12/17', HOLIDAYS.DESCRIPTION = 'Holiday_description' WHERE ID_HOLIDAY = 43;
+
+                    //string query = @"UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = ':Holiday_day', HOLIDAYS.DESCRIPTION = ':Holiday_description' WHERE ID_HOLIDAY = :Holiday_id";
+                    string query = @"update pe.holidays set holidays.holiday_day = " + "'" + holiday.InsertDay + "'" + ", holidays.description = " + "'" + holiday.Description + "'" + " where id_holiday = " + holiday.HolidayId;
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("Holiday_id", holiday.HolidayId));
@@ -48,6 +52,7 @@ namespace PES.Services
             }
             catch (Exception xe)
             {
+                Console.WriteLine("popo");
                 throw;
             }
             
@@ -101,7 +106,6 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
-                    //string query = @"delete from PE.holidays where ID_HOLIDAY =  '" + holidayId +"'";
                     string query = @"delete from PE.holidays where ID_HOLIDAY = :Holiday_id";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
@@ -203,7 +207,7 @@ namespace PES.Services
                             holiday.HolidayId = Convert.ToInt32(reader["ID_HOLIDAY"]);
                             holiday.Day = Convert.ToDateTime(reader["HOLIDAY_DAY"]);
                             holiday.Description = Convert.ToString(reader["DESCRIPTION"]);
-
+                            holiday.InsertDay = holiday.Day.ToShortDateString();
                             holidays.Add(holiday);
                         }
                     }
