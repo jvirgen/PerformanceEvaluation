@@ -5,17 +5,23 @@ using System.Web;
 
 namespace PES.ViewModels
 {    
-    public class CancelRequestViewModel   /* : VacHeadReqViewModel*/
+    public class StatusRequestViewModel   /* : VacHeadReqViewModel*/
     {
         public int HeaderRequestId { get; set; }
+
+        public string currentStatusId { get; set; }
 
         /// <summary>
         /// Replay comment or reason of cancelation
         /// </summary>
-        public string ReasonCancellation { get; set; }
+        public string Reason { get; set; }
 
         public string EmployeeEmail { get; set; }
 
         public string ManagerEmail { get; set; }
+
+        public string NoVacRequested { get; set; }
+
+        public VacHeadReqViewModel VacHedModel { get; set;  }
     }
 }

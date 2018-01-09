@@ -16,13 +16,13 @@ using System.Web.Routing;
 
 namespace PES.Services
 {
-    public class EmailCancelRequestService
+    public class EmailRejectRequestService
     {
         private PESDBContext dbContext = new PESDBContext();
     
        
         private SmtpClient client;
-        public EmailCancelRequestService()
+        public EmailRejectRequestService()
         {
             dbContext = new PESDBContext();
 
@@ -32,7 +32,6 @@ namespace PES.Services
 
             client = new SmtpClient("smtp-mail.outlook.com");
         }
-
 
         public bool SendEmail(string email, string subject, string bodyMessage)
         {
@@ -117,7 +116,7 @@ namespace PES.Services
             return dataRequests;
         }
 
-        public bool ChangeRequestStatus(int headerRequestId, string ReasonCancellation)
+        public bool ChangeRequestStatus(int headerRequestId, string rejectReason)
         {
 
             try
@@ -128,8 +127,8 @@ namespace PES.Services
                     db.Open();
 
                     string query = @"UPDATE   PE.VACATION_HEADER_REQ 
-                                                  SET     ID_REQ_STATUS = 4, 
-                                                          REPLAY_COMMENT =  '"+ ReasonCancellation + "' " +
+                                                  SET     ID_REQ_STATUS = 2, 
+                                                          REPLAY_COMMENT =  '"+ rejectReason + "' " +
                                                           "WHERE    ID_HEADER_REQ = '" + headerRequestId + "'" ;
 
                     using (OracleCommand command = new OracleCommand(query, db))

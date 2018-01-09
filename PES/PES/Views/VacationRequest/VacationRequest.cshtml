@@ -1,12 +1,17 @@
 ﻿@* View of a Existing Request *@
 @model PES.ViewModels.VacHeadReqViewModel
+@using PES.Models;
+
+@{
+    int useProfile = (int)Session["UserProfile"];
+}
 <div>
     <section>
         <div class="page-header text-center">
             <h1>Vacation Request</h1>
         </div>
         @Html.HiddenFor(model => model.VacationHeaderReqId)
-        @using (Html.BeginForm("CancelRequest", "VacationRequest", FormMethod.Post))
+        @using (Html.BeginForm("AcctionRequest", "VacationRequest", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
@@ -17,9 +22,16 @@
                         @Html.LabelFor(model => model.Title, "Request Title", new { @class = "control-label col-form-label" })
                         @if (Model.status.ToLower() == "rejected")
                         {
-                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                            if (useProfile == (int)ProfileUser.Manager)
+                            {
+                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                            }
                         }
-                        else 
+                        else
                         {
                             @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @disabled = "disabled" })
                         }
@@ -29,13 +41,13 @@
                     <div id="vacationarea" class="col-md-2 text-center">
                         <label>
                             Vacation Days:
-                            <span id="daysVac" class="label label-default">@Model.FreeDays</span>
+                            <input id="daysReq" name="NoVacRequested" type="text" class="daysReq" value="0" readonly />
                         </label>
                     </div>
                     <div id="requestarea" class="col-md-2 text-left">
                         <label>
                             Days Requested:
-                            <span id="daysReq" class="label label-default">@Model.NoVacDays</span>
+                            <span id="daysReq" name="" class="label label-default">@Model.NoVacDays</span>                           
                         </label>
                     </div>
                     <div id="reqStatus" class="col-md-5 text-right">
@@ -64,7 +76,14 @@
                         @Html.LabelFor(model => model.Comments, "Comments", new { @class = "control-label" })
                         @if (Model.status.ToLower() == "rejected")
                         {
-                            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+                            if (useProfile == (int)ProfileUser.Manager)
+                            {
+                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+                            }
                         }
                         else
                         {
@@ -73,24 +92,56 @@
 
                         @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })                     
                     </div>
-                    
-                        <!-- BLOCK BUTTONS -->
-                    <div class="col-md-4 text-center">
-                        @if (Model.status.ToLower() == "pending" || Model.status.ToLower() == "approved")
-                        {
-                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
-                            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
-                         
-                            
-                            @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+                                     
+                     <!-- BLOCK BUTTONS -->                            
+                     <div class="col-md-4 text-center">
 
-                          
-                        }
-                        else if (Model.status.ToLower() == "rejected")
+                        @if (Model.status.ToLower() == "pending" && useProfile == (int)ProfileUser.Resource)
                         {
-                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block">Return to Historical</a>
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+                            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                            @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+                        }
+
+                        else if (Model.status.ToLower() == "pending" && useProfile == (int)ProfileUser.Manager)
+                        {
+                             <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+                             <button id="reject" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Reject</button>
+                             @Html.Partial("_ModalRejectRequestPartial", Model.Modal)
+
+                             <div style="line-height:40%;">
+                                 <br />
+                             </div>
+
+                             <button id="aprove" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Aprove</button>
+                             @Html.Partial("_ModalApproveRequestPartial", Model.Modal)
+                         }
+
+                        else if (Model.status.ToLower() == "approved")
+                        { 
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+                            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                            @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+                        }
+
+                        else if (Model.status.ToLower() == "rejected" && useProfile == (int)ProfileUser.Manager)
+                        {
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+                            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Cancel</button>
+                            @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+                        }
+
+                        else if (Model.status.ToLower() == "rejected" && useProfile == (int)ProfileUser.Resource)
+                        {
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
                             <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
                         }
+
+                        else if (Model.status.ToLower() == "canceled")
+                        {
+                            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+                        }
+
                     </div>
                 </div> <!-- container end -->
             </div> <!-- form-group end -->

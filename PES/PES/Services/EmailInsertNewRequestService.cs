@@ -44,9 +44,9 @@ namespace PES.Services
             msje.Body = bodyMessage;
 
 
-            Attachment attachment;
-            attachment = new System.Net.Mail.Attachment(myfile);
-            msje.Attachments.Add(attachment);
+            //Attachment attachment;
+            //attachment = new System.Net.Mail.Attachment(myfile);
+            //msje.Attachments.Add(attachment);
             //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
