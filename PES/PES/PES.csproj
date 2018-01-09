@@ -499,6 +499,7 @@
     <Content Include="Views\VacationRequest\HistoricalResource.cshtml" />
     <Content Include="Views\Shared\_ModalInsertNewRequestPartial.cshtml" />
     <Content Include="Views\Holidays\Create.cshtml" />
+    <Content Include="Views\Holidays\EditShow.cshtml" />
     <Content Include="Views\Shared\_ModalApproveRequestPartial.cshtml" />
     <Content Include="Views\Shared\_ModalRejectRequestPartial.cshtml" />
     <Content Include="Views\Shared\_ModalDeleteHolidayPartial.cshtml" />

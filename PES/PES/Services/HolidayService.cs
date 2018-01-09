@@ -16,6 +16,49 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
+        public bool EditHoliday(Holiday holiday)
+        {
+            bool status = false;
+
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    //working query
+                    //UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = '04/12/17', HOLIDAYS.DESCRIPTION = 'Holiday_description' WHERE ID_HOLIDAY = 43;
+
+                    //string query = @"UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = ':Holiday_day', HOLIDAYS.DESCRIPTION = ':Holiday_description' WHERE ID_HOLIDAY = :Holiday_id";
+                    string query = @"update pe.holidays set holidays.holiday_day = " + "'" + holiday.InsertDay + "'" + ", holidays.description = " + "'" + holiday.Description + "'" + " where id_holiday = " + holiday.HolidayId;
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("Holiday_id", holiday.HolidayId));
+                        command.Parameters.Add(new OracleParameter("Holiday_day", holiday.InsertDay));
+                        command.Parameters.Add(new OracleParameter("Holiday_description", holiday.Description));
+
+                        try
+                        {
+                            command.Connection.Open();
+                            command.ExecuteNonQuery();
+                            command.Connection.Close();
+                        }
+                        catch (OracleException ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                            throw;
+                        }
+                        status = true;
+                    }
+                }
+            }
+            catch (Exception xe)
+            {
+                Console.WriteLine("popo");
+                throw;
+            }
+            
+            return status;
+        }
+
         public bool DeleteHoliday(Holiday holiday)
         {
             bool status = false;
@@ -63,8 +106,7 @@ namespace PES.Services
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
-                    //string query = @"delete from PE.holidays where ID_HOLIDAY =  '" + holidayId +"'";
-                    string query = @"delete from PE.holidays where ID_HOLIDAY = "+ holidayId;
+                    string query = @"delete from PE.holidays where ID_HOLIDAY = :Holiday_id";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("Holiday_id", OracleDbType.Int32, holidayId, System.Data.ParameterDirection.Input));
@@ -165,7 +207,7 @@ namespace PES.Services
                             holiday.HolidayId = Convert.ToInt32(reader["ID_HOLIDAY"]);
                             holiday.Day = Convert.ToDateTime(reader["HOLIDAY_DAY"]);
                             holiday.Description = Convert.ToString(reader["DESCRIPTION"]);
-
+                            holiday.InsertDay = holiday.Day.ToShortDateString();
                             holidays.Add(holiday);
                         }
                     }

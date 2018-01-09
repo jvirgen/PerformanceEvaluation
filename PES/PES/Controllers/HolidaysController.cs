@@ -20,9 +20,7 @@ namespace PES.Controllers
         public ActionResult Index()
         {
             IEnumerable<Holiday> holidays = new List<Holiday>();
-
             holidays = _holidayService.GetAllHolidays();
-
             return View(holidays);
         }
 
@@ -31,11 +29,20 @@ namespace PES.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Delete(Holiday model)
+        public ActionResult EditShow(Holiday holiday)
         {
-            
-            _holidayService.DeleteHoliday(model.HolidayId);
+            return View(holiday);     
+        }
+
+        public ActionResult Edit(Holiday holiday)
+        {
+            _holidayService.EditHoliday(holiday);
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult Delete(int holidayId)
+        {
+            _holidayService.DeleteHoliday(holidayId);
             return RedirectToAction("Index");
         }
 

@@ -19,7 +19,8 @@
             <th>Day</th>
             <th>Celebration</th>
             <th><a href="@Url.Action("Create", "Holidays")" class="btn btn-success" style="width:100%;">Add a holiday </a></th>
-           
+            
+
         </tr>
     </thead>
     <tbody>
@@ -29,8 +30,8 @@
                 <td> @holiday.Day.Date.ToString("D", holiday.USCulture) </td>
                 <td>@holiday.Description</td>
                 <td class="col-sm-3">
-                    <button type="button" class="btn btn-primary col-sm-4 col-sm-offset-1"><span style="margin-right: 5px" class="glyphicon glyphicon-align-justify"></span>Edit</button>
-                    <button type="button" class="btn btn-danger col-sm-4 col-sm-offset-1" data-toggle="modal" data-target="#modal-delete-holiday" > <span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span>Delete</button>                   
+                    <a type="button" class="btn btn-primary col-sm-4 col-sm-offset-1" href='@Url.Action("EditShow", "Holidays", holiday)'><span style="margin-right: 5px" class="glyphicon glyphicon-align-justify"></span>Edit</a>
+                    <a type="button" class="btn btn-danger col-sm-4 col-sm-offset-1" href='@Url.Action("Delete", "Holidays", new { holidayId = holiday.HolidayId })'> <span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span>Delete</a>
                     @Html.Partial("_ModalDeleteHolidayPartial", holiday)
                 
                 </td>
