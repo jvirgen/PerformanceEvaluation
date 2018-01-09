@@ -20,7 +20,7 @@ namespace PES.ViewModels
 
         public string ManagerEmail { get; set; }
 
-        public string NoVacRequested { get; set; }
+        public string NoVacDays { get; set; }
 
         public VacHeadReqViewModel VacHedModel { get; set;  }
     }

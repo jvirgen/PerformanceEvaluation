@@ -214,67 +214,69 @@ namespace PES.Controllers
             return View(listHeaderReqVM);
         }
         //method to change reques and send emails 
-        [HttpPost]
-        public ActionResult AcctionRequest(StatusRequestViewModel model)
-        {
-            if( Convert.ToInt16 (model.currentStatusId) == 4)
-            {
-                // Update status of the request
-                _emailCancelRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
-                // Send email if success
-                // Get request by id
-                List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
-                data = _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
-                string employeeEmail = data[0].EmployeeEmail;
-                string managerEmail = data[0].ManagerEmail;
-                string reasonCancellation = data[0].Reason;
-                List<string> emails = new List<string>()
-            {
-                employeeEmail,
-                managerEmail
-            };
-                _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
-               
-            }
-            else if (Convert.ToInt16(model.currentStatusId) == 2)
-            {
-                // Update status of the request
-                _emailRejectRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
-                // Send email if success
-                // Get request by id
-                List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
-                data = _emailRejectRequestService.GetDataRequest(model.HeaderRequestId);
-                string employeeEmail = data[0].EmployeeEmail;
-                string managerEmail = data[0].ManagerEmail;
-                string rejectReason = data[0].Reason;
-                List<string> emails = new List<string>()
-            {
-                employeeEmail,
-                managerEmail
-            };
-                _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
 
-            }
-            else if (Convert.ToInt16(model.currentStatusId) == 3)
-            {
-                // Update status of the request
-                _emailApproveRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason, model.NoVacRequested);
-                // Send email if success
-                // Get request by id
-                List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
-                data = _emailApproveRequestService.GetDataRequest(model.HeaderRequestId);
-                string employeeEmail = data[0].EmployeeEmail;
-                string managerEmail = data[0].ManagerEmail;
-                string approveReason = data[0].Reason;
-                List<string> emails = new List<string>()
+        [HttpPost]
+        public ActionResult CancelRequest(StatusRequestViewModel model)
+        {
+            // Update status of the request
+            _emailCancelRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
+            // Send email if success
+            // Get request by id
+            List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+            data = _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            string reasonCancellation = data[0].Reason;
+            List<string> emails = new List<string>()
             {
                 employeeEmail,
                 managerEmail
             };
-                _emailApproveRequestService.SendEmails(emails, " Approved Request", approveReason);
-                //_emailApproveRequestService.LessNoVacDays(employeeEmail,  Convert.ToInt16(model.NoVacRequested));
-            }
+            _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
             return RedirectToAction("HistoricalResource");
+
+        }
+        [HttpPost]
+        public ActionResult ApproveRequest(StatusRequestViewModel model)
+        {
+            // Update status of the request
+            _emailApproveRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason, model.NoVacDays);
+            // Send email if success
+            // Get request by id
+            List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+            data = _emailApproveRequestService.GetDataRequest(model.HeaderRequestId);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            string approveReason = data[0].Reason;
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailApproveRequestService.SendEmails(emails, " Approved Request", approveReason);
+            //_emailApproveRequestService.LessNoVacDays(employeeEmail,  Convert.ToInt16(model.NoVacRequested));
+            return RedirectToAction("HistoricalResource");
+    }
+        [HttpPost]
+        public ActionResult RejectRequest(StatusRequestViewModel model)
+        {
+            // Update status of the request
+            _emailRejectRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
+            // Send email if success
+            // Get request by id
+            List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+            data = _emailRejectRequestService.GetDataRequest(model.HeaderRequestId);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            string rejectReason = data[0].Reason;
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
+            return RedirectToAction("HistoricalResource");
+
         }
 
         [HttpGet]
