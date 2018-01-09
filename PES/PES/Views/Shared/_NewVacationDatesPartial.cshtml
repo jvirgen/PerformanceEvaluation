@@ -1,32 +1,5 @@
 ﻿@* Partial view to Get all vacation periods of a NEW VACATION REQUEST*@
 
-@model IEnumerable<PES.Models.Holiday>
-
-<!-- TABLE TO HOLIDAYS -->
-<div id="datesGroups">
-    <div id="datesGroup" class="form-group">
-        <div class="col-md-3 pull-right">
-            <table id="holidayTable" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Day</th>
-                        <th>Celebration</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var holiday in Model)
-                    {
-                        <tr>
-                            <td id="day">@holiday.Day.ToString("MM/dd/yyyy") </td><!--.ToString("MM/dd/yyyy")-->
-                            <td id="description">@holiday.Description</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
 @*@using (Html.BeginForm("InsertNewRequest", "VacationRequest", FormMethod.Post))
 {*@
 <div id="datesGroup" class="form-group datesGroup">

@@ -503,6 +503,7 @@
     <Content Include="Views\Shared\_ModalApproveRequestPartial.cshtml" />
     <Content Include="Views\Shared\_ModalRejectRequestPartial.cshtml" />
     <Content Include="Views\Shared\_ModalDeleteHolidayPartial.cshtml" />
+    <Content Include="Views\Shared\_ShowCalendarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
