@@ -26,7 +26,6 @@ namespace PES.Services
                 {
                     //working query
                     //UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = '04/12/17', HOLIDAYS.DESCRIPTION = 'Holiday_description' WHERE ID_HOLIDAY = 43;
-
                     //string query = @"UPDATE pe.HOLIDAYS SET HOLIDAYS.HOLIDAY_DAY = ':Holiday_day', HOLIDAYS.DESCRIPTION = ':Holiday_description' WHERE ID_HOLIDAY = :Holiday_id";
                     string query = @"update pe.holidays set holidays.holiday_day = " + "'" + holiday.InsertDay + "'" + ", holidays.description = " + "'" + holiday.Description + "'" + " where id_holiday = " + holiday.HolidayId;
                     using (OracleCommand command = new OracleCommand(query, db))
@@ -52,7 +51,6 @@ namespace PES.Services
             }
             catch (Exception xe)
             {
-                Console.WriteLine("popo");
                 throw;
             }
             
@@ -199,6 +197,7 @@ namespace PES.Services
 
                     using (OracleCommand command = new OracleCommand(selectAllHolidays, db))
                     {
+
                         OracleDataReader reader = command.ExecuteReader();
                         holidays = new List<Holiday>();
                         while (reader.Read())
@@ -220,6 +219,45 @@ namespace PES.Services
             }
 
             return holidays;
+        }
+
+         public Holiday GetHoliday(int holidayId)
+        {
+            Holiday holiday = new Holiday() ;
+           try
+            {
+
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string selectAllHolidays = @"SELECT  
+                                                ID_HOLIDAY, 
+                                                HOLIDAY_DAY,
+                                                DESCRIPTION FROM HOLIDAYS where ID_HOLIDAY = :Holiday_id";
+
+                    using (OracleCommand command = new OracleCommand(selectAllHolidays, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("Holiday_id", OracleDbType.Int32, holidayId, System.Data.ParameterDirection.Input));
+
+
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {                        
+                            holiday.HolidayId = Convert.ToInt32(reader["ID_HOLIDAY"]);
+                            holiday.Day = Convert.ToDateTime(reader["HOLIDAY_DAY"]);
+                            holiday.Description = Convert.ToString(reader["DESCRIPTION"]);
+                            holiday.InsertDay = holiday.Day.ToShortDateString();
+                        }
+                    }
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+
+            return holiday;
         }
     }
 }

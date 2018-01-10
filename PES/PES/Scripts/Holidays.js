@@ -1,5 +1,13 @@
-﻿//$(document).ready(function () {
-//    $(function () {
-//        document.getElementById("form-horizontal").reset();
-//    });
-//});
+﻿$(document).ready(function () {
+    $(function () {
+
+
+    });
+});
+
+function callModalCreate() {
+    $("#modal-Add-Holiday").modal();
+}
+function callModalEdit() {
+    $("#modal-Edit-Holiday").modal();
+}

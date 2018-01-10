@@ -43,30 +43,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (var headerVM in Model)
-                        {
-                            if (headerVM.status.ToLower() == "pending")
-                            {
-                                string style = headerVM.HaveProject == 'N' ? "background-color:#f1bc30" : "";
-                                <tr>
-                                    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                                    {
-                                        <td style= "@style">@headerVM.FirstName @headerVM.LastName</td>
-                                    }
-                                    <td style="@style">
-                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { haderReqId = headerVM.VacationHeaderReqId })">
-                                            @{
-                                                @(headerVM.Title)
-                                            }
-                                        </a>
-                                    </td>
-                                    <td style="@style">@headerVM.NoVacDays</td>
-                                    <td style="@style">@headerVM.StartDate.ToShortDateString()</td>
-                                    <td style="@style">@headerVM.EndDate.ToShortDateString()</td>
-                                    <td style="@style">@headerVM.ReturnDate.ToShortDateString()</td>
-                                </tr>
-                                                    }
-                                                }*@ 
+
                         @foreach (var headerVM in Model)
                         {
                             if (headerVM.status.ToLower() == "pending")

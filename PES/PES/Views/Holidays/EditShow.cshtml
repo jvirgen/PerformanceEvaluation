@@ -4,13 +4,14 @@
     ViewBag.Title = "EditShow";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Edit</h2>
+<div class="page-header text-center">
+    <h1>Edit Holiday</h1>
+</div>
+
 @using (Html.BeginForm("Edit", "Holidays", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
     {
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
-            <h4>Holiday</h4>
-            <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.HolidayId)
 
@@ -32,8 +33,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
+                    <input type="submit" value="Save" class="btn btn-primary"/>
+               </div>
             </div>
         </div>
     }
@@ -72,6 +73,7 @@
     @section Scripts
 {
         @Styles.Render("~/Content/themes/base/daterangepicker.css")
+        @Scripts.Render("~/Scripts/holidays.js")
         @Scripts.Render("~/Scripts/vacationsRequest.js")
         @Scripts.Render("~/Scripts/moment.js")
         @Scripts.Render("~/Scripts/daterangepicker.js")
