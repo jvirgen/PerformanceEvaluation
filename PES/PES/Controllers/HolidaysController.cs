@@ -23,13 +23,18 @@ namespace PES.Controllers
             holidays = _holidayService.GetAllHolidays();
             return View(holidays);
         }
-
+        //Fix attribute insertDay, this has to be only the day attrirbute.
         [HttpGet]
         public ActionResult EditShow(int holidayId)
         {
             Holiday holiday = new Holiday();
             holiday =  _holidayService.GetHoliday(holidayId);
-
+            string endDate = holiday.InsertDay;
+            string eMonth = endDate.Substring(0, 2);
+            string eDay = endDate.Substring(3, 2);
+            string eYear = endDate.Substring(6, 4);
+            string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+            holiday.InsertDay = eFinalEndDate;
             return View(holiday);     
         }
         [HttpPost]

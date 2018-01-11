@@ -18,7 +18,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.InsertDay, "{0:MM/DD/YYYY}", new { @class = "date-picker form-control createFormInput", @required = "required" })
+                    @Html.TextBoxFor(model => model.InsertDay, "{0:MM/dd/yyyy}", new { @class = "date-picker form-control createFormInput", @required = "required" })
                     @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
                 </div>
             </div>
