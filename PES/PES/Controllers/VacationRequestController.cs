@@ -234,6 +234,9 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
+            //Add if 
+            _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
+
             return RedirectToAction("HistoricalResource");
 
         }
