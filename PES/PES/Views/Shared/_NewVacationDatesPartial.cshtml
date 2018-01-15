@@ -3,28 +3,27 @@
 @*@using (Html.BeginForm("InsertNewRequest", "VacationRequest", FormMethod.Post))
 {*@
 <div id="datesGroup" class="form-group datesGroup">
-    <hr class="divisor">
     <div id="subDatesGroup" class="form-group">
-        <div id="datesCont" class="container flexEnd">
-            <div class="col-md-4 text-center">
+        <div id="datesCont">
+            <div class="col-sm-4 col-md-4 col-lg-4">
                 <label for="start">Start Date - End Date</label>
                 <input id="start" type="text" name="subRequest[0].Date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" />
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-lg-3">
                 <label>Return Date</label>
                 <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" value="" readonly />
             </div>
-            <div class="col-md-2">
-                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn">
+            <div class="col-sm-2 col-md-2 col-lg-2">
+                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn addatebtn">
                     Add Date
                 </button>
             </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
     <div id="subDatesGroup" class="form-group">
-        <div id="datesCont" class="container flexCenter">
-            <div id="leadName" class="col-md-3">
+        <div id="datesCont">
+            <div id="leadName" class="col-md-4 col-lg-4">
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
 
@@ -33,10 +32,10 @@
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
             </div>
-            <div id="checkarea" class="col-md-2 checkbox">
-                <label id="checktext">
+            <div id="checkarea" class="col-sm-3 col-md-3 col-lg-3">
+                <label id="checktext" class="text-left">
 
-                    <input type="checkbox" @*onclick="disableLeadNameInput()"*@ class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="" checked />I do not have a project
+                    <input type="checkbox" @*onclick="disableLeadNameInput()"*@ class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="" checked />  I do not have a project
                     <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false" />
 
                 </label>

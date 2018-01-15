@@ -19,6 +19,7 @@
 #checkarea {
     padding-top: 0px;
     padding-left: 10px;
+    margin-top: 40px;
 }
 
 #holidaytable {
@@ -92,4 +93,8 @@
 
 #my-file {
     visibility: hidden;
+}
+
+.addatebtn {
+  margin-top: 1.8vw;
 }
