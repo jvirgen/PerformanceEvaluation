@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using PES.ViewModels; 
 
 namespace PES.Models
 {
@@ -54,7 +55,7 @@ namespace PES.Models
         /// </summary>
         public int? NoUnpaidDays { get; set; }
 
-
+        public StatusRequestViewModel Model { get; set; }
     }
     
 }

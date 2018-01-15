@@ -78,7 +78,7 @@ namespace PES.Controllers
         {
             //:::::::::::::::::Obtain fullPath ::::::::::::::::::
 
-            
+            //HttpPostedFile filePosted = Request.Files[myfile];
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
             //Insert Header Request.
@@ -121,7 +121,7 @@ namespace PES.Controllers
                 employeeEmail,
                 managerEmail
             };
-            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.myFile);
+            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments /*, model.myFile*/);
             
             //return to History View.
             return RedirectToAction("HistoricalResource");
@@ -154,7 +154,8 @@ namespace PES.Controllers
             currentRequest.FreeDays = currentUser.Freedays;
             currentRequest.Modal = new StatusRequestViewModel()
             {
-                HeaderRequestId = currentRequest.VacationHeaderReqId
+                HeaderRequestId = currentRequest.VacationHeaderReqId,
+                NoVacDaysRequested = currentRequest.NoVacDays
             };
 
             return View("VacationRequest", currentRequest);
@@ -233,14 +234,18 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
+            //Add if 
+            _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
+
             return RedirectToAction("HistoricalResource");
 
         }
         [HttpPost]
         public ActionResult ApproveRequest(StatusRequestViewModel model)
         {
+           
             // Update status of the request
-            _emailApproveRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason, model.NoVacDays);
+            _emailApproveRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
             // Send email if success
             // Get request by id
             List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
@@ -254,7 +259,7 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailApproveRequestService.SendEmails(emails, " Approved Request", approveReason);
-            //_emailApproveRequestService.LessNoVacDays(employeeEmail,  Convert.ToInt16(model.NoVacRequested));
+            _emailApproveRequestService.LessNoVacDays(employeeEmail, model.NoVacDaysRequested);
             return RedirectToAction("HistoricalResource");
     }
         [HttpPost]

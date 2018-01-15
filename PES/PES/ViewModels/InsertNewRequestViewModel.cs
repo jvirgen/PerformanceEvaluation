@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PES.Models;
+using System.Web.DynamicData;
 using System.ComponentModel.DataAnnotations;
 
 namespace PES.ViewModels
@@ -54,9 +55,10 @@ namespace PES.ViewModels
 
         //public string myFile { get; set;  }
 
-        public VacHeadReqViewModel VacHeaderRequest { get; set;  }   
-        
-        public string myFile { get; set;  }
+        public VacHeadReqViewModel VacHeaderRequest { get; set;  }
+
+        //[DataType(DataType.Upload)]
+        //HttpPostedFileBase myFile { get; set; }
     }
  
 }

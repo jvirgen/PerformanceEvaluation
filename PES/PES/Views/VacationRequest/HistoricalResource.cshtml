@@ -43,30 +43,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (var headerVM in Model)
-                        {
-                            if (headerVM.status.ToLower() == "pending")
-                            {
-                                string style = headerVM.HaveProject == 'N' ? "background-color:#f1bc30" : "";
-                                <tr>
-                                    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                                    {
-                                        <td style= "@style">@headerVM.FirstName @headerVM.LastName</td>
-                                    }
-                                    <td style="@style">
-                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { haderReqId = headerVM.VacationHeaderReqId })">
-                                            @{
-                                                @(headerVM.Title)
-                                            }
-                                        </a>
-                                    </td>
-                                    <td style="@style">@headerVM.NoVacDays</td>
-                                    <td style="@style">@headerVM.StartDate.ToShortDateString()</td>
-                                    <td style="@style">@headerVM.EndDate.ToShortDateString()</td>
-                                    <td style="@style">@headerVM.ReturnDate.ToShortDateString()</td>
-                                </tr>
-                                                    }
-                                                }*@ 
+
                         @foreach (var headerVM in Model)
                         {
                             if (headerVM.status.ToLower() == "pending")
@@ -84,9 +61,9 @@
                                         </a>
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToShortDateString()</td>
-                                    <td>@headerVM.EndDate.ToShortDateString()</td>
-                                    <td>@headerVM.ReturnDate.ToShortDateString()</td>
+                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                 </tr>
                                                     }
                                                 }
@@ -128,9 +105,9 @@
                                         </a>
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToShortDateString()</td>
-                                    <td>@headerVM.EndDate.ToShortDateString()</td>
-                                    <td>@headerVM.ReturnDate.ToShortDateString()</td>
+                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                 </tr>
                             }
                          }
@@ -170,9 +147,9 @@
                                         </a>
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToShortDateString()</td>
-                                    <td>@headerVM.EndDate.ToShortDateString()</td>
-                                    <td>@headerVM.ReturnDate.ToShortDateString()</td>
+                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                 </tr>
                             }
                          }
@@ -212,9 +189,9 @@
                                         </a>
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToShortDateString()</td>
-                                    <td>@headerVM.EndDate.ToShortDateString()</td>
-                                    <td>@headerVM.ReturnDate.ToShortDateString()</td>
+                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                 </tr>
                                                     }
                                                 }

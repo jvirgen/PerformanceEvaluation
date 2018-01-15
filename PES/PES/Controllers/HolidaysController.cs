@@ -23,34 +23,50 @@ namespace PES.Controllers
             holidays = _holidayService.GetAllHolidays();
             return View(holidays);
         }
-
-        public ActionResult Create()
+        //Fix attribute insertDay, this has to be only the day attrirbute.
+        [HttpGet]
+        public ActionResult EditShow(int holidayId)
         {
-            return View();
-        }
-
-        public ActionResult EditShow(Holiday holiday)
-        {
+            Holiday holiday = new Holiday();
+            holiday =  _holidayService.GetHoliday(holidayId);
+            string endDate = holiday.InsertDay;
+            string eMonth = endDate.Substring(0, 2);
+            string eDay = endDate.Substring(3, 2);
+            string eYear = endDate.Substring(6, 4);
+            string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+            holiday.InsertDay = eFinalEndDate;
             return View(holiday);     
         }
-
+        [HttpPost]
         public ActionResult Edit(Holiday holiday)
         {
+            string endDate = holiday.InsertDay;
+            string eMonth = endDate.Substring(0, 2);
+            string eDay = endDate.Substring(3, 2);
+            string eYear = endDate.Substring(6, 4);
+            string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+            holiday.InsertDay = eFinalEndDate;
+
             _holidayService.EditHoliday(holiday);
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public ActionResult Delete(int holidayId)
+        [HttpPost]
+        public ActionResult Delete(Holiday model)
         {
-            _holidayService.DeleteHoliday(holidayId);
+            _holidayService.DeleteHoliday(model.HolidayId);
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Create()
+        {
+                return View();            
+        }
         // POST: Holidays1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Holiday holiday)
-        {
+        {            
             Holiday newHoliday = new Holiday();
             newHoliday.Description = holiday.Description;
             string endDate = holiday.InsertDay;

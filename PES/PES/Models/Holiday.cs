@@ -22,7 +22,7 @@ namespace PES.Models
         /// Holiday day
         /// </summary>
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Day { get; set; }
 
         public string InsertDay { get; set; }

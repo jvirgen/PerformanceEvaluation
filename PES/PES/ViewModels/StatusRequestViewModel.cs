@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PES.Models;
+
 
 namespace PES.ViewModels
 {    
-    public class StatusRequestViewModel   /* : VacHeadReqViewModel*/
+    public class StatusRequestViewModel 
     {
         public int HeaderRequestId { get; set; }
 
@@ -20,8 +22,6 @@ namespace PES.ViewModels
 
         public string ManagerEmail { get; set; }
 
-        public string NoVacDays { get; set; }
-
-        public VacHeadReqViewModel VacHedModel { get; set;  }
+        public int NoVacDaysRequested { get; set; }
     }
 }

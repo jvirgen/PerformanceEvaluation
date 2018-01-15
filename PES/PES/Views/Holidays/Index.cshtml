@@ -30,10 +30,11 @@
                 <td> @holiday.Day.Date.ToString("D", holiday.USCulture) </td>
                 <td>@holiday.Description</td>
                 <td class="col-sm-3">
-                    <a type="button" class="btn btn-primary col-sm-4 col-sm-offset-1" href='@Url.Action("EditShow", "Holidays", holiday)'><span style="margin-right: 5px" class="glyphicon glyphicon-align-justify"></span>Edit</a>
-                    <a type="button" class="btn btn-danger col-sm-4 col-sm-offset-1" href='@Url.Action("Delete", "Holidays", new { holidayId = holiday.HolidayId })'> <span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span>Delete</a>
+                    <a type="button" class="btn btn-primary col-sm-4 col-sm-offset-1" href='@Url.Action("EditShow", "Holidays", new { holidayId = holiday.HolidayId })'><span style="margin-right: 5px" class="glyphicon glyphicon-align-justify"></span>Edit</a>
+                    <button type="button" class="btn btn-danger col-sm-4 col-sm-offset-1" data-toggle="modal" data-target="#modal-delete-holiday-@holiday.HolidayId"> <span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span>Delete</button>
                     @Html.Partial("_ModalDeleteHolidayPartial", holiday)
-                
+
+                                
                 </td>
             </tr>
         }

@@ -147,5 +147,32 @@ namespace PES.Services
 
             return true;
         }
+        public bool PlusNoVacDays(string employeeEmail, int noVacDays)
+        {
+            try
+            {
+
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string query = @" UPDATE   PE.EMPLOYEE 
+                                      SET     FREE_DAYS = (FREE_DAYS + :noVacDays ) WHERE   EMAIL = '" + employeeEmail + "' ";
+
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("noVacDays", (noVacDays)));
+                        OracleDataReader reader = command.ExecuteReader();
+                    }
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+
+            return true;
+        }
     }
 }

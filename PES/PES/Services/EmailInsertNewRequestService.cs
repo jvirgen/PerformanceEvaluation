@@ -30,7 +30,7 @@ namespace PES.Services
         }
 
 
-        public bool SendEmail(string email, string subject, string bodyMessage , string myfile)
+        public bool SendEmail(string email, string subject, string bodyMessage /*, string myfile*/)
         {
 
             //::::::::::::::::::::::EMAIL:::::::::::::::::::::::::::::::::::::
@@ -43,10 +43,7 @@ namespace PES.Services
             //Email Body
             msje.Body = bodyMessage;
 
-
-            //Attachment attachment;
-            //attachment = new System.Net.Mail.Attachment(myfile);
-            //msje.Attachments.Add(attachment);
+            //msje.Attachments.Add(new Attachment(myfile));
             //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -66,11 +63,11 @@ namespace PES.Services
             return true;
         }
 
-        public bool SendEmails(List<string> emails, string subject, string bodyMessage , string myfile)
+        public bool SendEmails(List<string> emails, string subject, string bodyMessage /*, string myfile*/)
         {
             foreach (var email in emails)
             {
-                this.SendEmail(email, subject, bodyMessage,  myfile );
+                this.SendEmail(email, subject, bodyMessage/*,  myfile*/ );
             }
 
             return true;
