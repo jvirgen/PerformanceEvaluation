@@ -14,7 +14,7 @@
     <div id="requestarea" class="col-sm-4 col-md-4 col-lg-4">
         <label>
             Days Requested:
-            <input id="daysReq" name="daysReq" type="text" class="daysReq" value="0" readonly />
+            <input id="daysReq" type="text" class="daysReq" value="0" readonly />
         </label>
     </div>
     <div id="reqStatus" class="col-sm-4 col-md-4 col-lg-4">
@@ -30,27 +30,12 @@
     <div class="col-md-9">
         <div class="row">
             <section>
-                
                 @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
                 {
                     @Html.HiddenFor(model => model.EmployeeId)
-                    @*<div id="form" class="form-horizontal">*@
-                    <div class="form-group">
+                    <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
+                     <div class="form-group">
                         <div>
-
-
-
-                            
-
-
-
-
-
-
-
-
-
-
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12">
                                     @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
