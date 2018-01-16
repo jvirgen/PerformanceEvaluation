@@ -122,7 +122,8 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments /*, model.myFile*/);
-            
+            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq);
+
             //return to History View.
             return RedirectToAction("HistoricalResource");
         }
@@ -259,7 +260,7 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailApproveRequestService.SendEmails(emails, " Approved Request", approveReason);
-            _emailApproveRequestService.LessNoVacDays(employeeEmail, model.NoVacDaysRequested);
+            //_emailApproveRequestService.LessNoVacDays(employeeEmail, model.NoVacDaysRequested);
             return RedirectToAction("HistoricalResource");
     }
         [HttpPost]

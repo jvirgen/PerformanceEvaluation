@@ -118,6 +118,33 @@ namespace PES.Services
 
             return dataRequests;
         }
+
+        public bool Lessnovacdays(string employeeemail, int daysReq)
+        {
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+
+                    string query = @" update   pe.employee 
+                                      set     free_days = (free_days + :novacdays ) where   email = '" + employeeemail + "' ";
+
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("novacdays", (daysReq * -1)));
+                        OracleDataReader reader = command.ExecuteReader();
+                    }
+                    db.Close();
+                }
+            }
+            catch (Exception xe)
+            {
+                throw;
+            }
+
+            return true;
+        }
     }
 }
 
