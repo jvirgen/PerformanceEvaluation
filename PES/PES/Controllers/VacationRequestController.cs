@@ -281,6 +281,8 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
+            _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
+
             return RedirectToAction("HistoricalResource");
 
         }

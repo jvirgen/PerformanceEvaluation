@@ -25,6 +25,7 @@
                    <div class="form-group row">
                        <fieldset>
                            @Html.HiddenFor(model => model.HeaderRequestId)
+                           <input id="approveDays" type="hidden" name="NoVacDaysRequested" value="@Model.NoVacDaysRequested" />
                            <input name="currentStatusId" type="hidden" value="2" />
 
                            @Html.LabelFor(model => model.Reason, " Please add a reject reason", new { @class = "control-label " })
