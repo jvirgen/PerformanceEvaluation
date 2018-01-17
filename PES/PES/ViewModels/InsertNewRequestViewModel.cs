@@ -57,6 +57,8 @@ namespace PES.ViewModels
 
         public VacHeadReqViewModel VacHeaderRequest { get; set;  }
 
+        public ResendRequest ResendModel { get; set; }
+
         //[DataType(DataType.Upload)]
         //HttpPostedFileBase myFile { get; set; }
     }
