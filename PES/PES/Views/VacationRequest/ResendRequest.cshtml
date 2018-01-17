@@ -70,13 +70,12 @@
 
                                 <input type="button" id="my-button" value="Select Files">
                                 <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">
-
-                            </div>
+                           </div>
                             <div class="col-md-4 text-center">
                                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
                                 <br />
-                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend Request</button>
-                                @Html.Partial("_ModalInsertNewRequestPartial")
+                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#ResendReqModal">Resend Request</button>
+                                @Html.Partial("_ModalResendRequestPartial")
                             </div>
                         </div> <!-- container end -->
                     </div> <!-- form-group end -->

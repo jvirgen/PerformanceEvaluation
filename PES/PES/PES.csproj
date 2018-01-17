@@ -508,6 +508,7 @@
     <Content Include="Views\Shared\_ShowCalendarPartial.cshtml" />
     <Content Include="Views\VacationRequest\ResendRequest.cshtml" />
     <Content Include="Views\Shared\_ResendVacationDatesPartial.cshtml" />
+    <Content Include="Views\Shared\_ModalResendRequestPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
