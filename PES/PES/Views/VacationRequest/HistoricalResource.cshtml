@@ -54,10 +54,8 @@
                                         <td>@headerVM.FirstName @headerVM.LastName</td>
                                     }
                                     <td>
-                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                            @{
-                                                @(headerVM.Title)
-                                            }
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
                                         </a>
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
@@ -96,13 +94,20 @@
                                         <td>@headerVM.FirstName @headerVM.LastName</td>
                                     }
                                     <td>
+                                        @if(profileId == Convert.ToInt32(ProfileUser.Manager))
+                                            {
                                         <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                            @{
+                                                @headerVM.Title
 
-                                                @(headerVM.Title)
-
-                                            }
                                         </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ResendRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId , userID  = headerVM.EmployeeId })">
+                                                @headerVM.Title
+
+                                            </a>
+                                        }
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
                                     <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
@@ -141,9 +146,8 @@
                                     }
                                     <td>
                                         <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                            @{
-                                                @(headerVM.Title)
-                                            }
+                                                @headerVM.Title
+
                                         </a>
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
@@ -183,9 +187,7 @@
                                     }
                                     <td>
                                         <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                            @{
-                                                @(headerVM.Title)
-                                            }
+                                                @headerVM.Title
                                         </a>
                                     </td>
                                     <td>@headerVM.NoVacDays</td>
