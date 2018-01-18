@@ -164,6 +164,7 @@
     <Compile Include="Services\EmailRejectRequestService.cs" />
     <Compile Include="Services\EmailApproveRequestService.cs" />
     <Compile Include="Services\EmailInsertNewRequestService.cs" />
+    <Compile Include="Services\ResendRequestService.cs" />
     <Compile Include="ViewModels\StatusRequestViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="ViewModels\PerformanceRankHelper.cs" />
     <Compile Include="ViewModels\PerformanceFilesPartial.cs" />
     <Compile Include="ViewModels\PEVisualizationViewModel.cs" />
+    <Compile Include="ViewModels\ResendRequestViewModel.cs" />
     <Compile Include="ViewModels\VacHeadReqViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -504,6 +506,9 @@
     <Content Include="Views\Shared\_ModalRejectRequestPartial.cshtml" />
     <Content Include="Views\Shared\_ModalDeleteHolidayPartial.cshtml" />
     <Content Include="Views\Shared\_ShowCalendarPartial.cshtml" />
+    <Content Include="Views\VacationRequest\ResendRequest.cshtml" />
+    <Content Include="Views\Shared\_ResendVacationDatesPartial.cshtml" />
+    <Content Include="Views\Shared\_ModalResendRequestPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

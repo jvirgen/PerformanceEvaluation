@@ -137,11 +137,11 @@
                                     }
                                 }
 
-                                else if (Model.status.ToLower() == "rejected" && useProfile == (int)ProfileUser.Resource)
+                                @*else if (Model.status.ToLower() == "rejected" && useProfile == (int)ProfileUser.Resource)
                                 {
-                                    <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+                                    <a href="@Url.Action("in", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
                                     <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
-                                }
+                                }*@
 
                                 else if (Model.status.ToLower() == "canceled")
                                 {

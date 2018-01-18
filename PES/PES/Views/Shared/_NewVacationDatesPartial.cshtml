@@ -1,8 +1,5 @@
 ﻿@* Partial view to Get all vacation periods of a NEW VACATION REQUEST*@
-
-@*@using (Html.BeginForm("InsertNewRequest", "VacationRequest", FormMethod.Post))
-{*@
-<div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
+<div id="datesGroup" class="form-group datesGroup">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont">
             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -35,7 +32,7 @@
             <div id="checkarea" class="col-sm-3 col-md-3 col-lg-3">
                 <label id="checktext" class="text-left">
 
-                    <input type="checkbox" @*onclick="disableLeadNameInput()"*@ class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="" checked />  I do not have a project
+                    <input type="checkbox"  class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="" checked />  I do not have a project
                     <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false" />
 
                 </label>
@@ -46,6 +43,5 @@
             </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
-</div>
-<!-- form-group end -->
-@*}*@
+</div><!-- form-group end -->
+

@@ -33,6 +33,8 @@ namespace PES.Controllers
         private EmailApproveRequestService _emailApproveRequestService;
         private EmailRejectRequestService _emailRejectRequestService;
         // private EmailService 
+        private ResendRequestService _resendRequestService;
+
 
         public VacationRequestController()
         {
@@ -46,6 +48,7 @@ namespace PES.Controllers
             _emailInsertNewRequestService = new EmailInsertNewRequestService();
             _emailApproveRequestService = new EmailApproveRequestService();
             _emailRejectRequestService = new EmailRejectRequestService();
+            _resendRequestService = new ResendRequestService();
         }
 
         /// <summary>
@@ -68,6 +71,22 @@ namespace PES.Controllers
             return View(newRequest);
         }
 
+
+        public ActionResult ResendRequest(int headerReqId, int userid)
+        {
+            //Obtaing UserInformation 
+            Employee currentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            currentEmployee = _employeeService.GetByID(userid);
+
+            ResendRequest model = new ResendRequest();
+
+            model = _resendRequestService.GetRequestInformation(headerReqId);
+            model.ModelEmployeeResend = currentEmployee;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+
+            return View(model);
+        }
         /// <summary>
         /// POST of New Vacation Request to get all data form the New Request View to process and insert them in the DB
         /// </summary>
@@ -122,7 +141,8 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments /*, model.myFile*/);
-            
+            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq);
+
             //return to History View.
             return RedirectToAction("HistoricalResource");
         }
@@ -158,7 +178,7 @@ namespace PES.Controllers
                 NoVacDaysRequested = currentRequest.NoVacDays
             };
 
-            return View("VacationRequest", currentRequest);
+                return View("VacationRequest", currentRequest);
         }
 
         /// <summary>
@@ -259,7 +279,7 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailApproveRequestService.SendEmails(emails, " Approved Request", approveReason);
-            _emailApproveRequestService.LessNoVacDays(employeeEmail, model.NoVacDaysRequested);
+            //_emailApproveRequestService.LessNoVacDays(employeeEmail, model.NoVacDaysRequested);
             return RedirectToAction("HistoricalResource");
     }
         [HttpPost]
@@ -280,6 +300,8 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
+            _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
+
             return RedirectToAction("HistoricalResource");
 
         }

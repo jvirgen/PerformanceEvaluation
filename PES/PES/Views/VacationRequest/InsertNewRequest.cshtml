@@ -14,7 +14,7 @@
     <div id="requestarea" class="col-sm-4 col-md-4 col-lg-4">
         <label>
             Days Requested:
-            <input id="daysReq" name="daysReq" type="text" class="daysReq" value="0" readonly />
+            <input id="daysReq" type="text" class="daysReq" value="0" readonly />
         </label>
     </div>
     <div id="reqStatus" class="col-sm-4 col-md-4 col-lg-4">
@@ -30,28 +30,13 @@
     <div class="col-md-9">
         <div class="row">
             <section>
-                
                 @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
                 {
                     @Html.HiddenFor(model => model.EmployeeId)
-                    @*<div id="form" class="form-horizontal">*@
-                    <div class="form-group">
+                    <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
+                     <div class="form-group">
                         <div>
-
-
-
-                            
-
-
-
-
-
-
-
-
-
-
-                            <div class="row" style="margin-left: 1vw;">
+                            <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12">
                                     @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
                                     <div>
@@ -82,18 +67,14 @@
                                 @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
                                 @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
                                 <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
-
                                 <input type="button" id="my-button" value="Select Files">
                                 <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">
-
                             </div>
                             <div class="col-md-4 text-center">
                                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
                                 <br />
-                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Send Request</button>
+                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#ResendReqModal">Send Request</button>
                                 @Html.Partial("_ModalInsertNewRequestPartial")
-
-
                             </div>
                         </div> <!-- container end -->
                     </div> <!-- form-group end -->
