@@ -161,6 +161,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CompetencesSection.cs" />
     <Compile Include="Models\Description.cs" />
+    <Compile Include="Services\EmailResendRequestService.cs" />
     <Compile Include="Services\EmailRejectRequestService.cs" />
     <Compile Include="Services\EmailApproveRequestService.cs" />
     <Compile Include="Services\EmailInsertNewRequestService.cs" />

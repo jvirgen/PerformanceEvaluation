@@ -17,9 +17,9 @@ namespace PES.Services
             dbContext = new PESDBContext();
         }
 
-        public ResendRequest GetRequestInformation(int headerReq)
+        public ResendRequestViewModel GetRequestInformation(int headerReq)
         {
-            ResendRequest resendRequest = new ResendRequest(); 
+            ResendRequestViewModel resendRequest = new ResendRequestViewModel(); 
 
             try
             {
@@ -61,6 +61,98 @@ namespace PES.Services
             }
 
             return resendRequest;
+        }
+
+
+        /// <summary>
+        /// Metod to insert the data of the Object vacHeaderReq in the DB
+        /// </summary>
+        /// <param name="vacHeadReq"></param>
+        /// <returns>True if the insert was successful</returns>
+        public bool UpdateResendRequestHeaderReq(ResendRequestViewModel model)
+        {
+            bool status = false;
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string query = @"Update PE.VACATION_HEADER_REQ " +
+                               "SET TITLE = :NewTitle, " +
+                               "NO_VAC_DAYS = :NewNoVacDays, " +
+                               "REPLAY_COMMENT =  :NewReplayComment , " +
+                               "ID_REQ_STATUS =  :NewStatus " +
+                               "WHERE ID_HEADER_REQ = :RequestId ";
+
+
+                using (OracleCommand command = new OracleCommand(query, db))
+                {
+                    command.Parameters.Add(new OracleParameter("NewTitle", model.TitleResend));
+                    command.Parameters.Add(new OracleParameter("NewNoVacDays", model.NovacDaysResend));
+                    command.Parameters.Add(new OracleParameter("NewReplayComment", model.CommentsResend));
+                    command.Parameters.Add(new OracleParameter("NewStatus", 1));
+                    command.Parameters.Add(new OracleParameter("RequestId", model.RequestIdResend));
+                   
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        throw;
+                    }
+                    status = true;
+                }
+            }
+            return status;
+        }
+
+        //Insert Subreq
+        public bool UpdateResendRequestSubReq(int idHeaderReq, List<NewVacationDates> model)
+        {
+            bool status = false;
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string query = "Update PE.VACATION_SUBREQ " +
+                    "SET     START_DATE = :NewSTART_DATE , " +
+                            "END_DATE = :NewEND_DATE , " +
+                            "RETURN_DATE = :NewRETURN_DATE , " +
+                            "HAVE_PROJECT = :NewHAVE_PROJECT , " +
+                            "LEAD_NAME = :NewLEAD_NAME " +
+                            "WHERE ID_HEADER_REQ = :NewID_HEADER_REQ ";
+
+                using (OracleCommand command = new OracleCommand(query, db))
+                {
+                    try
+                    {
+                        command.Connection.Open();
+                        foreach (var date in model)
+                        {
+                            string returnDate = date.ReturnDate;
+                            string rMonth = returnDate.Substring(0, 2);
+                            string rDay = returnDate.Substring(3, 2);
+                            string rYear = returnDate.Substring(6, 4);
+                            string finalReturnDate = (rDay + "/" + rMonth + "/" + rYear);
+
+                            command.Parameters.Add(new OracleParameter("NewSTART_DATE", date.StartDate));
+                            command.Parameters.Add(new OracleParameter("NewEND_DATE", date.EndDate));
+                            command.Parameters.Add(new OracleParameter("NewRETURN_DATE", finalReturnDate));
+                            command.Parameters.Add(new OracleParameter("NewHAVE_PROJECT", (date.HaveProject).ToString()));
+                            command.Parameters.Add(new OracleParameter("NewLEAD_NAME", date.LeadName));
+                            command.Parameters.Add(new OracleParameter("NewID_HEADER_REQ", idHeaderReq));
+                            command.ExecuteNonQuery();
+                        }
+
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        throw;
+                    }
+                    status = true;
+                }
+            }
+            return status;
         }
 
     }

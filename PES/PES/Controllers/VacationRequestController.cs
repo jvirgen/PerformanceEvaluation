@@ -32,6 +32,7 @@ namespace PES.Controllers
         private EmailCancelRequestService _emailCancelRequestService;
         private EmailApproveRequestService _emailApproveRequestService;
         private EmailRejectRequestService _emailRejectRequestService;
+        private EmailResendRequestService _emailResendRequestService;
         // private EmailService 
         private ResendRequestService _resendRequestService;
 
@@ -49,6 +50,7 @@ namespace PES.Controllers
             _emailApproveRequestService = new EmailApproveRequestService();
             _emailRejectRequestService = new EmailRejectRequestService();
             _resendRequestService = new ResendRequestService();
+            _emailResendRequestService = new EmailResendRequestService();
         }
 
         /// <summary>
@@ -79,13 +81,62 @@ namespace PES.Controllers
             _employeeService = new EmployeeService();
             currentEmployee = _employeeService.GetByID(userid);
 
-            ResendRequest model = new ResendRequest();
+            ResendRequestViewModel model = new ResendRequestViewModel();
 
             model = _resendRequestService.GetRequestInformation(headerReqId);
             model.ModelEmployeeResend = currentEmployee;
             ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateResendRequest(ResendRequestViewModel model)
+        {
+            //Update by  Header Request.
+            _resendRequestService.UpdateResendRequestHeaderReq(model);
+            //Obtain id header request inserted.
+
+            string[] StartAndEndate;
+
+            for (int i = 0; i < model.SubRequest.Count(); i++)
+            {
+                StartAndEndate = model.SubRequest[i].Date.Split('-');
+                //Changing date format.
+                string startDate = StartAndEndate[0].Trim();
+                string month = startDate.Substring(0, 2);
+                string day = startDate.Substring(3, 2);
+                string year = startDate.Substring(6, 4);
+                string finalStarDate = (day + "/" + month + "/" + year);
+                //Changing date format.
+                string endDate = StartAndEndate[1].Trim();
+                string eMonth = endDate.Substring(0, 2);
+                string eDay = endDate.Substring(3, 2);
+                string eYear = endDate.Substring(6, 4);
+                string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+                //Sending Information to ViewModel.
+                model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
+                model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
+
+            }
+            //inserting sub request.
+            _resendRequestService.UpdateResendRequestSubReq(model.RequestIdResend, model.SubRequest);
+
+
+            List<ResendRequestViewModel> data = new List<ResendRequestViewModel>();
+            data = _emailResendRequestService.GetEmail(model.RequestIdResend);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailResendRequestService.SendEmails(emails, "Resend Vacation Request ", model.CommentsResend /*, model.myFile*/);
+            _emailResendRequestService.Lessnovacdays(employeeEmail, model.NovacDaysResend);
+
+            //return to History View.
+            return RedirectToAction("HistoricalResource");
         }
         /// <summary>
         /// POST of New Vacation Request to get all data form the New Request View to process and insert them in the DB

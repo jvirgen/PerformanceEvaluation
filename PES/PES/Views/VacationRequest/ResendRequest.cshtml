@@ -1,5 +1,5 @@
 ﻿@* View to make a new vacation request *@
-@model PES.ViewModels.ResendRequest
+@model PES.ViewModels.ResendRequestViewModel
 
 <div class="page-header text-center">
     <h1>Vacation Request</h1>
@@ -30,10 +30,11 @@
     <div class="col-md-9">
         <div class="row">
             <section>
-                @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+                @using (Html.BeginForm("UpdateResendRequest", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form"}))
                 {
-                    @Html.HiddenFor(model => model.ModelEmployeeResend.EmployeeId)
-                    <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
+                    @Html.HiddenFor(model => Model.ModelEmployeeResend.EmployeeId)
+                    @Html.HiddenFor(model => Model.RequestIdResend )
+                    <input id="daysRequest" name="NovacDaysResend" type="text" class="daysReq" value="" hidden />
                      <div class="form-group">
                         <div>
                             <div class="row">
@@ -79,7 +80,6 @@
                             </div>
                         </div> <!-- container end -->
                     </div> <!-- form-group end -->
-                    @*</div>*@
                 }
             </section>
         </div>

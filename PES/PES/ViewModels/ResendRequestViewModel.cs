@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PES.ViewModels
 {
-    public class ResendRequest 
+    public class ResendRequestViewModel
     {
         //Atributes to get information from database. 
         public int RequestIdResend { get; set; }
