@@ -13,11 +13,6 @@
                 <label>Return Date</label>
                 <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" value="@Model.ReturnDateResend.ToString("MM/dd/yyyy") " readonly />
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-2">
-                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn addatebtn">
-                    Add Date
-                </button>
-            </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
     <div id="subDatesGroup" class="form-group">
@@ -36,10 +31,6 @@
                         <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="@Model.HaveProjectResend" checked />  I do not have a project
                          <input type = "hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false" />
               </label>
-            </div>
-
-            <div class="removeBtn col-md-1 hidden">
-                <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
             </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
