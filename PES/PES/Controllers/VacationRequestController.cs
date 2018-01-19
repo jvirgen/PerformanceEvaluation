@@ -226,7 +226,8 @@ namespace PES.Controllers
             currentRequest.Modal = new StatusRequestViewModel()
             {
                 HeaderRequestId = currentRequest.VacationHeaderReqId,
-                NoVacDaysRequested = currentRequest.NoVacDays
+                NoVacDaysRequested = currentRequest.NoVacDays,
+                currentStatusId = currentRequest.status
             };
 
                 return View("VacationRequest", currentRequest);
@@ -306,8 +307,10 @@ namespace PES.Controllers
             };
             _emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
             //Add if 
-            _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
-
+            if(model.currentStatusId.ToLower() != "rejected")
+            {
+                _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
+            }
             return RedirectToAction("HistoricalResource");
 
         }

@@ -34,7 +34,7 @@
                 {
                     @Html.HiddenFor(model => Model.ModelEmployeeResend.EmployeeId)
                     @Html.HiddenFor(model => Model.RequestIdResend )
-                    <input id="daysRequest" name="NovacDaysResend" type="text" class="daysReq" value="" hidden />
+                    <input id="daysRequest" type="text" hidden name="NovacDaysResend" class="daysReq" value="@Model.NovacDaysResend"   readonly />
                      <div class="form-group">
                         <div>
                             <div class="row">
@@ -170,7 +170,7 @@
 {
     @Styles.Render("~/Content/themes/base/daterangepicker.css")
 
-    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/vacationsResendRequest.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
 }

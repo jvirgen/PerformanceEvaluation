@@ -180,9 +180,8 @@ function CountHolidaysAndValidateDates(start, end, count) {
         })
             .done(function (data) {
 
-                
-                $("#daysRequest").val(validateDaysRequested(getWorkableDays(start, end) - data, this));
                 $("#daysReq").val(validateDaysRequested(getWorkableDays(start, end) - data, this));
+                $("#daysRequest").val(validateDaysRequested(getWorkableDays(start, end) - data, this));
             })
             .fail(function () {
             })
