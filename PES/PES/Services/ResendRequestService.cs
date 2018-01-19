@@ -49,7 +49,7 @@ namespace PES.Services
                             resendRequest.ReturnDateResend  = Convert.ToDateTime(reader["RETURN_DATE"]);
                             resendRequest.LeadNameResend    = Convert.ToString(reader["LEAD_NAME"]);
                             resendRequest.HaveProjectResend = Convert.ToString(reader["HAVE_PROJECT"]);
-                            resendRequest.CommentsResend    = Convert.ToString(reader["REPLAY_COMMENT"]);
+                            resendRequest.ReplayCommentsResend = Convert.ToString(reader["REPLAY_COMMENT"]);
                         }
                     }
                     db.Close();
@@ -77,7 +77,7 @@ namespace PES.Services
                 string query = @"Update PE.VACATION_HEADER_REQ " +
                                "SET TITLE = :NewTitle, " +
                                "NO_VAC_DAYS = :NewNoVacDays, " +
-                               "REPLAY_COMMENT =  :NewReplayComment , " +
+                               "COMMENTS =  :NewComments , " +
                                "ID_REQ_STATUS =  :NewStatus " +
                                "WHERE ID_HEADER_REQ = :RequestId ";
 
@@ -86,7 +86,7 @@ namespace PES.Services
                 {
                     command.Parameters.Add(new OracleParameter("NewTitle", model.TitleResend));
                     command.Parameters.Add(new OracleParameter("NewNoVacDays", model.NovacDaysResend));
-                    command.Parameters.Add(new OracleParameter("NewReplayComment", model.CommentsResend));
+                    command.Parameters.Add(new OracleParameter("NewComments", model.CommentsResend));
                     command.Parameters.Add(new OracleParameter("NewStatus", 1));
                     command.Parameters.Add(new OracleParameter("RequestId", model.RequestIdResend));
                    

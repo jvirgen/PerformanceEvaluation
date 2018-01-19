@@ -33,6 +33,8 @@ namespace PES.ViewModels
         [Required(ErrorMessage = "Please submit a comment")]
         public string CommentsResend { get; set; }
 
+        public string ReplayCommentsResend { get; set; }
+
         public int FreeDaysResend { get; set; }
 
         public List<NewVacationDates> SubRequest { get; set; }

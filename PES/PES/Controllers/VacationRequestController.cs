@@ -86,7 +86,7 @@ namespace PES.Controllers
             model = _resendRequestService.GetRequestInformation(headerReqId);
             model.ModelEmployeeResend = currentEmployee;
             ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
-
+            
             return View(model);
         }
 

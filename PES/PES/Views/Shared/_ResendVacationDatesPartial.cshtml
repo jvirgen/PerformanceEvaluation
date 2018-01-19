@@ -1,7 +1,7 @@
 ﻿@model PES.ViewModels.ResendRequestViewModel
 
 
-<div id="datesGroup" class="form-group datesGroup">
+<div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont">
             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -15,22 +15,29 @@
             </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
-    <div id="subDatesGroup" class="form-group">
+    <div class="form-group">
+        <div class="container">
+            <div class="col-md-4">
+                <span style="margin-top" class="label label-warning">All vacations days must be in the same month</span>
+            </div>
+        </div> <!-- container end -->
+    </div><!-- form-group end -->
+    <div id="subDatesGroup" class="form-group" >
         <div id="datesCont">
             <div id="leadName" class="col-md-4 col-lg-4">
                 <label for="lead" class="control-label">Lead Name</label>
                 <div>
 
-                    <input id="lead" type="text" name="subRequest[0].LeadName"  value="@Model.LeadNameResend" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" disabled  />
-                     
+                    <input id="lead" type="text" name="subRequest[0].LeadName" value="@Model.LeadNameResend" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" disabled />
+
                 </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
             </div>
             <div id="checkarea" class="col-sm-3 col-md-3 col-lg-3">
                 <label id="checktext" class="text-left">
-                        <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="@Model.HaveProjectResend" checked />  I do not have a project
-                         <input type = "hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false" />
-              </label>
+                    <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="@Model.HaveProjectResend" checked />  I do not have a project
+                    <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false" />
+                </label>
             </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
