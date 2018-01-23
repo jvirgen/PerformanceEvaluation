@@ -35,8 +35,8 @@
             </div>
             <div id="checkarea" class="col-sm-3 col-md-3 col-lg-3">
                 <label id="checktext" class="text-left">
-                    <input type="checkbox" class="projectBox" id="unpaid" name="subRequest[0].HaveProject" value="@Model.HaveProjectResend" checked />  I do not have a project
-                    <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].HaveProject" value="false" />
+                    @Html.CheckBoxFor(model => model.SubRequest[0].HaveProject, new { @class = "projectBox", @id = "haveProject" })  I do not have a project
+                    <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].unpaid" value="false" />
                 </label>
             </div>
         </div> <!-- container end -->

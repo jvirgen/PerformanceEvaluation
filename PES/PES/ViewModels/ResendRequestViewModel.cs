@@ -28,7 +28,8 @@ namespace PES.ViewModels
 
         public string LeadNameResend { get; set; }
 
-        public string HaveProjectResend { get; set; }
+        //public string HaveProjectResend { get; set; }
+        public bool HaveProjectResend { get; set; }
 
         [Required(ErrorMessage = "Please submit a comment")]
         public string CommentsResend { get; set; }

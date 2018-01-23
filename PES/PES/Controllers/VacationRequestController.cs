@@ -67,7 +67,15 @@ namespace PES.Controllers
             InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
             newRequest.EmployeeId = userid;
             newRequest.Freedays = currentEmployee.Freedays;
-            newRequest.SubRequest = new List<NewVacationDates>();
+            newRequest.SubRequest = new List<NewVacationDates>()
+            {
+                new NewVacationDates
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = true
+                }
+            };
             ViewBag.newRequest = userid;
             ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
             return View(newRequest);
@@ -86,7 +94,6 @@ namespace PES.Controllers
             model = _resendRequestService.GetRequestInformation(headerReqId);
             model.ModelEmployeeResend = currentEmployee;
             ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
-            
             return View(model);
         }
 

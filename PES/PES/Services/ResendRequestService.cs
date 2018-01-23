@@ -48,7 +48,7 @@ namespace PES.Services
                             resendRequest.EndDateResend     = Convert.ToDateTime(reader["END_DATE"]);
                             resendRequest.ReturnDateResend  = Convert.ToDateTime(reader["RETURN_DATE"]);
                             resendRequest.LeadNameResend    = Convert.ToString(reader["LEAD_NAME"]);
-                            resendRequest.HaveProjectResend = Convert.ToString(reader["HAVE_PROJECT"]);
+                            resendRequest.HaveProjectResend = Convert.ToBoolean(reader["HAVE_PROJECT"]);
                             resendRequest.ReplayCommentsResend = Convert.ToString(reader["REPLAY_COMMENT"]);
                         }
                     }

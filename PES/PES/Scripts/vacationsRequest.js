@@ -9,9 +9,15 @@
        
     });
 
-    $('#unpaid').click(function () {
-
+    $('#haveProject').click(function () {
         this.checked ? $('#lead').prop('disabled', true) : $('#lead').prop('disabled', false);
+        $("#lead").val("");
+        if (this.checked) {
+                $("#haveProject").val("false");
+        } else {
+                $("#haveProject").val("true");
+          
+            }
     });
 
     $('#sendRequest').click(function () {
@@ -25,10 +31,6 @@
     $('#my-button').click(function () {
         $('#my-file').click();
         
-    });
-
-    $('#aprove').click(function () {
-        $("#daysReq").val($("#approveDays").val());
     });
 });
 

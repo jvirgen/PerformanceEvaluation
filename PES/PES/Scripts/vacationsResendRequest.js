@@ -6,12 +6,18 @@
         //editHolidayDay();
         //this event caches any modification on a start/end date field
         $(document).on('change', 'input.datesBox', getDaysRequested);
-       
     });
 
-    $('#unpaid').click(function () {
+   
 
+    $('#haveProject').click(function () {
         this.checked ? $('#lead').prop('disabled', true) : $('#lead').prop('disabled', false);
+        $("#lead").val("");
+        if (this.checked) {
+            $("#haveProject").val("false");
+        } else {
+            $("#haveProject").val("true");
+        }
     });
 
     $('#sendRequest').click(function () {
