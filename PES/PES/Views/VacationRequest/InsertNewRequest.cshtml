@@ -5,7 +5,7 @@
     <h1>New Vacation Request</h1>
 </div>
 <div class="row text-center">
-    <div id="vacationarea" class="col-sm-4 col-md-4 col-lg-4">
+    <div id="vacationarea" class="col-sm-4 col-md-4 col-lg-4" style="margin: 1vw;">
         <label>
             Vacation Days:
             <span id="daysVac" class="label label-default">@Model.Freedays</span>
@@ -37,7 +37,7 @@
                      <div class="form-group">
                         <div>
                             <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12" style="margin-left:1vw;">
                                     @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
                                     <div>
                                         @Html.EditorFor(model => Model.Title, new { htmlAttributes = new { @class = "form-control" } })
