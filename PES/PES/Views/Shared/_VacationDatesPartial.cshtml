@@ -10,10 +10,7 @@
         <div id="datesCont" class="container flexEnd">
             <div class="col-md-3 text-center">
                 <label for="start">Start Date - End Date</label>
-                <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" value="@Model.StartDate.ToString("MM/dd/yyyy") - @Model.EndDate.ToString("MM/dd/yyyy")" @(Model.status.ToLower() == "rejected" && useProfile != (int)ProfileUser.Manager ? null : new { disabled = "disabled" }) />
-
-
-
+                <input id="start" type="text" name="subRequest[0].date" class="form-control text-center datesBox daterange"  data-val="true" data-val-required="Start date is required" value="@Model.StartDate.ToString("MM/dd/yyyy") - @Model.EndDate.ToString("MM/dd/yyyy")" @(Model.status.ToLower() == "rejected" && useProfile != (int)ProfileUser.Manager ? null : new { disabled = "disabled" }) />
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
             </div>
             <div class="col-md-3">
@@ -46,7 +43,7 @@
                 </label>
             </div>
 
-            <div class="removeBtn col-md-2 hidden">
+            <div class="removeBtn col-md-2 ">
                 <button onclick="removeDate(this)" type="button" class="btn btn-danger btn-block">Remove Date</button>
             </div>
         </div> <!-- container end -->
