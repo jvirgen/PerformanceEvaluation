@@ -229,9 +229,6 @@ function getReturnDate() {
         }
     });
     var returnDay = new Date(endDate);
-    //var finalReturnDay = new Date(returnDay.getDate() + 1);
-    //var finalDate = new Date();
-    //finalDate.setDate(returnDay.getDate() + 1);
     validateReturnDate(returnDay);
 }
 
@@ -282,29 +279,6 @@ function getWorkableDays(start, end) {
         return days;       
 }   
 
-/*
-SUPPOSEDLY OBSOLETE
-function insertNewDates() {
-    // Get date group element
-    var dateGroup = $("#dateGroup-0");
-    // Clone into another div
-    var parentDiv = $("#datesGroups");
-    parentDiv.append('<div class="dateGroup" id="dateGroup-1">');
-    $("#dateGroup-1").append('<div id="subDatesGroup-1" class="form-group">');
-    $("#subDatesGroup-1").append('<div id="datesCont-1" class="container flexEnd">');
-    $("#datesCont-1").append('<div class="col-md-3 text-center" id="data-1">');
-    $("#data-1").append(' <label for="start" id="lable-1">Start Date - End Date</label>');
-    $("#lable-1").append('<input type="text" name="subRequest[' + add() + '].date" class="daterange" /></div></div></div></div>');
-}
-
-//global counter
-var add = (function () {
-    var counter = 0;
-    return function () {
-        return counter += 1;
-    }
-    })();
-*/
 
 /*
 
