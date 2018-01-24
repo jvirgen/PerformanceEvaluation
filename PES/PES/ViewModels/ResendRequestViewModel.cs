@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PES.ViewModels
 {
-    public class ResendRequest 
+    public class ResendRequestViewModel
     {
         //Atributes to get information from database. 
         public int RequestIdResend { get; set; }
@@ -28,10 +28,13 @@ namespace PES.ViewModels
 
         public string LeadNameResend { get; set; }
 
-        public string HaveProjectResend { get; set; }
+        //public string HaveProjectResend { get; set; }
+        public bool HaveProjectResend { get; set; }
 
         [Required(ErrorMessage = "Please submit a comment")]
         public string CommentsResend { get; set; }
+
+        public string ReplayCommentsResend { get; set; }
 
         public int FreeDaysResend { get; set; }
 

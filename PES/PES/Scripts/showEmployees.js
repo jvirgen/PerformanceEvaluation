@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     $("#table-employees").DataTable();
+    $("#Tableview").DataTable();
 
     // Events 
     $("#showEnables").on("click", function (e) {

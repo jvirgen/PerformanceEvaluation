@@ -43,7 +43,7 @@ namespace PES.Models
         /// <summary>
         /// Flag to know if have a project
         /// </summary>
-        public char HaveProject { get; set; }
+        public string HaveProject { get; set; }
 
     }
 }
