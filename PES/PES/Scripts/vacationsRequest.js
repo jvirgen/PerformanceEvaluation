@@ -1,12 +1,10 @@
 ﻿$(document).ready(function () {
     $(function() {
         $('.daterange').daterangepicker({});
-
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
         //editHolidayDay();
         //this event caches any modification on a start/end date field
         $(document).on('change', 'input.datesBox', getDaysRequested);
-       
     });
 
     $('#haveProject').click(function () {
@@ -35,18 +33,20 @@
 });
 
 
-
 function addDate(btnAdd) {
-    var last = $('.datesGroup')[$('.datesGroup').length - 1];
-    $(last).after($(last).clone());
+    var last = $('.datesGroup')[$('.datesGroup').length - 1]; 
+    $(last).after($(last).clone()); //clone
+    var last2 = $('.datesGroup')[$('.datesGroup').length - 1]; 
+    //save the counter as an integer on data atrribute (to increment by 1)
+    //set with attr add 1 
+    //updates inner array in name attribute of a determined start date, return date and lead 
+    //updateEnumerationBoxes();
 
-    //updates inner array in name attribute of a determined start date, return date and lead name
-    updateEnumerationBoxes();
-
-    $($('.datesBox')[$('.datesBox').length - 1]).daterangepicker({
-        startDate: getSysdate(),
-        endDate: getSysdate()
-    });
+    
+    //$($('.datesBox')[$('.datesBox').length - 1]).daterangepicker({
+    //    startDate: getSysdate(),
+    //    endDate: getSysdate()
+    //});
     disableBtn();
     showBtn();
     getDaysRequested();
