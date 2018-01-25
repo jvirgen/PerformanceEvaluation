@@ -70,6 +70,7 @@
                 <div class="container flexEnd">
                                                                    <!--COMMENTS-->
                     <div class="col-md-8">
+                        <!--Approve Reason -->
 
                                 @Html.LabelFor(model => model.Comments, "Comments", new { @class = "control-label" })
                                 @if (Model.status.ToLower() == "rejected")
@@ -88,7 +89,13 @@
                                     @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
                                 }
 
-                                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })                       
+                                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })        
+
+                                @if (Model.status.ToLower() == "approved")
+                                {
+                                    @Html.LabelFor(model => model.ReplayComment, "Approved Reason ", new { @class = "control-label" })
+                                    @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+                                }
                     </div>
                                      
                                                                     <!-- BLOCK BUTTONS -->                            
