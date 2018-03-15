@@ -220,6 +220,7 @@
     <Compile Include="ViewModels\EmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\InsertNewRequestViewModel.cs" />
     <Compile Include="ViewModels\NewVacationDates.cs" />
+    <Compile Include="ViewModels\SubrequestInfoVM.cs" />
     <Compile Include="ViewModels\TransferEmployeeViewModel.cs" />
     <Compile Include="ViewModels\UpdateEmployeeViewModel.cs" />
     <Compile Include="ViewModels\InsertEmployeeViewModel.cs" />
