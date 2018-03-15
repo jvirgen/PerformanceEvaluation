@@ -166,6 +166,7 @@
     <Compile Include="Services\EmailApproveRequestService.cs" />
     <Compile Include="Services\EmailInsertNewRequestService.cs" />
     <Compile Include="Services\ResendRequestService.cs" />
+    <Compile Include="ViewModels\SendRequestViewModel.cs" />
     <Compile Include="ViewModels\StatusRequestViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Extensions.cs" />

@@ -182,7 +182,7 @@ namespace PES.Controllers
                 string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
                 //Sending Information to ViewModel.
                 model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
-                model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
+                model.SubRequest[i].EndDate =Convert.ToDateTime(eFinalEndDate.Trim());
 
             }
             //inserting sub request.
