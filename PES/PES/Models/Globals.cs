@@ -7,7 +7,7 @@ namespace PES.Models
 {
     public static class Globals
     {
-        public static readonly string SMTPOutlookEmail = "alejandro.munoz@4thsource.com";
-        public static readonly string SMTPOutlookPass = "Alexmuoso123";
+        public static readonly string SMTPOutlookEmail = "victor.munguia@4thsource.com";
+        public static readonly string SMTPOutlookPass = "Reiben00_171";
     }
 }
