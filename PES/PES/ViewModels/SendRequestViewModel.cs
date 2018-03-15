@@ -18,6 +18,6 @@ namespace PES.ViewModels
 
         public string Comments { get; set; }
 
-        public List<"ViewModelRicardo"> SubRequests { get; set; }
+        public List<SubrequestInfoVM> SubRequests { get; set; }
     }
 }
