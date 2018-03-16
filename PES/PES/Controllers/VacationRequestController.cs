@@ -20,6 +20,8 @@ namespace PES.Controllers
     [Authorize]
     public class VacationRequestController : Controller
     {
+        string MesCorrectoFinal;
+        string MesCorrectoInicio;
         //Declare Services
         private EmployeeService _employeeService;
         private VacationHeaderReqService _headerReqService;
@@ -171,15 +173,141 @@ namespace PES.Controllers
                 //Changing date format.
                 string startDate = StartAndEndate[0].Trim();
                 string month = startDate.Substring(0, 2);
+                switch (month)
+                {
+                    case "01":
+                        {
+                            MesCorrectoInicio = "JAN";
+                            break;
+                        }
+                    case "02":
+                        {
+                            MesCorrectoInicio = "FEB";
+                            break;
+                        }
+                    case "03":
+                        {
+                            MesCorrectoInicio = "MAR";
+                            break;
+                        }
+                    case "04":
+                        {
+                            MesCorrectoInicio = "APR";
+                            break;
+                        }
+                    case "05":
+                        {
+                            MesCorrectoInicio = "MAY";
+                            break;
+                        }
+                    case "06":
+                        {
+                            MesCorrectoInicio = "JUN";
+                            break;
+                        }
+                    case "07":
+                        {
+                            MesCorrectoInicio = "JUL";
+                            break;
+                        }
+                    case "08":
+                        {
+                            MesCorrectoInicio = "AUG";
+                            break;
+                        }
+                    case "09":
+                        {
+                            MesCorrectoInicio = "SEP";
+                            break;
+                        }
+                    case "10":
+                        {
+                            MesCorrectoInicio = "OCT";
+                            break;
+                        }
+                    case "11":
+                        {
+                            MesCorrectoInicio = "NOV";
+                            break;
+                        }
+                    case "12":
+                        {
+                            MesCorrectoInicio = "DEC";
+                            break;
+                        }
+                }
                 string day = startDate.Substring(3, 2);
                 string year = startDate.Substring(6, 4);
-                string finalStarDate = (day + "/" + month + "/" + year);
+                string finalStarDate = (day + "-" + MesCorrectoInicio + "-" + year);
                 //Changing date format.
                 string endDate = StartAndEndate[1].Trim();
                 string eMonth = endDate.Substring(0, 2);
+                switch (eMonth)
+                {
+                    case "01":
+                        {
+                            MesCorrectoFinal = "JAN";
+                            break;
+                        }
+                    case "02":
+                        {
+                            MesCorrectoFinal = "FEB";
+                            break;
+                        }
+                    case "03":
+                        {
+                            MesCorrectoFinal = "MAR";
+                            break;
+                        }
+                    case "04":
+                        {
+                            MesCorrectoFinal = "APR";
+                            break;
+                        }
+                    case "05":
+                        {
+                            MesCorrectoFinal = "MAY";
+                            break;
+                        }
+                    case "06":
+                        {
+                            MesCorrectoFinal = "JUN";
+                            break;
+                        }
+                    case "07":
+                        {
+                            MesCorrectoFinal = "JUL";
+                            break;
+                        }
+                    case "08":
+                        {
+                            MesCorrectoFinal = "AUG";
+                            break;
+                        }
+                    case "09":
+                        {
+                            MesCorrectoFinal = "SEP";
+                            break;
+                        }
+                    case "10":
+                        {
+                            MesCorrectoFinal = "OCT";
+                            break;
+                        }
+                    case "11":
+                        {
+                            MesCorrectoFinal = "NOV";
+                            break;
+                        }
+                    case "12":
+                        {
+                            MesCorrectoFinal = "DEC";
+                            break;
+                        }
+                }
                 string eDay = endDate.Substring(3, 2);
                 string eYear = endDate.Substring(6, 4);
-                string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+                string eFinalEndDate = (eDay + "/" + MesCorrectoFinal + "/" + eYear);
                 //Sending Information to ViewModel.
                 model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
                 model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());

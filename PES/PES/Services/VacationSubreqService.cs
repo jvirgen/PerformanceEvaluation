@@ -12,6 +12,7 @@ namespace PES.Services
 {
     public class VacationSubreqService
     {
+        string MesCorrectoAuto;
         private PESDBContext dbContext = new PESDBContext();
         public VacationSubreqService()
         {
@@ -117,9 +118,72 @@ namespace PES.Services
                         {
                             string returnDate = date.ReturnDate;
                             string rMonth = returnDate.Substring(0, 2);
+                            switch (rMonth)
+                            {
+                                case "01":
+                                    {
+                                        MesCorrectoAuto = "JAN";
+                                        break;
+                                    }
+                                case "02":
+                                    {
+                                        MesCorrectoAuto = "FEB";
+                                        break;
+                                    }
+                                case "03":
+                                    {
+                                        MesCorrectoAuto = "MAR";
+                                        break;
+                                    }
+                                case "04":
+                                    {
+                                        MesCorrectoAuto = "APR";
+                                        break;
+                                    }
+                                case "05":
+                                    {
+                                        MesCorrectoAuto = "MAY";
+                                        break;
+                                    }
+                                case "06":
+                                    {
+                                        MesCorrectoAuto = "JUN";
+                                        break;
+                                    }
+                                case "07":
+                                    {
+                                        MesCorrectoAuto = "JUL";
+                                        break;
+                                    }
+                                case "08":
+                                    {
+                                        MesCorrectoAuto = "AUG";
+                                        break;
+                                    }
+                                case "09":
+                                    {
+                                        MesCorrectoAuto = "SEP";
+                                        break;
+                                    }
+                                case "10":
+                                    {
+                                        MesCorrectoAuto = "OCT";
+                                        break;
+                                    }
+                                case "11":
+                                    {
+                                        MesCorrectoAuto = "NOV";
+                                        break;
+                                    }
+                                case "12":
+                                    {
+                                        MesCorrectoAuto = "DEC";
+                                        break;
+                                    }
+                            }
                             string rDay = returnDate.Substring(3, 2);
                             string rYear = returnDate.Substring(6, 4);
-                            string FinalReturnDate = (rDay + "/" + rMonth + "/" + rYear);
+                            string FinalReturnDate = (rDay + "/" + MesCorrectoAuto + "/" + rYear);
 
                             command.Parameters.Add(new OracleParameter("IdHeaderReq", idHeaderReq));
                             command.Parameters.Add(new OracleParameter("StartDate", date.StartDate));
