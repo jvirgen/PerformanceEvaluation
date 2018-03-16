@@ -40,7 +40,8 @@ namespace PES.Controllers
             string eYear = endDate.Substring(6, 4);
             string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
             holiday.InsertDay = eFinalEndDate;
-            return View(holiday);     
+            return View(holiday);   
+            
         }
         [HttpPost]
         public ActionResult Edit(Holiday holiday)
