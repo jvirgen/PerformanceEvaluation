@@ -37,7 +37,7 @@ namespace PES.Controllers
             var MesCorrecto = new FechaViewModel();
             string eMonth = endDate.Substring(0, 2);
             string eDay = endDate.Substring(3, 2);
-            string eYear = endDate.Substring(6, 4);
+            string eYear = endDate.Substring(5, 3);
             string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
             holiday.InsertDay = eFinalEndDate;
             return View(holiday);   
@@ -48,9 +48,11 @@ namespace PES.Controllers
         {
             string endDate = holiday.InsertDay;
             string eMonth = endDate.Substring(0, 2);
+            var MesCorrecto2 = new FechaViewModel();
+            MesCorrectoHoly = MesCorrecto2.CorregirMes(eMonth).ToString();
             string eDay = endDate.Substring(3, 2);
             string eYear = endDate.Substring(6, 4);
-            string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+            string eFinalEndDate = (eDay + "/" + MesCorrectoHoly + "/" + eYear);
             holiday.InsertDay = eFinalEndDate;
 
             _holidayService.EditHoliday(holiday);
