@@ -32,9 +32,72 @@ namespace PES.Controllers
             holiday =  _holidayService.GetHoliday(holidayId);
             string endDate = holiday.InsertDay;
             string eMonth = endDate.Substring(0, 2);
-            string eDay = endDate.Substring(3, 2);
-            string eYear = endDate.Substring(6, 4);
-            string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+            switch (eMonth)
+            {
+                case "01":
+                    {
+                        MesCorrectoHoly = "JAN";
+                        break;
+                    }
+                case "02":
+                    {
+                        MesCorrectoHoly = "FEB";
+                        break;
+                    }
+                case "03":
+                    {
+                        MesCorrectoHoly = "MAR";
+                        break;
+                    }
+                case "04":
+                    {
+                        MesCorrectoHoly = "APR";
+                        break;
+                    }
+                case "05":
+                    {
+                        MesCorrectoHoly = "MAY";
+                        break;
+                    }
+                case "06":
+                    {
+                        MesCorrectoHoly = "JUN";
+                        break;
+                    }
+                case "07":
+                    {
+                        MesCorrectoHoly = "JUL";
+                        break;
+                    }
+                case "08":
+                    {
+                        MesCorrectoHoly = "AUG";
+                        break;
+                    }
+                case "09":
+                    {
+                        MesCorrectoHoly = "SEP";
+                        break;
+                    }
+                case "10":
+                    {
+                        MesCorrectoHoly = "OCT";
+                        break;
+                    }
+                case "11":
+                    {
+                        MesCorrectoHoly = "NOV";
+                        break;
+                    }
+                case "12":
+                    {
+                        MesCorrectoHoly = "DEC";
+                        break;
+                    }
+            }
+            string eDay = endDate.Substring(0, 2);
+            string eYear = endDate.Substring(4, 4);
+            string eFinalEndDate = (eDay + "/" + MesCorrectoHoly + "/" + eYear);
             holiday.InsertDay = eFinalEndDate;
             return View(holiday);     
         }
@@ -43,9 +106,72 @@ namespace PES.Controllers
         {
             string endDate = holiday.InsertDay;
             string eMonth = endDate.Substring(0, 2);
+            switch (eMonth)
+            {
+                case "01":
+                    {
+                        MesCorrectoHoly = "JAN";
+                        break;
+                    }
+                case "02":
+                    {
+                        MesCorrectoHoly = "FEB";
+                        break;
+                    }
+                case "03":
+                    {
+                        MesCorrectoHoly = "MAR";
+                        break;
+                    }
+                case "04":
+                    {
+                        MesCorrectoHoly = "APR";
+                        break;
+                    }
+                case "05":
+                    {
+                        MesCorrectoHoly = "MAY";
+                        break;
+                    }
+                case "06":
+                    {
+                        MesCorrectoHoly = "JUN";
+                        break;
+                    }
+                case "07":
+                    {
+                        MesCorrectoHoly = "JUL";
+                        break;
+                    }
+                case "08":
+                    {
+                        MesCorrectoHoly = "AUG";
+                        break;
+                    }
+                case "09":
+                    {
+                        MesCorrectoHoly = "SEP";
+                        break;
+                    }
+                case "10":
+                    {
+                        MesCorrectoHoly = "OCT";
+                        break;
+                    }
+                case "11":
+                    {
+                        MesCorrectoHoly = "NOV";
+                        break;
+                    }
+                case "12":
+                    {
+                        MesCorrectoHoly = "DEC";
+                        break;
+                    }
+            }
             string eDay = endDate.Substring(3, 2);
             string eYear = endDate.Substring(6, 4);
-            string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+            string eFinalEndDate = (eDay + "/" + MesCorrectoHoly + "/" + eYear);
             holiday.InsertDay = eFinalEndDate;
 
             _holidayService.EditHoliday(holiday);
