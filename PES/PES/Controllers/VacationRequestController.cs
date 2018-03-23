@@ -83,6 +83,19 @@ namespace PES.Controllers
             return View(newRequest);
         }
 
+        [HttpGet]
+        public ActionResult SendRequest(int userid)
+        {
+            Employee CurrentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            CurrentEmployee = _employeeService.GetByID(userid);
+            SendRequestViewModel NewRequest = new SendRequestViewModel();
+            NewRequest.EmployeedID = userid;
+            NewRequest.VacationDays = CurrentEmployee.Freedays;
+
+            return View(NewRequest);
+        }
+
 
         public ActionResult ResendRequest(int headerReqId, int userid)
         {
