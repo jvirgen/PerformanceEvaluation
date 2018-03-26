@@ -183,7 +183,6 @@ namespace PES.Controllers
             for (int i = 0; i < model.SubRequest.Count(); i++)
             {
                 StartAndEndate = model.SubRequest[i].Date.Split('-');
-
                 //Changing date format.
                 string startDate = StartAndEndate[0].Trim();
                 string month = startDate.Substring(0, 2);

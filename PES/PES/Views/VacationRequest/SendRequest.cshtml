@@ -1,4 +1,5 @@
-﻿@model PES.ViewModels.SendRequestViewModel
+﻿@using PES.ViewModels
+@model PES.ViewModels.SendRequestViewModel
 
 <div class="page-header text-center">
     <h2>New Vacation Request</h2>
@@ -50,7 +51,7 @@
                         </div>
                     </div>
                     <!--Aqui termina el apartado del titulo, ahora sigue el parcial view.-->
-                    // @Html.Partial("~/Views/Shared/_NewVacationDatesParcialRemake.cshtml", Model)
+                     @Html.Partial("~/Views/Shared/_NewVacationDatesParcialRemake.cshtml", new SubrequestInfoVM())
 
                     <!--Mensaje de alerta-->
                     <div class="form-group">

@@ -1,0 +1,12 @@
+﻿@model PES.ViewModels.SubrequestInfoVM
+<div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
+    <div id="subDatesGroup" class="form-group">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label for="start">Start Date</label>
+            @Html.TextBoxFor(model => model.StartDate, htmlAttributes: new { @id = "start", @class = "form-control text-center" })
+            <label for="start">End Date</label>
+            @Html.TextBoxFor(model => model.EndDate, new { @id = "EndDate", @class = "form-control text-center" })
+            @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
+        </div>
+    </div>
+</div>
