@@ -1,12 +1,50 @@
-﻿@model PES.ViewModels.SubrequestInfoVM
+﻿@using HtmlHelpers.BeginCollectionItem
+@model PES.ViewModels.SubrequestInfoVM
+
+@using (Html.BeginCollectionItem("SubRequests"))
+{
 <div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
     <div id="subDatesGroup" class="form-group">
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <label for="start">Start Date</label>
-            @Html.TextBoxFor(model => model.StartDate, htmlAttributes: new { @id = "start", @class = "form-control text-center" })
-            <label for="start">End Date</label>
-            @Html.TextBoxFor(model => model.EndDate, new { @id = "EndDate", @class = "form-control text-center" })
-            @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
+        <div id="datesCont">
+            <div class="col-sm-4 col-md-4 col-lg-3">
+                <label for="startDateLabel">Start Date</label>
+                @Html.TextBoxFor(model => model.StartDate, "{0:d-MMM-yyyy}", htmlAttributes: new { @id = "startDateLabel", @class = "form-control text-center" })
+                @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-3">
+                <label for="EndDateLabel">End Date</label>
+                @Html.TextBoxFor(model => model.EndDate, "{0:d-MMM-yyyy}", htmlAttributes: new { @id = "EndDateLabel", @class = "form-control text-center" })
+                @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-3">
+                <label for="ReturnDateLabel">Return Date</label>
+                @Html.TextBoxFor(model => model.ReturnDate, "{0:d-MMM-yyyy}", htmlAttributes: new { @id = "ReturnDateLabel", @class = "form-control text-center", @readonly = "readonly" })
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2">
+                <button onclick="" type="button" class="btn btn-default addBtn addatebtn">
+                    Add Date
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCount">
+            <div id="leadName" class="col-md-4 col-lg-4">
+                <label for="lead" class="control-label">Lead Name</label>
+                @Html.TextBoxFor(model => model.LeadName, htmlAttributes: new { @class = "form-control leadBox", @id = "lead" })
+            </div>
+            <div id="checktext" class="col-sm-3 col-md-3 col-lg-3">
+                <label id="checktext" class="text-left">
+                    @Html.CheckBoxFor(model => model.HaveProject, new { @class = "projectBox", @id = "haveProject" }) I do not have a project
+               
+                </label>
+            </div>
+            <div class="removeBtn col-md-1 hidden">
+                <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
+            </div>
         </div>
     </div>
 </div>
+    
+}

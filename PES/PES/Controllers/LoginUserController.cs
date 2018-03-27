@@ -33,9 +33,8 @@ namespace PES.Controllers
         {
             if (_employeeService.GetByEmail(user.UserEmail).EndDate == null)
             {
-                var isAuthenticated = user.Authentication(user.UserEmail, user.Password);
-
-                //isAuthenticated = true; Added for testing when offline
+                //var isAuthenticated = user.Authentication(user.UserEmail, user.Password);
+                var isAuthenticated = true; //Added for testing when offline
 
                 //Check if the Email and Password exist in Office 356
                 if (isAuthenticated)

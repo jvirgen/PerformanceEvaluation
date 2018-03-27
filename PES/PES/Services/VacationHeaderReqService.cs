@@ -215,7 +215,7 @@ namespace PES.Services
         /// </summary>
         /// <param name="vacHeadReq"></param>
         /// <returns>True if the insert was successful</returns>
-        public bool InsertVacHeaderReq(InsertNewRequestViewModel InsertNewRequest)
+        public bool InsertVacHeaderReq(SendRequestViewModel InsertNewRequest)
         {
             bool status = false;
             int RequestStatus = 1 ;
@@ -234,9 +234,9 @@ namespace PES.Services
 
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
-                    command.Parameters.Add(new OracleParameter("IdEmployee", InsertNewRequest.EmployeeId));
+                    command.Parameters.Add(new OracleParameter("IdEmployee", InsertNewRequest.EmployeedID));
                     command.Parameters.Add(new OracleParameter("Title", InsertNewRequest.Title));
-                    command.Parameters.Add(new OracleParameter("NoVacDays", InsertNewRequest.daysReq));
+                    command.Parameters.Add(new OracleParameter("NoVacDays", InsertNewRequest.DaysRequested));
                     command.Parameters.Add(new OracleParameter("Comments", InsertNewRequest.Comments));
                     command.Parameters.Add(new OracleParameter("IdReqStatus", RequestStatus));
                     command.Parameters.Add(new OracleParameter("NoUnpaidDays", NoUnpaidDays));

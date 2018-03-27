@@ -92,7 +92,17 @@ namespace PES.Controllers
             SendRequestViewModel NewRequest = new SendRequestViewModel();
             NewRequest.EmployeedID = userid;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
-
+            NewRequest.SubRequests = new List<SubrequestInfoVM>()
+            {
+                new SubrequestInfoVM
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = false
+                }
+            };
+            ViewBag.NewRequest = userid;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
             return View(NewRequest);
         }
 
@@ -166,7 +176,7 @@ namespace PES.Controllers
         /// <param name="model"></param>
         /// <returns>Redirect to Historial Screen</returns>
         [HttpPost]
-        public ActionResult InsertNewRequestData(InsertNewRequestViewModel model)
+        public ActionResult InsertNewRequestData(SendRequestViewModel model)
         {
             //:::::::::::::::::Obtain fullPath ::::::::::::::::::
 
@@ -178,37 +188,26 @@ namespace PES.Controllers
             //Obtain id header request inserted.
             int idRequest = _subReqService.GetHeaderRequest(model);
 
-            string[] StartAndEndate;
-
-            for (int i = 0; i < model.SubRequest.Count(); i++)
+            for (int i = 0; i < model.SubRequests.Count(); i++)
             {
-                StartAndEndate = model.SubRequest[i].Date.Split('-');
                 //Changing date format.
-                string startDate = StartAndEndate[0].Trim();
-                string month = startDate.Substring(0, 2);
-                var MesCorrecto = new FechaViewModel();
-                MesCorrectoInicio = MesCorrecto.CorregirMes(month).ToString();
                 //A QUI ME QUEDE
 
-                string day = startDate.Substring(3, 2);
-                string year = startDate.Substring(6, 4);
-                string finalStarDate = (day + "-" + MesCorrectoInicio + "-" + year);
+                //Variables a fechas
+                var finalStarDate = model.SubRequests[0].StartDate;
 
                 //Changing date format.
-                string endDate = StartAndEndate[1].Trim();
-                string eMonth = endDate.Substring(0, 2);
-                MesCorrectoFinal = MesCorrecto.CorregirMes(eMonth).ToString();                
-                string eDay = endDate.Substring(3, 2);
-                string eYear = endDate.Substring(6, 4);
-                string eFinalEndDate = (eDay + "/" + MesCorrectoFinal + "/" + eYear);
+
+                //Variables a fechas
+                var eFinalEndDate = model.SubRequests[0].EndDate;
                 //Sending Information to ViewModel.
 
-                model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
-                model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
+                model.SubRequests[i].StartDate = finalStarDate;
+                model.SubRequests[i].EndDate = finalStarDate;
 
             }
             //inserting sub request.
-            _subReqService.InsertSubReq(idRequest, model.SubRequest);        
+            _subReqService.InsertSubReq(idRequest, model.SubRequests);        
        
 
             List<InsertNewRequestViewModel> data = new List<InsertNewRequestViewModel>();
@@ -221,7 +220,7 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments /*, model.myFile*/);
-            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq);
+            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.DaysRequested);
 
             //return to History View.
             return RedirectToAction("HistoricalResource");

@@ -39,19 +39,23 @@
             <section>
                 @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
                 {
-                    @Html.HiddenFor(model => Model.EmployeedID)
+                    @Html.HiddenFor(model => model.EmployeedID)
                     <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12" style="margin-left:1vw;">
-                                @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
-                                @Html.EditorFor(model => Model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.LabelFor(model => model.Title, "Request Title", new { @class = "control-label col-form-label" })
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                                 <span class="field-validation-valid text-danger" data-valmsg-for="title" data-vlmsg-replace="true"></span>
                             </div>
                         </div>
                     </div>
                     <!--Aqui termina el apartado del titulo, ahora sigue el parcial view.-->
-                     @Html.Partial("~/Views/Shared/_NewVacationDatesParcialRemake.cshtml", new SubrequestInfoVM())
+                   
+                    foreach (var subrequest in Model.SubRequests)
+                    {
+                        @Html.Partial("~/Views/Shared/_NewVacationDatesParcialRemake.cshtml", subrequest)
+                    }
 
                     <!--Mensaje de alerta-->
                     <div class="form-group">
@@ -67,8 +71,8 @@
                         <div class="container flexEnd">
                             <div class="col-md-8">
 
-                                @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
-                                @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
+                                @Html.LabelFor(model => model.Comments, "Comments:", new { @class = "control-label" })
+                                @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
                                 <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                                 <input type="button" id="my-button" value="Select Files">
                                 <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">
@@ -76,14 +80,86 @@
                             <div class="col-md-4 text-center">
                                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
                                 <br />
-                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#SendRequest">Send Request</button>
-                                @Html.Partial("_ModalInsertNewRequestPartial")
+                                <input id="sendRequest" type="submit" class="btn btn-lg btn-primary btn-block" value="Send Request"/>
+                                @*@Html.Partial("_ModalInsertNewRequestPartial")*@
                             </div>
                         </div> <!-- container end -->
                     </div> <!-- form-group end -->
                 }
             </section>
         </div>
+    </div>
+    <div class="col-md-3">
+        @Html.Partial("_ShowCalendarPartial", (List<PES.Models.Holiday>)ViewBag.MyHoliday)
+    </div>
+</div>
+
+@* Modal begins *@
+<div class="modal fade" id="modalNoEnoughDays" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">No Enough Days</h4>
+            </div>
+            <div class="modal-body">
+                <p>You don't have enough days available.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+@* Modal begins *@
+<div class="modal fade" id="OldDate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Date can not be a pass or present date</b></p>
+                <br />
+                <p ALIGN=center> Please select other date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+@* Modal begins *@
+<div class="modal fade" id="sameMonth" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Selected dates must be in the same month</b></p>
+                <br />
+                <p ALIGN=center> Please select other date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
     </div>
 </div>
 

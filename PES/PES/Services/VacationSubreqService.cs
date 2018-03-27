@@ -86,7 +86,7 @@ namespace PES.Services
         /// 
 
 
-        public bool InsertSubReq(int idHeaderReq, List<NewVacationDates> model)
+        public bool InsertSubReq(int idHeaderReq, List<SubrequestInfoVM> model)
         {
             bool status = false;
             using (OracleConnection db = dbContext.GetDBConnection())
@@ -206,7 +206,7 @@ namespace PES.Services
             return status;
         }
 
-        public int GetHeaderRequest(InsertNewRequestViewModel data)
+        public int GetHeaderRequest(SendRequestViewModel data)
         {
             int iDHeaderReq = 0;
             try
@@ -218,7 +218,7 @@ namespace PES.Services
                     
                     string query =  "select   max (id_header_req) as    \"currentHeaderReq\"" + 
                                     "from      PE.VACATION_HEADER_REQ " +
-                                    "where     id_employee = '" + data.EmployeeId + "'" +
+                                    "where     id_employee = '" + data.EmployeedID + "'" +
                                     "order by  id_header_req  asc ";
 
                     using (OracleCommand command = new OracleCommand(query, db))

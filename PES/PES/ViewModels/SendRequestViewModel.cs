@@ -21,5 +21,7 @@ namespace PES.ViewModels
         public string Comments { get; set; }
 
         public List<SubrequestInfoVM> SubRequests { get; set; }
+
+        public VacHeadReqViewModel VacHeaderRequest { get; set; }
     }
 }
