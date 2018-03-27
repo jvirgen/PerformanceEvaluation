@@ -24,6 +24,7 @@ namespace PES.Controllers
         {
             IEnumerable<Holiday> holidays = new List<Holiday>();
             holidays = _holidayService.GetAllHolidays();
+
             return View(holidays);
         }
         //Fix attribute insertDay, this has to be only the day attrirbute.

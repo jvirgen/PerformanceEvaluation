@@ -34,7 +34,7 @@
                 {
                     @Html.HiddenFor(model => model.EmployeeId) // id
                     <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
-                     <div class="form-group">
+                    <div class="form-group">
                         <div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12" style="margin-left:1vw;">
@@ -48,7 +48,7 @@
                         </div> <!-- container end -->
                     </div> <!-- form-group end -->
 
-            <!-- PARTIAL VIEW WITH REQUEST DATES -->
+                    <!-- PARTIAL VIEW WITH REQUEST DATES -->
 
                     @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model)
 
@@ -84,7 +84,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        @Html.Partial("_ShowCalendarPartial",(List<PES.Models.Holiday>) ViewBag.MyHoliday )
+        @Html.Partial("_ShowCalendarPartial", (List<PES.Models.Holiday>)ViewBag.MyHoliday)
     </div>
 </div>
 
@@ -162,6 +162,7 @@
 {
     @Styles.Render("~/Content/css/vacation_request_resource.css")
     @Styles.Render("~/Content/themes/base/daterangepicker.css")
+    @Styles.Render("~/Content/css/select2.min.css")
 
 }
 
@@ -172,4 +173,12 @@
     @Scripts.Render("~/Scripts/vacationsRequest.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
+    @Scripts.Render("~/Scripts/select2.min.js")
+    @*<script type="text/javascript" src="~/Scripts/select2.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+
+            $("#ListEmployee").select2();
+        });
+    </script>
 }

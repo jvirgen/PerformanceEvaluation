@@ -5,6 +5,7 @@ using System.Web;
 using PES.Models;
 using System.Web.DynamicData;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace PES.ViewModels
 {
@@ -51,6 +52,11 @@ namespace PES.ViewModels
         /// <summary>
         /// Number of vacation days that employee have 
         /// </summary>
+        public IEnumerable<SelectListItem> ListEmployee { get; set; }
+        //public List<Employee> ListEmployee { get; set; }
+
+        
+
         public int Freedays {get; set; }
 
         //public string myFile { get; set;  }

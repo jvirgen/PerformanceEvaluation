@@ -69,10 +69,26 @@ namespace PES.Controllers
             InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
             newRequest.EmployeeId = userid;
             newRequest.Freedays = currentEmployee.Freedays;
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            IEnumerable<SelectListItem> leadName = listEmployee.Select(leader => new SelectListItem() {
+                Value = leader.EmployeeId.ToString(),
+                Text = leader.FirstName + " " + leader.LastName
+
+            });
+
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem() {
+                Value = employee.EmployeeId.ToString(),
+                Text = employee.FirstName + " " + employee.LastName
+            });
+            newRequest.ListEmployee = listEmployees;
+
+
             newRequest.SubRequest = new List<NewVacationDates>()
             {
                 new NewVacationDates
-                {
+                {   
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now,
                     HaveProject = true
@@ -169,6 +185,7 @@ namespace PES.Controllers
 
             for (int i = 0; i < model.SubRequest.Count(); i++)
             {
+
                 StartAndEndate = model.SubRequest[i].Date.Split('-');
 
                 //Changing date format.
@@ -185,12 +202,13 @@ namespace PES.Controllers
                 //Changing date format.
                 string endDate = StartAndEndate[1].Trim();
                 string eMonth = endDate.Substring(0, 2);
-                MesCorrectoFinal = MesCorrecto.CorregirMes(eMonth).ToString();                
+                MesCorrectoFinal = MesCorrecto.CorregirMes(eMonth).ToString();
                 string eDay = endDate.Substring(3, 2);
                 string eYear = endDate.Substring(6, 4);
                 string eFinalEndDate = (eDay + "/" + MesCorrectoFinal + "/" + eYear);
                 //Sending Information to ViewModel.
 
+            }
                 model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
                 model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
 

@@ -27,7 +27,10 @@ namespace PES.ViewModels
         /// <summary>
         /// Name of lead
         /// </summary>
-        public string LeadName { get; set; }
+        //public string LeadName { get; set; }
+
+
+        public List<NewVacationDates> LeadName { get; set; }
 
         /// <summary>
         /// Flag to know if have a project
