@@ -5,6 +5,7 @@ using System.Web;
 using PES.Models;
 using System.Web.DynamicData;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace PES.ViewModels
 {
@@ -47,6 +48,12 @@ namespace PES.ViewModels
         /// List of New vacation date Viewmodel 
         /// </summary>
         public List<NewVacationDates> SubRequest { get; set; }
+
+        // se agrego para provar el viewmodel completo// subrequest2 es el original
+        public List<SubrequestInfoVM> SubRequest2 { get; set; }
+
+
+        public IEnumerable<SelectListItem> ListEmployee { get; set; }
 
         /// <summary>
         /// Number of vacation days that employee have 

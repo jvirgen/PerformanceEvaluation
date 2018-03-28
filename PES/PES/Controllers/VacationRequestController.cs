@@ -66,7 +66,7 @@ namespace PES.Controllers
             Employee currentEmployee = new Employee();
             _employeeService = new EmployeeService();
             currentEmployee = _employeeService.GetByID(userid);
-            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
+            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();     
             newRequest.EmployeeId = userid;
             newRequest.Freedays = currentEmployee.Freedays;
             newRequest.SubRequest = new List<NewVacationDates>()
@@ -90,12 +90,26 @@ namespace PES.Controllers
             _employeeService = new EmployeeService();
             CurrentEmployee = _employeeService.GetByID(userid);
             SendRequestViewModel NewRequest = new SendRequestViewModel();
+
+            // mod
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Value = employee.EmployeeId.ToString(),
+                Text = employee.FirstName + " " + employee.LastName
+            });
+            //mod
+
+
             NewRequest.EmployeedID = userid;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
             NewRequest.SubRequests = new List<SubrequestInfoVM>()
             {
                 new SubrequestInfoVM
                 {
+                    ListEmployee = listEmployees,
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now,
                     HaveProject = false
