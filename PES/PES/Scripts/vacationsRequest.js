@@ -97,23 +97,38 @@ function statusColor() {
     }
 }
 
+
 function getDaysRequested() {
     var total = 0;
     var dates = '';
+    var dates2 = '';
     var start = null;
     var end = null;
 
 
-    $('.datesBox').each(function (i, input) {
+    $("#start").each(function (i, input) {
         dates = $(input).val();
         if (dates != '') {
-            start = moment(dates.split(" - ")[0]).subtract(1, 'days');  //subtract a day to count the first day selected in calendar till the last
-            end = moment(dates.split(" - ")[1]);
+            start = dates;  //subtract a day to count the first day selected in calendar till the last
+            //end = moment(dates.split(" - ")[1]);
 
-            ValidateSameMonth(start , end );
+            //ValidateSameMonth(start , end );
            
         }
     });
+
+    $("#EndDateLabel").each(function (i, input) {
+        dates2 = $(input).val();
+        if (dates2 != '') {
+            //start = moment(dates.split(" - ")[0]).subtract(1, 'days');  //subtract a day to count the first day selected in calendar till the last
+            end = dates2;
+
+            ValidateSameMonth(start, end);
+
+        }
+    });
+
+    
 
 }
 
