@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <!--Aqui termina el apartado del titulo, ahora sigue el parcial view.-->
-                   
+
                     foreach (var subrequest in Model.SubRequests)
                     {
                         @Html.Partial("~/Views/Shared/_NewVacationDatesParcialRemake.cshtml", subrequest)
@@ -80,7 +80,7 @@
                             <div class="col-md-4 text-center">
                                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
                                 <br />
-                                <input id="sendRequest" type="submit" class="btn btn-lg btn-primary btn-block" value="Send Request"/>
+                                <input id="sendRequest" type="submit" class="btn btn-lg btn-primary btn-block" value="Send Request" />
                                 @*@Html.Partial("_ModalInsertNewRequestPartial")*@
                             </div>
                         </div> <!-- container end -->
@@ -170,14 +170,31 @@
 {
     @Styles.Render("~/Content/css/vacation_request_resource.css")
     @Styles.Render("~/Content/themes/base/daterangepicker.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+
 
 }
 
 @section Scripts
 {
+
+
+
     @Styles.Render("~/Content/themes/base/daterangepicker.css")
+    @Scripts.Render("~/Scripts/select2.min.js")
 
     @Scripts.Render("~/Scripts/vacationsRequest.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $(".MySelect2").select2();
+
+            $("#ListEmployee").select2();
+        });
+    </script>
 }
