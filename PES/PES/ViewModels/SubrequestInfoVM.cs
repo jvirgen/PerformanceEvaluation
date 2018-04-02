@@ -40,7 +40,6 @@ namespace PES.ViewModels
         /// </summary>
         public bool HaveProject { get; set; }
 
-        public string Date { get; set; }
 
     }
 }

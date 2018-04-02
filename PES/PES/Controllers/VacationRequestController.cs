@@ -220,7 +220,7 @@ namespace PES.Controllers
                 //Sending Information to ViewModel.
 
                 model.SubRequests[i].StartDate = finalStarDate;
-                model.SubRequests[i].EndDate = finalStarDate;
+                model.SubRequests[i].EndDate = eFinalEndDate;
 
             }
             //inserting sub request.
