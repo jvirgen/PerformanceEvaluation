@@ -97,8 +97,8 @@ namespace PES.Controllers
 
             IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
             {
-                Value = employee.EmployeeId.ToString(),
-                Text = employee.FirstName + " " + employee.LastName
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
             });
             //mod
 
@@ -192,6 +192,7 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult InsertNewRequestData(SendRequestViewModel model)
         {
+
             //:::::::::::::::::Obtain fullPath ::::::::::::::::::
 
             //HttpPostedFile filePosted = Request.Files[myfile];
@@ -201,6 +202,7 @@ namespace PES.Controllers
             _headerReqService.InsertVacHeaderReq(model);
             //Obtain id header request inserted.
             int idRequest = _subReqService.GetHeaderRequest(model);
+            
 
             for (int i = 0; i < model.SubRequests.Count(); i++)
             {
@@ -209,7 +211,8 @@ namespace PES.Controllers
 
                 //Variables a fechas
                 var finalStarDate = model.SubRequests[0].StartDate;
-
+               
+                
                 //Changing date format.
 
                 //Variables a fechas

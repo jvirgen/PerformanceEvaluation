@@ -99,7 +99,7 @@ namespace PES.Services
                     "RETURN_DATE," +
                     "HAVE_PROJECT," +
                     "LEAD_NAME)" +
-                    "VALUES" +
+                     "VALUES" +
                     "(" +
                     " :IdHeaderReq, " +
                     " :StartDate," +
@@ -107,6 +107,7 @@ namespace PES.Services
                     " :ReturnDate," +
                     " :HaveProject," +
                     " :LeadName)";
+                
 
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
@@ -116,7 +117,7 @@ namespace PES.Services
                         command.Connection.Open();
                         foreach (var date in model)
                         {
-                            string returnDate = date.ReturnDate;
+                            string returnDate =date.ReturnDate;
                             string rMonth = returnDate.Substring(0, 2);
                             switch (rMonth)
                             {
@@ -189,8 +190,15 @@ namespace PES.Services
                             command.Parameters.Add(new OracleParameter("StartDate", date.StartDate));
                             command.Parameters.Add(new OracleParameter("EndDate", date.EndDate));
                             command.Parameters.Add(new OracleParameter("ReturnDate", FinalReturnDate));
+                            EmployeeService employeeService = new EmployeeService();
+                            var leadnameFirstName = employeeService.GetByID(date.SelectedEmployee).FirstName;
+                            var leadnameLastName = employeeService.GetByID(date.SelectedEmployee).LastName;
+                            var leadnameWholeName = leadnameFirstName + " " + leadnameLastName;
+
                             command.Parameters.Add(new OracleParameter("HaveProject", (date.HaveProject).ToString()));
-                            command.Parameters.Add(new OracleParameter("LeadName", date.LeadName));                    
+                            command.Parameters.Add(new OracleParameter("LeadName", leadnameWholeName));  
+                            
+
                             command.ExecuteNonQuery();
                         }
 

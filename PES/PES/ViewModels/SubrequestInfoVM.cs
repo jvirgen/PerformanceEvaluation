@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,6 +29,8 @@ namespace PES.ViewModels
         /// </summary>
         /// 
 
+        [Display(Name = "Lead Name")]
+        public int SelectedEmployee { get; set; }
         public IEnumerable<SelectListItem> ListEmployee { get; set; }
 
         public string LeadName { get; set; }
