@@ -12,20 +12,17 @@
                 </div>-->
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="start">Start Date</label>
-                    @Html.TextBoxFor(model => model.StartDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "start", @class = "form-control text-center datesBox" })
+                    @Html.TextBoxFor(model => model.StartDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
                     @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="EndDateLabel">End Date</label>
-                    @Html.TextBoxFor(model => model.EndDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "EndDateLabel", @class = "form-control text-center datesBox" })
+                    @Html.TextBoxFor(model => model.EndDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center datesBox" })
                     @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="returnDay">Return Date</label>
                     @Html.TextBoxFor(model => model.ReturnDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "returnDay", @class = "form-control text-center returnbox", @readonly = "readonly" })
-                </div>
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "datepicker" } })
                 </div>
                 <div class="col-sm-2 col-md-2 col-lg-2">
                     <button onclick="" type="button" class="btn btn-default addBtn addatebtn">
@@ -54,26 +51,5 @@
             </div>
         </div>
     </div>
-
-}
-
-@section scripts{
-
-
-    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
-
-    <script>
-        $(function () {
-            $(".datepicker").datepicker();
-
-        });
-    </script>
-
-    <script>
-        $(function () {
-            $(".datepicker2").datepicker();
-
-        });
-    </script>
 
 }

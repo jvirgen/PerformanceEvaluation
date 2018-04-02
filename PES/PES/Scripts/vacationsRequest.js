@@ -7,6 +7,7 @@
         $(document).on('change', 'input.datesBox', getDaysRequested);
     });
 
+
     $('#haveProject').click(function () {
         this.checked ? $('#lead').prop('disabled', true) : $('#lead').prop('disabled', false);
         $("#lead").val("");
@@ -97,40 +98,45 @@ function statusColor() {
     }
 }
 
+$('#start').datepicker({
+    format: "d/MM/yyyy",
+    autoclose: true,
+    todayHighlight: true
+});
 
-function getDaysRequested() {
-    var total = 0;
-    var dates = '';
-    var dates2 = '';
-    var start = null;
-    var end = null;
+$('#End').datepicker({
+    format: "d/MM/yyyy",
+    autoclose: true,
+    todayHighlight: true
+});
+
+$(".valida-fecha").on("change", function () {
+
+    var star = $("#start").val();
+
+    var end = $("#End").val();
+
+    if (star != "" && end != "") {
+        ValidateSameMonth(star, end);
+    }
+    else {
+        alert("Llene los campos");
+    }
+});
 
 
-    $("#start").each(function (i, input) {
-        dates = $(input).val();
-        if (dates != '') {
-            start = dates;  //subtract a day to count the first day selected in calendar till the last
-            //end = moment(dates.split(" - ")[1]);
-
-            //ValidateSameMonth(start , end );
-           
+/*function getDaysRequested() {
+    $("#start").blur(function () {
+        if (!isEmpty($("#start").val()) && !isEmpty($("#EndDateLabel").val())) {
+            ValidateSameMonth($("#start").val(), $("#EndDateLabel").val());
         }
     });
-
-    $("#EndDateLabel").each(function (i, input) {
-        dates2 = $(input).val();
-        if (dates2 != '') {
-            //start = moment(dates.split(" - ")[0]).subtract(1, 'days');  //subtract a day to count the first day selected in calendar till the last
-            end = dates2;
-
-            ValidateSameMonth(start, end);
-
+    $("#EndDateLabel").blur(function () {
+        if (!isEmpty($("#start").val()) && !isEmpty($("#EndDateLabel").val())) {
+            ValidateSameMonth($("#start").val(), $("#EndDateLabel").val());
         }
     });
-
-    
-
-}
+}*/
 
 function ValidateSameMonth(start, end, count) {
     var sD = new Date(start);
@@ -240,7 +246,7 @@ function getReturnDate() {
     $('.datesBox').each(function (i, input) {
         dates = $(input).val();
         if (dates != '') {
-            endDate = moment(dates.split(" - ")[1]);
+            endDate = dates;
         }
     });
     var returnDay = new Date(endDate);
