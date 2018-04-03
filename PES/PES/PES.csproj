@@ -532,6 +532,7 @@
     <Content Include="Views\VacationRequest\SendRequest.cshtml" />
     <Content Include="Views\Shared\_NewVacationDatesParcialRemake.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
+    <Content Include="Views\VacationRequest\VacationAssignation.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
