@@ -121,12 +121,24 @@ namespace PES.Controllers
         }
 
 
- //       // working on
-        public ActionResult AssignVacations()
+ /////////////// working on
+        public ActionResult VacationAssignation()
         {
 
+            AssignVacationsViewModel AssignVacations = new AssignVacationsViewModel();
 
-            return View("VacationAssignation");
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
+            });
+
+            AssignVacations.ListEmployee = listEmployees; 
+
+            return View(AssignVacations);
         }
        
 
