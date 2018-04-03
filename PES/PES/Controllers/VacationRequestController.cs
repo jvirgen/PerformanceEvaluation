@@ -454,7 +454,7 @@ namespace PES.Controllers
             //if is holiday _Again_
             var ifIsHolidate = IsHoliday(isEndOfMonth);
 
-            // if is Saturday or Sunday
+            // if is Saturday or Sunday\
             var finalDate = IsSatOrSun(ifIsHolidate);
 
 
@@ -501,20 +501,35 @@ namespace PES.Controllers
         {
             // Get holidays
             List<Holiday> holidays = _holidayService.GetAllHolidays();
-            var newDate = new DateTime();
-            foreach (var holiday in holidays)
+
+            if (holidays.Count == 0)
             {
-                if (returnDate.Date == holiday.Day.Date)
-                {
-                    newDate = returnDate.AddDays(1);
-                    break;
-                }
-                else
-                {
-                    newDate = returnDate;
-                }
+                return returnDate;
+
             }
-            return newDate;
+
+            else
+            {
+
+            
+                var newDate = new DateTime();
+                foreach (var holiday in holidays)
+                {
+                    if (returnDate.Date == holiday.Day.Date)
+                    {
+                        newDate = returnDate.AddDays(1);
+                        break;
+                    }
+                    else
+                    {
+                        newDate = returnDate;
+                    }
+                }
+                return newDate;
+
+            }
+
+
         }
 
         [HttpGet]

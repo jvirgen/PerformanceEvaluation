@@ -190,6 +190,7 @@ namespace PES.Services
                             command.Parameters.Add(new OracleParameter("StartDate", date.StartDate));
                             command.Parameters.Add(new OracleParameter("EndDate", date.EndDate));
                             command.Parameters.Add(new OracleParameter("ReturnDate", FinalReturnDate));
+                            //get employee
                             EmployeeService employeeService = new EmployeeService();
                             var leadnameFirstName = employeeService.GetByID(date.SelectedEmployee).FirstName;
                             var leadnameLastName = employeeService.GetByID(date.SelectedEmployee).LastName;
