@@ -1,0 +1,83 @@
+﻿
+@model PES.ViewModels.AssignVacationsViewModel
+
+
+@{
+    ViewBag.Title = "VacationAssignation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<br /><br /> <br />
+<div class="row" >
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                            @using (Html.BeginForm("ManagerInsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+                            {
+                                    <h2 class="text-center">Vacation Assignation</h2> 
+                                    <br />
+                                    @*<label for="lead" class="control-label">Lead Name</label>*@
+                                    @Html.LabelFor(m => m.SelectedEmployee, new { @class = "control-label", style = "padding-right: 10px" })
+
+                                    @Html.DropDownListFor(m => m.SelectedEmployee, Model.ListEmployee, new { style = "width: 200px;", @class = "MySelect2 leadBox", @id = "lead" })
+                                    @*@Html.TextBoxFor(model => model.LeadName, htmlAttributes: new { @class = "form-control leadBox", @id = "lead" })*@
+
+
+                                    <br /><br /> <br />
+
+
+
+                                      
+                                    <input id="sendRequest" type="submit" class="btn btn-lg btn-primary btn-block bottonSelectEmploye" value="Select Employe" />
+                                     @*@Html.Partial("_ModalInsertNewRequestPartial")*@
+                            }
+                </div> 
+             <div class="col-lg-4"></div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+@section Styles
+{
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+
+
+}
+
+@section Scripts
+{
+
+
+
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+    @Scripts.Render("~/Scripts/select2.min.js")
+
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $(".MySelect2").select2();
+
+            $("#ListEmployee").select2();
+        });
+    </script>
+}

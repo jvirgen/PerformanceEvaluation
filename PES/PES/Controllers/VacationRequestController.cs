@@ -121,6 +121,29 @@ namespace PES.Controllers
         }
 
 
+ /////////////// working on
+        public ActionResult VacationAssignation()
+        {
+
+            AssignVacationsViewModel AssignVacations = new AssignVacationsViewModel();
+
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
+            });
+
+            AssignVacations.ListEmployee = listEmployees; 
+
+            return View(AssignVacations);
+        }
+       
+
+
+
         public ActionResult ResendRequest(int headerReqId, int userid)
         {
             //Obtaing UserInformation 
@@ -242,6 +265,51 @@ namespace PES.Controllers
             //return to History View.
             return RedirectToAction("HistoricalResource");
         }
+
+
+
+
+
+
+
+
+        // working on ////
+
+
+
+        [HttpGet]
+        public ActionResult ManagerInsertNewRequest(AssignVacationsViewModel user)
+        {
+            Employee currentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            currentEmployee = _employeeService.GetByID(user.SelectedEmployee);
+            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
+            newRequest.EmployeeId = user.SelectedEmployee;
+            newRequest.Freedays = currentEmployee.Freedays;
+            newRequest.SubRequest3 = new List<AssignVacationsViewModel>()
+            {
+                new AssignVacationsViewModel
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = false
+                }
+            };
+            ViewBag.newRequest = user.SelectedEmployee;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(newRequest);
+        }
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// GET: VacationRequest Existing
@@ -454,7 +522,7 @@ namespace PES.Controllers
             //if is holiday _Again_
             var ifIsHolidate = IsHoliday(isEndOfMonth);
 
-            // if is Saturday or Sunday
+            // if is Saturday or Sunday\
             var finalDate = IsSatOrSun(ifIsHolidate);
 
 
@@ -501,20 +569,35 @@ namespace PES.Controllers
         {
             // Get holidays
             List<Holiday> holidays = _holidayService.GetAllHolidays();
-            var newDate = new DateTime();
-            foreach (var holiday in holidays)
+
+            if (holidays.Count == 0)
             {
-                if (returnDate.Date == holiday.Day.Date)
-                {
-                    newDate = returnDate.AddDays(1);
-                    break;
-                }
-                else
-                {
-                    newDate = returnDate;
-                }
+                return returnDate;
+
             }
-            return newDate;
+
+            else
+            {
+
+            
+                var newDate = new DateTime();
+                foreach (var holiday in holidays)
+                {
+                    if (returnDate.Date == holiday.Day.Date)
+                    {
+                        newDate = returnDate.AddDays(1);
+                        break;
+                    }
+                    else
+                    {
+                        newDate = returnDate;
+                    }
+                }
+                return newDate;
+
+            }
+
+
         }
 
         [HttpGet]

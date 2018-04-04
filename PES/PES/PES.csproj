@@ -169,7 +169,9 @@
     <Compile Include="Services\EmailApproveRequestService.cs" />
     <Compile Include="Services\EmailInsertNewRequestService.cs" />
     <Compile Include="Services\ResendRequestService.cs" />
+    <Compile Include="ViewModels\AssignVacationsViewModel.cs" />
     <Compile Include="ViewModels\FechaViewModel.cs" />
+    <Compile Include="ViewModels\ManagerInsertNewRequestViewModel.cs" />
     <Compile Include="ViewModels\SendRequestViewModel.cs" />
     <Compile Include="ViewModels\StatusRequestViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -532,6 +534,7 @@
     <Content Include="Views\VacationRequest\SendRequest.cshtml" />
     <Content Include="Views\Shared\_NewVacationDatesParcialRemake.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
+    <Content Include="Views\VacationRequest\VacationAssignation.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
