@@ -65,7 +65,7 @@
                             <div class="col-md-8">
 
                                 @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
-                                @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
+                                @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control ", @style = "min-width:100%;" })
                                 <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
                                 <input type="button" id="my-button" value="Select Files">
                                 <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">

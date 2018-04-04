@@ -266,6 +266,51 @@ namespace PES.Controllers
             return RedirectToAction("HistoricalResource");
         }
 
+
+
+
+
+
+
+
+        // working on ////
+
+
+
+        [HttpGet]
+        public ActionResult ManagerInsertNewRequest(AssignVacationsViewModel user)
+        {
+            Employee currentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            currentEmployee = _employeeService.GetByID(user.SelectedEmployee);
+            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
+            newRequest.EmployeeId = user.SelectedEmployee;
+            newRequest.Freedays = currentEmployee.Freedays;
+            newRequest.SubRequest3 = new List<AssignVacationsViewModel>()
+            {
+                new AssignVacationsViewModel
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = false
+                }
+            };
+            ViewBag.newRequest = user.SelectedEmployee;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(newRequest);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// GET: VacationRequest Existing
         /// </summary>

@@ -52,6 +52,9 @@ namespace PES.ViewModels
         // se agrego para provar el viewmodel completo// subrequest2 es el original
         public List<SubrequestInfoVM> SubRequest2 { get; set; }
 
+        public List<AssignVacationsViewModel> SubRequest3 { get; set; }
+
+
 
         public IEnumerable<SelectListItem> ListEmployee { get; set; }
 

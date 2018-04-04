@@ -29,7 +29,7 @@ namespace PES.ViewModels
         /// </summary>
         /// 
 
-        [Display(Name = "Select and Employee ")]
+        [Display(Name = "Select an Employee ")]
         public int SelectedEmployee { get; set; }
         public IEnumerable<SelectListItem> ListEmployee { get; set; }
 
