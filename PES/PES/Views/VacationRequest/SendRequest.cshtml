@@ -40,6 +40,8 @@
                 @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
                 {
                     @Html.HiddenFor(model => model.EmployeedID)
+                    @Html.TextBoxFor(model => model.VacationDays, Model.VacationDays)
+
                     <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
                     <div class="form-group">
                         <div class="row">

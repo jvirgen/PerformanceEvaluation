@@ -236,7 +236,7 @@ namespace PES.Services
                 {
                     command.Parameters.Add(new OracleParameter("IdEmployee", InsertNewRequest.EmployeedID));
                     command.Parameters.Add(new OracleParameter("Title", InsertNewRequest.Title));
-                    command.Parameters.Add(new OracleParameter("NoVacDays", InsertNewRequest.DaysRequested));
+                    command.Parameters.Add(new OracleParameter("NoVacDays", InsertNewRequest.daysReq));
                     command.Parameters.Add(new OracleParameter("Comments", InsertNewRequest.Comments));
                     command.Parameters.Add(new OracleParameter("IdReqStatus", RequestStatus));
                     command.Parameters.Add(new OracleParameter("NoUnpaidDays", NoUnpaidDays));

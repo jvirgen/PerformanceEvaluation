@@ -12,7 +12,7 @@ namespace PES.ViewModels
 
         public string Title { get; set; }
 
-        public int DaysRequested { get; set; }
+        public int daysReq { get; set; }
 
         public int VacationDays { get; set; }
 

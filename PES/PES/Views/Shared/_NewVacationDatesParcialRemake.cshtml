@@ -12,12 +12,12 @@
                 </div>-->
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="start">Start Date</label>
-                    @Html.TextBoxFor(model => model.StartDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
+                    @Html.TextBoxFor(model => model.StartDate, "{0:mmm/d/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
                     @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="EndDateLabel">End Date</label>
-                    @Html.TextBoxFor(model => model.EndDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center datesBox" })
+                    @Html.TextBoxFor(model => model.EndDate, "{0:MM/dd/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center datesBox" })
                     @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-3">

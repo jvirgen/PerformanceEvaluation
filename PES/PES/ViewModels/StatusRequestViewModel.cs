@@ -23,5 +23,7 @@ namespace PES.ViewModels
         public string ManagerEmail { get; set; }
 
         public int NoVacDaysRequested { get; set; }
+
+        public SendRequestViewModel VMSendRequest { get; set; }
     }
 }

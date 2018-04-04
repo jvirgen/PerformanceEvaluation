@@ -99,7 +99,7 @@ function statusColor() {
 }
 
 $('#start').datepicker({
-    format: "d/MM/yyyy",
+    format: "mmm/d/yyyy",
     autoclose: true,
     todayHighlight: true
 });
