@@ -277,15 +277,18 @@ namespace PES.Controllers
 
 
 
-        [HttpGet]
-        public ActionResult ManagerInsertNewRequest(AssignVacationsViewModel user)
+        [HttpPost]
+        public ActionResult ManagerInsertNewRequest(int SelectedEmployee)
         {
             Employee currentEmployee = new Employee();
-            _employeeService = new EmployeeService();
-            currentEmployee = _employeeService.GetByID(user.SelectedEmployee);
+            
+            currentEmployee = _employeeService.GetByID(SelectedEmployee);
+
             InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
-            newRequest.EmployeeId = user.SelectedEmployee;
+            newRequest.EmployeeId = SelectedEmployee;
             newRequest.Freedays = currentEmployee.Freedays;
+            newRequest.FirstName = currentEmployee.FirstName;
+            newRequest.LastName = currentEmployee.LastName;
             newRequest.SubRequest3 = new List<AssignVacationsViewModel>()
             {
                 new AssignVacationsViewModel
@@ -295,8 +298,9 @@ namespace PES.Controllers
                     HaveProject = false
                 }
             };
-            ViewBag.newRequest = user.SelectedEmployee;
-            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            ViewBag.newRequest = SelectedEmployee;
+            ViewBag.MyHoliday = _holidayService.GetAllHolidays();
+
             return View(newRequest);
         }
 

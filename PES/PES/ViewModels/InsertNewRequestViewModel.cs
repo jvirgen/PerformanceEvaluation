@@ -21,6 +21,10 @@ namespace PES.ViewModels
 
         public string EmployeeEmail { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string ManagerEmail { get; set; }
         /// <summary>
         /// Title of the request
