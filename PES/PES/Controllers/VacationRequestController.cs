@@ -280,6 +280,7 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult ManagerInsertNewRequest(int SelectedEmployee)
         {
+
             Employee currentEmployee = new Employee();
             
             currentEmployee = _employeeService.GetByID(SelectedEmployee);
