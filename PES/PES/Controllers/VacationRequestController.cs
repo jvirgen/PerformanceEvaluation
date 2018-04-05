@@ -284,14 +284,14 @@ namespace PES.Controllers
             
             currentEmployee = _employeeService.GetByID(SelectedEmployee);
 
-            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
-            newRequest.EmployeeId = SelectedEmployee;
-            newRequest.Freedays = currentEmployee.Freedays;
+            SendRequestViewModel newRequest = new SendRequestViewModel();
+            newRequest.EmployeedID = SelectedEmployee;
+            newRequest.VacationDays = currentEmployee.Freedays;
             newRequest.FirstName = currentEmployee.FirstName;
             newRequest.LastName = currentEmployee.LastName;
-            newRequest.SubRequest3 = new List<AssignVacationsViewModel>()
+            newRequest.SubRequests = new List<SubrequestInfoVM>()
             {
-                new AssignVacationsViewModel
+                new SubrequestInfoVM
                 {
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now,

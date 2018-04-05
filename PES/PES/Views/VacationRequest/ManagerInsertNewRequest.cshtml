@@ -1,4 +1,4 @@
-﻿@model PES.ViewModels.InsertNewRequestViewModel
+﻿@model PES.ViewModels.SendRequestViewModel
 @using PES.ViewModels
 
 @{
@@ -21,7 +21,7 @@
     <div id="vacationarea" class="col-sm-4 col-md-4 col-lg-4">
         <label>
             Vacation Days:
-            <span id="daysVac" class="label label-default">@Model.Freedays</span>
+            <span id="daysVac" class="label label-default">@Model.VacationDays</span>
         </label>
     </div>
 
@@ -50,8 +50,9 @@
             <section>
                 @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
                 {
-                    @Html.HiddenFor(model => model.EmployeeId)
-                    @Html.TextBoxFor(model => model.Freedays, Model.Freedays)
+                    @Html.HiddenFor(model => model.EmployeedID)
+
+                    @Html.HiddenFor(model => model.VacationDays, Model.VacationDays)
 
                     <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
                     <div class="form-group">
@@ -65,9 +66,9 @@
                     </div>
                     <!--Aqui termina el apartado del titulo, ahora sigue el parcial view.-->
 
-                    foreach (var subrequest in Model.SubRequest3)
+                    foreach (var subrequest in Model.SubRequests)
                     {
-                        //@Html.Partial("~/Views/Shared/_NewVacationDatesParcialRemake.cshtml", subrequest)
+                        @Html.Partial("~/Views/Shared/_PartialManagerInsertRequest.cshtml", subrequest)
                     }
 
                     <!--Mensaje de alerta-->

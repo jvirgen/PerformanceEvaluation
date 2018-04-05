@@ -8,6 +8,10 @@ namespace PES.ViewModels
 {
     public class SendRequestViewModel
     {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public int EmployeedID { get; set; }
 
         public string Title { get; set; }
