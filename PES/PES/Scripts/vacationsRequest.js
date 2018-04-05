@@ -112,9 +112,13 @@ $('#End').datepicker({
 
 $(".valida-fecha").on("change", function () {
 
-    var star = $("#start").val();
+    var Fecha1 = $("#start").val();
 
-    var end = $("#End").val();
+    var Fecha2 = $("#End").val();
+
+    var star = moment(Fecha1);
+
+    var end = moment(Fecha2);
 
     if (star != "" && end != "") {
         ValidateSameMonth(star, end);
