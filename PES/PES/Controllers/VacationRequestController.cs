@@ -659,13 +659,56 @@ namespace PES.Controllers
 
         public JsonResult ValidateEmployeeVacationsManager(int IdEmployee)
         {
+
+            Employee SelectedEmployee = new Employee();
+            EmployeeService SearchEmployee = new EmployeeService();
+            SelectedEmployee = SearchEmployee.GetByID(IdEmployee);
+
+            DateTime FullHireDate = SelectedEmployee.HireDate;
+            int vacationDays = SelectedEmployee.Freedays;            
+            DateTime today = DateTime.Today;
+
+            int hireYear = FullHireDate.Year;
+            int currentYear = today.Year;
+
+            int yearsWorking = currentYear - hireYear;
+        
             var flag = false;
 
-            if(IdEmployee == 1)
+
+            
+
+
+            if (yearsWorking == 1 && vacationDays > 6)
+            {
+                flag = true;
+            }
+            else if (yearsWorking == 2 && vacationDays > 8)
             {
                 flag = true;
 
             }
+            else if (yearsWorking == 3 && vacationDays > 10)
+            {
+                flag = true;
+
+            }
+            else if (yearsWorking == 4 && vacationDays > 12)
+            {
+                flag = true;
+
+            }
+            else if ( (yearsWorking >= 5 && yearsWorking <= 9) && vacationDays > 12) 
+            {
+                flag = true;
+
+            }
+            else
+            {
+                flag = false;
+            }
+
+
             return Json(flag, JsonRequestBehavior.AllowGet);
         }
 

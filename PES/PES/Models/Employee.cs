@@ -68,9 +68,9 @@ namespace PES.Models
         /// <summary>
         /// Hire Date
         /// </summary>
-        //[DataType(DataType.Date)]
-        //[Display(Name = "Hire Date")]
-        //public DateTime HireDate { get; set; }
+        [DataType(DataType.Date)]
+        [Display(Name = "Hire Date")]
+        public DateTime HireDate { get; set; }
 
         ///// <summary>
         ///// Employee Ranking
