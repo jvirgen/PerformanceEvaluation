@@ -277,7 +277,7 @@ function getWorkableDays(start, end) {
     var s = new Date(+start);
     var e = new Date(+end);
 
-    // Set time to midday to avoid daylight saving and browser quirksss
+    // Set time to midday to avoid daylight saving and browser quirks
     s.setHours(12, 0, 0, 0);
     e.setHours(12, 0, 0, 0);
 
