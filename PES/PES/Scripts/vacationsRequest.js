@@ -307,15 +307,13 @@ function getWorkableDays(start, end) {
         return days;       
 }
 
-
+//Document this if i dont finish it-----------------------------------------------
 var Item = document.getElementById("sendRequest2");
 
-Item.addEventListener("mouseover",ValidateVacationDaysManager,false)
+Item.addEventListener("mouseover", ValidateVacationDaysManager, false)
 
 function ValidateVacationDaysManager() {
     var idManager = $("#lead").val();
-    alert("El ID es: " + idManager);
-
     var flag = false;
 
 
@@ -325,14 +323,10 @@ function ValidateVacationDaysManager() {
     })
         .done(function (data) {
 
-            if (!data) {
+            if (data === true) {
 
-                $("#OldDate").modal();
-                $("#daysReq").text("0");
-                $("#returnDay").val("");
-                $('.datesBox').val("invalided date");
             } else {
-                CountHolidaysAndValidateDates(start, end, count);
+                $("#VaEmMa").modal();
             }
 
         })
@@ -340,6 +334,7 @@ function ValidateVacationDaysManager() {
         })
         .always(function () { });
 }
+//Document this if i dont finish it-----------------------------------------------
 
 
 /*

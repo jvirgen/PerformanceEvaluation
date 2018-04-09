@@ -657,6 +657,7 @@ namespace PES.Controllers
             
         }
 
+        //Document this if i dont finish it-----------------------------------------------
         public JsonResult ValidateEmployeeVacationsManager(int IdEmployee)
         {
             var flag = false;
@@ -668,6 +669,7 @@ namespace PES.Controllers
             }
             return Json(flag, JsonRequestBehavior.AllowGet);
         }
+        //Document this if i dont finish it-----------------------------------------------
 
     }
 }
