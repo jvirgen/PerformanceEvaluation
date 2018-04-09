@@ -169,6 +169,9 @@ function ValidateSameMonth(start, end, count) {
         .always(function () { });
 }
 
+
+
+
 function ValidateStartDate(start, end,  count) {
     var sD = new Date(start);
 
@@ -302,7 +305,41 @@ function getWorkableDays(start, end) {
     }
 
         return days;       
-}   
+}
+
+
+var Item = document.getElementById("sendRequest2");
+
+Item.addEventListener("mouseover",ValidateVacationDaysManager,false)
+
+function ValidateVacationDaysManager() {
+    var idManager = $("#lead").val();
+    alert("El ID es: " + idManager);
+
+    var flag = false;
+
+
+    $.ajax({
+        url: "/VacationRequest/ValidateEmployeeVacationsManager",
+        data: {IdEmployee: idManager}
+    })
+        .done(function (data) {
+
+            if (!data) {
+
+                $("#OldDate").modal();
+                $("#daysReq").text("0");
+                $("#returnDay").val("");
+                $('.datesBox').val("invalided date");
+            } else {
+                CountHolidaysAndValidateDates(start, end, count);
+            }
+
+        })
+        .fail(function () {
+        })
+        .always(function () { });
+}
 
 
 /*

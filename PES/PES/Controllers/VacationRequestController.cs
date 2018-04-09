@@ -280,29 +280,35 @@ namespace PES.Controllers
         [HttpPost]
         public ActionResult ManagerInsertNewRequest(int SelectedEmployee)
         {
-
-            Employee currentEmployee = new Employee();
             
-            currentEmployee = _employeeService.GetByID(SelectedEmployee);
 
-            SendRequestViewModel newRequest = new SendRequestViewModel();
-            newRequest.EmployeedID = SelectedEmployee;
-            newRequest.VacationDays = currentEmployee.Freedays;
-            newRequest.FirstName = currentEmployee.FirstName;
-            newRequest.LastName = currentEmployee.LastName;
-            newRequest.SubRequests = new List<SubrequestInfoVM>()
-            {
-                new SubrequestInfoVM
-                {
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now,
-                    HaveProject = false
-                }
-            };
-            ViewBag.newRequest = SelectedEmployee;
-            ViewBag.MyHoliday = _holidayService.GetAllHolidays();
+                        Employee currentEmployee = new Employee();
 
-            return View(newRequest);
+                        currentEmployee = _employeeService.GetByID(SelectedEmployee);
+
+                        SendRequestViewModel newRequest = new SendRequestViewModel();
+                        newRequest.EmployeedID = SelectedEmployee;
+                        newRequest.VacationDays = currentEmployee.Freedays;
+                        newRequest.FirstName = currentEmployee.FirstName;
+                        newRequest.LastName = currentEmployee.LastName;
+                        newRequest.SubRequests = new List<SubrequestInfoVM>()
+                        {
+                            new SubrequestInfoVM
+                            {
+                                StartDate = DateTime.Now,
+                                EndDate = DateTime.Now,
+                                HaveProject = false
+                            }
+                        };
+                        ViewBag.newRequest = SelectedEmployee;
+                        ViewBag.MyHoliday = _holidayService.GetAllHolidays();
+
+                        return View(newRequest);
+
+            
+            
+
+            
         }
 
 
@@ -649,6 +655,18 @@ namespace PES.Controllers
             Array.Clear(date, 0, 100);
             return countHolidays;
             
+        }
+
+        public JsonResult ValidateEmployeeVacationsManager(int IdEmployee)
+        {
+            var flag = false;
+
+            if(IdEmployee == 1)
+            {
+                flag = true;
+
+            }
+            return Json(flag, JsonRequestBehavior.AllowGet);
         }
 
     }
