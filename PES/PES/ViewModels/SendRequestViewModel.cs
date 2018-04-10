@@ -27,5 +27,7 @@ namespace PES.ViewModels
         public List<SubrequestInfoVM> SubRequests { get; set; }
 
         public VacHeadReqViewModel VacHeaderRequest { get; set; }
+
+       public HttpPostedFileBase MyFile { get; set; }
     }
 }

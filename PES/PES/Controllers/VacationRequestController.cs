@@ -259,7 +259,7 @@ namespace PES.Controllers
                 employeeEmail,
                 managerEmail
             };
-            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments /*, model.myFile*/);
+            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.MyFile);
             _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq);
 
             //return to History View.
