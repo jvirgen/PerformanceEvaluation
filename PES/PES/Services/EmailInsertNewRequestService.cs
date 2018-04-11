@@ -46,10 +46,14 @@ namespace PES.Services
 
             //enabled attachments //***
 
-           string fileName = Path.GetFileName(MyFile.FileName);
-           msje.Attachments.Add(new Attachment(MyFile.InputStream, fileName));
-           // msje.Attachments.Add(new Attachment(myfile));
-            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            if (MyFile != null)
+            {
+                string fileName = Path.GetFileName(MyFile.FileName);
+                msje.Attachments.Add(new Attachment(MyFile.InputStream, fileName));
+                // msje.Attachments.Add(new Attachment(myfile));
+                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            }
+
 
 
 
