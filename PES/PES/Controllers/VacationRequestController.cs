@@ -121,7 +121,17 @@ namespace PES.Controllers
         }
 
 
- /////////////// working on
+
+        // new send request for unpaid vacations
+        [HttpGet]
+        public ActionResult SendRequestUnpaid()
+        {
+            
+            return View();
+        }
+
+
+        /////////////// working on
         public ActionResult VacationAssignation()
         {
 
