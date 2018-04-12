@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     $("#table-employees").DataTable();
-    $("#Tableview").DataTable();
+    $("#Tableview").DataTable({
+        "order": [[4, "asc"]]
+    } );
 
     // Events 
     $("#showEnables").on("click", function (e) {
