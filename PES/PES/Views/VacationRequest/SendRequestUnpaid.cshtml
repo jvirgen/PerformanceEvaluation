@@ -1,8 +1,14 @@
-﻿@using PES.ViewModels
+﻿
+@{
+    ViewBag.Title = "SendRequestUnpaid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using PES.ViewModels
 @model PES.ViewModels.SendRequestViewModel
 
-<div class="page-header text-center">
-    <h2>New Vacation Request</h2>
+<div class="page-header text-center" style="color: orange">
+    <h2>New Unpaid Vacation Request</h2>
 </div>
 
 <!--Titulo donde marca el numero de dias-->
@@ -10,7 +16,7 @@
     <div id="vacationarea" class="col-sm-4 col-md-4 col-lg-4">
         <label>
             Vacation Days:
-            <span id="daysVac" class="label label-default">@Model.VacationDays</span>
+            <span id="daysVac" class="label label-default warning">Unlimited Vacation Days</span>
         </label>
     </div>
 
@@ -38,61 +44,66 @@
         <div class="row">
             <section>
                 @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @id = "form" }))
-                {
-                    @Html.HiddenFor(model => model.EmployeedID)
+    {
+            @Html.HiddenFor(model => model.EmployeedID)
 
-                    @Html.HiddenFor(model => model.VacationDays, Model.VacationDays)
 
-                    <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12" style="margin-left:1vw;">
-                                @Html.LabelFor(model => model.Title, "Request Title", new { @class = "control-label col-form-label" })
-                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                                <span class="field-validation-valid text-danger" data-valmsg-for="title" data-vlmsg-replace="true"></span>
-                            </div>
-                        </div>
+            @Html.HiddenFor(model => model.VacationDays, Model.VacationDays)
+
+            <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12" style="margin-left:1vw;">
+                        @Html.LabelFor(model => model.Title, "Request Title", new { @class = "control-label col-form-label" })
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="field-validation-valid text-danger" data-valmsg-for="title" data-vlmsg-replace="true"></span>
                     </div>
-                    <!--Aqui termina el apartado del titulo, ahora sigue el parcial view.-->
+                </div>
+            </div>
+            <!--Aqui termina el apartado del titulo, ahora sigue el parcial view.-->
 
-                    foreach (var subrequest in Model.SubRequests)
-                    {
-                        @Html.Partial("~/Views/Shared/_NewVacationDatesUnpaid.cshtml", subrequest)
-                    }
+foreach (var subrequest in Model.SubRequests)
+{
+            @Html.Partial("~/Views/Shared/_NewVacationDatesUnpaid.cshtml", subrequest)
+}
 
-                    <!--Mensaje de alerta-->
-                    <div class="form-group">
-                        <div class="container">
-                            <div class="col-md-4">
-                                <span class="label label-warning">All vacations days must be in the same month</span>
-                            </div>
-                        </div>
+            <!--Mensaje de alerta-->
+            <div class="form-group">
+                <div class="container">
+                    <div class="col-md-4">
+                        <span class="label label-warning">All vacations days must be in the same month</span>
                     </div>
+                </div>
+            </div>
 
-                    <!--Contenedor de comentarios, botones y boton para subir archivos-->
-                    <div class="form-group">
-                        <div class="container flexEnd">
-                            <div class="col-md-8">
+            <!--Contenedor de comentarios, botones y boton para subir archivos-->
+            <div class="form-group">
+                <div class="container flexEnd">
+                    <div class="col-md-8">
 
-                                @Html.LabelFor(model => model.Comments, "Comments:", new { @class = "control-label" })
-                                @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
-                                <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
-                                @* <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">*@
-                                @Html.TextBoxFor(model => model.MyFile, new { type = "file" , accept = ".jpg, .jpeg, .png , .txt" })
+                        @Html.LabelFor(model => model.Comments, "Comments:", new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
+                        <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                        @* <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">*@
+                        @Html.TextBoxFor(model => model.MyFile, new { type = "file", accept = ".jpg, .jpeg, .png , .txt" })
 
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
-                                <br />
-                                <input id="sendRequest" type="submit" class="btn btn-lg btn-primary btn-block" value="Send Request" />
-                                <br />
-                                <a href="@Url.Action("SendRequestUnpaid", "VacationRequest",new RouteValueDictionary(new { id = Model.EmployeedID }))" class="btn btn-lg btn-default btn-block"> Request Unpaid Vacations </a>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
+                        <br />
+                        <input id="sendRequest" type="submit" class="btn btn-lg btn-primary btn-block" value="Send Request" />
+                        <br />
+                    
+                    @Html.CheckBoxFor(model => model.IsUnpaid, new { @hidden="hidden"})
 
-                                @*@Html.Partial("_ModalInsertNewRequestPartial")*@
-                            </div>
-                        </div> <!-- container end -->
-                    </div> <!-- form-group end -->
-                }
+
+                        <a href="@Url.Action("SendRequest", "VacationRequest",new RouteValueDictionary(new { userid = Model.EmployeedID }))" class="btn btn-lg btn-default btn-block"> Return </a>
+
+                        @*@Html.Partial("_ModalInsertNewRequestPartial")*@
+                    </div>
+                </div> <!-- container end -->
+            </div> <!-- form-group end -->
+}
             </section>
         </div>
     </div>
@@ -194,7 +205,7 @@
     @Styles.Render("~/Content/themes/base/daterangepicker.css")
     @Scripts.Render("~/Scripts/select2.min.js")
 
-    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/vacationsRequestUnpaid.js")
     @Scripts.Render("~/Scripts/moment.js")
     @Scripts.Render("~/Scripts/daterangepicker.js")
 

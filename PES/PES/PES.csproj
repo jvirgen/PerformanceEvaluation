@@ -464,6 +464,7 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\showEmployees.js" />
     <Content Include="Scripts\update-change-validations.js" />
+    <Content Include="Scripts\VacationsRequestUnpaid.js" />
     <Content Include="Scripts\vacationsResendRequest.js" />
     <Content Include="Scripts\vacationsRequest.js" />
     <Content Include="Scripts\verifyPE.js" />
@@ -537,6 +538,8 @@
     <Content Include="Views\VacationRequest\VacationAssignation.cshtml" />
     <Content Include="Views\VacationRequest\ManagerInsertNewRequest.cshtml" />
     <Content Include="Views\Shared\_PartialManagerInsertRequest.cshtml" />
+    <Content Include="Views\VacationRequest\SendRequestUnpaid.cshtml" />
+    <Content Include="Views\Shared\_NewVacationDatesUnpaid.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

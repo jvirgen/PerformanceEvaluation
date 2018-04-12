@@ -102,7 +102,7 @@ namespace PES.Controllers
             });
             //mod
 
-
+            NewRequest.IsUnpaid = false;
             NewRequest.EmployeedID = userid;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
             NewRequest.SubRequests = new List<SubrequestInfoVM>()
@@ -120,7 +120,48 @@ namespace PES.Controllers
         }
 
 
- /////////////// working on
+
+        // new send request for unpaid vacations
+        [HttpGet]
+        public ActionResult SendRequestUnpaid(int id)
+        {
+
+            Employee CurrentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            CurrentEmployee = _employeeService.GetByID(id);
+            SendRequestViewModel NewRequest = new SendRequestViewModel();
+
+            // mod
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
+            });
+            //mod
+            NewRequest.IsUnpaid = true;
+            NewRequest.EmployeedID = id;
+            NewRequest.VacationDays = CurrentEmployee.Freedays;
+            NewRequest.SubRequests = new List<SubrequestInfoVM>()
+            {
+                new SubrequestInfoVM
+                {
+                    ListEmployee = listEmployees,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = false
+                }
+            };
+            ViewBag.NewRequest = id;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(NewRequest);
+
+        }
+
+
+        /////////////// working on
         public ActionResult VacationAssignation()
         {
 
@@ -229,8 +270,7 @@ namespace PES.Controllers
 
             for (int i = 0; i < model.SubRequests.Count(); i++)
             {
-                //Changing date format.
-                //A QUI ME QUEDE
+               
 
                 //Variables a fechas
                 var finalStarDate = model.SubRequests[0].StartDate;
@@ -260,7 +300,7 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.MyFile);
-            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq);
+            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.IsUnpaid);
 
             //return to History View.
             return RedirectToAction("HistoricalResource");
