@@ -308,9 +308,18 @@ function getWorkableDays(start, end) {
 }
 
 //Document this if i dont finish it-----------------------------------------------
-var Item = document.getElementById("sendRequest2");
+//var Item = document.getElementById("sendRequest2");
 
-Item.addEventListener("mouseover", ValidateVacationDaysManager, false)
+//Item.addEventListener("click", ValidateVacationDaysManager, false)
+
+$("#sendRequest2").on("click", function (e) {
+
+    e.stopPropagation();
+    ValidateVacationDaysManager();
+
+
+})
+
 
 function ValidateVacationDaysManager() {
     var idManager = $("#lead").val();
@@ -324,8 +333,9 @@ function ValidateVacationDaysManager() {
         .done(function (data) {
 
             if (data === true) {
-
+                $("#form").submit();
             } else {
+                
                 $("#VaEmMa").modal();
             }
 
