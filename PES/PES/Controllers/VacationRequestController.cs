@@ -111,8 +111,7 @@ namespace PES.Controllers
                 {
                     ListEmployee = listEmployees,
                     StartDate = DateTime.Now,
-                    EndDate = DateTime.Now,
-                    HaveProject = false
+                    EndDate = DateTime.Now
                 }
             };
             ViewBag.NewRequest = userid;
@@ -216,6 +215,7 @@ namespace PES.Controllers
         public ActionResult InsertNewRequestData(SendRequestViewModel model)
         {
 
+            
             //:::::::::::::::::Obtain fullPath ::::::::::::::::::
 
             //HttpPostedFile filePosted = Request.Files[myfile];
@@ -297,7 +297,7 @@ namespace PES.Controllers
                             {
                                 StartDate = DateTime.Now,
                                 EndDate = DateTime.Now,
-                                HaveProject = false
+                                HaveProject = true
                             }
                         };
                         ViewBag.newRequest = SelectedEmployee;

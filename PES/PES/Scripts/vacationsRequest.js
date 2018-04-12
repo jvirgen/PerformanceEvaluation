@@ -4,19 +4,19 @@
         statusColor();//changes the color of the status, <span> tag in VacationRequest view
         //editHolidayDay();
         //this event caches any modification on a start/end date field
-        $(document).on('change', 'input.datesBox', getDaysRequested);
+        //$(document).on('change', 'input.datesBox', getDaysRequested);
     });
 
 
     $('#haveProject').click(function () {
         this.checked ? $('#lead').prop('disabled', true) : $('#lead').prop('disabled', false);
         $("#lead").val("");
-        if (this.checked) {
-                $("#haveProject").val("false");
-        } else {
-                $("#haveProject").val("true");
+        //if (this.checked) {
+        //        $("#haveProject").val("false");
+        //} else {
+        //        $("#haveProject").val("true");
           
-            }
+        //    }
     });
 
     $('#sendRequest').click(function () {

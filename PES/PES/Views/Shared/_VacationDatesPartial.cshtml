@@ -36,9 +36,9 @@
             </div>
             <div id="checkarea" class="col-md-2 checkbox">
                 <label id="checktext">
-                    <input type="checkbox" id="unpaid" checked="@(Convert.ToString(Model.HaveProject) == "False" ? "checked" : "")" @(Model.status.ToLower() == "rejected" && useProfile != (int)ProfileUser.Manager ? null : new { disabled = "disabled" }) />
+                    <input type="checkbox" hidden="hidden" id="unpaid" checked="@(Convert.ToString(Model.HaveProject) == "False" ? "checked" : "")" @(Model.status.ToLower() == "rejected" && useProfile != (int)ProfileUser.Manager ? null : new { disabled = "disabled" }) />
                     <script>
-                        document.getElementById("checktext").innerHTML += "I do not have a project";
+                        document.getElementById("checktext").innerHTML += ;
                     </script>
                 </label>
             </div>

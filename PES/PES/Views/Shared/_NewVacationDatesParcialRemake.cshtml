@@ -13,12 +13,10 @@
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="start">Start Date</label>
                     @Html.TextBoxFor(model => model.StartDate, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
-                    @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="EndDateLabel">End Date</label>
                     @Html.TextBoxFor(model => model.EndDate, "{0:MM/dd/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center datesBox" })
-                    @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-3">
                     <label for="returnDay">Return Date</label>
@@ -42,10 +40,8 @@
                 @*@Html.TextBoxFor(model => model.LeadName, htmlAttributes: new { @class = "form-control leadBox", @id = "lead" })*@
             </div>
             <div id="checktext" class="col-sm-3 col-md-3 col-lg-3">
-                <label id="checktext" class="text-left">
-                    @Html.CheckBoxFor(model => model.HaveProject, new { @class = "projectBox", @id = "haveProject" }) I do not have a project
-               
-                </label>
+                    @Html.CheckBoxFor(m => m.HaveProject, new { @id = "haveProject" }) I do not have a project
+                    
             </div>
             <div class="removeBtn col-md-1 hidden">
                 <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
