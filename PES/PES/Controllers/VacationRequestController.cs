@@ -124,10 +124,42 @@ namespace PES.Controllers
 
         // new send request for unpaid vacations
         [HttpGet]
-        public ActionResult SendRequestUnpaid()
+        public ActionResult SendRequestUnpaid(int id)
         {
-            
-            return View();
+
+            Employee CurrentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            CurrentEmployee = _employeeService.GetByID(id);
+            SendRequestViewModel NewRequest = new SendRequestViewModel();
+
+            // mod
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
+            });
+            //mod
+
+
+            NewRequest.EmployeedID = id;
+            NewRequest.VacationDays = CurrentEmployee.Freedays;
+            NewRequest.SubRequests = new List<SubrequestInfoVM>()
+            {
+                new SubrequestInfoVM
+                {
+                    ListEmployee = listEmployees,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = false
+                }
+            };
+            ViewBag.NewRequest = id;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(NewRequest);
+
         }
 
 

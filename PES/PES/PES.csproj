@@ -538,6 +538,7 @@
     <Content Include="Views\VacationRequest\ManagerInsertNewRequest.cshtml" />
     <Content Include="Views\Shared\_PartialManagerInsertRequest.cshtml" />
     <Content Include="Views\VacationRequest\SendRequestUnpaid.cshtml" />
+    <Content Include="Views\Shared\_NewVacationDatesUnpaid.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

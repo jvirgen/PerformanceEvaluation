@@ -57,7 +57,7 @@
 
                     foreach (var subrequest in Model.SubRequests)
                     {
-                        @Html.Partial("~/Views/Shared/_NewVacationDatesParcialRemake.cshtml", subrequest)
+                        @Html.Partial("~/Views/Shared/_NewVacationDatesUnpaid.cshtml", subrequest)
                     }
 
                     <!--Mensaje de alerta-->
@@ -86,7 +86,7 @@
                                 <br />
                                 <input id="sendRequest" type="submit" class="btn btn-lg btn-primary btn-block" value="Send Request" />
                                 <br />
-                                <a href="@Url.Action("SendRequestUnpaid", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Request Unpaid Vacation </a>
+                                <a href="@Url.Action("SendRequestUnpaid", "VacationRequest",new RouteValueDictionary(new { id = Model.EmployeedID }))" class="btn btn-lg btn-default btn-block"> Request Unpaid Vacation </a>
 
                                 @*@Html.Partial("_ModalInsertNewRequestPartial")*@
                             </div>
