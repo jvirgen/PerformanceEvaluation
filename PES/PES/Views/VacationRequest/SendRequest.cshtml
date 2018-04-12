@@ -37,7 +37,7 @@
     <div class="col-lg-9">
         <div class="row">
             <section>
-                @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+                @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @id = "form" }))
                 {
                     @Html.HiddenFor(model => model.EmployeedID)
 
@@ -77,8 +77,9 @@
                                 @Html.LabelFor(model => model.Comments, "Comments:", new { @class = "control-label" })
                                 @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
                                 <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
-                                <input type="button" id="my-button" value="Select Files">
-                                <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">
+                                @* <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">*@
+                                @Html.TextBoxFor(model => model.MyFile, new { type = "file" , accept = ".jpg, .jpeg, .png , .txt" })
+
                             </div>
                             <div class="col-md-4 text-center">
                                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>

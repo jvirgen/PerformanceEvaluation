@@ -11,6 +11,7 @@ using System.Web.Optimization;
 using System.Net;
 using PES.ViewModels;
 using System.Web.Routing;
+using System.IO;
 
 namespace PES.Services
 {
@@ -30,7 +31,7 @@ namespace PES.Services
         }
 
 
-        public bool SendEmail(string email, string subject, string bodyMessage /*, string myfile*/)
+        public bool SendEmail(string email, string subject, string bodyMessage , HttpPostedFileBase MyFile)
         {
 
             //::::::::::::::::::::::EMAIL:::::::::::::::::::::::::::::::::::::
@@ -43,8 +44,16 @@ namespace PES.Services
             //Email Body
             msje.Body = bodyMessage;
 
-            //msje.Attachments.Add(new Attachment(myfile));
-            //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            //enabled attachments //***
+
+            if (MyFile != null)
+            {
+                string fileName = Path.GetFileName(MyFile.FileName);
+                msje.Attachments.Add(new Attachment(MyFile.InputStream, fileName));
+                // msje.Attachments.Add(new Attachment(myfile));
+                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            }
+
 
 
 
@@ -63,11 +72,12 @@ namespace PES.Services
             return true;
         }
 
-        public bool SendEmails(List<string> emails, string subject, string bodyMessage /*, string myfile*/)
+        public bool SendEmails(List<string> emails, string subject, string bodyMessage , HttpPostedFileBase MyFile)
         {
             foreach (var email in emails)
             {
-                this.SendEmail(email, subject, bodyMessage/*,  myfile*/ );
+                //enabled myfile
+                this.SendEmail(email, subject, bodyMessage,  MyFile);
             }
 
             return true;
