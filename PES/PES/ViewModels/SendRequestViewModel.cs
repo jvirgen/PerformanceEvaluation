@@ -29,5 +29,7 @@ namespace PES.ViewModels
         public VacHeadReqViewModel VacHeaderRequest { get; set; }
 
        public HttpPostedFileBase MyFile { get; set; }
+     
+        public bool IsUnpaid { get; set; }
     }
 }

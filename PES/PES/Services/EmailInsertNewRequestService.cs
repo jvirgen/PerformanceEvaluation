@@ -129,31 +129,41 @@ namespace PES.Services
             return dataRequests;
         }
 
-        public bool Lessnovacdays(string employeeemail, int daysReq)
+        public bool Lessnovacdays(string employeeemail, int daysReq, bool isunpaid)
         {
-            try
-            {
-                using (OracleConnection db = dbContext.GetDBConnection())
-                {
-                    db.Open();
 
-                    string query = @" update   pe.employee 
+            if (isunpaid)
+            {
+                return true;
+            }
+            else
+            {
+                try
+                {
+                    using (OracleConnection db = dbContext.GetDBConnection())
+                    {
+                        db.Open();
+
+                        string query = @" update   pe.employee 
                                       set     free_days = (free_days + :novacdays ) where   email = '" + employeeemail + "' ";
 
-                    using (OracleCommand command = new OracleCommand(query, db))
-                    {
-                        command.Parameters.Add(new OracleParameter("novacdays", (daysReq * -1)));
-                        OracleDataReader reader = command.ExecuteReader();
+                        using (OracleCommand command = new OracleCommand(query, db))
+                        {
+                            command.Parameters.Add(new OracleParameter("novacdays", (daysReq * -1)));
+                            OracleDataReader reader = command.ExecuteReader();
+                        }
+                        db.Close();
                     }
-                    db.Close();
                 }
-            }
-            catch (Exception xe)
-            {
-                throw;
-            }
+                catch (Exception xe)
+                {
+                    throw;
+                }
 
+            }
             return true;
+
+
         }
     }
 }

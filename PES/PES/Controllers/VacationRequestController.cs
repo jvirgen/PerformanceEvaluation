@@ -102,7 +102,7 @@ namespace PES.Controllers
             });
             //mod
 
-
+            NewRequest.IsUnpaid = false;
             NewRequest.EmployeedID = userid;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
             NewRequest.SubRequests = new List<SubrequestInfoVM>()
@@ -142,8 +142,7 @@ namespace PES.Controllers
                 Value = employee.EmployeeId.ToString()
             });
             //mod
-
-
+            NewRequest.IsUnpaid = true;
             NewRequest.EmployeedID = id;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
             NewRequest.SubRequests = new List<SubrequestInfoVM>()
@@ -271,8 +270,7 @@ namespace PES.Controllers
 
             for (int i = 0; i < model.SubRequests.Count(); i++)
             {
-                //Changing date format.
-                //A QUI ME QUEDE
+               
 
                 //Variables a fechas
                 var finalStarDate = model.SubRequests[0].StartDate;
@@ -302,7 +300,7 @@ namespace PES.Controllers
                 managerEmail
             };
             _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.MyFile);
-            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq);
+            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.IsUnpaid);
 
             //return to History View.
             return RedirectToAction("HistoricalResource");
