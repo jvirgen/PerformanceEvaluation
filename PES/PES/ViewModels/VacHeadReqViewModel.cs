@@ -49,12 +49,16 @@ namespace PES.ViewModels
         /// </summary>
         public string LeadName { get; set; }
 
+        //public bool HasLead { }
+
         /// <summary>
         /// Flag to know if the employee has a project
         /// </summary>
         public string HaveProject { get; set; }
 
         public StatusRequestViewModel Modal { get; set; }
+
+
 
     }
 

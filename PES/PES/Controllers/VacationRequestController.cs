@@ -372,6 +372,8 @@ namespace PES.Controllers
 
             List<VacHeadReqViewModel> listHeaderReqDB = new List<VacHeadReqViewModel>();
             List<VacHeadReqViewModel> listHeaderReqVM = new List<VacHeadReqViewModel>();
+            
+
             if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.Manager))
             {
                 listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByManagerId(currentUser.EmployeeId);
@@ -396,8 +398,10 @@ namespace PES.Controllers
                         ReturnDate = headerReq.ReturnDate,
                         FirstName = headerReq.FirstName,
                         LastName = headerReq.LastName,
-                        HaveProject = headerReq.HaveProject
-                    };
+                        HaveProject = headerReq.HaveProject,
+
+
+                };
                     listHeaderReqVM.Add(headerReqVm);
                 }
             }
@@ -406,6 +410,7 @@ namespace PES.Controllers
             ViewBag.UserID = currentUser.EmployeeId;
             ViewBag.FreeDays = currentUser.Freedays;
             ViewBag.profileId = currentUser.ProfileId;
+            ViewBag.LeadName = _subReqService.GetVacationSubreqByHeaderReqId(currentUser.EmployeeId);
 
 
             return View(listHeaderReqVM);

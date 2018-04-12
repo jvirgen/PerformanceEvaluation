@@ -40,6 +40,7 @@
                             <th id="header_start_date">Start Date</th>
                             <th id="header_end_date">End Date</th>
                             <th id="header_return_date">Return Date</th>
+                      
                         </tr>
                     </thead>
                     <tbody>
@@ -51,20 +52,65 @@
                                 <tr>
                                     @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                                     {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
+
+                                        if(headerVM.HaveProject == "True")
+                                        {
+
+                                                <td style="background-color:#f28500">@headerVM.FirstName @headerVM.LastName</td>
+                                                <td style="background-color:#f28500">
+                                                <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                        @headerVM.Title
+                                                </a>
+                                            </td>
+                                            <td style="background-color:#f28500">@headerVM.NoVacDays</td>
+                                            <td style="background-color:#f28500">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                            <td style="background-color:#f28500">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                            <td style="background-color:#f28500">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+
+                                        }
+                                        else
+                                        {
+
+                                                <td>@headerVM.FirstName @headerVM.LastName</td>
+
+                                                <td>
+                                                <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                        @headerVM.Title
+                                                </a>
+                                            </td>
+                                            <td>@headerVM.NoVacDays</td>
+                                            <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+
+                                        }
+                                            
+
+
                                     }
-                                    <td>
-                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                        </a>
-                                    </td>
-                                    <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                    else
+                                    {
+
+
+                                            <td>
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                    @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td>@headerVM.NoVacDays</td>
+                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+                                    }
+                                    
+                                    
+
                                 </tr>
-                                                    }
-                                                }
+                             }
+                          }
                     </tbody>
                 </table>
             </div>
