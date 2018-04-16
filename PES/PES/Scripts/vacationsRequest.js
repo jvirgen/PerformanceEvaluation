@@ -116,12 +116,13 @@ $(".valida-fecha").on("change", function () {
 
     var Fecha2 = $("#End").val();
 
-    var star = moment(Fecha1);
+    var star = moment(Fecha1).add(-1,'days');
 
     var end = moment(Fecha2);
 
     if (star != "" && end != "") {
         ValidateSameMonth(star, end);
+
     }
     else {
         alert("Llene los campos");
@@ -345,6 +346,31 @@ function ValidateVacationDaysManager() {
         .always(function () { });
 }
 //Document this if i dont finish it-----------------------------------------------
+
+$("#sendRequest").on("click", function (e) {
+
+    var StartDateCorrection = $("#start").val();
+
+    var EndDateCorrection = $("#End").val();
+
+    var ReturnDateCorrection = $("#returnDay").val();
+
+    var DaysRequestedCorrection = $("#daysReq").val();
+
+    var TitleCorrection = $("#Title").val();
+
+    if (EndDateCorrection === "invalided date" || ReturnDateCorrection == "" || DaysRequestedCorrection < 0 || TitleCorrection == "") {
+        $("#CorregirCampos").modal();
+    }
+    else {
+
+        $("#form").submit();
+    }
+
+
+})
+
+
 
 
 /*
