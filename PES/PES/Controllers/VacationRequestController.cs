@@ -286,6 +286,7 @@ namespace PES.Controllers
                 model.SubRequests[i].EndDate = eFinalEndDate;
 
             }
+          
             //inserting sub request.
             _subReqService.InsertSubReq(idRequest, model.SubRequests);        
        
@@ -299,6 +300,8 @@ namespace PES.Controllers
                 employeeEmail,
                 managerEmail
             };
+
+
             _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.MyFile);
             _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.IsUnpaid);
 

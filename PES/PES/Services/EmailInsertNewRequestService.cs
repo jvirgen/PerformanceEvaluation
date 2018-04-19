@@ -129,10 +129,10 @@ namespace PES.Services
             return dataRequests;
         }
 
-        public bool Lessnovacdays(string employeeemail, int daysReq, bool isunpaid)
+        public bool Lessnovacdays(string employeeemail, int daysReq, bool isUnpaid)
         {
 
-            if (isunpaid)
+            if (isUnpaid)
             {
                 return true;
             }
