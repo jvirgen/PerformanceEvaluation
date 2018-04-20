@@ -33,3 +33,24 @@
 .nav-tabs > li > a {
     margin-right:0;
 }
+
+.ContenedorColorVerde {
+    height: 25px;
+    width: 25px;
+    background-color: #BBF40A;
+    border: 1px solid black;
+    margin-bottom: 30px;
+
+}
+
+.TextoColorVerde{
+    margin-left: -150px;
+}
+
+.ContenedorColorNaranja {
+    height: 25px;
+    width: 25px;
+    background-color: #f28500;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}

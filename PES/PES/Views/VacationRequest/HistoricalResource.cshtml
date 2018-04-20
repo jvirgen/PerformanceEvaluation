@@ -19,7 +19,7 @@
                 <span id="availableDays" class="label label-default">@freeDays</span>
             </label>
         </div>
-        <ul class="nav nav-tabs"  style="margin-bottom: 5px;">
+        <ul class="nav nav-tabs" style="margin-bottom: 5px;">
             <li class="active" id="pending-tab"><a data-toggle="tab" href="#pending" class="pending-tab">Pending</a></li>
             <li id="rejected-tab"><a data-toggle="tab" href="#rejected" class="rejected-tab">Rejected</a></li>
             <li id="approved-tab"><a data-toggle="tab" href="#approved" class="approved-tab">Approved</a></li>
@@ -32,85 +32,97 @@
                     <thead>
                         <tr>
                             @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                            {
-                                <th>Name</th>
-                            }
+                        {
+                            <th>Name</th>
+                    }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
                             <th id="header_end_date">End Date</th>
                             <th id="header_return_date">Return Date</th>
-                      
+
                         </tr>
                     </thead>
                     <tbody>
 
                         @foreach (var headerVM in Model)
+                    {
+                        if (headerVM.status.ToLower() == "pending")
                         {
-                            if (headerVM.status.ToLower() == "pending")
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                             {
-                                <tr>
-                                    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                                    {
+                                if (headerVM.Title.Contains("UNPAID:"))
+                                {
+                                    <td style="background-color:#BBF40A">@headerVM.FirstName @headerVM.LastName</td>
+                                    <td style="background-color:#BBF40A">
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                            @headerVM.Title
+                                        </a>
+                                    </td>
+                                    <td style="background-color:#BBF40A">@headerVM.NoVacDays</td>
+                                    <td style="background-color:#BBF40A">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td style="background-color:#BBF40A">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                    <td style="background-color:#BBF40A">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                            }
+                            else if (headerVM.HaveProject == "True")
+                            {
 
-                                        if(headerVM.HaveProject == "True")
-                                        {
-
-                                                <td style="background-color:#f28500">@headerVM.FirstName @headerVM.LastName</td>
-                                                <td style="background-color:#f28500">
-                                                <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                        @headerVM.Title
-                                                </a>
-                                            </td>
-                                            <td style="background-color:#f28500">@headerVM.NoVacDays</td>
-                                            <td style="background-color:#f28500">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                            <td style="background-color:#f28500">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                            <td style="background-color:#f28500">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-
-
-                                        }
-                                        else
-                                        {
-
-                                                <td>@headerVM.FirstName @headerVM.LastName</td>
-
-                                                <td>
-                                                <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                        @headerVM.Title
-                                                </a>
-                                            </td>
-                                            <td>@headerVM.NoVacDays</td>
-                                            <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                            <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                            <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                <td style="background-color:#f28500">@headerVM.FirstName @headerVM.LastName</td>
+                                <td style="background-color:#f28500">
+                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                        @headerVM.Title
+                                    </a>
+                                </td>
+                                <td style="background-color:#f28500">@headerVM.NoVacDays</td>
+                                <td style="background-color:#f28500">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td style="background-color:#f28500">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td style="background-color:#f28500">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
 
 
-                                        }
-                                            
+                        }
+                        else
+                        {
+
+                            <td>@headerVM.FirstName @headerVM.LastName</td>
+
+                            <td>
+                                <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                    @headerVM.Title
+                                </a>
+                            </td>
+                            <td>@headerVM.NoVacDays</td>
+                            <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                            <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                            <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
 
 
-                                    }
-                                    else
-                                    {
+                    }
 
 
-                                            <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                    @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
 
-                                    }
-                                    
-                                    
+                }
+                else
+                {
 
-                                </tr>
-                             }
-                          }
+
+                    <td>
+                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                            @headerVM.Title
+                        </a>
+                    </td>
+                    <td>@headerVM.NoVacDays</td>
+                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+            }
+
+
+
+                            </tr>
+                    }
+                }
                     </tbody>
                 </table>
             </div>
@@ -119,9 +131,9 @@
                     <thead>
                         <tr>
                             @if (profileId == (int)ProfileUser.Manager)
-                            {
-                                <th>Name</th>
-                            }
+                        {
+                            <th>Name</th>
+                    }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
@@ -131,37 +143,37 @@
                     </thead>
                     <tbody>
                         @foreach (var headerVM in Model)
+                    {
+                        if (headerVM.status.ToLower() == "rejected")
                         {
-                            if (headerVM.status.ToLower() == "rejected")
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                             {
-                                <tr>
+                                <td>@headerVM.FirstName @headerVM.LastName</td>
+                        }
+                                <td>
                                     @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                                    {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-                                    }
-                                    <td>
-                                        @if(profileId == Convert.ToInt32(ProfileUser.Manager))
-                                            {
-                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                                @headerVM.Title
+                                {
+                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                        @headerVM.Title
 
-                                        </a>
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("ResendRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId , userID  = headerVM.EmployeeId })">
-                                                @headerVM.Title
-
-                                            </a>
-                                        }
-                                    </td>
-                                    <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-                                </tr>
+                                    </a>
                             }
-                         }
+                            else
+                            {
+                                <a href="@Url.Action("ResendRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId , userID  = headerVM.EmployeeId })">
+                                    @headerVM.Title
+
+                                </a>
+                        }
+                                </td>
+                                <td>@headerVM.NoVacDays</td>
+                                <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                            </tr>
+                    }
+                }
                     </tbody>
                 </table>
             </div>
@@ -170,9 +182,9 @@
                     <thead>
                         <tr>
                             @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                            {
-                                <th>Name</th>
-                            }
+                        {
+                            <th>Name</th>
+                    }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
@@ -182,27 +194,27 @@
                     </thead>
                     <tbody>
                         @foreach (var headerVM in Model)
+                    {
+                        if (headerVM.status.ToLower() == "approved")
                         {
-                            if (headerVM.status.ToLower() == "approved")
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                             {
-                                <tr>
-                                    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                                    {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-                                    }
-                                    <td>
-                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                                @headerVM.Title
+                                <td>@headerVM.FirstName @headerVM.LastName</td>
+                        }
+                                <td>
+                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                        @headerVM.Title
 
-                                        </a>
-                                    </td>
-                                    <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-                                </tr>
-                            }
-                         }
+                                    </a>
+                                </td>
+                                <td>@headerVM.NoVacDays</td>
+                                <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                            </tr>
+                    }
+                }
                     </tbody>
                 </table>
             </div>
@@ -211,9 +223,9 @@
                     <thead>
                         <tr>
                             @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                            {
-                                <th>Name</th>
-                            }
+                        {
+                            <th>Name</th>
+                    }
                             <th id="header_title">Title</th>
                             <th id="header_days">Days</th>
                             <th id="header_start_date">Start Date</th>
@@ -223,31 +235,52 @@
                     </thead>
                     <tbody>
                         @foreach (var headerVM in Model)
+                    {
+                        if (headerVM.status.ToLower() == "canceled")
                         {
-                            if (headerVM.status.ToLower() == "canceled")
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                             {
-                                <tr>
-                                    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                                 {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-                                    }
-                                    <td>
-                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                                @headerVM.Title
-                                        </a>
-                                    </td>
-                                    <td>@headerVM.NoVacDays</td>
-                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-                                </tr>
-                                                    }
-                                                }
+                                <td>@headerVM.FirstName @headerVM.LastName</td>
+                        }
+                                <td>
+                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                        @headerVM.Title
+                                    </a>
+                                </td>
+                                <td>@headerVM.NoVacDays</td>
+                                <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                            </tr>
+                    }
+                }
                     </tbody>
                 </table>
             </div>
         </div>
-      <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary">New Request</a>
+        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+        {
+             <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="ContenedorColorNaranja"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="TextoColorVerde">No Leader Request</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="ContenedorColorVerde"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="TextoColorVerde">Unpaid Request</div>
+                    </div>
+                </div>
+            </div>
+        }
+        <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary">New Request</a>
     </div>
 
 
