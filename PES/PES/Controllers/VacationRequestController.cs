@@ -304,7 +304,7 @@ namespace PES.Controllers
 
             _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.MyFile);
             _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.IsUnpaid);
-
+            
             //return to History View.
             return RedirectToAction("HistoricalResource");
         }
@@ -346,25 +346,8 @@ namespace PES.Controllers
                         ViewBag.newRequest = SelectedEmployee;
                         ViewBag.MyHoliday = _holidayService.GetAllHolidays();
 
-                        return View(newRequest);
-
-            
-            
-
-            
+                        return View(newRequest);                                    
         }
-
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// GET: VacationRequest Existing
         /// </summary>
@@ -459,6 +442,39 @@ namespace PES.Controllers
             return View(listHeaderReqVM);
         }
         //method to change reques and send emails 
+
+
+
+
+            //im workign on this
+
+
+
+        public ActionResult VacationsReminder()
+        {
+
+
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+
+            return View(listEmployee);
+        }
+
+        public ActionResult SendReminderEmail(int userid)
+        {
+            Employee RemindedEmployee = new Employee();
+            RemindedEmployee = _employeeService.GetByID(userid);
+
+            string employeeEmail = RemindedEmployee.Email;
+            string bodyEmail = "I have to remind you that you have x vacation days availables, if you dont take them soon i may have asign you vacations";
+            _emailInsertNewRequestService.SendEmail(employeeEmail, "Reminder From HR", bodyEmail );
+            
+            return RedirectToAction("VacationsReminder");
+        }
+
+
+
 
         [HttpPost]
         public ActionResult CancelRequest(StatusRequestViewModel model)

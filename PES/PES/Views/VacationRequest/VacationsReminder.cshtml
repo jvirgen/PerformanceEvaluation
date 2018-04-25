@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PES.Models.Employee>
+@using PES.Models
+@{
+    ViewBag.Title = "VacationsReminder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Vacations Reminder</h2>
+
+<table>
+
+    <tr>
+        <th> Vacation Days</th>
+        <th>Emploeyee Name</th>
+        <th>Send email Reminder</th>
+        <th>Last time a reminder was sent</th>
+    </tr>
+
+    @foreach (var item in Model) { 
+
+    <tr>
+        <td>  @item.Freedays</td>
+        <td> @item.FirstName @item.LastName </td>
+        <td>
+            <a href="@Url.Action("SendReminderEmail", "VacationRequest",new RouteValueDictionary(new { userid = item.EmployeeId }))" class="btn btn-lg btn-default btn-block"> Send Reminder </a>
+        </td>
+       
+    </tr>
+
+     } 
+
+</table>

@@ -54,30 +54,30 @@
                             {
                                 if (headerVM.Title.Contains("UNPAID:"))
                                 {
-                                    <td style="background-color:#BBF40A">@headerVM.FirstName @headerVM.LastName</td>
-                                    <td style="background-color:#BBF40A">
+                                    <td style="background-color:#baffc9">@headerVM.FirstName @headerVM.LastName</td>
+                                    <td style="background-color:#baffc9">
                                         <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                             @headerVM.Title
                                         </a>
                                     </td>
-                                    <td style="background-color:#BBF40A">@headerVM.NoVacDays</td>
-                                    <td style="background-color:#BBF40A">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                    <td style="background-color:#BBF40A">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                    <td style="background-color:#BBF40A">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                    <td style="background-color:#baffc9">@headerVM.NoVacDays</td>
+                                    <td style="background-color:#baffc9">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td style="background-color:#baffc9">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                    <td style="background-color:#baffc9">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                             }
                             else if (headerVM.HaveProject == "True")
                             {
 
-                                <td style="background-color:#f28500">@headerVM.FirstName @headerVM.LastName</td>
-                                <td style="background-color:#f28500">
+                                <td style="background-color:#ffdfba">@headerVM.FirstName @headerVM.LastName</td>
+                                <td style="background-color:#ffdfba">
                                     <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                         @headerVM.Title
                                     </a>
                                 </td>
-                                <td style="background-color:#f28500">@headerVM.NoVacDays</td>
-                                <td style="background-color:#f28500">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                <td style="background-color:#f28500">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                <td style="background-color:#f28500">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                <td style="background-color:#ffdfba">@headerVM.NoVacDays</td>
+                                <td style="background-color:#ffdfba">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td style="background-color:#ffdfba">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td style="background-color:#ffdfba">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
 
 
                         }
@@ -267,7 +267,7 @@
                         <div class="ContenedorColorNaranja"></div>
                     </div>
                     <div class="col-md-2">
-                        <div class="TextoColorVerde">No Leader Request</div>
+                        <div class="TextoColorVerde">Resource On Bench</div>
                     </div>
                 </div>
                 <div class="row">
