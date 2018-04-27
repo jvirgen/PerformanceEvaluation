@@ -66,7 +66,7 @@ namespace PES.Controllers
             Employee currentEmployee = new Employee();
             _employeeService = new EmployeeService();
             currentEmployee = _employeeService.GetByID(userid);
-            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();     
+            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
             newRequest.EmployeeId = userid;
             newRequest.Freedays = currentEmployee.Freedays;
             newRequest.SubRequest = new List<NewVacationDates>()
@@ -186,11 +186,11 @@ namespace PES.Controllers
                 Value = employee.EmployeeId.ToString()
             });
 
-            AssignVacations.ListEmployee = listEmployees; 
+            AssignVacations.ListEmployee = listEmployees;
 
             return View(AssignVacations);
         }
-       
+
 
 
 
@@ -257,6 +257,8 @@ namespace PES.Controllers
             //return to History View.
             return RedirectToAction("HistoricalResource");
         }
+
+
         /// <summary>
         /// POST of New Vacation Request to get all data form the New Request View to process and insert them in the DB
         /// </summary>
@@ -266,7 +268,7 @@ namespace PES.Controllers
         public ActionResult InsertNewRequestData(SendRequestViewModel model)
         {
 
-            
+
             //:::::::::::::::::Obtain fullPath ::::::::::::::::::
 
             //HttpPostedFile filePosted = Request.Files[myfile];
@@ -276,30 +278,30 @@ namespace PES.Controllers
             _headerReqService.InsertVacHeaderReq(model);
             //Obtain id header request inserted.
             int idRequest = _subReqService.GetHeaderRequest(model);
-            
 
-            for (int i = 0; i < model.SubRequests.Count(); i++)
-            {
-               
 
-                //Variables a fechas
-                var finalStarDate = model.SubRequests[0].StartDate;
-               
-                
-                //Changing date format.
+            //for (int i = 0; i < model.SubRequests.Count(); i++)
+            //{
 
-                //Variables a fechas
-                var eFinalEndDate = model.SubRequests[0].EndDate;
-                //Sending Information to ViewModel.
 
-                model.SubRequests[i].StartDate = finalStarDate;
-                model.SubRequests[i].EndDate = eFinalEndDate;
+            //    //Variables a fechas
+            //    var finalStarDate = model.SubRequests[0].StartDate;
 
-            }
-          
+
+            //    //Changing date format.
+
+            //    //Variables a fechas
+            //    var eFinalEndDate = model.SubRequests[0].EndDate;
+            //    //Sending Information to ViewModel.
+
+            //    model.SubRequests[i].StartDate = finalStarDate;
+            //    model.SubRequests[i].EndDate = eFinalEndDate;
+
+            //}
+
             //inserting sub request.
-            _subReqService.InsertSubReq(idRequest, model.SubRequests);        
-       
+            _subReqService.InsertSubReq(idRequest, model.SubRequests);
+
 
             List<InsertNewRequestViewModel> data = new List<InsertNewRequestViewModel>();
             data = _emailInsertNewRequestService.GetEmail(idRequest);
@@ -312,7 +314,9 @@ namespace PES.Controllers
             };
 
 
-            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request " , model.Comments , model.MyFile);
+            _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+
+
             _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.IsUnpaid);
 
             //return to History View.
@@ -328,53 +332,33 @@ namespace PES.Controllers
 
         // working on ////
 
-
-
         [HttpPost]
         public ActionResult ManagerInsertNewRequest(int SelectedEmployee)
         {
-            
 
-                        Employee currentEmployee = new Employee();
 
-                        currentEmployee = _employeeService.GetByID(SelectedEmployee);
+            Employee currentEmployee = _employeeService.GetByID(SelectedEmployee);
 
-                        SendRequestViewModel newRequest = new SendRequestViewModel();
-                        newRequest.EmployeedID = SelectedEmployee;
-                        newRequest.VacationDays = currentEmployee.Freedays;
-                        newRequest.FirstName = currentEmployee.FirstName;
-                        newRequest.LastName = currentEmployee.LastName;
-                        newRequest.SubRequests = new List<SubrequestInfoVM>()
-                        {
-                            new SubrequestInfoVM
-                            {
-                                StartDate = DateTime.Now,
-                                EndDate = DateTime.Now,
-                                HaveProject = true
-                            }
-                        };
-                        ViewBag.newRequest = SelectedEmployee;
-                        ViewBag.MyHoliday = _holidayService.GetAllHolidays();
+            SendRequestViewModel newRequest = new SendRequestViewModel();
+            newRequest.EmployeedID = SelectedEmployee;
+            newRequest.VacationDays = currentEmployee.Freedays;
+            newRequest.FirstName = currentEmployee.FirstName;
+            newRequest.LastName = currentEmployee.LastName;
+            newRequest.SubRequests = new List<SubrequestInfoVM>()
+            {
+                new SubrequestInfoVM
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = true
+                }
+            };
+            //agregar al view model reemplasar viewbag
+            ViewBag.newRequest = SelectedEmployee;
+            ViewBag.MyHoliday = _holidayService.GetAllHolidays();
 
-                        return View(newRequest);
-
-            
-            
-
-            
+            return View(newRequest);
         }
-
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// GET: VacationRequest Existing
         /// </summary>
@@ -407,7 +391,7 @@ namespace PES.Controllers
                 currentStatusId = currentRequest.status
             };
 
-                return View("VacationRequest", currentRequest);
+            return View("VacationRequest", currentRequest);
         }
 
         /// <summary>
@@ -425,7 +409,7 @@ namespace PES.Controllers
 
             List<VacHeadReqViewModel> listHeaderReqDB = new List<VacHeadReqViewModel>();
             List<VacHeadReqViewModel> listHeaderReqVM = new List<VacHeadReqViewModel>();
-            
+
 
             if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.Manager))
             {
@@ -454,7 +438,7 @@ namespace PES.Controllers
                         HaveProject = headerReq.HaveProject,
 
 
-                };
+                    };
                     listHeaderReqVM.Add(headerReqVm);
                 }
             }
@@ -467,8 +451,79 @@ namespace PES.Controllers
 
 
             return View(listHeaderReqVM);
+        } 
+        
+
+
+        public ActionResult VacationsReminder()
+        {
+
+
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            List<Employee> listEmployeeFiltered = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            // NOTE: add more attributes to the "var employeed" if you need them. 
+            foreach (var employ in listEmployee)
+            {
+                if (employ.Freedays != 0)
+                {
+                    var employeed = new Employee
+                    {
+                        EmployeeId = employ.EmployeeId,
+                        Freedays = employ.Freedays,
+                        FirstName = employ.FirstName,
+                        LastName = employ.LastName,
+                        Email = employ.Email,    
+                        
+                    };
+
+                    listEmployeeFiltered.Add(employeed);
+                }
+            }    
+
+            return View(listEmployeeFiltered);
         }
-        //method to change reques and send emails 
+
+        public JsonResult SendReminderEmail(int userid)
+        {
+            Employee RemindedEmployee = new Employee();
+            RemindedEmployee = _employeeService.GetByID(userid);
+            int vacationDays = RemindedEmployee.Freedays;
+            string employeeEmail = RemindedEmployee.Email;
+            //this is the hardcoded message, this should be editable?. need to ask
+            string bodyEmail = "I have to remind you that you have " + vacationDays + " vacation days available, if you don't take them soon i might have to assign you vacations \nThis is not an automatic email, if you have any doubt feel free to ask me" ;
+
+           if( _emailInsertNewRequestService.SendEmail(employeeEmail, "Reminder From HR", bodyEmail))
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        public JsonResult SendConfirmationHR(int userid)
+        {
+            Employee RemindedEmployee = new Employee();
+            RemindedEmployee = _employeeService.GetByID(userid);
+            int vacationDays = RemindedEmployee.Freedays;
+            string employeeEmail = RemindedEmployee.Email;
+            //this is the hardcoded message, this should be editable?. need to ask
+            string bodyEmail = "I have to remind you that you have " + vacationDays + " vacation days available, if you don't take them soon i might have to assign you vacations \nThis is not an automatic email, if you have any doubt feel free to ask me";
+
+            if (_emailInsertNewRequestService.SendEmail(employeeEmail, "Reminder From HR", bodyEmail))
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
 
         [HttpPost]
         public ActionResult CancelRequest(StatusRequestViewModel model)

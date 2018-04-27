@@ -235,6 +235,8 @@ namespace PES.Services
                 using (OracleCommand command = new OracleCommand(query, db))
                 {
                     command.Parameters.Add(new OracleParameter("IdEmployee", InsertNewRequest.EmployeedID));
+
+
                     if (InsertNewRequest.IsUnpaid)
                     {
                         command.Parameters.Add(new OracleParameter("Title","UNPAID: " + InsertNewRequest.Title));

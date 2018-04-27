@@ -72,11 +72,39 @@ namespace PES.Services
             return true;
         }
 
+        // sendamail without attachments
+        public bool SendEmail(string email, string subject, string bodyMessage)
+        {
+
+            //::::::::::::::::::::::EMAIL:::::::::::::::::::::::::::::::::::::
+            MailMessage msje = new MailMessage();
+            msje.From = new MailAddress(Globals.SMTPOutlookEmail);
+            //to who 
+            msje.To.Add(email);
+            //Subject
+            msje.Subject = subject;
+            //Email Body
+            msje.Body = bodyMessage;
+
+            client.Port = 587;
+            client.Credentials = new NetworkCredential(Globals.SMTPOutlookEmail, Globals.SMTPOutlookPass);
+            client.EnableSsl = true;
+            try
+            {
+                this.client.Send(msje);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public bool SendEmails(List<string> emails, string subject, string bodyMessage , HttpPostedFileBase MyFile)
         {
             foreach (var email in emails)
             {
-                //enabled myfile
                 this.SendEmail(email, subject, bodyMessage,  MyFile);
             }
 
