@@ -159,6 +159,7 @@
     <Compile Include="Controllers\PerformanceEvaluationController.cs" />
     <Compile Include="Controllers\VacationRequestController.cs" />
     <Compile Include="DBContext\DBContext.cs" />
+    <Compile Include="Enums\RequestType.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -379,6 +380,7 @@
     <Content Include="Scripts\ExportDataTables\pdfmake.min.js" />
     <Content Include="Scripts\ExportDataTables\vfs_fonts.js" />
     <Content Include="Scripts\FileValidation.js" />
+    <Content Include="Scripts\historicalResource.js" />
     <Content Include="Scripts\history-report.js" />
     <Content Include="Scripts\holidays.js" />
     <Content Include="Scripts\i18n\af.js" />
@@ -465,6 +467,8 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\showEmployees.js" />
     <Content Include="Scripts\update-change-validations.js" />
+    <Content Include="Scripts\VacationAssignation.js" />
+    <Content Include="Scripts\VacationsReminder.js" />
     <Content Include="Scripts\VacationsRequestUnpaid.js" />
     <Content Include="Scripts\vacationsResendRequest.js" />
     <Content Include="Scripts\vacationsRequest.js" />

@@ -86,11 +86,6 @@ namespace PES.Services
             //Email Body
             msje.Body = bodyMessage;
 
-            //enabled attachments //***
-
-
-
-
             client.Port = 587;
             client.Credentials = new NetworkCredential(Globals.SMTPOutlookEmail, Globals.SMTPOutlookPass);
             client.EnableSsl = true;
@@ -100,7 +95,7 @@ namespace PES.Services
             }
             catch (Exception ex)
             {
-                throw;
+                return false;
             }
 
             return true;
@@ -110,7 +105,6 @@ namespace PES.Services
         {
             foreach (var email in emails)
             {
-                //enabled myfile
                 this.SendEmail(email, subject, bodyMessage,  MyFile);
             }
 

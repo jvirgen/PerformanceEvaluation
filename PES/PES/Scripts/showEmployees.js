@@ -6,7 +6,6 @@
 
     // Events 
     $("#showEnables").on("click", function (e) {
-        // Execute function 
 
         // Email user
         var emailUser = $("#EmailUser").val();
