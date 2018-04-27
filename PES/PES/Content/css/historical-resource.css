@@ -54,3 +54,7 @@
     border: 1px solid black;
     margin-bottom: 30px;
 }
+
+.unpaid-color {
+    background-color: #BBF40A
+}

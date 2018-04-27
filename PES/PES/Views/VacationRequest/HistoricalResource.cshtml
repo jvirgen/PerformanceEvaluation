@@ -1,207 +1,207 @@
 ﻿@* View of the Historical Vacation Requests *@
-    @model IEnumerable<PES.ViewModels.VacHeadReqViewModel>
-    @using PES.Models
-    @{
-        int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
-        int freeDays = ViewBag.FreeDays != null ? (int)ViewBag.FreeDays : 0;
-        int profileId = ViewBag.profileId != null ? (int)ViewBag.profileId : 0;
-    }
-    <div class="row text-center">
-        <br />
-        <div class="col-md-12">
-            <h2>Vacation Resquest History </h2>
-        </div>
+@model IEnumerable<PES.ViewModels.VacHeadReqViewModel>
+@using PES.Models
+@{
+    int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
+    int freeDays = ViewBag.FreeDays != null ? (int)ViewBag.FreeDays : 0;
+    int profileId = ViewBag.profileId != null ? (int)ViewBag.profileId : 0;
+}
+<div class="row text-center">
+    <br />
+    <div class="col-md-12">
+        <h2>Vacation Resquest History </h2>
     </div>
-    <div class="well">
-        <div id="freeDaysArea" class="text-right">
-            <label>
-                Available Days:
-                <span id="availableDays" class="label label-default">@freeDays</span>
-            </label>
-        </div>
-        <ul class="nav nav-tabs" style="margin-bottom: 5px;">
-            <li class="active" id="pending-tab"><a data-toggle="tab" href="#pending" class="pending-tab">Pending</a></li>
-            <li id="rejected-tab"><a data-toggle="tab" href="#rejected" class="rejected-tab">Rejected</a></li>
-            <li id="approved-tab"><a data-toggle="tab" href="#approved" class="approved-tab">Approved</a></li>
-            <li id="canceled-tab"><a data-toggle="tab" href="#canceled" class="canceled-tab">Canceled</a></li>
-        </ul>
+</div>
+<div class="well">
+    <div id="freeDaysArea" class="text-right">
+        <label>
+            Available Days:
+            <span id="availableDays" class="label label-default">@freeDays</span>
+        </label>
+    </div>
+    <ul class="nav nav-tabs" style="margin-bottom: 5px;">
+        <li class="active" id="pending-tab"><a data-toggle="tab" href="#pending" class="pending-tab">Pending</a></li>
+        <li id="rejected-tab"><a data-toggle="tab" href="#rejected" class="rejected-tab">Rejected</a></li>
+        <li id="approved-tab"><a data-toggle="tab" href="#approved" class="approved-tab">Approved</a></li>
+        <li id="canceled-tab"><a data-toggle="tab" href="#canceled" class="canceled-tab">Canceled</a></li>
+    </ul>
 
-        <div class="tab-content">
-            <div id="pending" class="tab-pane fade in active">
-                <table id="Tableview" border="1" class="table table-striped">
-                    <thead>
-                        <tr>
-                            @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+    <div class="tab-content">
+        <div id="pending" class="tab-pane fade in active">
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                         {
                             <th>Name</th>
-                    }
-                            <th id="header_title">Title</th>
-                            <th id="header_days">Days</th>
-                            <th id="header_start_date">Start Date</th>
-                            <th id="header_end_date">End Date</th>
-                            <th id="header_return_date">Return Date</th>
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                    </tr>
+                </thead>
+                <tbody>
 
-                        @foreach (var headerVM in Model)
+                    @foreach (var headerVM in Model)
                     {
                         if (headerVM.status.ToLower() == "pending")
                         {
                             <tr>
                                 @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                            {
-                                if (headerVM.Title.Contains("UNPAID:"))
                                 {
-                                    <td style="background-color:#BBF40A">@headerVM.FirstName @headerVM.LastName</td>
-                                    <td style="background-color:#BBF40A">
+                                    if (headerVM.Title.Contains("UNPAID:"))
+                                    {
+                                        <td class="unpaid-color" style="background-color:#BBF40A">@headerVM.FirstName @headerVM.LastName</td>
+                                        <td style="background-color:#BBF40A">
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td style="background-color:#BBF40A">@headerVM.NoVacDays</td>
+                                        <td style="background-color:#BBF40A">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#BBF40A">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#BBF40A">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                    }
+                                    else if (headerVM.HaveProject == "True")
+                                    {
+
+                                        <td style="background-color:#f28500">@headerVM.FirstName @headerVM.LastName</td>
+                                        <td style="background-color:#f28500">
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td style="background-color:#f28500">@headerVM.NoVacDays</td>
+                                        <td style="background-color:#f28500">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#f28500">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#f28500">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+
+                                    }
+                                    else
+                                    {
+
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
+
+                                        <td>
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td>@headerVM.NoVacDays</td>
+                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+
+                                    }
+
+
+
+                                }
+                                else
+                                {
+
+
+                                    <td>
                                         <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                             @headerVM.Title
                                         </a>
                                     </td>
-                                    <td style="background-color:#BBF40A">@headerVM.NoVacDays</td>
-                                    <td style="background-color:#BBF40A">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                    <td style="background-color:#BBF40A">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                    <td style="background-color:#BBF40A">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-                            }
-                            else if (headerVM.HaveProject == "True")
-                            {
+                                    <td>@headerVM.NoVacDays</td>
+                                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
 
-                                <td style="background-color:#f28500">@headerVM.FirstName @headerVM.LastName</td>
-                                <td style="background-color:#f28500">
-                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                        @headerVM.Title
-                                    </a>
-                                </td>
-                                <td style="background-color:#f28500">@headerVM.NoVacDays</td>
-                                <td style="background-color:#f28500">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                <td style="background-color:#f28500">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                <td style="background-color:#f28500">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-
-
-                        }
-                        else
-                        {
-
-                            <td>@headerVM.FirstName @headerVM.LastName</td>
-
-                            <td>
-                                <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                    @headerVM.Title
-                                </a>
-                            </td>
-                            <td>@headerVM.NoVacDays</td>
-                            <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                            <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                            <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-
-
-                    }
-
-
-
-                }
-                else
-                {
-
-
-                    <td>
-                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                            @headerVM.Title
-                        </a>
-                    </td>
-                    <td>@headerVM.NoVacDays</td>
-                    <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                    <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                    <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-
-            }
+                                }
 
 
 
                             </tr>
+                        }
                     }
-                }
-                    </tbody>
-                </table>
-            </div>
-            <div id="rejected" class="tab-pane fade">
-                <table id="Tableview" border="1" class="table table-striped">
-                    <thead>
-                        <tr>
-                            @if (profileId == (int)ProfileUser.Manager)
+                </tbody>
+            </table>
+        </div>
+        <div id="rejected" class="tab-pane fade">
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        @if (profileId == (int)ProfileUser.Manager)
                         {
                             <th>Name</th>
-                    }
-                            <th id="header_title">Title</th>
-                            <th id="header_days">Days</th>
-                            <th id="header_start_date">Start Date</th>
-                            <th id="header_end_date">End Date</th>
-                            <th id="header_return_date">Return Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var headerVM in Model)
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var headerVM in Model)
                     {
                         if (headerVM.status.ToLower() == "rejected")
                         {
                             <tr>
                                 @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                            {
-                                <td>@headerVM.FirstName @headerVM.LastName</td>
-                        }
+                                {
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
+                                }
                                 <td>
                                     @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                                {
-                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
-                                        @headerVM.Title
+                                    {
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                            @headerVM.Title
 
-                                    </a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("ResendRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId , userID  = headerVM.EmployeeId })">
-                                    @headerVM.Title
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("ResendRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId , userID  = headerVM.EmployeeId })">
+                                            @headerVM.Title
 
-                                </a>
-                        }
+                                        </a>
+                                    }
                                 </td>
                                 <td>@headerVM.NoVacDays</td>
                                 <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
                                 <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                 <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                             </tr>
+                        }
                     }
-                }
-                    </tbody>
-                </table>
-            </div>
-            <div id="approved" class="tab-pane fade">
-                <table id="Tableview" border="1" class="table table-striped">
-                    <thead>
-                        <tr>
-                            @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                </tbody>
+            </table>
+        </div>
+        <div id="approved" class="tab-pane fade">
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                         {
                             <th>Name</th>
-                    }
-                            <th id="header_title">Title</th>
-                            <th id="header_days">Days</th>
-                            <th id="header_start_date">Start Date</th>
-                            <th id="header_end_date">End Date</th>
-                            <th id="header_return_date">Return Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var headerVM in Model)
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var headerVM in Model)
                     {
                         if (headerVM.status.ToLower() == "approved")
                         {
                             <tr>
                                 @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                            {
-                                <td>@headerVM.FirstName @headerVM.LastName</td>
-                        }
+                                {
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
+                                }
                                 <td>
                                     <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
                                         @headerVM.Title
@@ -213,36 +213,36 @@
                                 <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                 <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                             </tr>
+                        }
                     }
-                }
-                    </tbody>
-                </table>
-            </div>
-            <div id="canceled" class="tab-pane fade">
-                <table id="Tableview" border="1" class="table table-striped">
-                    <thead>
-                        <tr>
-                            @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                </tbody>
+            </table>
+        </div>
+        <div id="canceled" class="tab-pane fade">
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                         {
                             <th>Name</th>
-                    }
-                            <th id="header_title">Title</th>
-                            <th id="header_days">Days</th>
-                            <th id="header_start_date">Start Date</th>
-                            <th id="header_end_date">End Date</th>
-                            <th id="header_return_date">Return Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var headerVM in Model)
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var headerVM in Model)
                     {
                         if (headerVM.status.ToLower() == "canceled")
                         {
                             <tr>
                                 @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-                            {
-                                <td>@headerVM.FirstName @headerVM.LastName</td>
-                        }
+                                {
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
+                                }
                                 <td>
                                     <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
                                         @headerVM.Title
@@ -253,35 +253,35 @@
                                 <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                 <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                             </tr>
+                        }
                     }
-                }
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="ContenedorColorNaranja"></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="TextoColorVerde">No Leader Request</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="ContenedorColorVerde"></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="TextoColorVerde">Unpaid Request</div>
+                </div>
             </div>
         </div>
-        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
-        {
-             <div class="container">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="ContenedorColorNaranja"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="TextoColorVerde">No Leader Request</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="ContenedorColorVerde"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="TextoColorVerde">Unpaid Request</div>
-                    </div>
-                </div>
-            </div>
-        }
-        <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary">New Request</a>
-    </div>
+    }
+    <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary">New Request</a>
+</div>
 
 
 @section Scripts {

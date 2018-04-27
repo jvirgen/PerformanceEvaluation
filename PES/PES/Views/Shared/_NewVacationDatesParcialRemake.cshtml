@@ -3,7 +3,7 @@
 
 @using (Html.BeginCollectionItem("SubRequests"))
 {
-    <div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
+    <div id="datesGroup" class="form-group datesGroup" @*style="margin: 1vw;"*@>
         <div id="subDatesGroup" class="form-group">
             <div id="datesCont">
                 <!--<div class="col-md-3 col-lg-3">
@@ -31,7 +31,7 @@
         </div>
 
     <div id="subDatesGroup" class="form-group">
-        <div id="datesCount">
+        @*<div class="row" id="datesCount">*@
             <div id="leadName" class="col-md-4 col-lg-4">
                 @*<label for="lead" class="control-label">Lead Name</label>*@
                 @Html.LabelFor(m => m.SelectedEmployee, new { @class = "control-label" })
@@ -46,8 +46,10 @@
             <div class="removeBtn col-md-1 hidden">
                 <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
             </div>
-        </div>
+        @*</div>*@
     </div>
+
+    
 </div>
     
 }
