@@ -36,14 +36,18 @@
 $(".btn-send-mail").on("click", function (e) {
     e.stopPropagation();
     var id = $(this).attr('id');
+    var VacDaysReq = $(this).attr('value');
     sendedImail(id);
     //$("#VaReEmail").modal();
 });
 
-function sendedImail(id) {
+function sendedImail(id, VacDaysReq) {
     $.ajax({
         url: "/VacationRequest/SendConfirmationHR",
-        data: { userid: id }
+        data: {
+            userid: id,
+            VacationDays: VacDaysReq
+        }
     })
         .done(function (data) {
             if (data) {

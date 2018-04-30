@@ -27,6 +27,7 @@ namespace PES.Controllers
         private VacationHeaderReqService _headerReqService;
         private VacationReqStatusService _ReqStatusService;
         private VacationSubreqService _subReqService;
+        private LocationService _locationService;
         //Added
         private HolidayService _holidayService;
         private EmailInsertNewRequestService _emailInsertNewRequestService;
@@ -494,16 +495,36 @@ namespace PES.Controllers
         }
 
 
-        public JsonResult SendConfirmationHR(int userid)
+        public JsonResult SendConfirmationHR(int userid,int VacationDays)
         {
+            /*
+              surname,
+                 name,
+                 location,
+                 client, 
+                 days requested.
+             */
+
             Employee RemindedEmployee = new Employee();
             RemindedEmployee = _employeeService.GetByID(userid);
-            int vacationDays = RemindedEmployee.Freedays;
+            int vacationDaysReq = VacationDays;
             string employeeEmail = RemindedEmployee.Email;
-            //this is the hardcoded message, this should be editable?. need to ask
-            string bodyEmail = "I have to remind you that you have " + vacationDays + " vacation days available, if you don't take them soon i might have to assign you vacations \nThis is not an automatic email, if you have any doubt feel free to ask me";
+            string wholeName = RemindedEmployee.FirstName + " " + RemindedEmployee.LastName;           
+            Location UserLocation = _locationService.GetPeriodById(RemindedEmployee.LocationId);
+            string locationName = UserLocation.Name;
+            string employeeClient = RemindedEmployee.Customer;
 
-            if (_emailInsertNewRequestService.SendEmail(employeeEmail, "Reminder From HR", bodyEmail))
+
+            
+
+            string bodyEmail = "an employee wants has solicited vacations, can you please confirm me your aproval or rejection please. this is his innformation:\n " +
+                "Complete Name: " + wholeName + "\n" +
+                "Location: " + locationName + "\n" +
+                "client: " + employeeClient + "\n" +
+                "Days Requested: " + vacationDaysReq + "\n" +
+                "This message was created automatically but send manually, if you have any doubt feel free to ask me.";
+           
+            if (_emailInsertNewRequestService.SendEmail("victor.enciso@4thsource.com", "Vacation Aproval", bodyEmail))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
