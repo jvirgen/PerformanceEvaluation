@@ -468,6 +468,7 @@
     <Content Include="Scripts\showEmployees.js" />
     <Content Include="Scripts\update-change-validations.js" />
     <Content Include="Scripts\VacationAssignation.js" />
+    <Content Include="Scripts\VacationRequestEmail.js" />
     <Content Include="Scripts\VacationsReminder.js" />
     <Content Include="Scripts\VacationsRequestUnpaid.js" />
     <Content Include="Scripts\vacationsResendRequest.js" />
