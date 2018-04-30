@@ -33,36 +33,6 @@
     });
 });
 
-$(".btn-send-mail").on("click", function (e) {
-    e.stopPropagation();
-    var id = $(this).attr('id');
-    var VacDaysReq = $(this).attr('value');
-    sendedImail(id);
-    //$("#VaReEmail").modal();
-});
-
-function sendedImail(id, VacDaysReq) {
-    $.ajax({
-        url: "/VacationRequest/SendConfirmationHR",
-        data: {
-            userid: id,
-            VacationDays: VacDaysReq
-        }
-    })
-        .done(function (data) {
-            if (data) {
-                $("#VaReEmail").modal();
-            } else {
-                $("#VaFailedEmail").modal();
-            }
-
-        })
-        .fail(function () {
-            $("#VaFailedEmail").modal();
-        })
-        .always(function () { });
-}
-
 function addDate(btnAdd) {
     var last = $('.datesGroup')[$('.datesGroup').length - 1]; 
     $(last).after($(last).clone()); //clone

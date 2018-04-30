@@ -54,6 +54,7 @@ namespace PES.Controllers
             _emailRejectRequestService = new EmailRejectRequestService();
             _resendRequestService = new ResendRequestService();
             _emailResendRequestService = new EmailResendRequestService();
+            _locationService = new LocationService();
         }
 
         /// <summary>
@@ -506,15 +507,7 @@ namespace PES.Controllers
 
 
         public JsonResult SendConfirmationHR(int userid,int VacationDays)
-        {
-            /*
-              surname,
-                 name,
-                 location,
-                 client, 
-                 days requested.
-             */
-
+        {   
             Employee RemindedEmployee = new Employee();
             RemindedEmployee = _employeeService.GetByID(userid);
             int vacationDaysReq = VacationDays;
@@ -522,19 +515,16 @@ namespace PES.Controllers
             string wholeName = RemindedEmployee.FirstName + " " + RemindedEmployee.LastName;           
             Location UserLocation = _locationService.GetPeriodById(RemindedEmployee.LocationId);
             string locationName = UserLocation.Name;
-            string employeeClient = RemindedEmployee.Customer;
+            string employeeClient = RemindedEmployee.Customer;            
 
-
-            
-
-            string bodyEmail = "an employee wants has solicited vacations, can you please confirm me your aproval or rejection please. this is his innformation:\n " +
+            string bodyEmail = "an employee has solicited vacations, can you please confirm me your aproval or rejection please. this is his information:\n" +
                 "Complete Name: " + wholeName + "\n" +
                 "Location: " + locationName + "\n" +
                 "client: " + employeeClient + "\n" +
                 "Days Requested: " + vacationDaysReq + "\n" +
-                "This message was created automatically but send manually, if you have any doubt feel free to ask me.";
+                "This message was created automatically but send manually, if you have any questions, feel free to ask me.";
            
-            if (_emailInsertNewRequestService.SendEmail("victor.enciso@4thsource.com", "Vacation Aproval", bodyEmail))
+            if (_emailInsertNewRequestService.SendEmail("victor.munguia@4thsource.com", "Vacation Aproval", bodyEmail))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
