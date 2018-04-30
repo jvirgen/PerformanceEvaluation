@@ -506,22 +506,22 @@ namespace PES.Controllers
         }
 
 
-        public JsonResult SendConfirmationHR(int userid,int VacationDays)
+        public JsonResult SendConfirmationHR(int userid,int VacationDays, string Sfechas)
         {   
             Employee RemindedEmployee = new Employee();
             RemindedEmployee = _employeeService.GetByID(userid);
-            int vacationDaysReq = VacationDays;
             string employeeEmail = RemindedEmployee.Email;
             string wholeName = RemindedEmployee.FirstName + " " + RemindedEmployee.LastName;           
             Location UserLocation = _locationService.GetPeriodById(RemindedEmployee.LocationId);
             string locationName = UserLocation.Name;
             string employeeClient = RemindedEmployee.Customer;            
 
-            string bodyEmail = "an employee has solicited vacations, can you please confirm me your aproval or rejection please. this is his information:\n" +
+            string bodyEmail = "An employee has solicited vacations, can you please confirm me your aproval or rejection please. this is his information:\n" +
                 "Complete Name: " + wholeName + "\n" +
                 "Location: " + locationName + "\n" +
                 "client: " + employeeClient + "\n" +
-                "Days Requested: " + vacationDaysReq + "\n" +
+                "Dates Requested: " + Sfechas + "\n" +
+                "Total Days Requested: " + VacationDays + "\n" +
                 "This message was created automatically but send manually, if you have any questions, feel free to ask me.";
            
             if (_emailInsertNewRequestService.SendEmail("victor.munguia@4thsource.com", "Vacation Aproval", bodyEmail))
