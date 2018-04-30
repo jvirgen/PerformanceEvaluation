@@ -52,7 +52,22 @@
                             <tr>
                                 @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                                 {
-                                    if (headerVM.Title.Contains("UNPAID:"))
+                                    if(headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
+                                    {
+
+                                        <td style="background-color:#7AD8DB">@headerVM.FirstName @headerVM.LastName</td>
+                                        <td style="background-color:#7AD8DB">
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td style="background-color:#7AD8DB">@headerVM.NoVacDays</td>
+                                        <td style="background-color:#7AD8DB">@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#7AD8DB">@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#7AD8DB">@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+                                    }
+                                    else if (headerVM.Title.Contains("UNPAID:"))
                                     {
                                         <td style="background-color:#baffc9">@headerVM.FirstName @headerVM.LastName</td>
                                         <td style="background-color:#baffc9">
@@ -261,24 +276,32 @@
     </div>
     @if (profileId == Convert.ToInt32(ProfileUser.Manager))
     {
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="ContenedorColorNaranja"></div>
-                </div>
-                <div class="col-md-2">
-                    <div class="TextoColorVerde">Resource On Bench</div>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="ContenedorColorNaranja"></div>
             </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="ContenedorColorVerde"></div>
-                </div>
-                <div class="col-md-2">
-                    <div class="TextoColorVerde">Unpaid Request</div>
-                </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Resource On Bench</div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="ContenedorColorVerde"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Unpaid Request</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="ContenedorColorAzul"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Resource On Bench and Unpaid Request</div>
+            </div>
+        </div>
+    </div>
     }
     <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary">New Request</a>
 </div>

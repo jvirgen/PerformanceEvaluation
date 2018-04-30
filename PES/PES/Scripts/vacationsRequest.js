@@ -156,7 +156,7 @@ function SendInfo(start, end) {
                     $("#daysReq").val(data.NumberDaysRequested);
                     break;
                 case 0:
-                    $("#correctDate").modal();
+
                     $("#daysReq").val(data.NumberDaysRequested);
                     $("#returnDay").val(data.ReturnDate)
                     $("#daysRequest").val(data.NumberDaysRequested)
