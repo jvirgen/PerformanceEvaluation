@@ -150,7 +150,7 @@ $(".valida-fecha").on("change", function () {
     var end = moment(Fecha2);
 
     if (star != "" && end != "") {
-        ValidateSameMonth(star, end);
+        SendInfo(star, end);
 
     }
     else {
@@ -159,40 +159,41 @@ $(".valida-fecha").on("change", function () {
 });
 
 
-/*function getDaysRequested() {
-    $("#start").blur(function () {
-        if (!isEmpty($("#start").val()) && !isEmpty($("#EndDateLabel").val())) {
-            ValidateSameMonth($("#start").val(), $("#EndDateLabel").val());
-        }
-    });
-    $("#EndDateLabel").blur(function () {
-        if (!isEmpty($("#start").val()) && !isEmpty($("#EndDateLabel").val())) {
-            ValidateSameMonth($("#start").val(), $("#EndDateLabel").val());
-        }
-    });
-}*/
-
-function ValidateSameMonth(start, end, count) {
+function SendInfo(start, end) {
     var sD = new Date(start);
     var eD = new Date(end);
-    var count = 0;
-    var flag = false;
 
     $.ajax({
-        url: "/VacationRequest/ValidateSameMonth",
-        data: { start: sD.toISOString(), end: eD.toISOString(), flag: flag }
+        url: "/VacationRequest/ValidationStarEndDatesHolidays",
+        data: { startDate: sD.toISOString(), endDate: eD.toISOString()}
     })
         .done(function (data) {
-
-            if (!data) {
-
-                $("#sameMonth").modal();
-                $("#daysReq").text("0");
-                $("#returnDay").val("");
-                $('.datesBox').val("invalided date");
-            } else {
-                ValidateStartDate(start, end, count);
+            switch (data.errorType) {
+                case 1:
+                    $('.datesBox').val("invalided date");
+                    $("#OldDate").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    break;
+                case 2:
+                    $("#sameMonth").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    $("#returnDay").val(data.ReturnDate)
+                    $("#daysRequest").val(data.NumberDaysRequested)
+                    break;
+                case 3:
+                    $('.datesBox').val("invalided date");
+                    $("#EndDateLow").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    break;
+                case 0:
+                    $("#correctDate").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    $("#returnDay").val(data.ReturnDate)
+                    $("#daysRequest").val(data.NumberDaysRequested)
+                    break;
+                   
             }
+            
         })
         .fail(function () {
         })
@@ -201,94 +202,6 @@ function ValidateSameMonth(start, end, count) {
 
 
 
-
-function ValidateStartDate(start, end,  count) {
-    var sD = new Date(start);
-
-    var flag = false;
-
-    $.ajax({
-        url: "/VacationRequest/ValidateStartDate",
-        data: { start: sD.toISOString(), flag: flag }
-    })
-        .done(function (data) {
-
-            if (!data) {
-
-                $("#OldDate").modal();
-                $("#daysReq").text("0");
-                $("#returnDay").val("");
-                $('.datesBox').val("invalided date");
-            } else {
-                CountHolidaysAndValidateDates(start, end, count);
-            }
-
-        })
-        .fail(function () {
-        })
-        .always(function () { });    
-}
-
-function CountHolidaysAndValidateDates(start, end, count) {
-    var sD = new Date(start);
-
-    var eD = new Date(end);
-
-        $.ajax({
-            url: "/VacationRequest/CountHolidaysAndValidateDates",
-            data: { start: sD.toISOString(), end: eD.toISOString(), count: count }
-        })
-            .done(function (data) {
-
-                $("#daysReq").val(validateDaysRequested(getWorkableDays(start, end) - data, this));
-                $("#daysRequest").val(validateDaysRequested(getWorkableDays(start, end) - data, this));
-            })
-            .fail(function () {
-            })
-            .always(function () { });
-
-}
-
-function validateDaysRequested(daysReq, input) {
-    if ($('#daysVac').text() < daysReq) {
-        $(input).val('');
-        $("#modalNoEnoughDays").modal();
-        return 0;
-    }
-    else {
-        getReturnDate();
-        return daysReq;
-    }
-}
-
-function validateReturnDate(returnDate) {
-    $.ajax({
-        url: "/VacationRequest/ValidateResultDate",
-        data: { returnDate: returnDate.toISOString() }
-    })
-        .done(function (data) {
-
-            $("#returnDay").val(data.date);
-        })
-        .fail(function () {
-
-        })
-        .always(function () {});
-}
-
-function getReturnDate() {
-    //var returnDay = new Date();
-    var dates = '';
-    var endDate = null;
-    $('.datesBox').each(function (i, input) {
-        dates = $(input).val();
-        if (dates != '') {
-            endDate = dates;
-        }
-    });
-    var returnDay = new Date(endDate);
-    validateReturnDate(returnDay);
-}
 
 function getSysdate() {
     var d = new Date();
@@ -300,47 +213,6 @@ function getSysdate() {
     return output;
 }
 
-// Expects start date to be before end date
-// start and end are Date objects
-function getWorkableDays(start, end) {
-    // Copy date objects so don't modify originals
-    var s = new Date(+start);
-    var e = new Date(+end);
-
-    // Set time to midday to avoid daylight saving and browser quirks
-    s.setHours(12, 0, 0, 0);
-    e.setHours(12, 0, 0, 0);
-
-    // Get the difference in whole days
-    var totalDays = Math.round((e - s) / 8.64e7);
-
-    // Get the difference in whole weeks
-    var wholeWeeks = totalDays / 7 | 0;
-
-    // Estimate business days as number of whole weeks * 5
-    var days = wholeWeeks * 5;
-
-    // If not even number of weeks, calc remaining weekend days
-    if (totalDays % 7) {
-        s.setDate(s.getDate() + wholeWeeks * 7);
-
-        while (s < e) {
-            s.setDate(s.getDate() + 1);
-
-            // If day isn't a Sunday or Saturday, add to business days
-            if (s.getDay() != 0 && s.getDay() != 6) {               
-                ++days;
-            }
-        }
-    }
-
-        return days;       
-}
-
-//Document this if i dont finish it-----------------------------------------------
-//var Item = document.getElementById("sendRequest2");
-
-//Item.addEventListener("click", ValidateVacationDaysManager, false)
 
 $("#sendRequest2").on("click", function (e) {
 
@@ -388,7 +260,9 @@ $("#sendRequest").on("click", function (e) {
 
     var TitleCorrection = $("#Title").val();
 
-    if (EndDateCorrection === "invalided date" || ReturnDateCorrection == "" || DaysRequestedCorrection < 0 || TitleCorrection == "") {
+    var userVacations = $("#VacationDays").val();
+
+    if (EndDateCorrection === "invalided date" || ReturnDateCorrection == "" || DaysRequestedCorrection < 0 || TitleCorrection == "" || userVacations < DaysRequestedCorrection) {
         $("#CorregirCampos").modal();
     }
     else {

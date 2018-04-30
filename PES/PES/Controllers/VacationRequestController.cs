@@ -87,37 +87,47 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult SendRequest(int userid)
         {
-            Employee CurrentEmployee = new Employee();
-            _employeeService = new EmployeeService();
-            CurrentEmployee = _employeeService.GetByID(userid);
-            SendRequestViewModel NewRequest = new SendRequestViewModel();
+            Employee currentEmployee =  _employeeService.GetByID(userid);
 
-            // mod
-            IEnumerable<Employee> listEmployee = new List<Employee>();
-            listEmployee = _employeeService.GetAll();
-
-            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            if (currentEmployee.EmployeeId > 0)
             {
-                Text = employee.FirstName + " " + employee.LastName,
-                Value = employee.EmployeeId.ToString()
-            });
-            //mod
+                // Is valid
+                SendRequestViewModel NewRequest = new SendRequestViewModel();
 
-            NewRequest.IsUnpaid = false;
-            NewRequest.EmployeedID = userid;
-            NewRequest.VacationDays = CurrentEmployee.Freedays;
-            NewRequest.SubRequests = new List<SubrequestInfoVM>()
-            {
-                new SubrequestInfoVM
+                // mod
+                IEnumerable<Employee> listEmployee = new List<Employee>();
+                listEmployee = _employeeService.GetAll();
+
+                IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
                 {
-                    ListEmployee = listEmployees,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now
-                }
-            };
-            ViewBag.NewRequest = userid;
-            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
-            return View(NewRequest);
+                    Text = employee.FirstName + " " + employee.LastName,
+                    Value = employee.EmployeeId.ToString()
+                });
+                //mod
+
+                NewRequest.IsUnpaid = false;
+                NewRequest.EmployeedID = userid;
+                NewRequest.VacationDays = currentEmployee.Freedays;
+                NewRequest.SubRequests = new List<SubrequestInfoVM>()
+                {
+                    new SubrequestInfoVM
+                    {
+                        ListEmployee = listEmployees,
+                        StartDate = DateTime.Now,
+                        EndDate = DateTime.Now
+                    }
+                };
+                ViewBag.NewRequest = userid;
+                ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+                return View(NewRequest);
+            }
+            else
+            {
+                TempData["Error"] = "User was not found";
+                return RedirectToAction("HistoricalResource", "VacationRequest");
+            }
+
+            
         }
 
 
@@ -638,7 +648,7 @@ namespace PES.Controllers
 
 
         [HttpGet]
-        public JsonResult ValidateResultDate(DateTime returnDate)
+        public DateTime ValidateResultDate(DateTime returnDate)
         {
             //send parameter where will be validate
             returnDate = returnDate.AddDays(1);
@@ -662,7 +672,7 @@ namespace PES.Controllers
 
 
             //Date confirm
-            return Json(new { date = finalDate.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
+            return finalDate;
         }
 
 
@@ -838,6 +848,149 @@ namespace PES.Controllers
         }
         //Document this if i dont finish it-----------------------------------------------
 
+
+        public JsonResult ValidationStarEndDatesHolidays (DateTime startDate, DateTime endDate)
+        {
+            //var sDate = startDate;
+            //var eDate = endDate;
+            //these are the constans that will be compare with the days
+            DateTime DiaStarRango = startDate.Date.AddDays(1);
+            DateTime SabadoFecha = new DateTime(2018, 4, 28);
+            DateTime DomingoFecha = new DateTime(2018, 4, 29);
+
+            int DiasARestarSabadosDomingos = 0;
+            //this while will be counting the endweeks days
+            while (true)
+            {
+                if(DiaStarRango.Date == endDate.Date)
+                {
+                    var SabadoComparacion = SabadoFecha.DayOfWeek;
+                    var DomingoComparacion = DomingoFecha.DayOfWeek;
+                    var DiaSemana = DiaStarRango.DayOfWeek;
+
+                    if (DiaSemana == SabadoComparacion || DiaSemana == DomingoComparacion)
+                    {
+                        DiasARestarSabadosDomingos = DiasARestarSabadosDomingos + 1;
+                    }
+
+                    DiaStarRango = DiaStarRango.AddDays(1);
+
+                    break;
+                }
+                else if(endDate < DiaStarRango.Date)
+                {
+                    break;
+                }
+                else
+                {
+                    var SabadoComparacion = SabadoFecha.DayOfWeek;
+                    var DomingoComparacion = DomingoFecha.DayOfWeek;
+                    var DiaSemana = DiaStarRango.DayOfWeek;
+
+                    if(DiaSemana == SabadoComparacion || DiaSemana == DomingoComparacion)
+                    {
+                        DiasARestarSabadosDomingos = DiasARestarSabadosDomingos + 1;
+                    }
+
+                    DiaStarRango = DiaStarRango.AddDays(1);
+                }
+            }
+
+            //here we are resting the endweek days to work days
+            int countMethod = 0;
+
+            int CountingHolidays = IsHolidayStartAndEndDates(startDate, endDate, countMethod);
+
+            TimeSpan DiasEntreFechas = endDate - startDate;
+
+            int dias = DiasEntreFechas.Days - DiasARestarSabadosDomingos;
+            int finalDays = dias - CountingHolidays;
+            DateTime FecharCortaReturnDate = ValidateResultDate(endDate);
+            string returnDateCorrectly = FecharCortaReturnDate.ToString("MM/dd/yyyy");
+            DateTime returnDate = DateTime.Now;
+
+            var dataToReturn = new
+            {
+                IsValid = default(bool),
+                Message = default(string),
+                errorType = default(int),
+                NumberDaysRequested = default(int),
+                ReturnDate = default(string)
+            };
+
+            if (endDate.Date > startDate.Date)
+            {
+                //all is correct
+            }
+            else
+            {
+                dataToReturn = new
+                {
+                    IsValid = false,
+                    Message = "End date should be higest than Start Date",
+                    errorType = 3,
+                    NumberDaysRequested = finalDays,
+                    ReturnDate = returnDateCorrectly
+                };
+
+                return Json(dataToReturn, JsonRequestBehavior.AllowGet);
+            }
+
+            //Validated if start date is valid
+            #region validation start date
+            var validateStartDate_sDate = startDate.AddDays(1);
+            DateTime today = DateTime.Today;
+            if(validateStartDate_sDate.Date > today.Date)
+            {
+                //all is correct
+            }
+            else
+            {
+                dataToReturn = new
+                {
+                    IsValid = false,
+                    Message = "Start date is wrong, please checkt it and correct",
+                    errorType = 1,
+                    NumberDaysRequested = finalDays,
+                    ReturnDate = returnDateCorrectly
+                };
+
+                return Json(dataToReturn, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            //validate if startdate star after 5 weeks
+            var weekNumberfive = today.AddDays(35);
+            if(validateStartDate_sDate.Date > weekNumberfive.Date)
+            {
+                //all is correct
+            }
+            else
+            {
+                dataToReturn = new
+                {
+                    IsValid = false,
+                    Message = "Start date sould be after 5 weeks",
+                    errorType = 2,
+                    NumberDaysRequested = finalDays,
+                    ReturnDate = returnDateCorrectly
+                };
+
+                return Json(dataToReturn, JsonRequestBehavior.AllowGet);
+            }
+
+            //This will be the correct data
+            dataToReturn = new
+            {
+                IsValid = true,
+                Message = "All is correct",
+                errorType = 0,
+                NumberDaysRequested = finalDays,
+                ReturnDate = returnDateCorrectly
+            };
+
+            return Json(dataToReturn, JsonRequestBehavior.AllowGet);
+        }
     }
 }
 
