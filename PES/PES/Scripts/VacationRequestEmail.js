@@ -6,6 +6,7 @@ $(".btn-send-mail").on("click", function (e) {
     var id = $(this).attr('id');
     var VacDaysReq = $(this).attr('value');
     sendedImail(id, VacDaysReq, stringFechas);
+    $('.spinner').css('display', 'block');
     //$("#VaReEmail").modal();
 });
 
@@ -19,6 +20,7 @@ function sendedImail(id, VacDaysReq, stringFechas) {
         }
     })
         .done(function (data) {
+            $('.spinner').hide();
             if (data) {
                 $("#VaReEmail").modal();
             } else {
@@ -27,7 +29,9 @@ function sendedImail(id, VacDaysReq, stringFechas) {
 
         })
         .fail(function () {
+            stopAnimation('.spinner');
             $("#VaFailedEmail").modal();
         })
         .always(function () { });
 }
+

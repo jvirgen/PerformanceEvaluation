@@ -249,6 +249,7 @@
     <Content Include="Content\css\select2-bootstrap.css" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\css\spiner.css" />
     <Content Include="Content\css\vacation_request_resource.css" />
     <Content Include="Content\css\StyleLateness.css" />
     <Content Include="Content\datatables\dataTables.bootstrap.min.css" />

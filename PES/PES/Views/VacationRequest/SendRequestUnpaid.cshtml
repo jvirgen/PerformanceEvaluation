@@ -60,6 +60,19 @@
                             </div>
                         </div>
                     </div>
+
+
+
+                    //spiner
+
+                    <div class="spinner" style="display:none">
+                        <div class="center-div">
+                            <div class="inner-div">
+                                <div class="loader"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!--Aqui termina el apartado del titulo, ahora sigue el parcial view.-->
 
                     foreach (var subrequest in Model.SubRequests)
@@ -255,7 +268,8 @@
 
 
 @* Modal begins *@
-<div class="modal fade" id="moreThanThreeDays" role="dialog">s
+<div class="modal fade" id="moreThanThreeDays" role="dialog">
+    s
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -288,6 +302,7 @@
     @Styles.Render("~/Content/css/vacation_request_resource.css")
     @Styles.Render("~/Content/themes/base/daterangepicker.css")
     @Styles.Render("~/Content/css/select2.min.css")
+    @Styles.Render("~/Content/css/spiner.css")
 
 
 }

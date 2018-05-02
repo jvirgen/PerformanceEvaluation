@@ -12,6 +12,8 @@ $("#tableViewReminded .btn-send-reminder").on("click", function (e) {
     e.stopPropagation();
     var id = $(this).attr('id');
     sendedImail(id);
+    $('.spinner').css('display', 'block');
+
     //$("#VaReEmail").modal();
 });
 
@@ -21,6 +23,8 @@ function sendedImail(id) {
         data: { userid: id }
     })
         .done(function (data) {
+            $('.spinner').hide();
+
             if (data) {
                 $("#VaReEmail").modal();
             } else {
@@ -29,6 +33,8 @@ function sendedImail(id) {
 
         })
         .fail(function () {
+            $('.spinner').hide();
+
             $("#VaFailedEmail").modal();
         })
         .always(function () { });
