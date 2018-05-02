@@ -173,6 +173,15 @@ namespace PES.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult emergencyRequest()
+        {
+
+            return View();
+
+        }
+
+
         /////////////// working on
         public ActionResult VacationAssignation()
         {

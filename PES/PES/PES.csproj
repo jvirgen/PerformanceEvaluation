@@ -547,6 +547,7 @@
     <Content Include="Views\VacationRequest\SendRequestUnpaid.cshtml" />
     <Content Include="Views\Shared\_NewVacationDatesUnpaid.cshtml" />
     <Content Include="Views\VacationRequest\VacationsReminder.cshtml" />
+    <Content Include="Views\VacationRequest\emergencyRequest.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
