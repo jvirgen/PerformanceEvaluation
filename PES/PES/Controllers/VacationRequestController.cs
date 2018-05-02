@@ -517,11 +517,13 @@ namespace PES.Controllers
             string employeeClient = RemindedEmployee.Customer;            
 
             string bodyEmail = "An employee has solicited vacations, can you please confirm me your aproval or rejection please. this is his information:\n" +
+                "\n" +
                 "Complete Name: " + wholeName + "\n" +
                 "Location: " + locationName + "\n" +
-                "client: " + employeeClient + "\n" +
+                "Client: " + employeeClient + "\n" +
                 "Dates Requested: " + Sfechas + "\n" +
                 "Total Days Requested: " + VacationDays + "\n" +
+                "\n" +
                 "This message was created automatically but send manually, if you have any questions, feel free to ask me.";
            
             if (_emailInsertNewRequestService.SendEmail("victor.munguia@4thsource.com", "Vacation Aproval", bodyEmail))
@@ -839,7 +841,7 @@ namespace PES.Controllers
         //Document this if i dont finish it-----------------------------------------------
 
 
-        public JsonResult ValidationStarEndDatesHolidays (DateTime startDate, DateTime endDate)
+        public JsonResult ValidationStarEndDatesHolidays (DateTime startDate, DateTime endDate, bool unpaid = false)
         {
             //var sDate = startDate;
             //var eDate = endDate;
@@ -911,8 +913,25 @@ namespace PES.Controllers
 
             if (endDate.Date > startDate.Date)
             {
-                //all is correct
+                if (unpaid)
+                {
+                    if (finalDays > 3)
+                    {
+                        dataToReturn = new
+                        {
+                            IsValid = false,
+                            Message = "Sorry but you can't request more than three(3) Unpaid Days",
+                            errorType = 4,
+                            NumberDaysRequested = finalDays,
+                            ReturnDate = returnDateCorrectly
+                        };
+
+                        return Json(dataToReturn, JsonRequestBehavior.AllowGet);
+
+                    }
+                }
             }
+
             else
             {
                 dataToReturn = new
