@@ -137,7 +137,7 @@ function SendInfo(start, end) {
 
     $.ajax({
         url: "/VacationRequest/ValidationStarEndDatesHolidays",
-        data: { startDate: sD.toISOString(), endDate: eD.toISOString() }
+        data: { startDate: sD.toISOString(), endDate: eD.toISOString() , unpaid: true}
     })
         .done(function (data) {
             switch (data.errorType) {
@@ -155,6 +155,11 @@ function SendInfo(start, end) {
                 case 3:
                     $('.datesBox').val("invalided date");
                     $("#EndDateLow").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    break;
+                case 4:
+                    $('.datesBox').val("invalided date");
+                    $("#moreThanThreeDays").modal();
                     $("#daysReq").val(data.NumberDaysRequested);
                     break;
                 case 0:
