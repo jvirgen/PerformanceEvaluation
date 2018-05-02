@@ -3,7 +3,7 @@
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="modal-cancel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        @using (Html.BeginForm("CancelRequest", "VacationRequest", FormMethod.Post))
+        @using (Html.BeginForm("CancelRequest", "VacationRequest", FormMethod.Post, new { id="cancelFormModal"}))
         {
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -43,7 +43,7 @@
                 <!-- IF the request is canceled shot event to change the satus to cancel and redirected to history list and also send emails to director and user.-->
 
 
-                <input type="submit" class="btn btn-danger" value="Cancel Request" />
+                <input type="button" id="cancelBotomModal" class="btn btn-danger" value="Cancel Request" />
             </div>
         }
         </div><!-- /.modal-content -->
