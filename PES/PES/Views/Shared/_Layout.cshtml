@@ -1,4 +1,5 @@
 ﻿@using PES.Models
+
 @{
     // Check if user is logged in
     var userLogged = Session["UserName"] != null ? true : false;
@@ -44,23 +45,28 @@
                 }
             </div>
             <div class="navbar-collapse collapse">
-                @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager))
+                @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager || userProfile == ProfileUser.Resource))
                 {
                     <ul class="nav navbar-nav" style="margin-top:10px">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lateness<span class="caret"></span></a>
                             <ul class="dropdown-menu text-center">
                                 @if (userProfile == ProfileUser.Manager)
-    {
-                            <li><a href="@Url.Action("LatenessMenu", "Menu")">Lateness Menu</a></li>
-                            <li><a href="@Url.Action("LatenessAllUsers", "Lateness")">List of Lateness</a></li>
-                            <li><a href="@Url.Action("ShowLatenesExcel", "Lateness")">Import an Excel File</a></li>
-                            <li><a href="@Url.Action("Index", "Lateness")">My Lateness</a></li>
-                            <li><a href="@Url.Action("Index", "Holidays")">Holidays</a></li>
-                            <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Vacations</a></li>
-                            <li><a href="@Url.Action("VacationAssignation", "VacationRequest")">Assign Vacations</a></li>
-                            <li><a href="@Url.Action("VacationsReminder", "VacationRequest")">Vacations Reminder</a></li>
-}
+                                {
+                                    <li><a href="@Url.Action("LatenessMenu", "Menu")">Lateness Menu</a></li>
+                                    <li><a href="@Url.Action("LatenessAllUsers", "Lateness")">List of Lateness</a></li>
+                                    <li><a href="@Url.Action("ShowLatenesExcel", "Lateness")">Import an Excel File</a></li>
+                                    <li><a href="@Url.Action("Index", "Lateness")">My Lateness</a></li>
+                                    <li><a href="@Url.Action("Index", "Holidays")">Holidays</a></li>
+                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Vacations</a></li>
+                                    <li><a href="@Url.Action("VacationAssignation", "VacationRequest")">Assign Vacations</a></li>
+                                    <li><a href="@Url.Action("VacationsReminder", "VacationRequest")">Vacations Reminder</a></li>
+                                }
+                                else if (userProfile == ProfileUser.Resource)
+                                {
+                                  
+                                    <li><a href="@Url.Action("VacationsReminder", "VacationRequest")">Emergency days off</a></li>
+                                }
                             </ul>
                         </li>
                     </ul>

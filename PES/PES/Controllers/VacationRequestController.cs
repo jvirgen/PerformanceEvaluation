@@ -845,8 +845,8 @@ namespace PES.Controllers
             //var eDate = endDate;
             //these are the constans that will be compare with the days
             DateTime DiaStarRango = startDate.Date.AddDays(1);
-            DateTime SabadoFecha = new DateTime(2018, 4, 28);
-            DateTime DomingoFecha = new DateTime(2018, 4, 29);
+            //DateTime SabadoFecha = new DateTime(2018, 4, 28);
+            //DateTime DomingoFecha = new DateTime(2018, 4, 29);
 
             int DiasARestarSabadosDomingos = 0;
             //this while will be counting the endweeks days
@@ -854,11 +854,12 @@ namespace PES.Controllers
             {
                 if(DiaStarRango.Date == endDate.Date)
                 {
-                    var SabadoComparacion = SabadoFecha.DayOfWeek;
-                    var DomingoComparacion = DomingoFecha.DayOfWeek;
+
+                    //var SabadoComparacion = SabadoFecha.DayOfWeek;
+                    //var DomingoComparacion = DomingoFecha.DayOfWeek;
                     var DiaSemana = DiaStarRango.DayOfWeek;
 
-                    if (DiaSemana == SabadoComparacion || DiaSemana == DomingoComparacion)
+                    if (DiaSemana == DayOfWeek.Saturday || DiaSemana == DayOfWeek.Sunday)
                     {
                         DiasARestarSabadosDomingos = DiasARestarSabadosDomingos + 1;
                     }
@@ -873,11 +874,11 @@ namespace PES.Controllers
                 }
                 else
                 {
-                    var SabadoComparacion = SabadoFecha.DayOfWeek;
-                    var DomingoComparacion = DomingoFecha.DayOfWeek;
+                    //var SabadoComparacion = SabadoFecha.DayOfWeek;
+                    //var DomingoComparacion = DomingoFecha.DayOfWeek;
                     var DiaSemana = DiaStarRango.DayOfWeek;
 
-                    if(DiaSemana == SabadoComparacion || DiaSemana == DomingoComparacion)
+                    if(DiaSemana == DayOfWeek.Saturday || DiaSemana == DayOfWeek.Sunday)
                     {
                         DiasARestarSabadosDomingos = DiasARestarSabadosDomingos + 1;
                     }
