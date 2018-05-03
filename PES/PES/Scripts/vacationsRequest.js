@@ -234,7 +234,6 @@ $("#sendRequest").on("click", function (e) {
 
 
 
-
     if (EndDateCorrection === "invalided date") {
 
         $("#endDateInvalit").modal();
@@ -251,7 +250,9 @@ $("#sendRequest").on("click", function (e) {
 
         $("#titleEmpy").modal();
     }
-    else if (userVacations < DaysRequestedCorrection) {
+
+    
+    else if (DaysRequestedCorrection > userVacations) {
 
         $("#noVacationsDays").modal();
     }
