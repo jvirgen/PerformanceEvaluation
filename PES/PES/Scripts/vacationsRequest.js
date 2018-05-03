@@ -250,9 +250,7 @@ $("#sendRequest").on("click", function (e) {
 
         $("#titleEmpy").modal();
     }
-
-    
-    else if (DaysRequestedCorrection > userVacations) {
+    else if (parseInt(userVacations) < parseInt(DaysRequestedCorrection)) {
 
         $("#noVacationsDays").modal();
     }
