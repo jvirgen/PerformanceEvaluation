@@ -232,16 +232,33 @@ $("#sendRequest").on("click", function (e) {
 
     var userVacations = $("#VacationDays").val();
 
-    if (false) {// (EndDateCorrection === "invalided date" || ReturnDateCorrection == "" || DaysRequestedCorrection < 0 || TitleCorrection == "" || userVacations < DaysRequestedCorrection) {
-        $("#CorregirCampos").modal();
+
+
+
+    if (EndDateCorrection === "invalided date") {
+
+        $("#endDateInvalit").modal();
+    }
+    else if (ReturnDateCorrection == "") {
+
+        $("#endEmpy").modal();
+    }
+    else if (DaysRequestedCorrection < 0) {
+
+        $("#daysRequestedZero").modal();
+    }
+    else if (TitleCorrection == "") {
+
+        $("#titleEmpy").modal();
+    }
+    else if (userVacations < DaysRequestedCorrection) {
+
+        $("#noVacationsDays").modal();
     }
     else {
-
         $("#form").submit();
     }
-
-
-})
+});
 
 
 

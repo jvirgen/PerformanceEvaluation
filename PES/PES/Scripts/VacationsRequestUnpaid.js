@@ -251,11 +251,28 @@ $("#sendRequest").on("click", function (e) {
 
     var TitleCorrection = $("#Title").val();
 
-    if (EndDateCorrection === "invalided date" || ReturnDateCorrection == "" || DaysRequestedCorrection < 0 || TitleCorrection == "") {
-        $("#CorregirCampos").modal();
+    var userVacations = $("#VacationDays").val();
+
+
+
+
+    if (EndDateCorrection === "invalided date") {
+
+        $("#endDateInvalit").modal();
+    }
+    else if (ReturnDateCorrection == "") {
+
+        $("#endEmpy").modal();
+    }
+    else if (DaysRequestedCorrection < 0) {
+
+        $("#daysRequestedZero").modal();
+    }
+    else if (TitleCorrection == "") {
+
+        $("#titleEmpy").modal();
     }
     else {
-
         $("#form").submit();
     }
 
