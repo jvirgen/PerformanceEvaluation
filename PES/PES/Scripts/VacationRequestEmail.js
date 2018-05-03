@@ -1,7 +1,7 @@
 ﻿
 $(".btn-send-mail").on("click", function (e) {
     e.stopPropagation();
-    var fechas = $('#start').attr('value')
+    var fechas = $('#start').attr('value');
     var stringFechas = fechas.toString();
     var id = $(this).attr('id');
     var VacDaysReq = $(this).attr('value');
@@ -29,7 +29,7 @@ function sendedImail(id, VacDaysReq, stringFechas) {
 
         })
         .fail(function () {
-            stopAnimation('.spinner');
+            $('.spinner').hide();
             $("#VaFailedEmail").modal();
         })
         .always(function () { });
@@ -45,7 +45,7 @@ $('#cancelBotomModal').on("click", function (e) {
     //True es no puede cancelar si es false si puede cancelar
     if (starDate < compareToday) {
         uncomingDate = true;
-        $("#VaFailedEmail").modal();
+        $("#informationSoon").modal();
     }
     else {
         uncomingDate = false;

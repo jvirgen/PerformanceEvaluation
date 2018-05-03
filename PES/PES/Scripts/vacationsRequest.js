@@ -232,7 +232,7 @@ $("#sendRequest").on("click", function (e) {
 
     var userVacations = $("#VacationDays").val();
 
-    if (EndDateCorrection === "invalided date" || ReturnDateCorrection == "" || DaysRequestedCorrection < 0 || TitleCorrection == "" || userVacations < DaysRequestedCorrection) {
+    if (false) {// (EndDateCorrection === "invalided date" || ReturnDateCorrection == "" || DaysRequestedCorrection < 0 || TitleCorrection == "" || userVacations < DaysRequestedCorrection) {
         $("#CorregirCampos").modal();
     }
     else {
