@@ -237,10 +237,14 @@ namespace PES.Services
                     command.Parameters.Add(new OracleParameter("IdEmployee", InsertNewRequest.EmployeedID));
 
 
-                    if (InsertNewRequest.IsUnpaid)
+                    if (InsertNewRequest.TypeRequest == 1)
                     {
                         command.Parameters.Add(new OracleParameter("Title","UNPAID: " + InsertNewRequest.Title));
 
+                    }
+                    else if(InsertNewRequest.TypeRequest == 2)
+                    {
+                        command.Parameters.Add(new OracleParameter("Title","EMERGENCY: " + InsertNewRequest.Title));
                     }
                     else
                     {

@@ -30,6 +30,6 @@ namespace PES.ViewModels
 
        public HttpPostedFileBase MyFile { get; set; }
      
-        public bool IsUnpaid { get; set; }
+        public int TypeRequest { get; set; }
     }
 }

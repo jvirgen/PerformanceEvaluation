@@ -107,7 +107,7 @@
                                 <input id="sendRequest" type="button" class="btn btn-lg btn-primary btn-block" value="Send Request" />
                                 <br />
 
-                                @Html.CheckBoxFor(model => model.IsUnpaid, new { @hidden = "hidden" })
+                                @Html.HiddenFor(model => model.TypeRequest)
 
 
                                 <a href="@Url.Action("SendRequest", "VacationRequest",new RouteValueDictionary(new { userid = Model.EmployeedID }))" class="btn btn-lg btn-default btn-block"> Return </a>
