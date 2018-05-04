@@ -234,7 +234,6 @@ $("#sendRequest").on("click", function (e) {
 
 
 
-
     if (EndDateCorrection === "invalided date") {
 
         $("#endDateInvalit").modal();

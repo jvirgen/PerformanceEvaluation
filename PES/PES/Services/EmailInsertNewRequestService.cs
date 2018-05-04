@@ -45,7 +45,6 @@ namespace PES.Services
             msje.Body = bodyMessage;
 
             //enabled attachments //***
-
             if (MyFile != null)
             {
                 string fileName = Path.GetFileName(MyFile.FileName);
