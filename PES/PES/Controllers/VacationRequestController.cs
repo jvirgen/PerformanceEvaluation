@@ -959,23 +959,7 @@ namespace PES.Controllers
 
 			if (endDate.Date > startDate.Date)
 			{
-				if (unpaid)
-				{
-					if (finalDays > 3)
-					{
-						dataToReturn = new
-						{
-							IsValid = false,
-							Message = "Sorry but you can't request more than three(3) Unpaid Days",
-							errorType = 4,
-							NumberDaysRequested = finalDays,
-							ReturnDate = returnDateCorrectly
-						};
-
-						return Json(dataToReturn, JsonRequestBehavior.AllowGet);
-
-					}
-				}
+				//all is correct
 			}
 
 			else
