@@ -113,7 +113,7 @@ else
                     @if (Model.status.ToLower() == "pending" && useProfile == (int)ProfileUser.Resource)
         {
             <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
-            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-cancel">Cancel</button>
+            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-cancel">Cancel Request</button>
             @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
 }
 
@@ -204,7 +204,7 @@ else if (Model.status.ToLower() == "canceled")
 </div>
 
 
-<!--failure to send mail modal-->>
+<!--failure to send mail modal-->
 <div class="modal fade" id="VaFailedEmail" role="dialog">
     <div class="modal-dialog">
 
