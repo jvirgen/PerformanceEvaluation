@@ -106,27 +106,27 @@ namespace PES.Controllers
 				});
 				//mod
 
-				NewRequest.IsUnpaid = false;
-				NewRequest.EmployeedID = userid;
-				NewRequest.VacationDays = currentEmployee.Freedays;
-				NewRequest.SubRequests = new List<SubrequestInfoVM>()
-				{
-					new SubrequestInfoVM
-					{
-						ListEmployee = listEmployees,
-						StartDate = DateTime.Now,
-						EndDate = DateTime.Now
-					}
-				};
-				ViewBag.NewRequest = userid;
-				ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
-				return View(NewRequest);
-			}
-			else
-			{
-				TempData["Error"] = "User was not found";
-				return RedirectToAction("HistoricalResource", "VacationRequest");
-			}
+                NewRequest.TypeRequest = 0;
+                NewRequest.EmployeedID = userid;
+                NewRequest.VacationDays = currentEmployee.Freedays;
+                NewRequest.SubRequests = new List<SubrequestInfoVM>()
+                {
+                    new SubrequestInfoVM
+                    {
+                        ListEmployee = listEmployees,
+                        StartDate = DateTime.Now,
+                        EndDate = DateTime.Now
+                    }
+                };
+                ViewBag.NewRequest = userid;
+                ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+                return View(NewRequest);
+            }
+            else
+            {
+                TempData["Error"] = "User was not found";
+                return RedirectToAction("HistoricalResource", "VacationRequest");
+            }
 
 			
 		}
@@ -147,37 +147,67 @@ namespace PES.Controllers
 			IEnumerable<Employee> listEmployee = new List<Employee>();
 			listEmployee = _employeeService.GetAll();
 
-			IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
-			{
-				Text = employee.FirstName + " " + employee.LastName,
-				Value = employee.EmployeeId.ToString()
-			});
-			//mod
-			NewRequest.IsUnpaid = true;
-			NewRequest.EmployeedID = id;
-			NewRequest.VacationDays = CurrentEmployee.Freedays;
-			NewRequest.SubRequests = new List<SubrequestInfoVM>()
-			{
-				new SubrequestInfoVM
-				{
-					ListEmployee = listEmployees,
-					StartDate = DateTime.Now,
-					EndDate = DateTime.Now,
-					HaveProject = false
-				}
-			};
-			ViewBag.NewRequest = id;
-			ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
-			return View(NewRequest);
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
+            });
+            //mod
+            NewRequest.TypeRequest = 1;
+            NewRequest.EmployeedID = id;
+            NewRequest.VacationDays = CurrentEmployee.Freedays;
+            NewRequest.SubRequests = new List<SubrequestInfoVM>()
+            {
+                new SubrequestInfoVM
+                {
+                    ListEmployee = listEmployees,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = false
+                }
+            };
+            ViewBag.NewRequest = id;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(NewRequest);
 
 		}
 
 
-		[HttpGet]
-		public ActionResult emergencyRequest()
-		{
+        [HttpGet]
+        public ActionResult EmergencyRequest(int id)
+        {
 
-			return View();
+            Employee CurrentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            CurrentEmployee = _employeeService.GetByID(id);
+            SendRequestViewModel NewRequest = new SendRequestViewModel();
+
+            // mod
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
+            });
+            //mod
+            NewRequest.TypeRequest = 2;
+            NewRequest.EmployeedID = id;
+            NewRequest.VacationDays = CurrentEmployee.Freedays;
+            NewRequest.SubRequests = new List<SubrequestInfoVM>()
+            {
+                new SubrequestInfoVM
+                {
+                    ListEmployee = listEmployees,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = false
+                }
+            };
+            ViewBag.NewRequest = id;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(NewRequest);
 
 		}
 
@@ -285,10 +315,11 @@ namespace PES.Controllers
 			//HttpPostedFile filePosted = Request.Files[myfile];
 			//::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-			//Insert Header Request.
-			_headerReqService.InsertVacHeaderReq(model);
-			//Obtain id header request inserted.
-			int idRequest = _subReqService.GetHeaderRequest(model);
+            //Insert Header Request.
+            //AQUI SE PONE EL TITULO EMERGENCY............................................................
+            _headerReqService.InsertVacHeaderReq(model);
+            //Obtain id header request inserted.
+            int idRequest = _subReqService.GetHeaderRequest(model);
 
 
 			//for (int i = 0; i < model.SubRequests.Count(); i++)
@@ -328,7 +359,7 @@ namespace PES.Controllers
 			_emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
 
 
-			_emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.IsUnpaid);
+            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.TypeRequest);
 
 			//return to History View.
 			return RedirectToAction("HistoricalResource");

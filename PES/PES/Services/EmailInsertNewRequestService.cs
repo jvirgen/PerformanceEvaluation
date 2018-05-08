@@ -156,10 +156,10 @@ namespace PES.Services
             return dataRequests;
         }
 
-        public bool Lessnovacdays(string employeeemail, int daysReq, bool isUnpaid)
+        public bool Lessnovacdays(string employeeemail, int daysReq, int typeRequest)
         {
 
-            if (isUnpaid)
+            if (typeRequest == 1 || typeRequest == 2)
             {
                 return true;
             }

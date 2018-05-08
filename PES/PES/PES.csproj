@@ -374,6 +374,7 @@
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\define-report.js" />
+    <Content Include="Scripts\emergencyRequestJavascript.js" />
     <Content Include="Scripts\enable-disable.js" />
     <Content Include="Scripts\ExportDataTables\buttons.html5.min.js" />
     <Content Include="Scripts\ExportDataTables\dataTables.buttons.min.js" />
@@ -549,6 +550,7 @@
     <Content Include="Views\Shared\_NewVacationDatesUnpaid.cshtml" />
     <Content Include="Views\VacationRequest\VacationsReminder.cshtml" />
     <Content Include="Views\VacationRequest\emergencyRequest.cshtml" />
+    <Content Include="Views\Shared\_EmergencyRequestPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
