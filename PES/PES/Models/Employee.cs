@@ -96,7 +96,10 @@ namespace PES.Models
         public int LocationId { get; set; }
 
         public int Freedays { get; set; }
+
+        public DateTime? ReminderDate { get; set; }
         
+
 
     }
 
