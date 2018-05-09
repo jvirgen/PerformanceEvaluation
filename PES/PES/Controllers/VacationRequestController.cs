@@ -424,8 +424,11 @@ namespace PES.Controllers
             Employee currentUser = new Employee();
             currentUser = _employeeService.GetByID(currentRequest.EmployeeId);
 
+            
             ViewBag.status = currentRequest.status;
             currentRequest.FreeDays = currentUser.Freedays;
+            currentRequest.FirstName = currentUser.FirstName;
+            currentRequest.LastName = currentUser.LastName;
             currentRequest.Modal = new StatusRequestViewModel()
             {
                 HeaderRequestId = currentRequest.VacationHeaderReqId,
