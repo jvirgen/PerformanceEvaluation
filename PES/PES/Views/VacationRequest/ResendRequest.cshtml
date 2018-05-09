@@ -56,9 +56,9 @@
                     <div class="form-group">
                         <div class="container flexEnd" style="display: flex; align-items: flex-start;">
                             <div class="col-md-8 ">            
-                                @Html.LabelFor(model => Model.ReplayCommentsResend, "Rejected Reason:", new { @class = "control-label" })
+                                @Html.LabelFor(model => Model.ReplayCommentsResend, "Comments from Human Resources:", new { @class = "control-label" })
                                 @Html.TextAreaFor(model => Model.ReplayCommentsResend, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" , @disabled = "disabled" })
-                                @Html.LabelFor(model => Model.CommentsResend, "Comments:", new { @class = "control-label" })
+                                @Html.LabelFor(model => Model.CommentsResend, "Comment Your Request:", new { @class = "control-label" })
                                 @Html.TextAreaFor(model => Model.CommentsResend,  htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
                                 <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span> 
                                 <input type="button" id="my-button" value="Select Files">
