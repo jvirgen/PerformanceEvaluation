@@ -128,11 +128,11 @@
                 <div class="col-md-4 text-center">
 
                     @if (Model.status.ToLower() == "pending" && useProfile == (int)ProfileUser.Resource)
-                {
-                    <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
-                    <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-cancel">Cancel</button>
-                    @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
-            }
+        {
+            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-cancel">Cancel Request</button>
+            @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+}
 
             else if (Model.status.ToLower() == "pending" && useProfile == (int)ProfileUser.Manager)
             {

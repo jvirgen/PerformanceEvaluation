@@ -178,7 +178,8 @@ namespace PES.Services
                                            "END_DATE, " +
                                            "PROJECT, " +
                                            "ID_LOCATION, " +
-                                           "FREE_DAYS " +
+                                           "FREE_DAYS, " +
+                                           "REMINDED_DATE " +
                                            "FROM EMPLOYEE";
 
                     OracleCommand Comand = new OracleCommand(Query, db);
@@ -200,6 +201,16 @@ namespace PES.Services
                         employee.Project = Convert.ToString(Read["PROJECT"]);
                         employee.LocationId = Convert.ToInt32(Read["ID_LOCATION"]);
                         employee.Freedays = Convert.ToInt32(Read["FREE_DAYS"]);
+                       // employee.ReminderDate = Convert.ToDateTime(Read["REMINDED_DATE"]);
+                        string ReminderDate = Convert.ToString(Read["REMINDED_DATE"]);
+                        if (!string.IsNullOrEmpty(ReminderDate))
+                        {
+                            employee.ReminderDate = Convert.ToDateTime(ReminderDate);
+                        }
+                        else
+                        {
+                            employee.ReminderDate = null;
+                        }
 
                         if (!string.IsNullOrEmpty(endDate))
                         {
@@ -379,6 +390,57 @@ namespace PES.Services
             return status;
         }
 
+
+        // temporal service from remindedemployee
+
+        public bool InsertReminderEmployee(Employee employee)
+        {
+            bool status = false;
+
+            // Connect to the DB 
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+
+                #region Old insert
+               
+                #endregion
+
+                #region New insert
+                string insertQuery = @" INSERT INTO REMINDER_DATES (ID_EMPLOYEE,
+                                                                REMINDER_DATE) 
+
+                                                        VALUES (:employee_id,                                                                
+                                                                TO_DATE(:reminder_date,'dd/mm/yyyy hh24:mi:ss')  
+                                                                )";
+
+                // Adding parameters
+                using (OracleCommand command = new OracleCommand(insertQuery, db))
+                {
+                    command.Parameters.Add(new OracleParameter("employee_id", employee.EmployeeId));
+                    command.Parameters.Add(new OracleParameter("reminder_date", OracleDbType.Date, employee.ReminderDate, ParameterDirection.Input));
+
+                    try
+                    {
+                        command.Connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        throw;
+                    }
+
+                    status = true;
+                }
+                #endregion
+            }
+            return status;
+        }
+
+
+
+
         public bool UpdateEmployee(Employee employee) 
         {
             try
@@ -424,6 +486,45 @@ namespace PES.Services
 
             return true;
         }
+
+
+        // reminded service
+
+        public bool UpdateEmployeeRemindedDate(Employee employee)
+        {
+            try
+            {
+                var user = this.GetByID(employee.EmployeeId);
+
+                if (user != null)
+                {
+                    using (OracleConnection db = dbContext.GetDBConnection())
+                    {
+                        db.Open();
+
+
+                        string InsertQuery = "UPDATE EMPLOYEE SET REMINDED_DATE = '" + employee.ReminderDate.ToString() + "' " +
+                                     "WHERE ID_EMPLOYEE='" + employee.EmployeeId + "'";
+                        OracleCommand Comand = new OracleCommand(InsertQuery, db);
+                        Comand.ExecuteNonQuery();
+
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return true;
+        }
+
+
+
+
+
+
 
         public bool TransferAllEmployees(int manager, int newManager)
         {

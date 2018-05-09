@@ -156,12 +156,7 @@ function SendInfo(start, end) {
                     $('.datesBox').val("invalided date");
                     $("#EndDateLow").modal();
                     $("#daysReq").val(data.NumberDaysRequested);
-                    break;
-                case 4:
-                    $('.datesBox').val("invalided date");
-                    $("#moreThanThreeDays").modal();
-                    $("#daysReq").val(data.NumberDaysRequested);
-                    break;
+                    break;            
                 case 0:
 
                     $("#daysReq").val(data.NumberDaysRequested);
