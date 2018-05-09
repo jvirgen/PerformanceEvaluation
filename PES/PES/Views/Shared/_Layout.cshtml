@@ -61,8 +61,17 @@
                                     <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Vacations</a></li>
                                     <li><a href="@Url.Action("VacationAssignation", "VacationRequest")">Assign Vacations</a></li>
                                     <li><a href="@Url.Action("VacationsReminder", "VacationRequest")">Vacations Reminder</a></li>
+                                    <li><a href="@Url.Action("Index", "PerformanceEvaluation")">Perfomance Evaluation</a></li>
+                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Vacations</a></li>
+                                    <li><a href="@Url.Action("latenessMenu", "Menu")">Lateness Report</a></li>
                                 }
-                                                                                                 
+                                else
+                                {
+                                    <li><a href="@Url.Action("Index", "PerformanceEvaluation")">Perfomance Evaluation</a></li>
+                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Vacations</a></li>
+                                    <li><a href="@Url.Action("Index", "Lateness")">Lateness Report</a></li>
+                                }
+
                             </ul>
                         </li>
                     </ul>
