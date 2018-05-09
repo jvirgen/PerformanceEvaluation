@@ -424,14 +424,17 @@ namespace PES.Controllers
 			Employee currentUser = new Employee();
 			currentUser = _employeeService.GetByID(currentRequest.EmployeeId);
 
-			ViewBag.status = currentRequest.status;
-			currentRequest.FreeDays = currentUser.Freedays;
-			currentRequest.Modal = new StatusRequestViewModel()
-			{
-				HeaderRequestId = currentRequest.VacationHeaderReqId,
-				NoVacDaysRequested = currentRequest.NoVacDays,
-				currentStatusId = currentRequest.status
-			};
+            
+            ViewBag.status = currentRequest.status;
+            currentRequest.FreeDays = currentUser.Freedays;
+            currentRequest.FirstName = currentUser.FirstName;
+            currentRequest.LastName = currentUser.LastName;
+            currentRequest.Modal = new StatusRequestViewModel()
+            {
+                HeaderRequestId = currentRequest.VacationHeaderReqId,
+                NoVacDaysRequested = currentRequest.NoVacDays,
+                currentStatusId = currentRequest.status
+            };
 
 			return View("VacationRequest", currentRequest);
 		}

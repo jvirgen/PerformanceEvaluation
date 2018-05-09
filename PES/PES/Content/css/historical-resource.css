@@ -72,3 +72,20 @@
     border: 1px solid black;
     margin-bottom: 30px;
 }
+
+.redColorBackground {
+    background-color: #F08080;
+}
+
+
+.blueColorBackground {
+    background-color: #7AD8DB;
+}
+
+.greenColorBackground {
+    background-color: #BBF40A
+}
+
+.yellowColorBackground {
+    background-color: #ffdfba;
+}
