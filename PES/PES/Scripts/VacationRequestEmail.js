@@ -36,19 +36,6 @@ function sendedImail(id, VacDaysReq, stringFechas) {
 }
 
 
-$('#cancelBotomModal').on("click", function (e) {
-    var Fecha = $('#start').val();
-    var starDate = moment(Fecha.substring(0, 10));
-    var today = moment(new Date());
-    var compareToday = today.add(2,'days');
-    var uncomingDate = true;
-    //True es no puede cancelar si es false si puede cancelar
-    if (starDate < compareToday) {
-        uncomingDate = true;
-        $("#informationSoon").modal();
-    }
-    else {
-        uncomingDate = false;
-        $("#cancelFormModal").submit();
-    }
+$('#cancelBotomModal').on("click", function (e) {    
+        $("#cancelFormModal").submit();    
 });
