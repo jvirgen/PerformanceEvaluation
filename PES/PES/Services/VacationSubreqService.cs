@@ -215,6 +215,138 @@ namespace PES.Services
             return status;
         }
 
+        //New methot to insert the subrequest
+        public bool InsertSubrequest(int idHeaderReq, SubrequestInfoVM subrequest)
+        {
+
+            bool status = false;
+            using (OracleConnection db = dbContext.GetDBConnection())
+            {
+                string query = "INSERT INTO PE.VACATION_SUBREQ" +
+                    "(" +
+                    "ID_HEADER_REQ," +
+                    "START_DATE," +
+                    "END_DATE," +
+                    "RETURN_DATE," +
+                    "HAVE_PROJECT," +
+                    "LEAD_NAME)" +
+                     "VALUES" +
+                    "(" +
+                    " :IdHeaderReq, " +
+                    " :StartDate," +
+                    " :EndDate," +
+                    " :ReturnDate," +
+                    " :HaveProject," +
+                    " :LeadName)";
+
+
+                using (OracleCommand command = new OracleCommand(query, db))
+                {
+                    try
+                    {
+
+                        command.Connection.Open();
+
+                            string returnDate = subrequest.ReturnDate;
+                            string rMonth = returnDate.Substring(0, 2);
+                            switch (rMonth)
+                            {
+                                case "01":
+                                    {
+                                        MesCorrectoAuto = "JAN";
+                                        break;
+                                    }
+                                case "02":
+                                    {
+                                        MesCorrectoAuto = "FEB";
+                                        break;
+                                    }
+                                case "03":
+                                    {
+                                        MesCorrectoAuto = "MAR";
+                                        break;
+                                    }
+                                case "04":
+                                    {
+                                        MesCorrectoAuto = "APR";
+                                        break;
+                                    }
+                                case "05":
+                                    {
+                                        MesCorrectoAuto = "MAY";
+                                        break;
+                                    }
+                                case "06":
+                                    {
+                                        MesCorrectoAuto = "JUN";
+                                        break;
+                                    }
+                                case "07":
+                                    {
+                                        MesCorrectoAuto = "JUL";
+                                        break;
+                                    }
+                                case "08":
+                                    {
+                                        MesCorrectoAuto = "AUG";
+                                        break;
+                                    }
+                                case "09":
+                                    {
+                                        MesCorrectoAuto = "SEP";
+                                        break;
+                                    }
+                                case "10":
+                                    {
+                                        MesCorrectoAuto = "OCT";
+                                        break;
+                                    }
+                                case "11":
+                                    {
+                                        MesCorrectoAuto = "NOV";
+                                        break;
+                                    }
+                                case "12":
+                                    {
+                                        MesCorrectoAuto = "DEC";
+                                        break;
+                                    }
+                            }
+                            string rDay = returnDate.Substring(3, 2);
+                            string rYear = returnDate.Substring(6, 4);
+                            string FinalReturnDate = (rDay + "/" + MesCorrectoAuto + "/" + rYear);
+
+                            command.Parameters.Add(new OracleParameter("IdHeaderReq", idHeaderReq));
+                            command.Parameters.Add(new OracleParameter("StartDate", subrequest.StartDate));
+                            command.Parameters.Add(new OracleParameter("EndDate", subrequest.EndDate));
+                            command.Parameters.Add(new OracleParameter("ReturnDate", FinalReturnDate));
+                            //get employee
+                            EmployeeService employeeService = new EmployeeService();
+                            var leadnameFirstName = employeeService.GetByID(subrequest.SelectedEmployee).FirstName;
+                            var leadnameLastName = employeeService.GetByID(subrequest.SelectedEmployee).LastName;
+                            var leadnameWholeName = leadnameFirstName + " " + leadnameLastName;
+
+                            command.Parameters.Add(new OracleParameter("HaveProject", (subrequest.HaveProject).ToString()));
+                            command.Parameters.Add(new OracleParameter("LeadName", leadnameWholeName));
+
+
+                            command.ExecuteNonQuery();
+                        
+
+                        command.Connection.Close();
+                    }
+                    catch (OracleException ex)
+                    {
+                        throw;
+                    }
+                    status = true;
+                }
+            }
+            return status;
+        }
+        //New methot to insert the subrequest
+
+
         public int GetHeaderRequest(SendRequestViewModel data)
         {
             int iDHeaderReq = 0;

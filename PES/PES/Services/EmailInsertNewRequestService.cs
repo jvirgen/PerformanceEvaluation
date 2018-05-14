@@ -156,7 +156,7 @@ namespace PES.Services
             return dataRequests;
         }
 
-        public bool Lessnovacdays(string employeeemail, int daysReq, int typeRequest)
+        public bool UpdateVacationDays(string employeeemail, int daysReq, int typeRequest)
         {
 
             if (typeRequest == 1 || typeRequest == 2)

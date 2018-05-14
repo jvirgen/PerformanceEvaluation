@@ -18,94 +18,94 @@ using PES.Enums;
 
 namespace PES.Controllers
 {
-	[Authorize]
-	public class VacationRequestController : Controller
-	{
-		string MesCorrectoFinal;
-		string MesCorrectoInicio;
-		//Declare Services
-		private EmployeeService _employeeService;
-		private VacationHeaderReqService _headerReqService;
-		private VacationReqStatusService _ReqStatusService;
-		private VacationSubreqService _subReqService;
-		private LocationService _locationService;
-		//Added
-		private HolidayService _holidayService;
-		private EmailInsertNewRequestService _emailInsertNewRequestService;
-		// status 
-		private EmailCancelRequestService _emailCancelRequestService;
-		private EmailApproveRequestService _emailApproveRequestService;
-		private EmailRejectRequestService _emailRejectRequestService;
-		private EmailResendRequestService _emailResendRequestService;
-		// private EmailService 
-		private ResendRequestService _resendRequestService;
+    [Authorize]
+    public class VacationRequestController : Controller
+    {
+        string MesCorrectoFinal;
+        string MesCorrectoInicio;
+        //Declare Services
+        private EmployeeService _employeeService;
+        private VacationHeaderReqService _headerReqService;
+        private VacationReqStatusService _ReqStatusService;
+        private VacationSubreqService _subReqService;
+        private LocationService _locationService;
+        //Added
+        private HolidayService _holidayService;
+        private EmailInsertNewRequestService _emailInsertNewRequestService;
+        // status 
+        private EmailCancelRequestService _emailCancelRequestService;
+        private EmailApproveRequestService _emailApproveRequestService;
+        private EmailRejectRequestService _emailRejectRequestService;
+        private EmailResendRequestService _emailResendRequestService;
+        // private EmailService 
+        private ResendRequestService _resendRequestService;
 
 
-		public VacationRequestController()
-		{
-			_employeeService = new EmployeeService();
-			_headerReqService = new VacationHeaderReqService();
-			_ReqStatusService = new VacationReqStatusService();
-			_subReqService = new VacationSubreqService();
-			//Added
-			_holidayService = new HolidayService();
-			_emailCancelRequestService = new EmailCancelRequestService();
-			_emailInsertNewRequestService = new EmailInsertNewRequestService();
-			_emailApproveRequestService = new EmailApproveRequestService();
-			_emailRejectRequestService = new EmailRejectRequestService();
-			_resendRequestService = new ResendRequestService();
-			_emailResendRequestService = new EmailResendRequestService();
-			_locationService = new LocationService();
-		}
+        public VacationRequestController()
+        {
+            _employeeService = new EmployeeService();
+            _headerReqService = new VacationHeaderReqService();
+            _ReqStatusService = new VacationReqStatusService();
+            _subReqService = new VacationSubreqService();
+            //Added
+            _holidayService = new HolidayService();
+            _emailCancelRequestService = new EmailCancelRequestService();
+            _emailInsertNewRequestService = new EmailInsertNewRequestService();
+            _emailApproveRequestService = new EmailApproveRequestService();
+            _emailRejectRequestService = new EmailRejectRequestService();
+            _resendRequestService = new ResendRequestService();
+            _emailResendRequestService = new EmailResendRequestService();
+            _locationService = new LocationService();
+        }
 
-		/// <summary>
-		/// GET: New vacation requests. The metod only need a User Id parameter 
-		/// </summary>
-		/// <param name="userid"></param>
-		/// <returns>New Request Screen</returns>
-		[HttpGet]
-		public ActionResult InsertNewRequest(int userid)
-		{
-			Employee currentEmployee = new Employee();
-			_employeeService = new EmployeeService();
-			currentEmployee = _employeeService.GetByID(userid);
-			InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
-			newRequest.EmployeeId = userid;
-			newRequest.Freedays = currentEmployee.Freedays;
-			newRequest.SubRequest = new List<NewVacationDates>()
-			{
-				new NewVacationDates
-				{
-					StartDate = DateTime.Now,
-					EndDate = DateTime.Now,
-					HaveProject = true
-				}
-			};
-			ViewBag.newRequest = userid;
-			ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
-			return View(newRequest);
-		}
+        /// <summary>
+        /// GET: New vacation requests. The metod only need a User Id parameter 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns>New Request Screen</returns>
+        [HttpGet]
+        public ActionResult InsertNewRequest(int userid)
+        {
+            Employee currentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            currentEmployee = _employeeService.GetByID(userid);
+            InsertNewRequestViewModel newRequest = new InsertNewRequestViewModel();
+            newRequest.EmployeeId = userid;
+            newRequest.Freedays = currentEmployee.Freedays;
+            newRequest.SubRequest = new List<NewVacationDates>()
+            {
+                new NewVacationDates
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    HaveProject = true
+                }
+            };
+            ViewBag.newRequest = userid;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(newRequest);
+        }
 
-		[HttpGet]
-		public ActionResult SendRequest(int userid)
-		{
-			Employee currentEmployee =  _employeeService.GetByID(userid);
+        [HttpGet]
+        public ActionResult SendRequest(int userid)
+        {
+            Employee currentEmployee = _employeeService.GetByID(userid);
 
-			if (currentEmployee.EmployeeId > 0)
-			{
-				// Is valid
-				SendRequestViewModel NewRequest = new SendRequestViewModel();
+            if (currentEmployee.EmployeeId > 0)
+            {
+                // Is valid
+                SendRequestViewModel NewRequest = new SendRequestViewModel();
 
-				// mod
-				IEnumerable<Employee> listEmployee = new List<Employee>();
-				listEmployee = _employeeService.GetAll();
+                // mod
+                IEnumerable<Employee> listEmployee = new List<Employee>();
+                listEmployee = _employeeService.GetAll();
 
-				IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
-				{
-					Text = employee.FirstName + " " + employee.LastName,
-					Value = employee.EmployeeId.ToString()
-				});
-				//mod
+                IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+                {
+                    Text = employee.FirstName + " " + employee.LastName,
+                    Value = employee.EmployeeId.ToString()
+                });
+                //mod
 
                 NewRequest.TypeRequest = 0;
                 NewRequest.EmployeedID = userid;
@@ -129,8 +129,8 @@ namespace PES.Controllers
                 return RedirectToAction("HistoricalResource", "VacationRequest");
             }
 
-			
-		}
+
+        }
 
 
 
@@ -172,7 +172,7 @@ namespace PES.Controllers
             ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
             return View(NewRequest);
 
-		}
+        }
 
 
         [HttpGet]
@@ -211,162 +211,318 @@ namespace PES.Controllers
             ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
             return View(NewRequest);
 
-		}
+        }
 
 
 		public ActionResult VacationAssignation()
 		{
 
-			AssignVacationsViewModel AssignVacations = new AssignVacationsViewModel();
+            AssignVacationsViewModel AssignVacations = new AssignVacationsViewModel();
 
-			IEnumerable<Employee> listEmployee = new List<Employee>();
-			listEmployee = _employeeService.GetAll();
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
 
-			IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
-			{
-				Text = employee.FirstName + " " + employee.LastName,
-				Value = employee.EmployeeId.ToString()
-			});
+            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            {
+                Text = employee.FirstName + " " + employee.LastName,
+                Value = employee.EmployeeId.ToString()
+            });
 
-			AssignVacations.ListEmployee = listEmployees;
+            AssignVacations.ListEmployee = listEmployees;
 
-			return View(AssignVacations);
-		}
-
-
+            return View(AssignVacations);
+        }
 
 
-		public ActionResult ResendRequest(int headerReqId, int userid)
-		{
-			//Obtaing UserInformation 
-			Employee currentEmployee = new Employee();
-			_employeeService = new EmployeeService();
-			currentEmployee = _employeeService.GetByID(userid);
-
-			ResendRequestViewModel model = new ResendRequestViewModel();
-
-			model = _resendRequestService.GetRequestInformation(headerReqId);
-			model.ModelEmployeeResend = currentEmployee;
-			ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
-			return View(model);
-		}
-
-		[HttpPost]
-		public ActionResult UpdateResendRequest(ResendRequestViewModel model)
-		{
-			//Update by  Header Request.
-			_resendRequestService.UpdateResendRequestHeaderReq(model);
-			//Obtain id header request inserted.
-
-			string[] StartAndEndate;
-
-			for (int i = 0; i < model.SubRequest.Count(); i++)
-			{
-				StartAndEndate = model.SubRequest[i].Date.Split('-');
-				//Changing date format.
-				string startDate = StartAndEndate[0].Trim();
-				string month = startDate.Substring(0, 2);
-				string day = startDate.Substring(3, 2);
-				string year = startDate.Substring(6, 4);
-				string finalStarDate = (day + "/" + month + "/" + year);
-				//Changing date format.
-				string endDate = StartAndEndate[1].Trim();
-				string eMonth = endDate.Substring(0, 2);
-				string eDay = endDate.Substring(3, 2);
-				string eYear = endDate.Substring(6, 4);
-				string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
-				//Sending Information to ViewModel.
-				model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
-				model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
-
-			}
-			//inserting sub request.
-			_resendRequestService.UpdateResendRequestSubReq(model.RequestIdResend, model.SubRequest);
 
 
-			List<ResendRequestViewModel> data = new List<ResendRequestViewModel>();
-			data = _emailResendRequestService.GetEmail(model.RequestIdResend);
-			string employeeEmail = data[0].EmployeeEmail;
-			string managerEmail = data[0].ManagerEmail;
-			List<string> emails = new List<string>()
-			{
-				employeeEmail,
-				managerEmail
-			};
-			_emailResendRequestService.SendEmails(emails, "Resend Vacation Request ", model.CommentsResend /*, model.myFile*/);
-			_emailResendRequestService.Lessnovacdays(employeeEmail, model.NovacDaysResend);
+        public ActionResult ResendRequest(int headerReqId, int userid)
+        {
+            //Obtaing UserInformation 
+            Employee currentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            currentEmployee = _employeeService.GetByID(userid);
 
-			//return to History View.
-			return RedirectToAction("HistoricalResource");
-		}
+            ResendRequestViewModel model = new ResendRequestViewModel();
 
-
-		/// <summary>
-		/// POST of New Vacation Request to get all data form the New Request View to process and insert them in the DB
-		/// </summary>
-		/// <param name="model"></param>
-		/// <returns>Redirect to Historial Screen</returns>
-		[HttpPost]
-		public ActionResult InsertNewRequestData(SendRequestViewModel model)
-		{
-
-
-			//:::::::::::::::::Obtain fullPath ::::::::::::::::::
-
-			//HttpPostedFile filePosted = Request.Files[myfile];
-			//::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-            //Insert Header Request.
-            //AQUI SE PONE EL TITULO EMERGENCY............................................................
-            _headerReqService.InsertVacHeaderReq(model);
-            //Obtain id header request inserted.
-            int idRequest = _subReqService.GetHeaderRequest(model);
-
-
-			//for (int i = 0; i < model.SubRequests.Count(); i++)
-			//{
-
-
-			//    //Variables a fechas
-			//    var finalStarDate = model.SubRequests[0].StartDate;
-
-
-			//    //Changing date format.
-
-			//    //Variables a fechas
-			//    var eFinalEndDate = model.SubRequests[0].EndDate;
-			//    //Sending Information to ViewModel.
-
-			//    model.SubRequests[i].StartDate = finalStarDate;
-			//    model.SubRequests[i].EndDate = eFinalEndDate;
-
-			//}
-
-			//inserting sub request.
-			_subReqService.InsertSubReq(idRequest, model.SubRequests);
-
-
-			List<InsertNewRequestViewModel> data = new List<InsertNewRequestViewModel>();
-			data = _emailInsertNewRequestService.GetEmail(idRequest);
-			string employeeEmail = data[0].EmployeeEmail;
-			string managerEmail = data[0].ManagerEmail;
-			List<string> emails = new List<string>()
-			{
-				employeeEmail,
-				managerEmail
-			};
-
-
-			_emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
-
-
-            _emailInsertNewRequestService.Lessnovacdays(employeeEmail, model.daysReq, model.TypeRequest);
-
-			//return to History View.
-			return RedirectToAction("HistoricalResource");
-		}
+            model = _resendRequestService.GetRequestInformation(headerReqId);
+            model.ModelEmployeeResend = currentEmployee;
+            ViewBag.MyHoliday = new HolidayService().GetAllHolidays();
+            return View(model);
+        }
 
         [HttpPost]
+        public ActionResult UpdateResendRequest(ResendRequestViewModel model)
+        {
+            //Update by  Header Request.
+            _resendRequestService.UpdateResendRequestHeaderReq(model);
+            //Obtain id header request inserted.
+
+            string[] StartAndEndate;
+
+            for (int i = 0; i < model.SubRequest.Count(); i++)
+            {
+                StartAndEndate = model.SubRequest[i].Date.Split('-');
+                //Changing date format.
+                string startDate = StartAndEndate[0].Trim();
+                string month = startDate.Substring(0, 2);
+                string day = startDate.Substring(3, 2);
+                string year = startDate.Substring(6, 4);
+                string finalStarDate = (day + "/" + month + "/" + year);
+                //Changing date format.
+                string endDate = StartAndEndate[1].Trim();
+                string eMonth = endDate.Substring(0, 2);
+                string eDay = endDate.Substring(3, 2);
+                string eYear = endDate.Substring(6, 4);
+                string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+                //Sending Information to ViewModel.
+                model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
+                model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
+
+            }
+            //inserting sub request.
+            _resendRequestService.UpdateResendRequestSubReq(model.RequestIdResend, model.SubRequest);
+
+
+            List<ResendRequestViewModel> data = new List<ResendRequestViewModel>();
+            data = _emailResendRequestService.GetEmail(model.RequestIdResend);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailResendRequestService.SendEmails(emails, "Resend Vacation Request ", model.CommentsResend /*, model.myFile*/);
+            _emailResendRequestService.Lessnovacdays(employeeEmail, model.NovacDaysResend);
+
+            //return to History View.
+            return RedirectToAction("HistoricalResource");
+        }
+
+
+        /// <summary>
+        /// POST of New Vacation Request to get all data form the New Request View to process and insert them in the DB
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Redirect to Historial Screen</returns>
+        [HttpPost]
+        public ActionResult InsertNewRequestData(SendRequestViewModel model)
+        {
+            //// Validate if unpaid days will be taken, return unpaid days that will be taken
+            //int unpaidDays = 0;
+
+            // Send normal request with vacation days
+            #region normal vacation days request
+            //int vacationDays = model.daysReq - unpaidDays;
+            //model.daysReq = vacationDays;
+
+            //model.SubRequests.
+
+           
+                //Insert Header Request.
+               if(model.TypeRequest == 0)
+            {
+                InsertRequest(model);
+            }
+            else
+            {
+                InsertRequestSpecial(model);
+            }
+            
+
+
+
+
+            #endregion
+
+            //if (unpaidDays > 0)
+            //{
+            //    // Send unpad days request
+            //    model.daysReq = unpaidDays;
+            //    model.TypeRequest = 1;
+
+            //    InsertRequest(model);
+            //}
+
+
+            //return to History View.
+            return RedirectToAction("HistoricalResource");
+        }
+
+        // working on ////
+
+        private bool InsertRequestSpecial(SendRequestViewModel model)
+        {
+
+            Employee employee = _employeeService.GetByID(model.EmployeedID);
+
+            // Get manager 
+            Employee manager = _employeeService.GetByID(employee.ManagerId);
+
+            // Emails where the request will be sent to
+            List<string> emails = new List<string> { employee.Email, manager.Email };
+
+            foreach (var subrequest in model.SubRequests)
+            {
+                _headerReqService.InsertVacHeaderReq(model);
+
+
+                int idRequest = _subReqService.GetHeaderRequest(model);
+
+
+                _subReqService.InsertSubrequest(idRequest, subrequest);
+
+                _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+
+
+                _emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
+
+            }
+
+                    return true;
+
+        }
+
+        private bool InsertRequest(SendRequestViewModel model)
+        {
+            ////Insert Header Request.
+            //_headerReqService.InsertVacHeaderReq(model);
+
+            ////Obtain id header request inserted.
+            //int idRequest = _subReqService.GetHeaderRequest(model);
+            int daysRequestedForUnpaid = model.daysReq;
+            int vacationsForThisEmploeForUnpdaid = model.VacationDays;
+            ////inserting sub request.
+            //_subReqService.InsertSubReq(idRequest, model.SubRequests);
+
+            // Get employee
+            Employee employee = _employeeService.GetByID(model.EmployeedID);
+
+            // Get manager 
+            Employee manager = _employeeService.GetByID(employee.ManagerId);
+
+            // Emails where the request will be sent to
+            List<string> emails = new List<string> { employee.Email, manager.Email };
+
+            int vacationDays = employee.Freedays;
+
+            #region insert request for every subrequest
+            foreach (var subrequest in model.SubRequests)
+            {
+                // Update number of vacation days
+                vacationDays = _employeeService.GetByID(employee.EmployeeId).Freedays;
+                //model.daysReq = (subrequest.EndDate.Date - subrequest.StartDate.Date).Days + 1;
+
+                if (model.daysReq <= vacationDays)
+                {
+                    // insert request in db
+                    _headerReqService.InsertVacHeaderReq(model);
+
+                    // get header request id
+                    int idRequest = _subReqService.GetHeaderRequest(model);
+
+                    //inserting sub request.
+                    _subReqService.InsertSubrequest(idRequest, subrequest);
+
+                    _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+
+                    // Update 
+                    _emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
+                }
+                else
+                {
+                    // We know that unpaid days will be needed
+
+                    // Send normal request up to the vacation days
+                    int normalReqDays = vacationDays;
+                    bool sendNormalRequest = normalReqDays > 0;
+
+                    if (sendNormalRequest)
+                    {
+                        subrequest.EndDate = subrequest.StartDate.Date.AddDays(normalReqDays - 1);
+                        if(subrequest.EndDate.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            subrequest.EndDate = subrequest.EndDate.Date.AddDays(2);
+                        }
+                        else if(subrequest.EndDate.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            subrequest.EndDate = subrequest.EndDate.Date.AddDays(1);
+                        }
+
+                        model.daysReq = normalReqDays;
+
+                        // Send normal request
+
+                        // insert request in db
+                        _headerReqService.InsertVacHeaderReq(model);
+
+                        // get header request id
+                        int idRequest = _subReqService.GetHeaderRequest(model);
+
+                        //inserting sub request.
+                        _subReqService.InsertSubrequest(idRequest, subrequest);
+
+                        _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+
+                        // Update 
+                        _emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
+                    }
+
+                    // Send unpaid request
+                    int unpaidReqDays = daysRequestedForUnpaid - vacationsForThisEmploeForUnpdaid;
+
+               
+
+                    if (unpaidReqDays > 0)
+                    {
+                        subrequest.StartDate = subrequest.EndDate.Date.AddDays(unpaidReqDays - 1);
+                        if (subrequest.StartDate.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            subrequest.StartDate = subrequest.StartDate.Date.AddDays(2);
+                        }
+                        else if (subrequest.StartDate.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            subrequest.StartDate = subrequest.StartDate.Date.AddDays(1);
+                        }
+                        model.daysReq = unpaidReqDays;
+                        model.TypeRequest = 1;
+
+                        // Send normal request
+
+                        // insert request in db
+                        _headerReqService.InsertVacHeaderReq(model);
+
+                        // get header request id
+                        int idRequest = _subReqService.GetHeaderRequest(model);
+
+                        //inserting sub request.
+                        _subReqService.InsertSubrequest(idRequest, subrequest);
+
+                        _emailInsertNewRequestService.SendEmails(emails, "New Unpaid Vacation Request", model.Comments, model.MyFile);
+
+                        // Update 
+                        //_emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
+                    }
+                }
+                
+            }
+            #endregion
+
+            
+
+            
+
+            
+
+            
+
+            
+
+            return true;
+        }
+
+		[HttpPost]
 		public ActionResult ManagerInsertNewRequest(int SelectedEmployee)
 		{
 
@@ -378,6 +534,7 @@ namespace PES.Controllers
 			newRequest.VacationDays = currentEmployee.Freedays;
 			newRequest.FirstName = currentEmployee.FirstName;
 			newRequest.LastName = currentEmployee.LastName;
+            newRequest.TypeRequest = 1;
 			newRequest.SubRequests = new List<SubrequestInfoVM>()
 			{
 				new SubrequestInfoVM
