@@ -230,7 +230,6 @@ $("#sendRequest").on("click", function (e) {
 
     var TitleCorrection = $("#Title").val();
 
-    var userVacations = $("#VacationDays").val();
 
 
 
@@ -249,10 +248,6 @@ $("#sendRequest").on("click", function (e) {
     else if (TitleCorrection == "") {
 
         $("#titleEmpy").modal();
-    }
-    else if (parseInt(userVacations) < parseInt(DaysRequestedCorrection)) {
-
-        $("#noVacationsDays").modal();
     }
     else {
         $("#form").submit();
