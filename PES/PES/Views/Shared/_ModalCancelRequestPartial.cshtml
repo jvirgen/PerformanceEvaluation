@@ -32,7 +32,7 @@
 
                            @Html.LabelFor(model => model.Reason, " Please add a reason of request cancellation ", new { @class = "control-label " })
                            
-                               @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control col-md-offset-3 col-sm-offset-3 col-xs-offset-3" } })
+                               @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control col-md-offset-3 col-sm-offset-3 col-xs-offset-3", @id="calcelmodaltext" } })
                                @Html.ValidationMessageFor(model => model.Reason, " ", new { @class = "text-danger" })
                        </fieldset>
                    </div>

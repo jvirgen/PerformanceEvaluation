@@ -38,6 +38,7 @@ function sendedImail(id, VacDaysReq, stringFechas) {
 
 $('#cancelBotomModal').on("click", function (e) {
     var Fecha = $('#start').val();
+    var cancelString = $('#calcelmodaltext').text();
     var starDate = moment(Fecha.substring(0, 10));
     var today = moment(new Date());
     var compareToday = today.add(2,'days');
@@ -45,7 +46,13 @@ $('#cancelBotomModal').on("click", function (e) {
     //True es no puede cancelar si es false si puede cancelar
     if (starDate < compareToday) {
         uncomingDate = true;
-        $("#informationSoon").modal();
+        if (cancelString == "") {
+            $("#filltextfield").modal();
+
+        }
+        else {
+            $("#cancelFormModal").submit();
+        }
     }
     else {
         uncomingDate = false;
