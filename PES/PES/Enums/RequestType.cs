@@ -9,7 +9,8 @@ namespace PES.Enums
     {
         Normal = 0,
         IsUnpaid = 1,
-        Emergency = 2,
-        Pregnancy = 3
+        UnEmergency = 2,
+        Paternity = 3,
+        Funeral = 4
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using PES.Models;
@@ -31,5 +32,25 @@ namespace PES.ViewModels
        public HttpPostedFileBase MyFile { get; set; }
      
         public int TypeRequest { get; set; }
+
+        public enum RequestType
+        {
+            Normal = 0,
+            IsUnpaid = 1,
+            UnEmergency = 2,
+            Paternity = 3,
+            Funeral = 4
+        }
+
+
+        public enum MyEnum
+        {
+            [Display(Name = "First Value - desc..")]
+            FirstValue,
+            [Display(Name = "Second Value - desc...")]
+            SecondValue
+        }
+
+
     }
 }

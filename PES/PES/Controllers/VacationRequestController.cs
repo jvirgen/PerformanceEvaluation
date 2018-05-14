@@ -14,6 +14,7 @@ using System.Net;
 using System.Web.Routing;
 using System.Web.Optimization;
 using System.IO;
+using PES.Enums;
 
 namespace PES.Controllers
 {
@@ -133,19 +134,19 @@ namespace PES.Controllers
 
 
 
-		// new send request for unpaid vacations
-		[HttpGet]
-		public ActionResult SendRequestUnpaid(int id)
-		{
+        // new send request for unpaid vacations
+        [HttpGet]
+        public ActionResult SendRequestUnpaid(int id)
+        {
 
-			Employee CurrentEmployee = new Employee();
-			_employeeService = new EmployeeService();
-			CurrentEmployee = _employeeService.GetByID(id);
-			SendRequestViewModel NewRequest = new SendRequestViewModel();
+            Employee CurrentEmployee = new Employee();
+            _employeeService = new EmployeeService();
+            CurrentEmployee = _employeeService.GetByID(id);
+            SendRequestViewModel NewRequest = new SendRequestViewModel();
 
-			// mod
-			IEnumerable<Employee> listEmployee = new List<Employee>();
-			listEmployee = _employeeService.GetAll();
+            // mod
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
 
             IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
             {
@@ -153,7 +154,8 @@ namespace PES.Controllers
                 Value = employee.EmployeeId.ToString()
             });
             //mod
-            NewRequest.TypeRequest = 1;
+            //NewRequest.TypeRequest = 1;
+            NewRequest.TypeRequest = Convert.ToInt32(RequestType.IsUnpaid);
             NewRequest.EmployeedID = id;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
             NewRequest.SubRequests = new List<SubrequestInfoVM>()
@@ -182,7 +184,7 @@ namespace PES.Controllers
             CurrentEmployee = _employeeService.GetByID(id);
             SendRequestViewModel NewRequest = new SendRequestViewModel();
 
-            // mod
+            
             IEnumerable<Employee> listEmployee = new List<Employee>();
             listEmployee = _employeeService.GetAll();
 
@@ -192,7 +194,7 @@ namespace PES.Controllers
                 Value = employee.EmployeeId.ToString()
             });
             //mod
-            NewRequest.TypeRequest = 2;
+            NewRequest.TypeRequest = Convert.ToInt32(RequestType.UnEmergency);
             NewRequest.EmployeedID = id;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
             NewRequest.SubRequests = new List<SubrequestInfoVM>()
@@ -212,7 +214,6 @@ namespace PES.Controllers
 		}
 
 
-		/////////////// working on
 		public ActionResult VacationAssignation()
 		{
 
@@ -365,16 +366,7 @@ namespace PES.Controllers
 			return RedirectToAction("HistoricalResource");
 		}
 
-
-
-
-
-
-
-
-		// working on ////
-
-		[HttpPost]
+        [HttpPost]
 		public ActionResult ManagerInsertNewRequest(int SelectedEmployee)
 		{
 
