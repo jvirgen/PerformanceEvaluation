@@ -602,8 +602,17 @@ namespace PES.Controllers
             {
                 HeaderRequestId = currentRequest.VacationHeaderReqId,
                 NoVacDaysRequested = currentRequest.NoVacDays,
-                currentStatusId = currentRequest.status
+                currentStatusId = currentRequest.status,
+                Title = currentRequest.Title
+                
+                
             };
+
+            //currentRequest.Modal = new StatusRequestViewModel()
+            //{
+            //    Title = currentRequest.Title
+            //};
+
 
 			return View("VacationRequest", currentRequest);
 		}
@@ -759,6 +768,16 @@ namespace PES.Controllers
 		[HttpPost]
 		public ActionResult CancelRequest(StatusRequestViewModel model)
 		{
+            int TypeRequest = 0;
+            if (model.Title.Contains("UNPAID:"))
+            {
+                TypeRequest = 1;
+            }
+            else if(model.Title.Contains("EMERGENCY:"))
+            {
+                TypeRequest = 2;
+            }
+
 			// Update status of the request
 			_emailCancelRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
 			// Send email if success
@@ -777,7 +796,7 @@ namespace PES.Controllers
 			//Add if 
 			if(model.currentStatusId.ToLower() != "rejected")
 			{
-				_emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
+				_emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested, TypeRequest);
 			}
 			return RedirectToAction("HistoricalResource");
 
@@ -804,25 +823,35 @@ namespace PES.Controllers
 			//_emailApproveRequestService.LessNoVacDays(employeeEmail, model.NoVacDaysRequested);
 			return RedirectToAction("HistoricalResource");
 	}
-		[HttpPost]
-		public ActionResult RejectRequest(StatusRequestViewModel model)
-		{
-			// Update status of the request
-			_emailRejectRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
-			// Send email if success
-			// Get request by id
-			List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
-			data = _emailRejectRequestService.GetDataRequest(model.HeaderRequestId);
-			string employeeEmail = data[0].EmployeeEmail;
-			string managerEmail = data[0].ManagerEmail;
-			string rejectReason = data[0].Reason;
-			List<string> emails = new List<string>()
-			{
-				employeeEmail,
-				managerEmail
-			};
-			_emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
-			_emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested);
+        [HttpPost]
+        public ActionResult RejectRequest(StatusRequestViewModel model)
+        {
+            int TypeRequest = 0;
+            if (model.Title.Contains("UNPAID:"))
+            {
+                TypeRequest = 1;
+            }
+            else if (model.Title.Contains("EMERGENCY:"))
+            {
+                TypeRequest = 2;
+            }
+
+            // Update status of the request
+            _emailRejectRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
+            // Send email if success
+            // Get request by id
+            List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+            data = _emailRejectRequestService.GetDataRequest(model.HeaderRequestId);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            string rejectReason = data[0].Reason;
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
+            _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested, TypeRequest);
 
 			return RedirectToAction("HistoricalResource");
 

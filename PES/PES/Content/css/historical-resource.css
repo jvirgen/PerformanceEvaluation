@@ -43,7 +43,7 @@
 }
 
 .TextoColorVerde{
-    margin-left: -150px;
+    margin-left: -50px;
 }
 
 .ContenedorColorNaranja {
@@ -88,4 +88,17 @@
 
 .yellowColorBackground {
     background-color: #ffdfba;
+}
+
+
+.buttomShowHideContent{
+    margin-bottom: 20px;
+}
+
+.contenedorColores {
+    color: white;
+    padding-top: 30px;
+    background-color: #7B7D7D;
+    border-radius: 20px;
+    margin-bottom: 20px;
 }

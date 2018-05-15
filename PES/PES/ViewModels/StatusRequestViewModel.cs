@@ -11,6 +11,8 @@ namespace PES.ViewModels
     {
         public int HeaderRequestId { get; set; }
 
+        public string Title { get; set; }
+
         public string currentStatusId { get; set; }
 
         /// <summary>
