@@ -777,6 +777,14 @@ namespace PES.Controllers
             {
                 TypeRequest = 2;
             }
+            else if(model.Title.Contains("FUNERAL:"))
+            {
+                TypeRequest = 3;
+            }
+            else if(model.Title.Contains("PATERNITY:"))
+            {
+                TypeRequest = 4;
+            }
 
 			// Update status of the request
 			_emailCancelRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
@@ -834,6 +842,14 @@ namespace PES.Controllers
             else if (model.Title.Contains("EMERGENCY:"))
             {
                 TypeRequest = 2;
+            }
+            else if (model.Title.Contains("FUNERAL:"))
+            {
+                TypeRequest = 3;
+            }
+            else if (model.Title.Contains("PATERNITY:"))
+            {
+                TypeRequest = 4;
             }
 
             // Update status of the request

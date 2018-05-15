@@ -149,7 +149,7 @@ namespace PES.Services
         }
         public bool PlusNoVacDays(string employeeEmail, int noVacDays, int TypeRequest)
         {
-            if(TypeRequest == 1 || TypeRequest == 2)
+            if(TypeRequest == 1 || TypeRequest == 2 || TypeRequest == 3 || TypeRequest == 4)
             {
                 return true;
             }
