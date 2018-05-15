@@ -5,6 +5,7 @@
         <div class="modal-content">
         @using (Html.BeginForm("RejectRequest", "VacationRequest", FormMethod.Post , new { id="rejectFormModal"}))
         {
+            @Html.HiddenFor(model => model.Title)
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
