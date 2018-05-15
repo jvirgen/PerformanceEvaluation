@@ -102,6 +102,37 @@
                                         <td style="background-color:#baffc9">Unpaid Request</td>
 
                                     }
+                                     else if (headerVM.Title.Contains("FUNERAL:"))
+                                    {
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td>@headerVM.NoVacDays</td>
+                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#F08080">Emergency Request</td>
+                                        }
+
+                                        else if (headerVM.Title.Contains("PATERNITY:"))
+                                    {
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td>@headerVM.NoVacDays</td>
+                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#F08080">Emergency Request</td>
+                                        }
+
+
                                     else if (headerVM.HaveProject == "True")
                                     {
 
@@ -453,34 +484,3 @@ else
 
 
 
-
-
-
-
-
-
-  if (headerVM.Title.Contains("EMERGENCY:"))
-        {
-<td style="background-color:#F08080">Emergency Request</td>
-
-}
-else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
-{
-<td style="background-color:#7AD8DB">Unpaid and With Proyect</td>
-
-}
-else if (headerVM.Title.Contains("UNPAID:"))
-{
-
-<td style="background-color:#baffc9">Unpaid Request</td>
-
-}
-else if (headerVM.HaveProject == "True")
-{
-<td style="background-color:#ffdfba">Resource On Bench</td>
-
-}
-else
-{
-<td>Normal Request</td>
-}

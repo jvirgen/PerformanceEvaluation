@@ -179,12 +179,31 @@ namespace PES.Controllers
         public ActionResult EmergencyRequest(int id)
         {
 
+            
+
             Employee CurrentEmployee = new Employee();
             _employeeService = new EmployeeService();
             CurrentEmployee = _employeeService.GetByID(id);
             SendRequestViewModel NewRequest = new SendRequestViewModel();
 
-            
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Funeral",
+                Value = "3"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Paternity",
+                Value = "4",
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Other Emergency",
+                Value = "2",
+            });
+        
+
             IEnumerable<Employee> listEmployee = new List<Employee>();
             listEmployee = _employeeService.GetAll();
 
@@ -194,7 +213,8 @@ namespace PES.Controllers
                 Value = employee.EmployeeId.ToString()
             });
             //mod
-            NewRequest.TypeRequest = Convert.ToInt32(RequestType.UnEmergency);
+            NewRequest.ListRequestType = listItems;
+          //  NewRequest.TypeRequest = Convert.ToInt32(RequestType.UnEmergency);
             NewRequest.EmployeedID = id;
             NewRequest.VacationDays = CurrentEmployee.Freedays;
             NewRequest.SubRequests = new List<SubrequestInfoVM>()

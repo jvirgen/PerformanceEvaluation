@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using PES.Models;
 
 namespace PES.ViewModels
@@ -32,6 +33,12 @@ namespace PES.ViewModels
        public HttpPostedFileBase MyFile { get; set; }
      
         public int TypeRequest { get; set; }
+
+
+        [Display(Name = "Select Type ")]
+        public int SelectedRequestType { get; set; }
+        public IEnumerable<SelectListItem> ListRequestType { get; set; }
+
 
         public enum RequestType
         {
