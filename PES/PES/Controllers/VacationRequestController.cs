@@ -617,6 +617,38 @@ namespace PES.Controllers
 			return View("VacationRequest", currentRequest);
 		}
 
+
+        [HttpGet]
+        public ActionResult SendIdNav(int TypeRedirectRequest)
+        {
+
+            Employee currentUser = new Employee();
+            var currentUserEmail = (string)Session["UserEmail"];
+            currentUser = _employeeService.GetByEmail(currentUserEmail);
+
+            if(TypeRedirectRequest == 1)
+            {
+                return RedirectToAction("SendRequest", "VacationRequest", new { userid = currentUser.EmployeeId });
+            }
+            else if(TypeRedirectRequest == 2)
+            {
+                return RedirectToAction("SendRequestUnpaid", "VacationRequest", new { id = currentUser.EmployeeId });
+            }
+            else if(TypeRedirectRequest == 3)
+            {
+                return RedirectToAction("EmergencyRequest", "VacationRequest", new { id = currentUser.EmployeeId });
+            }
+            else
+            {
+                return RedirectToAction("EmergencyRequest", "VacationRequest", new { id = currentUser.EmployeeId });
+            }
+
+          
+
+
+
+        }
+
 		/// <summary>
 		/// GET: HistoricalResource. Metod to Get all the data of the current employee and all its vacation requests 
 		/// </summary>

@@ -79,7 +79,7 @@
 
 
 
-                 @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager || userProfile == ProfileUser.Resource))
+                 @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Resource))
                 {
                     <ul class="nav navbar-nav" style="margin-top:10px">
                         <li class="dropdown">
@@ -92,10 +92,10 @@
                                 }
                                 else
                                 {
-                                    <li><a href="@Url.Action("LatenessMenu", "Menu")">Vacation Request</a></li>
-                                    <li><a href="@Url.Action("LatenessAllUsers", "Lateness")">Unpday Request</a></li>
-                                    <li><a href="@Url.Action("ShowLatenesExcel", "Lateness")">Funeral Request</a></li>
-                                    <li><a href="@Url.Action("Index", "Lateness")">Paternity Request</a></li>
+                                    <li><a href="@Url.Action("SendIdNav", "VacationRequest", new { TypeRedirectRequest = 1})">Vacation Request</a></li>
+                                    <li><a href="@Url.Action("SendIdNav", "VacationRequest", new { TypeRedirectRequest = 2})">Unpday Request</a></li>
+                                    <li><a href="@Url.Action("SendIdNav", "VacationRequest", new { TypeRedirectRequest = 3})">Funeral Request</a></li>
+                                    <li><a href="@Url.Action("SendIdNav", "VacationRequest", new { TypeRedirectRequest = 4})">Paternity Request</a></li>
                                 }
 
                             </ul>
